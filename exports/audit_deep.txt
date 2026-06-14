@@ -1,0 +1,64 @@
+=== AUDIT DEEP n=3390 ===
+
+=== TEST 8 : ROI de chaque marché en pariant systématiquement ===
+  TOP 20 marchés/labels (n>=100) classés par ROI :
+  Market                              Label           n      acc      ROI
+  Les deux équipes marquent / 1ère mi Oui             3390    56.0%  +119.21%
+  HT/FT                               1/2             3390     3.4%  +81.59%
+  HT/FT                               2/1             3390     3.9%  +39.89%
+  HT/FT                               1/X             3390     4.2%   -0.26%
+  HT/FT                               X/2             3390    12.4%   -2.80%
+  HT/FT                               2/X             3390     4.2%   -3.14%
+  Score exact                         1-0             3390     7.0%   -3.53%
+  HT/FT                               X/1             3390    17.1%   -3.93%
+  Score exact                         2-0             3390     7.1%   -4.53%
+  Score exact                         0-0             3390     5.3%   -4.55%
+  Mi-tps 1X2                          X               3390    43.1%   -5.36%
+  Double Chance                       12              3390    78.0%   -6.71%
+  Mi-tps 1X2                          1               3390    35.0%   -7.23%
+  Double Chance                       1X              3258    69.2%   -7.81%
+  Score exact                         1-2             3390     7.6%   -8.30%
+  Score exact                         2-2             3390     6.3%   -8.57%
+  Double Chance                       X2              3347    51.1%   -9.16%
+  Score exact                         2-1             3390     9.7%  -10.28%
+  Score exact                         2-3             3390     2.5%  -10.88%
+  Score exact                         4-2             3390     1.2%  -12.43%
+
+  BOTTOM 20 :
+  Score exact                         3-1             3390     6.0%  -17.36%
+  Score exact                         3-2             3390     3.2%  -18.01%
+  Score exact                         1-1             3390     9.6%  -18.96%
+  HT/FT                               1/1             3390    27.4%  -19.08%
+  HT/FT                               X/X             3390    13.6%  -19.56%
+  Score exact                         4-1             3390     2.7%  -26.55%
+  Score exact                         1-3             3390     3.2%  -27.61%
+  Score exact                         4-0             3390     3.1%  -27.89%
+  HT/FT                               2/2             3390    13.8%  -32.49%
+  Score exact                         1-4             3390     1.6%  -32.75%
+  Score exact                         3-3             3390     0.7%  -33.10%
+  Score exact                         5-0             3390     1.6%  -40.29%
+  Score exact                         0-4             3390     1.2%  -44.70%
+  Score exact                         2-4             3390     0.6%  -45.22%
+  Les deux équipes marquent / 1ère mi Non             3390    44.0%  -45.54%
+  Score exact                         5-1             3390     1.0%  -46.59%
+  Score exact                         6-0             3390     0.4%  -74.24%
+  Score exact                         1-5             3390     0.2%  -79.55%
+  Score exact                         0-5             3390     0.3%  -81.99%
+  Score exact                         0-6             3390     0.1%  -95.20%
+
+=== TEST 9 : Distribution # favoris gagnants par round (10 matchs) ===
+
+=== TEST 10 : Régression à la moyenne intra-round ===
+  Match #N | favoris déjà gagnés | n | accuracy favori
+
+=== TEST 11 : Ratio cote HT-X / FT-X — value bet ? ===
+  Mediane ratio : 0.539
+  Test : parier HT-X quand cote HT-X / cote FT-X dans certains brackets
+    ratio ∈ [0.40;0.50]  n= 768  acc= 38.9%  ROI= -2.22%
+    ratio ∈ [0.50;0.55]  n=1175  acc= 42.1%  ROI= -8.34%
+    ratio ∈ [0.55;0.60]  n=1333  acc= 47.6%  ROI= -3.41%
+
+=== TEST 12 : Double chance (1X/12/X2) — moins d'overround ? ===
+  1X (sur cote impl) : acc=70.4%  ROI=-5.89%
+  12 (sur cote impl) : acc=78.0%  ROI=-4.96%
+

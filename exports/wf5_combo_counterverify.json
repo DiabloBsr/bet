@@ -1,0 +1,401 @@
+{
+ "team_name_collision": {
+  "leagues_sharing_team_names": [
+   "InstantLeague-8035",
+   "InstantLeague-8056"
+  ],
+  "filter_required": true
+ },
+ "recompute_oos": {
+  "n": 447,
+  "hits": 92,
+  "hit_rate": 0.2058,
+  "per_pair": [
+   {
+    "pair": "Fulham v Manchester Blue",
+    "n": 30,
+    "hits": 6,
+    "targets": "1-2+0-1",
+    "combo_is": 0.75
+   },
+   {
+    "pair": "C. Palace v Spurs",
+    "n": 31,
+    "hits": 8,
+    "targets": "2-1+3-1",
+    "combo_is": 0.625
+   },
+   {
+    "pair": "Burnley v Manchester Blue",
+    "n": 26,
+    "hits": 5,
+    "targets": "1-2+0-1",
+    "combo_is": 0.583
+   },
+   {
+    "pair": "Newcastle v West Ham",
+    "n": 22,
+    "hits": 6,
+    "targets": "3-0+2-0",
+    "combo_is": 0.6
+   },
+   {
+    "pair": "Wolverhampton v Fulham",
+    "n": 29,
+    "hits": 6,
+    "targets": "2-1+1-1",
+    "combo_is": 0.7
+   },
+   {
+    "pair": "Bournemouth v Manchester Blue",
+    "n": 24,
+    "hits": 1,
+    "targets": "1-1+0-3",
+    "combo_is": 0.545
+   },
+   {
+    "pair": "Manchester Red v Bournemouth",
+    "n": 31,
+    "hits": 7,
+    "targets": "1-0+3-1",
+    "combo_is": 0.636
+   },
+   {
+    "pair": "Burnley v Liverpool",
+    "n": 27,
+    "hits": 5,
+    "targets": "0-2+0-1",
+    "combo_is": 0.667
+   },
+   {
+    "pair": "A. Villa v C. Palace",
+    "n": 27,
+    "hits": 5,
+    "targets": "2-0+1-1",
+    "combo_is": 0.556
+   },
+   {
+    "pair": "Leeds v Brentford",
+    "n": 31,
+    "hits": 11,
+    "targets": "1-2+0-3",
+    "combo_is": 0.556
+   },
+   {
+    "pair": "Brighton v Manchester Red",
+    "n": 24,
+    "hits": 4,
+    "targets": "2-1+3-1",
+    "combo_is": 0.667
+   },
+   {
+    "pair": "Manchester Red v Wolverhampton",
+    "n": 34,
+    "hits": 8,
+    "targets": "1-0+1-2",
+    "combo_is": 0.556
+   },
+   {
+    "pair": "West Ham v A. Villa",
+    "n": 25,
+    "hits": 3,
+    "targets": "1-1+2-0",
+    "combo_is": 0.556
+   },
+   {
+    "pair": "Bournemouth v Brentford",
+    "n": 27,
+    "hits": 6,
+    "targets": "1-1+3-1",
+    "combo_is": 0.6
+   },
+   {
+    "pair": "Liverpool v London Reds",
+    "n": 30,
+    "hits": 8,
+    "targets": "2-0+1-1",
+    "combo_is": 0.5
+   },
+   {
+    "pair": "Manchester Blue v Everton",
+    "n": 29,
+    "hits": 3,
+    "targets": "3-0+2-1",
+    "combo_is": 0.6
+   }
+  ]
+ },
+ "cs_market_margin": {
+  "n": 140,
+  "avg_book": 1.1796
+ },
+ "roi_models": {
+  "split_half_unit": {
+   "n": 140,
+   "roi": -0.0506,
+   "z": -0.29
+  },
+  "missing_odds": 307,
+  "top1_only": {
+   "n": 140,
+   "roi": -0.0328,
+   "z": -0.14
+  },
+  "top2_only": {
+   "n": 140,
+   "roi": -0.0684,
+   "z": -0.24
+  }
+ },
+ "score_orientation_check": {
+  "ok": 60,
+  "bad": 0
+ },
+ "settlement_spot_checks": [
+  {
+   "event": 213,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-06 03:58:42.654535",
+   "score": "0-4",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.68,
+    11.37
+   ],
+   "hit": false
+  },
+  {
+   "event": 15161,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-10 20:08:14.841126",
+   "score": "1-4",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.74,
+    11.58
+   ],
+   "hit": false
+  },
+  {
+   "event": 15776,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-10 21:05:19.559373",
+   "score": "0-1",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.73,
+    11.26
+   ],
+   "hit": true
+  },
+  {
+   "event": 20763,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-12 01:37:32.049590",
+   "score": "0-2",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.74,
+    11.31
+   ],
+   "hit": false
+  },
+  {
+   "event": 24016,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-12 06:36:14.063806",
+   "score": "0-1",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.72,
+    11.82
+   ],
+   "hit": true
+  },
+  {
+   "event": 31866,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-12 08:41:32.464141",
+   "score": "1-0",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.79,
+    11.52
+   ],
+   "hit": false
+  },
+  {
+   "event": 35571,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-12 09:39:15.808119",
+   "score": "0-4",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.77,
+    11.83
+   ],
+   "hit": false
+  },
+  {
+   "event": 41509,
+   "pair": "Fulham v Manchester Blue",
+   "fin": "2026-06-12 11:18:26.525786",
+   "score": "1-0",
+   "targets": [
+    "1-2",
+    "0-1"
+   ],
+   "cotes": [
+    7.75,
+    11.72
+   ],
+   "hit": false
+  }
+ ],
+ "oracle_refit_oos": {
+  "n": 447,
+  "hit_rate": 0.3758,
+  "note": "plafond: top2 choisis SUR l'OOS lui-meme (triche volontaire)",
+  "per_pair": [
+   {
+    "pair": "Fulham v Manchester Blue",
+    "n": 30,
+    "oracle_top2": "0-2+1-2",
+    "oracle_hit": 0.3
+   },
+   {
+    "pair": "C. Palace v Spurs",
+    "n": 31,
+    "oracle_top2": "1-0+3-1",
+    "oracle_hit": 0.29
+   },
+   {
+    "pair": "Burnley v Manchester Blue",
+    "n": 26,
+    "oracle_top2": "0-3+0-1",
+    "oracle_hit": 0.346
+   },
+   {
+    "pair": "Newcastle v West Ham",
+    "n": 22,
+    "oracle_top2": "2-1+5-0",
+    "oracle_hit": 0.545
+   },
+   {
+    "pair": "Wolverhampton v Fulham",
+    "n": 29,
+    "oracle_top2": "1-2+2-0",
+    "oracle_hit": 0.345
+   },
+   {
+    "pair": "Bournemouth v Manchester Blue",
+    "n": 24,
+    "oracle_top2": "2-1+1-2",
+    "oracle_hit": 0.292
+   },
+   {
+    "pair": "Manchester Red v Bournemouth",
+    "n": 31,
+    "oracle_top2": "2-1+3-1",
+    "oracle_hit": 0.355
+   },
+   {
+    "pair": "Burnley v Liverpool",
+    "n": 27,
+    "oracle_top2": "0-2+1-2",
+    "oracle_hit": 0.333
+   },
+   {
+    "pair": "A. Villa v C. Palace",
+    "n": 27,
+    "oracle_top2": "2-1+2-0",
+    "oracle_hit": 0.333
+   },
+   {
+    "pair": "Leeds v Brentford",
+    "n": 31,
+    "oracle_top2": "1-2+0-1",
+    "oracle_hit": 0.452
+   },
+   {
+    "pair": "Brighton v Manchester Red",
+    "n": 24,
+    "oracle_top2": "3-0+2-0",
+    "oracle_hit": 0.333
+   },
+   {
+    "pair": "Manchester Red v Wolverhampton",
+    "n": 34,
+    "oracle_top2": "3-0+1-0",
+    "oracle_hit": 0.353
+   },
+   {
+    "pair": "West Ham v A. Villa",
+    "n": 25,
+    "oracle_top2": "0-0+1-2",
+    "oracle_hit": 0.48
+   },
+   {
+    "pair": "Bournemouth v Brentford",
+    "n": 27,
+    "oracle_top2": "1-1+0-0",
+    "oracle_hit": 0.407
+   },
+   {
+    "pair": "Liverpool v London Reds",
+    "n": 30,
+    "oracle_top2": "1-1+0-2",
+    "oracle_hit": 0.467
+   },
+   {
+    "pair": "Manchester Blue v Everton",
+    "n": 29,
+    "oracle_top2": "1-0+4-0",
+    "oracle_hit": 0.414
+   }
+  ]
+ },
+ "hit_by_day": {
+  "2026-06-06": {
+   "hits": 15,
+   "n": 48
+  },
+  "2026-06-07": {
+   "hits": 1,
+   "n": 7
+  },
+  "2026-06-10": {
+   "hits": 6,
+   "n": 23
+  },
+  "2026-06-11": {
+   "hits": 7,
+   "n": 67
+  },
+  "2026-06-12": {
+   "hits": 63,
+   "n": 302
+  }
+ }
+}

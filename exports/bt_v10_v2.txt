@@ -1,0 +1,13 @@
+=== Backtest V10 FINAL rééquilibré — n=3710 ===
+
+Train n=2597, Test n=1113, Rounds=225
+
+=== V10 FINAL rééquilibré ===
+  Bankroll final : 194.13u (+94.13u)
+  Paris : 495
+  SÉCURISÉ      n=  61  acc= 67.2%  ROI=+14.74%
+  MODÉRÉ        n=  93  acc= 38.7%  ROI=-18.80%
+  SPÉCULATIF    n= 341  acc=  8.2%  ROI=+60.77%
+
+  📊 PAIRES OR uniquement :
+     n=12  acc=66.7%  ROI=+4.90%

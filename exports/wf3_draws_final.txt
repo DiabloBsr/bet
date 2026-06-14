@@ -1,0 +1,59 @@
+================ A) VARIETE POISSON & FINGERPRINT ================
+|p_draw_mkt - p_draw_poisson_fit| : mean=0.000000 max=0.000000 q99=0.000000
+  -> 5859/5859 matchs avec ecart < 0.001
+triples 1X2 uniques : 5644 sur 5859 matchs
+lambda_h : uniques@0.01=266 mean=1.635 [0.42,3.25]
+lambda_a : uniques@0.01=210 mean=1.196 [0.46,2.67]
+mu=lh+la : mean=2.831 std=0.425
+home adv lh-la : mean=0.439 std=0.892
+corr(lam_h, lam_a) = -0.671
+mu par skew bin:
+             mean    std  count
+skw                            
+(0.0, 0.2]  2.645  0.382   1670
+(0.2, 0.4]  2.719  0.351   1925
+(0.4, 0.6]  2.959  0.394   1491
+(0.6, 1.0]  3.271  0.344    766
+
+buts reels mean=2.953 vs mu mean=2.831
+home goals mean=1.700 vs lam_h=1.635 ; away 1.254 vs lam_a=1.196
+var(home goals)=1.664 (Poisson => ~mean) ; var(away)=1.236
+corr(score_a, score_b) = -0.2459 p=0.0000
+corr residus (score-lambda) = -0.1318 p=0.0000  <- test independance conditionnelle
+
+================ B) SCORES REELS : GRILLE CS vs POISSON ================
+matchs avec grille CS: 5859
+log-loss score exact : grille_devig=2.8404  poisson_fit=2.9046
+  t-test apparie (grille meilleure si t<0) : t=-16.59 p=1.912e-60
+
+conditionnel au nul (n=1287) :
+  obs      : [0.24553225 0.44211344 0.27972028 0.03263403]
+  grille   : [0.23660021 0.46983378 0.2786366  0.01492942]
+  poisson  : [0.28239111 0.46292192 0.20507743 0.04960954]
+  chi2 vs grille = 29.6 (p=1.703e-06) ; chi2 vs poisson = 49.8 (p=8.656e-11)
+
+p_draw(grille CS devig) - p_draw(1X2 devig) : mean=+0.0027 std=0.0033 max|.|=0.0117
+
+================ C) FAVORIS EXTREMES : CALIBRATION 1X2 COMPLETE ================
+         bin    n  fav_real  fav_mkt  p_fav_binom  draw_real  draw_mkt  p_draw_binom  dog_real  dog_mkt  p_dog_binom  roi_fav  roi_draw  roi_dog
+(0.999, 1.1]    1    1.0000   0.8549       1.0000     0.0000    0.1026        1.0000    0.0000   0.0426       1.0000   0.1000   -1.0000  -1.0000
+  (1.1, 1.2]  291    0.8557   0.8104       0.0516     0.0790    0.1262        0.0133    0.0653   0.0635       0.9040  -0.0040   -0.4053  -0.0081
+  (1.2, 1.3]  384    0.7344   0.7522       0.4085     0.1719    0.1552        0.3598    0.0938   0.0926       0.9298  -0.0780    0.0531  -0.0254
+ (1.3, 1.45]  795    0.6868   0.6836       0.8788     0.1799    0.1860        0.6818    0.1333   0.1304       0.7923  -0.0530   -0.0824  -0.0348
+ (1.45, 1.6]  757    0.6156   0.6179       0.9107     0.2232    0.2137        0.5348    0.1612   0.1683       0.6273  -0.0591   -0.0070  -0.0865
+  (1.6, 2.0] 1960    0.5372   0.5293       0.4831     0.2347    0.2418        0.4764    0.2281   0.2290       0.9358  -0.0451   -0.0882  -0.0586
+  (2.0, 3.5] 1671    0.4117   0.4168       0.6914     0.2549    0.2641        0.4053    0.3333   0.3191       0.2174  -0.0661   -0.0876  -0.0135
+
+DC '12' fav<=1.20 : n=292 cote moy=1.060 reel=0.9212 1/cote=0.9436 ROI=-0.0235
+
+================ D) WALK-FORWARD ================
+DC12 fav<=1.20: train n=208 ROI=-0.0425 | OOS n=84 ROI=+0.0233 WR=0.9643 cote_moy=1.061
+DC12 fav<=1.15: train n=76 ROI=-0.0321 | OOS n=28 ROI=+0.0132 WR=0.9643 cote_moy=1.051
+DC12 fav<=1.30: train n=475 ROI=-0.0686 | OOS n=201 ROI=-0.0487 WR=0.8806 cote_moy=1.082
+backFAV fav<=1.20: train n=208 ROI=-0.0271 | OOS n=84 ROI=+0.0545 WR=0.9048 cote_moy=1.166
+backFAV fav<=1.15: train n=76 ROI=+0.0008 | OOS n=28 ROI=+0.0532 WR=0.9286 cote_moy=1.135
+backDOG fav<=1.20: train n=208 ROI=+0.0448 | OOS n=84 ROI=-0.1507 WR=0.0595 cote_moy=15.466
+backDOG fav 1.2-1.3: train n=267 ROI=-0.0361 | OOS n=117 ROI=-0.0011 WR=0.0940 cote_moy=10.359
+DC12 tous: train n=4101 ROI=-0.0745 | OOS n=1758 ROI=-0.0498 WR=0.7947 cote_moy=1.200
+
+done

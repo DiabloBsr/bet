@@ -1,0 +1,498 @@
+{
+ "cup_window": [
+  "2026-06-12 01:30:34.000000",
+  "2026-06-12 19:46:34.000000"
+ ],
+ "scopes": {
+  "cup-all": {
+   "n": 2634,
+   "wr": 0.7008,
+   "roi_pct": -7.41,
+   "avg_odds": 1.3405,
+   "avg_ovr": 1.06
+  },
+  "champ-all": {
+   "n": 4758,
+   "wr": 0.7009,
+   "roi_pct": -4.43,
+   "avg_odds": 1.3781,
+   "avg_ovr": 1.06
+  },
+  "champ-samewindow": {
+   "n": 2641,
+   "wr": 0.6975,
+   "roi_pct": -4.76,
+   "avg_odds": 1.3796,
+   "avg_ovr": 1.06
+  },
+  "8035-samewindow": {
+   "n": 817,
+   "wr": 0.7001,
+   "roi_pct": -4.31,
+   "avg_odds": 1.3799,
+   "avg_ovr": 1.0599
+  },
+  "newchamp-all": {
+   "n": 1855,
+   "wr": 0.6976,
+   "roi_pct": -4.8,
+   "avg_odds": 1.3794,
+   "avg_ovr": 1.06
+  },
+  "cup-8056": {
+   "n": 1438,
+   "wr": 0.7267,
+   "roi_pct": -6.81,
+   "avg_odds": 1.3011,
+   "avg_ovr": 1.06
+  },
+  "cup-8060": {
+   "n": 492,
+   "wr": 0.6911,
+   "roi_pct": -10.41,
+   "avg_odds": 1.3204,
+   "avg_ovr": 1.0601
+  },
+  "cup-8065": {
+   "n": 704,
+   "wr": 0.6548,
+   "roi_pct": -6.56,
+   "avg_odds": 1.4349,
+   "avg_ovr": 1.0601
+  }
+ },
+ "strat_cup_vs_newchamp": {
+  "label": "cup vs newchamp (meme fenetre)",
+  "z_strat": -1.367,
+  "p_one_sided": 0.0858,
+  "buckets": [
+   {
+    "lo": 1.05,
+    "nA": 176,
+    "nB": 32,
+    "wrA": 0.886,
+    "wrB": 0.969,
+    "roiA": -4.93,
+    "roiB": 4.06,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.1,
+    "nA": 263,
+    "nB": 97,
+    "wrA": 0.806,
+    "wrB": 0.814,
+    "roiA": -9.35,
+    "roiB": -7.87,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.15,
+    "nA": 180,
+    "nB": 143,
+    "wrA": 0.789,
+    "wrB": 0.818,
+    "roiA": -6.74,
+    "roiB": -3.63,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.2,
+    "nA": 177,
+    "nB": 67,
+    "wrA": 0.746,
+    "wrB": 0.731,
+    "roiA": -8.58,
+    "roiB": -10.25,
+    "cup_worse_wr": false,
+    "cup_worse_roi": false
+   },
+   {
+    "lo": 1.25,
+    "nA": 224,
+    "nB": 177,
+    "wrA": 0.714,
+    "wrB": 0.763,
+    "roiA": -9.17,
+    "roiB": -2.98,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.3,
+    "nA": 257,
+    "nB": 199,
+    "wrA": 0.72,
+    "wrB": 0.764,
+    "roiA": -4.94,
+    "roiB": 0.78,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.35,
+    "nA": 331,
+    "nB": 260,
+    "wrA": 0.74,
+    "wrB": 0.658,
+    "roiA": 1.95,
+    "roiB": -9.39,
+    "cup_worse_wr": false,
+    "cup_worse_roi": false
+   },
+   {
+    "lo": 1.4,
+    "nA": 282,
+    "nB": 243,
+    "wrA": 0.603,
+    "wrB": 0.65,
+    "roiA": -13.82,
+    "roiB": -7.08,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.45,
+    "nA": 226,
+    "nB": 191,
+    "wrA": 0.664,
+    "wrB": 0.696,
+    "roiA": -2.14,
+    "roiB": 2.82,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.5,
+    "nA": 265,
+    "nB": 232,
+    "wrA": 0.585,
+    "wrB": 0.616,
+    "roiA": -11.11,
+    "roiB": -6.25,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.55,
+    "nA": 253,
+    "nB": 214,
+    "wrA": 0.549,
+    "wrB": 0.589,
+    "roiA": -13.72,
+    "roiB": -7.54,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   }
+  ],
+  "n_buckets": 11,
+  "buckets_cup_worse_wr": 9,
+  "buckets_cup_worse_roi": 9
+ },
+ "strat_cup_vs_champwin": {
+  "label": "cup vs champ-samewindow",
+  "z_strat": -1.585,
+  "p_one_sided": 0.05646,
+  "buckets": [
+   {
+    "lo": 1.05,
+    "nA": 176,
+    "nB": 30,
+    "wrA": 0.886,
+    "wrB": 0.967,
+    "roiA": -4.93,
+    "roiB": 3.73,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.1,
+    "nA": 263,
+    "nB": 127,
+    "wrA": 0.806,
+    "wrB": 0.819,
+    "roiA": -9.35,
+    "roiB": -7.35,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.15,
+    "nA": 180,
+    "nB": 214,
+    "wrA": 0.789,
+    "wrB": 0.808,
+    "roiA": -6.74,
+    "roiB": -4.74,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.2,
+    "nA": 177,
+    "nB": 128,
+    "wrA": 0.746,
+    "wrB": 0.75,
+    "roiA": -8.58,
+    "roiB": -7.98,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.25,
+    "nA": 224,
+    "nB": 235,
+    "wrA": 0.714,
+    "wrB": 0.77,
+    "roiA": -9.17,
+    "roiB": -2.02,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.3,
+    "nA": 257,
+    "nB": 292,
+    "wrA": 0.72,
+    "wrB": 0.733,
+    "roiA": -4.94,
+    "roiB": -3.3,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.35,
+    "nA": 331,
+    "nB": 359,
+    "wrA": 0.74,
+    "wrB": 0.694,
+    "roiA": 1.95,
+    "roiB": -4.58,
+    "cup_worse_wr": false,
+    "cup_worse_roi": false
+   },
+   {
+    "lo": 1.4,
+    "nA": 282,
+    "nB": 357,
+    "wrA": 0.603,
+    "wrB": 0.658,
+    "roiA": -13.82,
+    "roiB": -5.93,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.45,
+    "nA": 226,
+    "nB": 266,
+    "wrA": 0.664,
+    "wrB": 0.669,
+    "roiA": -2.14,
+    "roiB": -1.22,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.5,
+    "nA": 265,
+    "nB": 322,
+    "wrA": 0.585,
+    "wrB": 0.618,
+    "roiA": -11.11,
+    "roiB": -6.08,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.55,
+    "nA": 253,
+    "nB": 311,
+    "wrA": 0.549,
+    "wrB": 0.592,
+    "roiA": -13.72,
+    "roiB": -7.14,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   }
+  ],
+  "n_buckets": 11,
+  "buckets_cup_worse_wr": 10,
+  "buckets_cup_worse_roi": 10
+ },
+ "strat_cup_vs_champall": {
+  "label": "cup vs champ-all (replication du finding)",
+  "z_strat": -2.122,
+  "p_one_sided": 0.01694,
+  "buckets": [
+   {
+    "lo": 1.05,
+    "nA": 176,
+    "nB": 32,
+    "wrA": 0.886,
+    "wrB": 0.969,
+    "roiA": -4.93,
+    "roiB": 4.06,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.1,
+    "nA": 263,
+    "nB": 231,
+    "wrA": 0.806,
+    "wrB": 0.853,
+    "roiA": -9.35,
+    "roiB": -3.39,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.15,
+    "nA": 180,
+    "nB": 394,
+    "wrA": 0.789,
+    "wrB": 0.83,
+    "roiA": -6.74,
+    "roiB": -2.1,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.2,
+    "nA": 177,
+    "nB": 279,
+    "wrA": 0.746,
+    "wrB": 0.742,
+    "roiA": -8.58,
+    "roiB": -9.05,
+    "cup_worse_wr": false,
+    "cup_worse_roi": false
+   },
+   {
+    "lo": 1.25,
+    "nA": 224,
+    "nB": 417,
+    "wrA": 0.714,
+    "wrB": 0.767,
+    "roiA": -9.17,
+    "roiB": -2.42,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.3,
+    "nA": 257,
+    "nB": 527,
+    "wrA": 0.72,
+    "wrB": 0.738,
+    "roiA": -4.94,
+    "roiB": -2.55,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.35,
+    "nA": 331,
+    "nB": 655,
+    "wrA": 0.74,
+    "wrB": 0.707,
+    "roiA": 1.95,
+    "roiB": -2.91,
+    "cup_worse_wr": false,
+    "cup_worse_roi": false
+   },
+   {
+    "lo": 1.4,
+    "nA": 282,
+    "nB": 629,
+    "wrA": 0.603,
+    "wrB": 0.652,
+    "roiA": -13.82,
+    "roiB": -6.82,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.45,
+    "nA": 226,
+    "nB": 470,
+    "wrA": 0.664,
+    "wrB": 0.64,
+    "roiA": -2.14,
+    "roiB": -5.52,
+    "cup_worse_wr": false,
+    "cup_worse_roi": false
+   },
+   {
+    "lo": 1.5,
+    "nA": 265,
+    "nB": 586,
+    "wrA": 0.585,
+    "wrB": 0.623,
+    "roiA": -11.11,
+    "roiB": -5.31,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   },
+   {
+    "lo": 1.55,
+    "nA": 253,
+    "nB": 538,
+    "wrA": 0.549,
+    "wrB": 0.604,
+    "roiA": -13.72,
+    "roiB": -5.19,
+    "cup_worse_wr": true,
+    "cup_worse_roi": true
+   }
+  ],
+  "n_buckets": 11,
+  "buckets_cup_worse_wr": 8,
+  "buckets_cup_worse_roi": 8
+ },
+ "bootstrap_roi_diff_cup_minus_newchamp": {
+  "obs": -2.62,
+  "ci95": [
+   -6.32,
+   1.11
+  ],
+  "p_diff_ge0": 0.0854
+ },
+ "half_ts": "2026-06-12 12:14:34.000000",
+ "period_H1": {
+  "cup": {
+   "n": 1317,
+   "wr": 0.7221,
+   "roi_pct": -4.47,
+   "avg_odds": 1.3434,
+   "avg_ovr": 1.0601
+  },
+  "newchamp": {
+   "n": 895,
+   "wr": 0.6771,
+   "roi_pct": -7.61,
+   "avg_odds": 1.3786,
+   "avg_ovr": 1.06
+  }
+ },
+ "period_H2": {
+  "cup": {
+   "n": 1317,
+   "wr": 0.6796,
+   "roi_pct": -10.36,
+   "avg_odds": 1.3375,
+   "avg_ovr": 1.06
+  },
+  "newchamp": {
+   "n": 929,
+   "wr": 0.7147,
+   "roi_pct": -2.4,
+   "avg_odds": 1.3804,
+   "avg_ovr": 1.0599
+  }
+ }
+}

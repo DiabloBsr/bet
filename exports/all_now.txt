@@ -1,0 +1,379 @@
+Modèles chargés (n=2816 matchs)
+Now Mada: 12:50:01
+Rounds futurs : ['12:51', '12:53', '12:55', '12:57', '13:02', '13:04', '13:06', '13:08']
+
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 12:51 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  London Reds vs Sunderland  (1.20/7.05/11.64)
+     HT: 1(1-0)  FT: 1(75%) 3-0  Buts: 3.5
+
+  ━━ MATCH 2  Newcastle vs Leeds  (1.17/7.02/16.71)
+     HT: 1(1-0)  FT: 1(78%) 3-0  Buts: 3.2
+
+  ━━ MATCH 3  Wolverhampton vs Liverpool  (3.77/3.98/1.84)
+     HT: 2(1-1)  FT: 2(50%) 1-1  Buts: 3.1
+
+  ━━ MATCH 4  London Blues vs N. Forest  (1.43/4.77/6.66)
+     HT: 1(1-0)  FT: 1(62%) 2-1  Buts: 2.7
+
+  ━━ MATCH 5  A. Villa vs Spurs  (1.69/4.59/3.99)
+     HT: 1(1-1)  FT: 1(51%) 1-1  Buts: 3.3
+
+  ━━ MATCH 6  Brighton vs Manchester Blue  (3.85/3.75/1.88)
+     HT: X(1-1)  FT: 2(46%) 1-1  Buts: 2.6
+     💎 UNDER 2.5 GOLD : 75% (n=8)
+
+  ━━ MATCH 7  C. Palace vs Bournemouth  (1.83/4.03/3.77)
+     HT: 1(1-0)  FT: 1(55%) 2-1  Buts: 3.1
+     💎 PAIRE OR HOME : 89% (n=9, ROI+67%)
+
+  ━━ MATCH 8  Everton vs Manchester Red  (2.37/3.12/3.15)
+     HT: X(1-1)  FT: 1(36%) 1-1  Buts: 2.4
+
+  ━━ MATCH 9  Fulham vs Brentford  (2.24/3.64/2.95)
+     HT: X(1-1)  FT: 1(42%) 1-1  Buts: 3.1
+
+  ━━ MATCH 10  Burnley vs West Ham  (2.80/3.46/2.41)
+     HT: X(1-1)  FT: 1(37%) 1-2  Buts: 2.7
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 12:53 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  Spurs vs Everton  (1.62/4.06/5.07)
+     HT: 1(1-0)  FT: 1(58%) 2-1  Buts: 2.8
+
+  ━━ MATCH 2  Manchester Red vs Burnley  (1.43/5.00/6.32)
+     HT: 1(1-1)  FT: 1(61%) 2-1  Buts: 3.3
+
+  ━━ MATCH 3  Wolverhampton vs Fulham  (2.62/3.41/2.60)
+     HT: X(1-1)  FT: 2(37%) 1-1  Buts: 2.8
+     💎💎 COMBO SCORE : 2-1(50%) + 1-1(20%) = 70%
+
+  ━━ MATCH 4  N. Forest vs A. Villa  (1.99/3.53/3.63)
+     HT: X(1-1)  FT: 1(45%) 1-1  Buts: 2.7
+     🔥🔥 MULTI 1@1.99 EV+70% conf 6.7/10
+
+  ━━ MATCH 5  Sunderland vs C. Palace  (6.15/3.94/1.55)
+     HT: 2(0-1)  FT: 2(60%) 0-2  Buts: 2.5
+
+  ━━ MATCH 6  West Ham vs Newcastle  (2.88/3.86/2.20)
+     HT: X(1-1)  FT: 2(42%) 1-2  Buts: 2.9
+
+  ━━ MATCH 7  Brentford vs Brighton  (2.01/4.38/3.00)
+     HT: X(1-1)  FT: 1(45%) 2-1  Buts: 3.3
+
+  ━━ MATCH 8  Liverpool vs London Blues  (1.36/5.20/7.57)
+     HT: 1(1-0)  FT: 1(68%) 2-1  Buts: 3.0
+     💎 OVER 2.5 GOLD : 89% (n=9)
+
+  ━━ MATCH 9  Manchester Blue vs London Reds  (2.27/3.62/2.92)
+     HT: X(1-0)  FT: 1(45%) 1-1  Buts: 2.8
+
+  ━━ MATCH 10  Bournemouth vs Leeds  (1.61/3.65/6.02)
+     HT: 1(1-0)  FT: 1(59%) 2-0  Buts: 2.4
+     🔥🔥 MULTI 1@1.61 EV+27% conf 8.4/10
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 12:55 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  Newcastle vs Bournemouth  (1.32/5.68/7.84)
+     HT: 1(1-0)  FT: 1(71%) 2-1  Buts: 3.5
+
+  ━━ MATCH 2  Brighton vs Wolverhampton  (1.52/4.51/5.57)
+     HT: 1(1-0)  FT: 1(63%) 2-1  Buts: 3.2
+     🔥🔥 MULTI 1@1.52 EV+49% conf 9.1/10
+
+  ━━ MATCH 3  Everton vs N. Forest  (1.88/3.46/4.17)
+     HT: X(1-0)  FT: 1(47%) 1-0  Buts: 2.4
+
+  ━━ MATCH 4  London Reds vs Brentford  (1.46/4.75/6.12)
+     HT: 1(1-0)  FT: 1(62%) 2-1  Buts: 3.0
+
+  ━━ MATCH 5  London Blues vs Fulham  (1.76/3.82/4.34)
+     HT: X(1-0)  FT: 1(51%) 1-1  Buts: 2.7
+
+  ━━ MATCH 6  West Ham vs Manchester Red  (2.23/3.58/3.01)
+     HT: X(1-1)  FT: 1(40%) 1-1  Buts: 2.6
+
+  ━━ MATCH 7  C. Palace vs Manchester Blue  (4.50/3.77/1.75)
+     HT: X(0-1)  FT: 2(51%) 1-1  Buts: 2.6
+
+  ━━ MATCH 8  A. Villa vs Liverpool  (2.12/4.10/2.90)
+     HT: X(1-1)  FT: 1(45%) 1-1  Buts: 3.3
+     💎 SCORE SWEET : 1-2 38% (n=8)
+
+  ━━ MATCH 9  Leeds vs Sunderland  (3.83/3.82/1.86)
+     HT: X(1-1)  FT: 2(49%) 1-1  Buts: 3.0
+
+  ━━ MATCH 10  Burnley vs Spurs  (3.88/4.00/1.81)
+     HT: 2(0-1)  FT: 2(53%) 1-1  Buts: 3.0
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 12:57 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  Liverpool vs Everton  (1.27/5.39/11.40)
+     HT: 1(1-0)  FT: 1(73%) 2-0  Buts: 2.8
+     💎 BTTS NON : 91% (n=11)
+
+  ━━ MATCH 2  Spurs vs West Ham  (1.57/4.65/4.80)
+     HT: 1(1-0)  FT: 1(61%) 2-1  Buts: 3.5
+     💎 PAIRE OR HOME : 90% (n=10, ROI+46%)
+
+  ━━ MATCH 3  London Blues vs Brighton  (1.75/4.22/3.98)
+     HT: X(1-1)  FT: 1(49%) 1-1  Buts: 3.0
+
+  ━━ MATCH 4  Brentford vs C. Palace  (1.87/3.98/3.65)
+     HT: X(1-1)  FT: 1(47%) 1-1  Buts: 2.7
+     💎 PAIRE OR AWAY : 50% (n=10, cote 3.65 OK)
+
+  ━━ MATCH 5  Fulham vs A. Villa  (2.05/3.70/3.31)
+     HT: 1(1-1)  FT: 1(46%) 1-1  Buts: 3.2
+     🔥🔥 MULTI 1@2.05 EV+41% conf 6.7/10
+
+  ━━ MATCH 6  Wolverhampton vs London Reds  (6.52/4.14/1.50)
+     HT: 2(0-1)  FT: 2(60%) 0-2  Buts: 2.9
+
+  ━━ MATCH 7  N. Forest vs Burnley  (1.55/4.42/5.36)
+     HT: 1(1-0)  FT: 1(56%) 2-1  Buts: 2.9
+
+  ━━ MATCH 8  Sunderland vs Bournemouth  (5.43/4.44/1.54)
+     HT: X(0-1)  FT: 2(56%) 1-2  Buts: 2.6
+
+  ━━ MATCH 9  Manchester Red vs Newcastle  (2.22/3.68/2.97)
+     HT: X(1-1)  FT: 1(40%) 1-1  Buts: 3.1
+     🔥🔥 MULTI 2@2.97 EV+24% conf 5.5/10
+
+  ━━ MATCH 10  Manchester Blue vs Leeds  (1.11/9.08/21.18)
+     HT: 1(1-0)  FT: 1(83%) 3-0  Buts: 3.6
+     💎 OVER 2.5 GOLD : 90% (n=10)
+     💎 BTTS NON : 80% (n=10)
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 13:02 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  Brentford vs Bournemouth  (1.72/4.50/3.90)
+     HT: 1(1-0)  FT: 1(57%) 1-1  Buts: 3.2
+
+  ━━ MATCH 2  Manchester Red vs Burnley  (1.42/5.03/6.40)
+     HT: 1(1-1)  FT: 1(61%) 2-1  Buts: 3.3
+
+  ━━ MATCH 3  London Reds vs Newcastle  (1.56/4.68/4.91)
+     HT: 1(1-1)  FT: 1(57%) 2-1  Buts: 3.2
+
+  ━━ MATCH 4  Liverpool vs Everton  (1.26/5.51/12.14)
+     HT: 1(1-0)  FT: 1(74%) 2-0  Buts: 2.8
+     💎 BTTS NON : 91% (n=11)
+
+  ━━ MATCH 5  London Blues vs C. Palace  (1.68/3.77/4.99)
+     HT: X(1-0)  FT: 1(51%) 1-1  Buts: 2.5
+
+  ━━ MATCH 6  A. Villa vs Leeds  (1.25/5.94/10.97)
+     HT: 1(1-0)  FT: 1(74%) 3-0  Buts: 3.1
+     💎 BTTS NON : 75% (n=8)
+
+  ━━ MATCH 7  Spurs vs Brighton  (1.98/4.41/3.05)
+     HT: 1(1-1)  FT: 1(47%) 2-1  Buts: 3.5
+
+  ━━ MATCH 8  Manchester Blue vs Wolverhampton  (1.18/7.50/12.87)
+     HT: 1(1-0)  FT: 1(79%) 3-0  Buts: 3.7
+
+  ━━ MATCH 9  West Ham vs N. Forest  (1.79/3.97/3.99)
+     HT: X(1-0)  FT: 1(52%) 1-1  Buts: 2.6
+
+  ━━ MATCH 10  Sunderland vs Fulham  (7.32/4.60/1.42)
+     HT: 2(0-1)  FT: 2(63%) 1-2  Buts: 2.7
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 13:04 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  Wolverhampton vs London Blues  (2.55/3.53/2.60)
+     HT: X(1-1)  FT: 2(38%) 1-1  Buts: 2.9
+     🔥🔥 MULTI 2@2.60 EV+73% conf 7.2/10
+
+  ━━ MATCH 2  Bournemouth vs Leeds  (1.60/3.65/6.15)
+     HT: 1(1-0)  FT: 1(59%) 2-0  Buts: 2.4
+
+  ━━ MATCH 3  Burnley vs Liverpool  (5.37/4.25/1.57)
+     HT: 2(0-1)  FT: 2(57%) 1-2  Buts: 3.0
+     💎💎 COMBO SCORE : 0-2(44%) + 0-1(22%) = 67%
+
+  ━━ MATCH 4  C. Palace vs Spurs  (2.31/3.94/2.68)
+     HT: X(1-1)  FT: 1(39%) 1-1  Buts: 3.1
+     💎 PAIRE OR HOME : 88% (n=8, ROI+94%)
+     💎💎 COMBO SCORE : 2-1(50%) + 3-1(12%) = 62%
+     🔥🔥 MULTI 2@2.68 EV+42% conf 6.2/10
+
+  ━━ MATCH 5  Everton vs A. Villa  (2.47/3.13/2.98)
+     HT: X(1-1)  FT: 1(37%) 1-1  Buts: 2.6
+     💎 PAIRE OR AWAY : 58% (n=12, cote 2.98 OK)
+
+  ━━ MATCH 6  West Ham vs Manchester Blue  (4.90/4.00/1.65)
+     HT: X(0-1)  FT: 2(55%) 1-2  Buts: 2.5
+
+  ━━ MATCH 7  Brighton vs Brentford  (2.06/3.63/3.36)
+     HT: 1(1-0)  FT: 1(48%) 1-1  Buts: 2.9
+     🔥🔥 MULTI 1@2.06 EV+41% conf 6.7/10
+
+  ━━ MATCH 8  N. Forest vs Sunderland  (1.69/3.95/4.68)
+     HT: 1(1-0)  FT: 1(54%) 1-1  Buts: 2.8
+
+  ━━ MATCH 9  Newcastle vs Manchester Red  (1.39/4.90/7.42)
+     HT: 1(1-0)  FT: 1(63%) 2-1  Buts: 2.9
+
+  ━━ MATCH 10  Fulham vs London Reds  (5.12/4.05/1.62)
+     HT: 2(1-1)  FT: 2(55%) 1-2  Buts: 3.1
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 13:06 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  Everton vs Burnley  (1.84/3.73/4.05)
+     HT: X(1-1)  FT: 1(48%) 2-1  Buts: 2.8
+     🔥🔥 MULTI 1@1.84 EV+42% conf 7.8/10
+
+  ━━ MATCH 2  Leeds vs Brighton  (6.48/5.05/1.41)
+     HT: 2(0-1)  FT: 2(66%) 1-2  Buts: 3.5
+     💎 OVER 2.5 GOLD : 89% (n=9)
+
+  ━━ MATCH 3  Brentford vs C. Palace  (1.93/3.89/3.50)
+     HT: X(1-1)  FT: 1(47%) 1-1  Buts: 2.7
+     💎 PAIRE OR AWAY : 50% (n=10, cote 3.50 OK)
+
+  ━━ MATCH 4  Liverpool vs Newcastle  (1.45/4.87/6.06)
+     HT: 1(1-0)  FT: 1(63%) 2-1  Buts: 3.0
+
+  ━━ MATCH 5  Manchester Red vs Fulham  (1.99/3.53/3.63)
+     HT: X(1-1)  FT: 1(47%) 1-1  Buts: 2.9
+
+  ━━ MATCH 6  London Reds vs N. Forest  (1.22/6.66/11.24)
+     HT: 1(1-0)  FT: 1(74%) 3-0  Buts: 3.2
+
+  ━━ MATCH 7  London Blues vs West Ham  (1.50/4.43/5.98)
+     HT: 1(1-0)  FT: 1(61%) 2-1  Buts: 3.1
+
+  ━━ MATCH 8  A. Villa vs Bournemouth  (1.47/5.08/5.53)
+     HT: 1(1-0)  FT: 1(65%) 2-1  Buts: 3.3
+
+  ━━ MATCH 9  Sunderland vs Manchester Blue  (19.04/7.54/1.14)
+     HT: 2(0-1)  FT: 2(79%) 0-3  Buts: 3.1
+     💎 OVER 2.5 GOLD : 91% (n=11)
+
+  ━━ MATCH 10  Spurs vs Wolverhampton  (1.51/4.82/5.24)
+     HT: 1(1-0)  FT: 1(62%) 2-1  Buts: 3.3
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 13:08 — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━ MATCH 1  N. Forest vs Manchester Red  (1.97/3.52/3.72)
+     HT: X(1-1)  FT: 1(43%) 1-1  Buts: 2.5
+     🔥🔥 MULTI 1@1.97 EV+69% conf 6.7/10
+
+  ━━ MATCH 2  West Ham vs Spurs  (2.65/4.00/2.31)
+     HT: X(1-1)  FT: 2(41%) 1-2  Buts: 3.0
+
+  ━━ MATCH 3  Wolverhampton vs Brentford  (2.86/3.38/2.42)
+     HT: X(1-1)  FT: 2(40%) 1-2  Buts: 2.8
+     💎 PAIRE OR AWAY : 64% (n=11, cote 2.42 OK)
+
+  ━━ MATCH 4  Burnley vs A. Villa  (3.26/3.39/2.18)
+     HT: X(1-1)  FT: 2(42%) 1-1  Buts: 2.7
+
+  ━━ MATCH 5  Fulham vs Liverpool  (3.11/4.03/2.04)
+     HT: X(1-1)  FT: 2(44%) 1-1  Buts: 3.4
+     💎 OVER 2.5 GOLD : 90% (n=10)
+
+  ━━ MATCH 6  Newcastle vs Everton  (1.34/4.85/9.17)
+     HT: 1(1-0)  FT: 1(69%) 2-0  Buts: 2.9
+
+  ━━ MATCH 7  Sunderland vs London Blues  (6.64/4.55/1.45)
+     HT: 2(0-1)  FT: 2(63%) 1-2  Buts: 2.8
+     💎 UNDER 2.5 GOLD : 75% (n=8)
+     💎 BTTS NON : 75% (n=8)
+
+  ━━ MATCH 8  Manchester Blue vs London Reds  (2.29/3.66/2.86)
+     HT: X(1-0)  FT: 1(45%) 1-1  Buts: 2.8
+
+  ━━ MATCH 9  C. Palace vs Leeds  (1.47/4.16/7.07)
+     HT: 1(1-0)  FT: 1(65%) 2-0  Buts: 2.8
+
+  ━━ MATCH 10  Brighton vs Bournemouth  (1.64/4.41/4.44)
+     HT: 1(1-0)  FT: 1(61%) 2-1  Buts: 3.3
+     💎 PAIRE OR HOME : 88% (n=8, ROI+44%)
+     💎 BTTS NON : 88% (n=8)
+
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  📋 SOMMAIRE FINAL — TOUS ROUNDS
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+💎 PAIRES OR HOME (4):
+   [12:51] C. Palace vs Bournemouth                 1 @1.83  (89% hist, n=9)
+   [12:57] Spurs vs West Ham                        1 @1.57  (90% hist, n=10)
+   [13:04] C. Palace vs Spurs                       1 @2.31  (88% hist, n=8)
+   [13:08] Brighton vs Bournemouth                  1 @1.64  (88% hist, n=8)
+
+💎 PAIRES OR AWAY (4):
+   [12:57] Brentford vs C. Palace                   2 @3.65  (50% hist)
+   [13:04] Everton vs A. Villa                      2 @2.98  (58% hist)
+   [13:06] Brentford vs C. Palace                   2 @3.50  (50% hist)
+   [13:08] Wolverhampton vs Brentford               2 @2.42  (64% hist)
+
+🔥 MULTI-SIGNAL (10):
+   [12:55] Brighton vs Wolverhampton                1 @1.52  EV+49% conf 9.1/10
+   [12:53] Bournemouth vs Leeds                     1 @1.61  EV+27% conf 8.4/10
+   [13:06] Everton vs Burnley                       1 @1.84  EV+42% conf 7.8/10
+   [13:04] Wolverhampton vs London Blues            2 @2.60  EV+73% conf 7.2/10
+   [12:53] N. Forest vs A. Villa                    1 @1.99  EV+70% conf 6.7/10
+   [12:57] Fulham vs A. Villa                       1 @2.05  EV+41% conf 6.7/10
+   [13:04] Brighton vs Brentford                    1 @2.06  EV+41% conf 6.7/10
+   [13:08] N. Forest vs Manchester Red              1 @1.97  EV+69% conf 6.7/10
+   [13:04] C. Palace vs Spurs                       2 @2.68  EV+42% conf 6.2/10
+   [12:57] Manchester Red vs Newcastle              2 @2.97  EV+24% conf 5.5/10
+
+💎 OVER 2.5 GOLD (5):
+   [12:53] Liverpool vs London Blues                Over 2.5  (89%)
+   [12:57] Manchester Blue vs Leeds                 Over 2.5  (90%)
+   [13:06] Leeds vs Brighton                        Over 2.5  (89%)
+   [13:06] Sunderland vs Manchester Blue            Over 2.5  (91%)
+   [13:08] Fulham vs Liverpool                      Over 2.5  (90%)
+
+💎 UNDER 2.5 GOLD (2):
+   [12:51] Brighton vs Manchester Blue              Under 2.5  (75%)
+   [13:08] Sunderland vs London Blues               Under 2.5  (75%)
+
+💎 BTTS NON (6):
+   [12:57] Liverpool vs Everton                     BTTS Non  (91%)
+   [12:57] Manchester Blue vs Leeds                 BTTS Non  (80%)
+   [13:02] Liverpool vs Everton                     BTTS Non  (91%)
+   [13:02] A. Villa vs Leeds                        BTTS Non  (75%)
+   [13:08] Sunderland vs London Blues               BTTS Non  (75%)
+   [13:08] Brighton vs Bournemouth                  BTTS Non  (88%)
+
+💎💎 SCORE COMBO TOP 2 (3):
+   [12:53] Wolverhampton vs Fulham                  2-1 + 1-1  (70%)
+   [13:04] Burnley vs Liverpool                     0-2 + 0-1  (67%)
+   [13:04] C. Palace vs Spurs                       2-1 + 3-1  (62%)
+
+💎 SCORE SWEET SPOT (1):
+   [12:55] A. Villa vs Liverpool                    1-2  (38%)
+
+⭐ V5 SCORE TOP (20):
+   [13:06] Sunderland vs Manchester Blue            0-3  V5 17%
+   [12:57] Manchester Blue vs Leeds                 3-0  V5 14%
+   [13:04] Wolverhampton vs London Blues            1-1  V5 14%
+   [12:51] Newcastle vs Leeds                       3-0  V5 14%
+   [13:02] Liverpool vs Everton                     2-0  V5 14%
+   [12:57] Liverpool vs Everton                     2-0  V5 13%
+   [13:04] Bournemouth vs Leeds                     2-0  V5 13%
+   [12:53] Bournemouth vs Leeds                     2-0  V5 13%
+   [13:04] Everton vs A. Villa                      1-1  V5 13%
+   [12:51] Everton vs Manchester Red                1-1  V5 13%

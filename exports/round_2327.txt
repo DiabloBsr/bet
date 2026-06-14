@@ -1,0 +1,7 @@
+V5/V10 (n_train=4593)
+
+🌍 Saison récente (20 dernières) depuis 2026-06-06 15:52:56
+   🔥 EN FORME : London Blues(78%/18), Everton(55%/20), Sunderland(33%/15), Wolverhampton(50%/20), London Reds(81%/21), Burnley(41%/22)
+   ❄️  EN PERTE : Brentford(29%/17), N. Forest(26%/19), A. Villa(42%/19), Liverpool(63%/19), West Ham(32%/19), Bournemouth(32%/19)
+
+Round 23:27 introuvable. Dispo : ['23:29', '23:31', '23:33', '23:35', '23:37', '23:39']

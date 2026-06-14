@@ -1,0 +1,7 @@
+V5/V10 (n_train=5482)
+
+🌍 Saison récente (20 dernières) depuis 2026-06-11 10:21:56
+   🔥 EN FORME : Brentford(69%/13), Everton(58%/12), Newcastle(83%/12)
+   ❄️  EN PERTE : Spurs(31%/13), Manchester Blue(57%/14), Liverpool(57%/14), London Blues(43%/14)
+
+Round 16:50 introuvable. Dispo : ['16:44', '16:46', '16:48', '16:52']

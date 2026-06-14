@@ -1,0 +1,188 @@
+{
+ "corrupted_loaded": 473,
+ "clean": 7721,
+ "dups": 180,
+ "opening_after_kickoff": 3873,
+ "settle_checked": 298,
+ "settle_mismatch": 0,
+ "window_conservative": {
+  "label": "conservatrice (fin >= 2026-06-06)",
+  "n": 133,
+  "wins": 43,
+  "wr": 0.3233,
+  "implied_wr": 0.3339,
+  "roi": -0.0342,
+  "z": -0.27,
+  "roi_ci90": [
+   -0.2412,
+   0.179
+  ],
+  "p_roi_pos": 0.395
+ },
+ "window_large": {
+  "label": "large (apres 3225e match propre)",
+  "n": 182,
+  "wins": 52,
+  "wr": 0.2857,
+  "implied_wr": 0.3348,
+  "roi": -0.1723,
+  "z": -1.68,
+  "roi_ci90": [
+   -0.3374,
+   -0.0008
+  ],
+  "p_roi_pos": 0.049
+ },
+ "window_all": {
+  "label": "TOUT l'historique (IS+OOS, contamine)",
+  "n": 323,
+  "wins": 128,
+  "wr": 0.3963,
+  "implied_wr": 0.3284,
+  "roi": 0.2198,
+  "z": 2.47,
+  "roi_ci90": [
+   0.076,
+   0.3674
+  ],
+  "p_roi_pos": 0.996
+ },
+ "per_pair": [
+  {
+   "pair": "London Blues v Spurs",
+   "n": 13,
+   "wr_is": 0.5,
+   "n_is": 8,
+   "roi_is": 0.959,
+   "wr_oos": 0.154,
+   "roi_oos": -0.402
+  },
+  {
+   "pair": "Fulham v Manchester Blue",
+   "n": 13,
+   "wr_is": 0.875,
+   "n_is": 8,
+   "roi_is": 0.51,
+   "wr_oos": 0.538,
+   "roi_oos": -0.075
+  },
+  {
+   "pair": "Fulham v Brighton",
+   "n": 11,
+   "wr_is": 0.75,
+   "n_is": 8,
+   "roi_is": 1.035,
+   "wr_oos": 0.182,
+   "roi_oos": -0.516
+  },
+  {
+   "pair": "N. Forest v Fulham",
+   "n": 11,
+   "wr_is": 0.556,
+   "n_is": 9,
+   "roi_is": 0.829,
+   "wr_oos": 0.182,
+   "roi_oos": -0.401
+  },
+  {
+   "pair": "London Blues v Manchester Red",
+   "n": 10,
+   "wr_is": 0.417,
+   "n_is": 12,
+   "roi_is": 1.023,
+   "wr_oos": 0.1,
+   "roi_oos": -0.483
+  },
+  {
+   "pair": "Bournemouth v A. Villa",
+   "n": 10,
+   "wr_is": 0.5,
+   "n_is": 8,
+   "roi_is": 0.564,
+   "wr_oos": 0.3,
+   "roi_oos": -0.061
+  },
+  {
+   "pair": "Brentford v C. Palace",
+   "n": 9,
+   "wr_is": 0.5,
+   "n_is": 10,
+   "roi_is": 0.8,
+   "wr_oos": 0.333,
+   "roi_oos": 0.2
+  },
+  {
+   "pair": "Everton v A. Villa",
+   "n": 8,
+   "wr_is": 0.583,
+   "n_is": 12,
+   "roi_is": 0.806,
+   "wr_oos": 0.625,
+   "roi_oos": 0.93
+  },
+  {
+   "pair": "C. Palace v Manchester Red",
+   "n": 8,
+   "wr_is": 0.5,
+   "n_is": 8,
+   "roi_is": 0.718,
+   "wr_oos": 0.375,
+   "roi_oos": 0.31
+  },
+  {
+   "pair": "Spurs v C. Palace",
+   "n": 8,
+   "wr_is": 0.417,
+   "n_is": 12,
+   "roi_is": 0.592,
+   "wr_oos": 0.5,
+   "roi_oos": 0.875
+  },
+  {
+   "pair": "Wolverhampton v Brentford",
+   "n": 7,
+   "wr_is": 0.636,
+   "n_is": 11,
+   "roi_is": 0.583,
+   "wr_oos": 0.429,
+   "roi_oos": 0.069
+  },
+  {
+   "pair": "C. Palace v Newcastle",
+   "n": 7,
+   "wr_is": 0.625,
+   "n_is": 8,
+   "roi_is": 0.542,
+   "wr_oos": 0.286,
+   "roi_oos": -0.296
+  },
+  {
+   "pair": "N. Forest v Wolverhampton",
+   "n": 6,
+   "wr_is": 0.444,
+   "n_is": 9,
+   "roi_is": 1.206,
+   "wr_oos": 0.167,
+   "roi_oos": -0.208
+  },
+  {
+   "pair": "Fulham v Newcastle",
+   "n": 6,
+   "wr_is": 0.8,
+   "n_is": 10,
+   "roi_is": 0.936,
+   "wr_oos": 0.5,
+   "roi_oos": 0.218
+  },
+  {
+   "pair": "C. Palace v London Blues",
+   "n": 6,
+   "wr_is": 0.6,
+   "n_is": 10,
+   "roi_is": 0.804,
+   "wr_oos": 0.333,
+   "roi_oos": -0.003
+  }
+ ],
+ "pairs_positive_oos": 6
+}

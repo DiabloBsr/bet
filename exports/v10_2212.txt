@@ -1,0 +1,100 @@
+Loading V10 model (n_train=3702)...
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  V10 — Round 22:12 — 10 matchs (multi-signaux)
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+━━━ MATCH 1  Newcastle vs Spurs
+     Cotes 1X2 : 1.46/5.08/5.58
+     Rang : 4-6
+     HT : 1 (score 1-0)    FT : 1 (62%) score 2-1
+     Buts : 3.35  P(+2.5)=65%  P(BTTS)=60%    HT/FT : 1/1 (37%)
+     ✅ 1 signal 2 @5.58  EV=+5.5%  conf=3.2/10  signaux: team_bias_+(+10%)
+     🎰 HT/FT 1/2 @63  EV+81% spéculatif
+     🎰 HT/FT 2/1 @24  EV+82% spéculatif
+
+━━━ MATCH 2  London Blues vs A. Villa
+     Cotes 1X2 : 1.65/4.00/4.90
+     Rang : 13-5
+     HT : X (score 1-0)    FT : 1 (53%) score 1-1
+     Buts : 2.80  P(+2.5)=53%  P(BTTS)=55%    HT/FT : 1/1 (29%)
+     🎰 HT/FT 1/2 @73  EV+56% spéculatif
+     🎰 HT/FT 2/1 @32  EV+58% spéculatif
+
+━━━ MATCH 3  West Ham vs Everton
+     Cotes 1X2 : 2.02/3.34/3.75
+     Rang : 15-12
+     HT : X (score 1-0)    FT : 1 (48%) score 1-1
+     Buts : 2.39  P(+2.5)=43%  P(BTTS)=46%    HT/FT : 1/1 (29%)
+     ✅ 1 signal 2 @3.75  EV=+9.7%  conf=4.2/10  signaux: team_bias_+(+7%)
+     🎰 HT/FT 1/2 @70  EV+139% spéculatif
+     🎰 HT/FT 2/1 @40  EV+137% spéculatif
+
+━━━ MATCH 4  Wolverhampton vs Manchester Blue
+     Cotes 1X2 : 5.65/4.05/1.57
+     Rang : 14-2
+     HT : 2 (score 0-1)    FT : 2 (61%) score 0-2
+     Buts : 2.70  P(+2.5)=51%  P(BTTS)=44%    HT/FT : 2/2 (30%)
+     ✅ 1 signal 1 @5.65  EV=+4.0%  conf=3.2/10  signaux: rank_diff_+(+7%)
+
+━━━ MATCH 5  Leeds vs Sunderland
+     Cotes 1X2 : 3.50/3.74/1.97
+     Rang : 20-18
+     HT : X (score 1-1)    FT : 2 (47%) score 1-1
+     Buts : 2.82  P(+2.5)=54%  P(BTTS)=55%    HT/FT : 2/2 (24%)
+     🎰 HT/FT 1/2 @33  EV+94% spéculatif
+
+━━━ MATCH 6  Liverpool vs London Reds
+     Cotes 1X2 : 2.29/3.41/3.03
+     Rang : 3-1
+     HT : X (score 1-0)    FT : 1 (44%) score 1-1
+     Buts : 2.39  P(+2.5)=43%  P(BTTS)=46%    HT/FT : 1/1 (28%)
+     🎰 HT/FT 1/2 @51  EV+79% spéculatif
+     🎰 HT/FT 2/1 @42  EV+189% spéculatif
+
+━━━ MATCH 7  N. Forest vs Bournemouth
+     Cotes 1X2 : 1.82/3.98/3.85
+     Rang : 19-11
+     HT : 1 (score 1-0)    FT : 1 (52%) score 2-1
+     Buts : 3.03  P(+2.5)=58%  P(BTTS)=57%    HT/FT : 1/1 (33%)
+     🔥🔥 MULTI-SIGNAL 1 @1.82  EV=+85.6%  conf=8.3/10  signaux: team_bracket_+(+34%), pair_+(+45%)
+     🎰 HT/FT 1/2 @50  EV+72% spéculatif
+     🎰 HT/FT 2/1 @31  EV+85% spéculatif
+
+━━━ MATCH 8  Fulham vs C. Palace
+     Cotes 1X2 : 2.15/3.51/3.23
+     Rang : 7-9
+     HT : X (score 1-1)    FT : 1 (43%) score 1-1
+     Buts : 2.84  P(+2.5)=54%  P(BTTS)=57%    HT/FT : 1/1 (27%)
+     🎰 HT/FT 1/2 @49  EV+71% spéculatif
+     🎰 HT/FT 2/1 @40  EV+176% spéculatif
+
+━━━ MATCH 9  Manchester Red vs Burnley
+     Cotes 1X2 : 1.42/4.98/6.47
+     Rang : 10-16
+     HT : 1 (score 1-1)    FT : 1 (62%) score 2-1
+     Buts : 3.39  P(+2.5)=66%  P(BTTS)=61%    HT/FT : 1/1 (36%)
+     🎰 HT/FT 1/2 @73  EV+64% spéculatif
+
+━━━ MATCH 10  Brighton vs Brentford
+     Cotes 1X2 : 2.04/3.68/3.35
+     Rang : 17-8
+     HT : 1 (score 1-0)    FT : 1 (50%) score 1-1
+     Buts : 2.92  P(+2.5)=56%  P(BTTS)=55%    HT/FT : 1/1 (33%)
+     🔥🔥 MULTI-SIGNAL 1 @2.04  EV=+38.5%  conf=7.8/10  signaux: team_bias_+(+9%), team_bracket_+(+22%)
+     🎰 HT/FT 1/2 @49  EV+66% spéculatif
+     🎰 HT/FT 2/1 @35  EV+111% spéculatif
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+🎯 CANDIDATS V10 : 2 (priorité multi-signaux)
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  🔥🔥 [1] N. Forest vs Bournemouth                 1 @1.82  EV=+85.6%  conf=8.3/10 (2 signaux)
+  🔥🔥 [2] Brighton vs Brentford                    1 @2.04  EV=+38.5%  conf=7.8/10 (2 signaux)
+
+💡 COMBINAISONS :
+
+  COMBO 1  cote 3.71  proba 25.4%  EV -6%  (2 multi-signal)
+     🔥 N. Forest vs Bournemouth                 1 @1.82
+     🔥 Brighton vs Brentford                    1 @2.04
+

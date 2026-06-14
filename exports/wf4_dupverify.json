@@ -1,0 +1,58 @@
+{
+ "n_pairs": 566,
+ "same_ft": 256,
+ "same_ht": 311,
+ "same_ft_and_ht": 242,
+ "same_goals_json": 235,
+ "same_round_info": 230,
+ "gap_zero": 230,
+ "gap_hist_5min": {
+  "0": 230,
+  "5": 2,
+  "10": 25,
+  "15": 77,
+  "20": 78,
+  "25": 154
+ },
+ "n_both_odds": 566,
+ "same_opening_odds": 230,
+ "close_opening_odds": 352,
+ "ft_identical_pairs": 256,
+ "ft_and_goals_identical": 235,
+ "ft_and_odds_identical": 230,
+ "by_competition": {
+  "InstantLeague-8035": 388,
+  "InstantLeague-8044": 37,
+  "InstantLeague-8042": 25,
+  "InstantLeague-8043": 23,
+  "InstantLeague-8060": 22,
+  "InstantLeague-8036": 21,
+  "InstantLeague-8037": 18,
+  "InstantLeague-8065": 16,
+  "InstantLeague-8056": 16
+ },
+ "by_day_expected_start": {
+  "2026-05-28": 4,
+  "2026-05-29": 4,
+  "2026-06-02": 5,
+  "2026-06-03": 3,
+  "2026-06-04": 3,
+  "2026-06-05": 41,
+  "2026-06-06": 22,
+  "2026-06-10": 17,
+  "2026-06-12": 467
+ },
+ "by_day_first_seen_dup": {
+  "2026-05-28": 10,
+  "2026-05-29": 4,
+  "2026-06-02": 8,
+  "2026-06-03": 20,
+  "2026-06-04": 12,
+  "2026-06-05": 25,
+  "2026-06-06": 3,
+  "2026-06-10": 17,
+  "2026-06-12": 467
+ },
+ "ctrl_30m2h_pairs": 5127,
+ "ctrl_30m2h_same_goals": 81
+}

@@ -1,0 +1,79 @@
+{
+ "dup_results_events": 0,
+ "open_snapshot_after_kickoff": {
+  "late": 2309,
+  "total": 3407
+ },
+ "n_all": 8109,
+ "n_clean": 7721,
+ "fin_3225th_clean": "2026-06-05 14:31:05.105108",
+ "variants": {
+  "baseline_cutoff_0606": {
+   "n": 513,
+   "roi": -0.0439,
+   "z": -1.04,
+   "wr": 0.5205,
+   "implied_wr": 0.5501,
+   "ci95": [
+    -0.1265,
+    0.0387
+   ]
+  },
+  "positional_after_3225": {
+   "n": 670,
+   "roi": -0.0499,
+   "z": -1.36,
+   "wr": 0.5179,
+   "implied_wr": 0.5489,
+   "ci95": [
+    -0.122,
+    0.0222
+   ]
+  },
+  "upper_inclusive": {
+   "n": 528,
+   "roi": -0.0538,
+   "z": -1.3,
+   "wr": 0.5152,
+   "implied_wr": 0.5498,
+   "ci95": [
+    -0.1352,
+    0.0275
+   ]
+  },
+  "without_corrupted_excl": {
+   "n": 514,
+   "roi": -0.0458,
+   "z": -1.09,
+   "wr": 0.5195,
+   "implied_wr": 0.5503,
+   "ci95": [
+    -0.1282,
+    0.0367
+   ]
+  },
+  "latest_snapshot_odds": {
+   "n": 515,
+   "roi": -0.0383,
+   "z": -0.91,
+   "wr": 0.5243,
+   "implied_wr": 0.5507,
+   "ci95": [
+    -0.1206,
+    0.0439
+   ]
+  },
+  "is_period_check_before_0606": {
+   "n": 679,
+   "roi": 0.0556,
+   "z": 1.54,
+   "wr": 0.5758,
+   "implied_wr": 0.542,
+   "ci95": [
+    -0.0153,
+    0.1265
+   ]
+  }
+ },
+ "avg_book_overround_oos": 1.06
+}

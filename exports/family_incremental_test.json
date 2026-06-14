@@ -1,0 +1,73 @@
+[
+ {
+  "market": "Mi-tps 1X2",
+  "sel": "1",
+  "n": 9051,
+  "cells": 13,
+  "z_star": 2.89,
+  "max_z_o25": 3.22,
+  "cells_sig_o25": 1,
+  "cells_sig_score": 0,
+  "verdict": "INFO_POSSIBLE"
+ },
+ {
+  "market": "HT/FT",
+  "sel": "1/1",
+  "n": 9051,
+  "cells": 13,
+  "z_star": 2.89,
+  "max_z_o25": 3.0,
+  "cells_sig_o25": 1,
+  "cells_sig_score": 0,
+  "verdict": "INFO_POSSIBLE"
+ },
+ {
+  "market": "FTTS",
+  "sel": "1",
+  "n": 9051,
+  "cells": 13,
+  "z_star": 2.89,
+  "max_z_o25": 3.22,
+  "cells_sig_o25": 1,
+  "cells_sig_score": 0,
+  "verdict": "INFO_POSSIBLE"
+ },
+ {
+  "market": "Pair/Impair",
+  "sel": "Pair",
+  "n": 9051,
+  "cells": 12,
+  "z_star": 2.87,
+  "max_z_o25": 3.14,
+  "cells_sig_o25": 1,
+  "cells_sig_score": 0,
+  "verdict": "INFO_POSSIBLE"
+ },
+ {
+  "market": "Double Chance",
+  "sel": "1X",
+  "n": 8716,
+  "cells": 13,
+  "z_star": 2.89,
+  "max_z_o25": 2.97,
+  "cells_sig_o25": 1,
+  "cells_sig_score": 0,
+  "verdict": "INFO_POSSIBLE"
+ },
+ {
+  "market": "Total equipe domicile",
+  "sel": ">3.5",
+  "n": 5203,
+  "cells": 6,
+  "z_star": 2.64,
+  "max_z_o25": 1.77,
+  "cells_sig_o25": 0,
+  "cells_sig_score": 0,
+  "verdict": "RIEN_AU_DELA_DE_LAMBDA"
+ },
+ {
+  "market": "Minute du premier but",
+  "n": 0,
+  "verdict": "TROP_PEU"
+ }
+]

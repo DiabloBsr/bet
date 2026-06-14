@@ -1,0 +1,236 @@
+{
+ "settlement_checked": 0,
+ "settlement_mismatch": 0,
+ "dup_results": 0,
+ "cutoffs": {
+  "2026-06-06": {
+   "n_oos_league": 3413,
+   "baseline_btts": 0.5816,
+   "flat_bet_oui_all": {
+    "n": 3413,
+    "roi": -0.0368
+   },
+   "signal_with_filter": {
+    "n": 131,
+    "hits": 76,
+    "hit_rate": 0.5802,
+    "ci95": [
+     0.4945,
+     0.6612
+    ],
+    "avg_oui": 1.562,
+    "breakeven": 0.6401,
+    "roi": -0.1065,
+    "roi_z": -1.59
+   },
+   "signal_no_filter": {
+    "n": 180,
+    "hits": 113,
+    "hit_rate": 0.6278,
+    "ci95": [
+     0.5552,
+     0.695
+    ],
+    "avg_oui": 1.569,
+    "breakeven": 0.6374,
+    "roi": -0.0237,
+    "roi_z": -0.42
+   }
+  },
+  "2026-06-07": {
+   "n_oos_league": 2780,
+   "baseline_btts": 0.5727,
+   "flat_bet_oui_all": {
+    "n": 2780,
+    "roi": -0.052
+   },
+   "signal_with_filter": {
+    "n": 110,
+    "hits": 61,
+    "hit_rate": 0.5545,
+    "ci95": [
+     0.4614,
+     0.644
+    ],
+    "avg_oui": 1.572,
+    "breakeven": 0.6361,
+    "roi": -0.1425,
+    "roi_z": -1.93
+   },
+   "signal_no_filter": {
+    "n": 147,
+    "hits": 89,
+    "hit_rate": 0.6054,
+    "ci95": [
+     0.5247,
+     0.6808
+    ],
+    "avg_oui": 1.579,
+    "breakeven": 0.6333,
+    "roi": -0.0544,
+    "roi_z": -0.85
+   }
+  },
+  "2026-06-08": {
+   "n_oos_league": 2740,
+   "baseline_btts": 0.5723,
+   "flat_bet_oui_all": {
+    "n": 2740,
+    "roi": -0.0527
+   },
+   "signal_with_filter": {
+    "n": 105,
+    "hits": 58,
+    "hit_rate": 0.5524,
+    "ci95": [
+     0.4571,
+     0.644
+    ],
+    "avg_oui": 1.568,
+    "breakeven": 0.6377,
+    "roi": -0.1509,
+    "roi_z": -2.0
+   },
+   "signal_no_filter": {
+    "n": 142,
+    "hits": 86,
+    "hit_rate": 0.6056,
+    "ci95": [
+     0.5235,
+     0.6822
+    ],
+    "avg_oui": 1.576,
+    "breakeven": 0.6344,
+    "roi": -0.0574,
+    "roi_z": -0.89
+   }
+  }
+ },
+ "in_sample_recalc": {
+  "n": 186,
+  "hits": 160,
+  "rate": 0.8602,
+  "per_pair": {
+   "C. Palace v Newcastle": {
+    "n_is_recalc": 8,
+    "hit_is_recalc": 1.0,
+    "n_hard": 8,
+    "rate_hard": 1.0
+   },
+   "A. Villa v Fulham": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 1.0,
+    "n_hard": 8,
+    "rate_hard": 1.0
+   },
+   "Fulham v Spurs": {
+    "n_is_recalc": 11,
+    "hit_is_recalc": 1.0,
+    "n_hard": 9,
+    "rate_hard": 1.0
+   },
+   "Leeds v Burnley": {
+    "n_is_recalc": 7,
+    "hit_is_recalc": 1.0,
+    "n_hard": 9,
+    "rate_hard": 1.0
+   },
+   "A. Villa v West Ham": {
+    "n_is_recalc": 12,
+    "hit_is_recalc": 0.917,
+    "n_hard": 11,
+    "rate_hard": 0.909
+   },
+   "West Ham v Bournemouth": {
+    "n_is_recalc": 10,
+    "hit_is_recalc": 0.9,
+    "n_hard": 9,
+    "rate_hard": 0.889
+   },
+   "Manchester Blue v Liverpool": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 0.889,
+    "n_hard": 9,
+    "rate_hard": 0.889
+   },
+   "Manchester Blue v Newcastle": {
+    "n_is_recalc": 7,
+    "hit_is_recalc": 0.857,
+    "n_hard": 9,
+    "rate_hard": 0.889
+   },
+   "Spurs v Burnley": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 0.889,
+    "n_hard": 9,
+    "rate_hard": 0.889
+   },
+   "Everton v Fulham": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 0.778,
+    "n_hard": 8,
+    "rate_hard": 0.875
+   },
+   "Fulham v Manchester Blue": {
+    "n_is_recalc": 7,
+    "hit_is_recalc": 0.857,
+    "n_hard": 8,
+    "rate_hard": 0.875
+   },
+   "Manchester Red v N. Forest": {
+    "n_is_recalc": 13,
+    "hit_is_recalc": 0.846,
+    "n_hard": 12,
+    "rate_hard": 0.833
+   },
+   "N. Forest v West Ham": {
+    "n_is_recalc": 12,
+    "hit_is_recalc": 0.75,
+    "n_hard": 11,
+    "rate_hard": 0.818
+   },
+   "A. Villa v Manchester Blue": {
+    "n_is_recalc": 10,
+    "hit_is_recalc": 0.7,
+    "n_hard": 11,
+    "rate_hard": 0.818
+   },
+   "Bournemouth v Brentford": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 0.778,
+    "n_hard": 10,
+    "rate_hard": 0.8
+   },
+   "N. Forest v London Blues": {
+    "n_is_recalc": 8,
+    "hit_is_recalc": 0.875,
+    "n_hard": 10,
+    "rate_hard": 0.8
+   },
+   "London Reds v West Ham": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 0.889,
+    "n_hard": 10,
+    "rate_hard": 0.8
+   },
+   "Fulham v Manchester Red": {
+    "n_is_recalc": 9,
+    "hit_is_recalc": 0.778,
+    "n_hard": 10,
+    "rate_hard": 0.8
+   },
+   "Leeds v A. Villa": {
+    "n_is_recalc": 10,
+    "hit_is_recalc": 0.8,
+    "n_hard": 10,
+    "rate_hard": 0.8
+   },
+   "Leeds v Spurs": {
+    "n_is_recalc": 8,
+    "hit_is_recalc": 0.75,
+    "n_hard": 10,
+    "rate_hard": 0.8
+   }
+  }
+ }
+}

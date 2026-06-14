@@ -1,0 +1,45 @@
+=== Monte Carlo V8 — n=3474 matchs disponibles ===
+
+Train n=1737, Test n=1737
+Rounds disponibles : 382
+
+=== TRAJECTOIRE déterministe (ordre chronologique) ===
+
+Bankroll initial : 100u
+Bankroll final   : 116.94u  (+16.94u)
+Bankroll max     : 147.54u
+Drawdown max     : -23.6%
+Total paris      : 822  (133 gagnés = 16.2%)
+Total misé       : 349.28u
+ROI réalisé      : +4.85%
+
+Par catégorie :
+  SPÉCULATIF    n= 631  acc=  5.2%  ROI= +1.44%  staked=147.5u
+  SÉCURISÉ      n=  75  acc= 65.3%  ROI= +7.84%  staked=119.2u
+  MODÉRÉ        n= 116  acc= 44.0%  ROI= +6.63%  staked=82.6u
+
+=== MONTE CARLO 500 simulations (rounds shufflés) ===
+
+  sim 100/500 done
+  sim 200/500 done
+  sim 300/500 done
+  sim 400/500 done
+  sim 500/500 done
+
+=== DISTRIBUTION FINALE (500 simulations) ===
+  Médiane         : 116.94u (+16.94u)
+  Moyenne         : 116.94u
+  Min  / Max       : 116.94u / 116.94u
+  Percentile 10%  : 116.94u
+  Percentile 25%  : 116.94u
+  Percentile 75%  : 116.94u
+  Percentile 90%  : 116.94u
+
+  Drawdown max moyen : -21.1%
+  Drawdown max P90   : -28.3%
+
+  P(bankroll > 100u) = 100.0%  (profit)
+  P(bankroll > 150u) = 0.0%  (gain 50%+)
+  P(bankroll > 200u) = 0.0%  (gain 100%+)
+  P(bankroll < 50u)  = 0.0%   (perte > 50%)
+  P(bankroll < 20u)  = 0.0%   (quasi-ruine)

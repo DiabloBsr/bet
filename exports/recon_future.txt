@@ -1,0 +1,66 @@
+﻿=== Step 1 : load main /matches page ===
+  [200]  20418B has_matches=False
+      https://storage-prod.sporty-tech.net/customer/Oc/configuration.json
+  [200]    110B has_matches=False
+      https://storage-prod.sporty-tech.net/customer/Oc/seo_virtual.json
+  [200] 151546B has_matches=False
+      https://storage-prod.sporty-tech.net/customer/Oc/localeresources/fr.json
+  [200]    110B has_matches=False
+      https://storage-prod.sporty-tech.net/customer/Oc/seo_virtual.json
+  [200]  25475B has_matches=False
+      https://storage-prod.sporty-tech.net/customer/Oc/templates.json
+  [200]   1049B has_matches=False
+      https://storage-prod.sporty-tech.net/customer/Oc/security-policy.json
+  [200]      2B has_matches=False
+      https://hg-customer-api-prod.sporty-tech.net/api/messages
+  [200]    328B has_matches=False
+      https://hg-customer-api-prod.sporty-tech.net/api/operatordata/content/cookies-consent
+  [200]   5452B has_matches=False
+      https://hg-event-api-prod.sporty-tech.net/api/eventcategories/entrypoints?fr
+  [200]    457B has_matches=False
+      https://hg-event-api-prod.sporty-tech.net/api/eventcategories/8035/details
+  [200]      2B has_matches=False
+      https://hg-event-api-prod.sporty-tech.net/api/events/sports/live-count
+  [200] 335486B has_matches=True  <-- MATCHES
+      https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/matches
+  [200]   2258B has_matches=True  <-- MATCHES
+      https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/38/playout?eventCategoryId=149486&parentEventCategoryId=8035
+
+=== Step 2 : look for round tabs in page ===
+  Tabs trouves (data-testid round / class round) : 0
+  Tabs avec heure : 9
+
+=== Step 3 : click on a future round tab ===
+  Clicking tab : '03:41'
+  [200]    137B has_matches=False
+      https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/9?eventCategoryId=149496&getNext=true
+  [200] 333444B has_matches=False
+      https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/1?eventCategoryId=149496&getNext=false
+  Erreur recherche tabs : ElementHandle.click: Timeout 45000ms exceeded.
+Call log:
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <hg-privacy class="ng-star-inserted" _nghost-hg-customer-c287="" _ngcontent-hg-customer-c293="">…</hg-privacy> intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <hg-privacy class="ng-star-inserted" _nghost-hg-customer-c287="" _ngcontent-hg-customer-c293="">…</hg-privacy> intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    82 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <hg-privacy class="ng-star-inserted" _nghost-hg-customer-c287="" _ngcontent-hg-customer-c293="">…</hg-privacy> intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+
+=== Done : 15 XHRs sporty-tech captures ===
+Voir recon_future.json

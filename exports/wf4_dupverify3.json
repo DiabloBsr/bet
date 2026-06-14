@@ -1,0 +1,92 @@
+[
+ {
+  "mode": "A_no_dedup",
+  "threshold": 0.9912,
+  "n_8035": 7967,
+  "n_new": 14951,
+  "train70": {
+   "n": 1116,
+   "wr": 0.379,
+   "roi_pct": -5.23,
+   "avg_odds": 3.518,
+   "p_boot_roi_le_0": 0.8565,
+   "n_bets_tainted_by_clone_sibling": 0
+  },
+  "test30": {
+   "n": 563,
+   "wr": 0.4494,
+   "roi_pct": 13.29,
+   "avg_odds": 3.596,
+   "p_boot_roi_le_0": 0.0275,
+   "n_bets_tainted_by_clone_sibling": 56
+  },
+  "pooled_newleagues": {
+   "n": 2820,
+   "wr": 0.367,
+   "roi_pct": -6.82,
+   "avg_odds": 4.35,
+   "p_boot_roi_le_0": 0.989,
+   "n_bets_tainted_by_clone_sibling": 0
+  }
+ },
+ {
+  "mode": "B_dedup_30m",
+  "threshold": 0.9911,
+  "n_8035": 7576,
+  "n_new": 14770,
+  "train70": {
+   "n": 1061,
+   "wr": 0.3779,
+   "roi_pct": -4.45,
+   "avg_odds": 3.532,
+   "p_boot_roi_le_0": 0.796,
+   "n_bets_tainted_by_clone_sibling": 0
+  },
+  "test30": {
+   "n": 445,
+   "wr": 0.4337,
+   "roi_pct": 14.83,
+   "avg_odds": 3.605,
+   "p_boot_roi_le_0": 0.0375,
+   "n_bets_tainted_by_clone_sibling": 0
+  },
+  "pooled_newleagues": {
+   "n": 2759,
+   "wr": 0.3701,
+   "roi_pct": -6.27,
+   "avg_odds": 4.317,
+   "p_boot_roi_le_0": 0.9805,
+   "n_bets_tainted_by_clone_sibling": 0
+  }
+ },
+ {
+  "mode": "C_dedup_clones_only",
+  "threshold": 0.9891,
+  "n_8035": 7721,
+  "n_new": 14951,
+  "train70": {
+   "n": 1081,
+   "wr": 0.3784,
+   "roi_pct": -4.89,
+   "avg_odds": 3.526,
+   "p_boot_roi_le_0": 0.815,
+   "n_bets_tainted_by_clone_sibling": 0
+  },
+  "test30": {
+   "n": 486,
+   "wr": 0.4403,
+   "roi_pct": 13.91,
+   "avg_odds": 3.661,
+   "p_boot_roi_le_0": 0.039,
+   "n_bets_tainted_by_clone_sibling": 0
+  },
+  "pooled_newleagues": {
+   "n": 2836,
+   "wr": 0.3667,
+   "roi_pct": -5.98,
+   "avg_odds": 4.353,
+   "p_boot_roi_le_0": 0.97725,
+   "n_bets_tainted_by_clone_sibling": 0
+  }
+ }
+]

@@ -1,0 +1,94 @@
+BDD globale : 3422 matchs finis
+BDD DS (J0+J1+J2) : 219 matchs (6.4%)
+
+===============================================================================================
+1️⃣  PROFIL GLOBAL : DS (J0/J1/J2) vs HORS-DS
+===============================================================================================
+
+  Métrique               DS             Hors-DS        Delta
+  ------------------------------------------------------------
+  Home win                47.0%         48.0%        -1.0pp
+  Draw                    20.5%         22.5%        -1.9pp
+  Away win                32.4%         29.5%        +2.9pp
+  Over 2.5                59.4%         61.9%        -2.5pp
+  Over 3.5                33.3%         36.2%        -2.9pp
+  BTTS                    53.9%         57.2%        -3.3pp
+  Buts moy                2.91          2.94         -0.03
+
+===============================================================================================
+2️⃣  PERF ÉQUIPES EN DS (vs perf globale)
+===============================================================================================
+
+  ⭐ ÉQUIPES qui PERFORMENT MIEUX en DS :
+  Équipe                 n_DS   WR DS      WR global    Delta      Buts/match
+  ------------------------------------------------------------------------------
+  Everton                7       71.4%     30.8%       +40.7pp    2.43 🔥
+  West Ham               11      72.7%     44.2%       +28.6pp    3.09 🔥
+  London Blues           6       66.7%     53.8%       +12.8pp    2.67 🔥
+  A. Villa               10      70.0%     58.2%       +11.8pp    2.40 🔥
+  Manchester Blue        13      84.6%     72.9%       +11.7pp    3.08 🔥
+  Brighton               11      63.6%     56.5%        +7.1pp    3.73
+  Sunderland             12      16.7%     11.8%        +4.9pp    2.92
+  Manchester Red         10      50.0%     52.8%        -2.8pp    2.40
+  Wolverhampton          14      35.7%     39.3%        -3.6pp    3.07
+  Bournemouth            11      36.4%     41.2%        -4.8pp    2.55
+
+  ❄️  ÉQUIPES qui SOUS-PERFORMENT en DS :
+  N. Forest              12      41.7%     46.6%        -4.9pp    2.00
+  Leeds                  11       9.1%     14.1%        -5.0pp    3.64
+  Liverpool              13      69.2%     74.4%        -5.2pp    3.00
+  Burnley                6       16.7%     25.9%        -9.3pp    3.00 ⚠️
+  C. Palace              15      40.0%     50.0%       -10.0pp    3.20 ⚠️
+  Fulham                 11      36.4%     48.6%       -12.3pp    3.64 ⚠️
+  London Reds            11      54.5%     67.9%       -13.4pp    2.55 ⚠️
+  Spurs                  8       37.5%     51.7%       -14.2pp    2.62 ⚠️
+  Newcastle              14      50.0%     64.6%       -14.6pp    2.93 ⚠️
+  Brentford              13      23.1%     51.6%       -28.5pp    2.85 ⚠️
+
+===============================================================================================
+3️⃣  MATCHS DU 14:21 — ANALYSE DS DÉDIÉE
+===============================================================================================
+
+
+  ┌─ C. Palace vs Manchester Blue  (cotes 4.28/3.72/1.79)
+  │  C. Palace home en DS  : 40% wr (15 matchs DS), 3.20 buts/match
+  │  Manchester Blue away en DS : 25% wr (8 matchs DS), 2.38 buts/match
+  │  💎 VALUE 1 : prob estimée 44% vs implicite 23% → C. Palace 1 @4.28
+
+  ┌─ London Reds vs Everton  (cotes 1.28/5.46/10.44)
+  │  London Reds home en DS  : 55% wr (11 matchs DS), 2.55 buts/match
+  │  Everton away en DS : 46% wr (13 matchs DS), 2.92 buts/match
+
+  ┌─ Liverpool vs Manchester Red  (cotes 1.29/5.54/9.34)
+  │  Liverpool home en DS  : 69% wr (13 matchs DS), 3.00 buts/match
+  │  Manchester Red away en DS : 43% wr (7 matchs DS), 2.71 buts/match
+
+  ┌─ Leeds vs Burnley  (cotes 3.33/3.95/1.98)
+  │  Leeds home en DS  : 9% wr (11 matchs DS), 3.64 buts/match
+  │  Burnley away en DS : 18% wr (17 matchs DS), 3.35 buts/match
+
+  ┌─ Sunderland vs Bournemouth  (cotes 5.3/4.32/1.56)
+  │  Sunderland home en DS  : 17% wr (12 matchs DS), 2.92 buts/match
+  │  Bournemouth away en DS : 22% wr (9 matchs DS), 4.11 buts/match
+
+  ┌─ A. Villa vs Newcastle  (cotes 1.86/4.18/3.52)
+  │  A. Villa home en DS  : 70% wr (10 matchs DS), 2.40 buts/match
+  │  Newcastle away en DS : 45% wr (11 matchs DS), 3.55 buts/match
+  │  💎 VALUE 1 : prob estimée 65% vs implicite 54% → A. Villa 1 @1.86
+
+  ┌─ London Blues vs Fulham  (cotes 1.74/3.84/4.46)
+  │  London Blues home en DS  : 67% wr (6 matchs DS), 2.67 buts/match
+  │  Fulham away en DS : 31% wr (13 matchs DS), 2.46 buts/match
+
+  ┌─ Wolverhampton vs Brentford  (cotes 2.81/3.37/2.46)
+  │  Wolverhampton home en DS  : 36% wr (14 matchs DS), 3.07 buts/match
+  │  Brentford away en DS : 27% wr (11 matchs DS), 2.73 buts/match
+
+  ┌─ Spurs vs N. Forest  (cotes 1.54/4.71/5.0)
+  │  Spurs home en DS  : 38% wr (8 matchs DS), 2.62 buts/match
+  │  N. Forest away en DS : 33% wr (12 matchs DS), 2.08 buts/match
+
+  ┌─ West Ham vs Brighton  (cotes 2.59/3.94/2.38)
+  │  West Ham home en DS  : 73% wr (11 matchs DS), 3.09 buts/match
+  │  Brighton away en DS : 40% wr (10 matchs DS), 3.20 buts/match
+  │  💎 VALUE 1 : prob estimée 61% vs implicite 39% → West Ham 1 @2.59

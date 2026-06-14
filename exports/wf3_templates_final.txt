@@ -1,0 +1,64 @@
+=== a) RESIDUS RATINGS — IDIOSYNCRASIE PAR PAIRE ?
+corr(residu(A@home), residu(B@home)) sur 190 paires non-ordonnees: 0.996
+  (~ -1 = idiosyncrasie de FORCE relative h2h persistante; ~0 = bruit d'estimation independant)
+std(residu) observe: 0.3241 vs bruit d'echantillonnage attendu ~0.0111 (jitter 0.043/sqrt(15))
+persistance temporelle des residus h2h (corr res_half1, res_half2): 0.997 sur 335 paires
+  (eleve = le moteur stocke des probas PAR PAIRE, pas juste des ratings)
+
+=== b) MECANISME: simulation arrondi
+  round: overround simule mean=1.05999 std=0.00118  (observe: mean=1.05999 std=0.00119)
+  floor: overround simule mean=1.06245 std=0.00133  (observe: mean=1.05999 std=0.00119)
+  ceil: overround simule mean=1.05758 std=0.00129  (observe: mean=1.05999 std=0.00119)
+
+=== c) CALIBRATION RESULTATS vs TEMPLATE PAIRE (pH_bar/pD_bar/pA_bar)
+chi2 agrege sur paires (n>=10): chi2=693.7, dof=730, p=0.8289
+calibration home par decile de pH:
+                   n    obs    imp  p_binom
+bin                                        
+(0.0376, 0.189]  586 0.1502 0.1372   0.3676
+(0.189, 0.296]   586 0.2474 0.2407   0.6992
+(0.296, 0.379]   586 0.3584 0.3475   0.6027
+(0.379, 0.433]   586 0.3976 0.4091   0.5288
+(0.433, 0.489]   586 0.4676 0.4629   0.8360
+(0.489, 0.535]   585 0.5231 0.5124   0.6198
+(0.535, 0.589]   586 0.5939 0.5625   0.1338
+(0.589, 0.651]   586 0.6195 0.6213   0.9322
+(0.651, 0.72]    586 0.6724 0.6846   0.5338
+(0.72, 0.855]    586 0.7747 0.7727   0.9607
+calibration DRAW par quintile de pD:
+                   n    obs    imp  p_binom
+binD                                       
+(0.102, 0.188]  1172 0.1544 0.1573   0.8410
+(0.188, 0.224]  1172 0.1997 0.2070   0.5641
+(0.224, 0.241]  1171 0.2306 0.2331   0.8628
+(0.241, 0.263]  1172 0.2457 0.2517   0.6618
+(0.263, 0.324]  1172 0.2679 0.2785   0.4343
+
+=== d) LE JITTER DEPEND-IL DE LA FORME RECENTE ? (feedback loop)
+corr(forme equipe home [3 derniers], jitter logit pH): -0.0047 (n=5761, p=0.7207)
+corr(forme equipe away, jitter): +0.0096 (p=0.4663)
+corr(round, jitter): -0.0053
+
+=== e) VALIDATION STRATEGIE FADE-JITTER (walk-forward 70/30)
+EV theorique sous H0 'bruit d'affichage': ROI = p_bar/(p_jit*1.06)-1
+  thr=0.005: n=797, ROI=+1.7% (se=5.1%), EV theorique bruit-affichage=-2.8%, p_binom(win vs 1/odds)=0.830
+  thr=0.010: n=322, ROI=+0.4% (se=7.2%), EV theorique bruit-affichage=-2.1%, p_binom(win vs 1/odds)=0.911
+  thr=0.015: n=103, ROI=+18.2% (se=12.3%), EV theorique bruit-affichage=-1.6%, p_binom(win vs 1/odds)=0.324
+
+=== f) INFO DANS LE MOUVEMENT OPEN->CLOSE
+n moved=1425, delta logit pH: std=0.0515
+corr(jitter_open, delta open->close): -0.697  (-0.5 attendu si close = nouveau tirage independant)
+  Brier open (big movers, n=465): 0.22977
+  Brier close (big movers, n=465): 0.22889
+logit(win_h) ~ logit(p_CLOSE) + delta: b_delta=1.140 +/- 2.148 (>0 = le mouvement contient PLUS d'info que le close n'en price)
+logit(win_h) ~ logit(p_OPEN)  + delta: b_delta=1.993 +/- 2.149 (1 = close efficient; 0 = open efficient)
+
+pari 'suis le mouvement' (au CLOSE), full sample + OOS 30%:
+  thr=0.05 [full]: n=480, WR=40.6%, ROI=-4.8% (se=6.4%)
+  thr=0.05 [OOS30]: n=197, WR=43.1%, ROI=+11.5% (se=11.5%)
+  thr=0.1 [full]: n=68, WR=39.7%, ROI=-6.4% (se=16.5%)
+  thr=0.1 [OOS30]: n=23, WR=47.8%, ROI=-6.4% (se=22.5%)
+  thr=0.15 [full]: n=2 (trop peu)
+  thr=0.15 [OOS30]: n=0 (trop peu)
+
+DONE

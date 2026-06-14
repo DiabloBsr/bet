@@ -1,0 +1,173 @@
+V5 chargé (n=3892)
+
+Rounds : ['00:56', '00:58', '01:00', '01:02', '01:04', '01:06']
+
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:56 Mada — 10 matchs — Analyse Under/Over + HT complète
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Match                                  Cotes             Buts att O0.5   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   HT pick  HT 1/X/2       Score HT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+N. Forest vs Newcastle                 2.57/3.63/2.53      3.1      95🔥    81⭐    66     36     41     64     68   X        29/39/32       1-1
+C. Palace vs A. Villa                  2.05/3.56/3.43      2.8      94🔥    77✓    58     31     47     69     62   X        36/41/23       1-1
+Manchester Red vs London Reds          4.27/3.51/1.85      2.7      94🔥    76✓    59     30     48     70✓    53   X        22/41/37       0-1
+Manchester Blue vs Spurs               1.33/6.02/7.14      3.4      97🔥    85⭐    70     45     34     55     59   1        53/33/14       1-0
+Bournemouth vs Everton                 2.07/3.05/4.02      2.4      91🔥    69     37     22     57     78✓    52   X        35/45/20       1-0
+Liverpool vs Wolverhampton             1.18/7.11/13.42     3.3      96🔥    85⭐    62     43     35     57     41   1        61/31/8        1-0
+Leeds vs Sunderland                    3.57/3.75/1.95      2.8      94🔥    77✓    52     31     47     69     42   X        23/41/37       1-1
+Brighton vs London Blues               1.89/3.94/3.63      3.1      95🔥    81⭐    64     37     40     63     54   1        41/38/21       1-1
+West Ham vs Burnley                    1.73/4.34/4.00      3.1      96🔥    82⭐    66     38     40     62     71✓  1        41/38/22       1-1
+Fulham vs Brentford                    2.29/3.63/2.88      3.1      95🔥    81⭐    47     37     40     63     63   X        35/39/26       1-1
+
+  📝 LÉGENDE :
+     🔥 ≥90%   ⭐ ≥80%   ✓ ≥70%   (sans marqueur) <70%
+
+  💡 Recommandations pour 00:56:
+     • N. Forest vs Newcastle: Over 1.5 (96% H2H n=23)
+     • Manchester Red vs London Reds: Under 3.5 (modèle 70%)
+     • Manchester Blue vs Spurs: Over 1.5 (modèle 85%)
+     • Bournemouth vs Everton: Under 3.5 (83% H2H) | Under 3.5 (modèle 78%)
+     • Liverpool vs Wolverhampton: Over 1.5 (91% H2H n=22)
+     • Leeds vs Sunderland: BTTS Non (72% H2H)
+     • West Ham vs Burnley: Over 1.5 (91% H2H n=22) | BTTS Oui (82% H2H)
+     • Fulham vs Brentford: Under 3.5 (80% H2H)
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:58 Mada — 10 matchs — Analyse Under/Over + HT complète
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Match                                  Cotes             Buts att O0.5   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   HT pick  HT 1/X/2       Score HT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Sunderland vs London Blues             6.95/4.66/1.43      2.9      95🔥    79✓    56     34     44     66     47   2        11/36/52       0-1
+Everton vs Liverpool                   3.78/3.57/1.94      2.7      93🔥    75✓    61     29     49     71✓    60   X        22/42/37       0-1
+London Reds vs Brighton                1.42/5.30/5.96      3.5      97🔥    86⭐    68     46     33     54     52   1        51/34/16       1-0
+Newcastle vs West Ham                  1.29/5.68/9.04      3.3      96🔥    84⭐    73✓    42     36     58     41   1        57/33/10       1-0
+A. Villa vs Manchester Red             1.58/4.33/5.10      3.0      95🔥    80⭐    54     36     42     64     58   1        40/39/21       1-1
+Wolverhampton vs Manchester Blue       5.52/3.95/1.60      2.6      93🔥    74✓    42     27     51     73✓    39   2        13/40/47       0-1
+Brentford vs Leeds                     1.35/5.17/8.00      3.2      96🔥    82⭐    54     39     39     61     49   1        53/35/12       1-0
+Burnley vs Fulham                      3.44/3.45/2.09      2.6      93🔥    74✓    52     27     51     73✓    51   X        25/43/32       1-1
+Bournemouth vs N. Forest               1.82/3.66/4.22      2.6      93🔥    74✓    51     27     51     73✓    52   X        38/42/20       1-0
+Spurs vs C. Palace                     1.82/4.02/3.81      2.8      94🔥    76✓    63     30     48     70     56   X        36/41/22       1-1
+
+  📝 LÉGENDE :
+     🔥 ≥90%   ⭐ ≥80%   ✓ ≥70%   (sans marqueur) <70%
+
+  💡 Recommandations pour 00:58:
+     • Everton vs Liverpool: Under 3.5 (modèle 71%)
+     • London Reds vs Brighton: Over 1.5 (modèle 86%)
+     • Newcastle vs West Ham: Over 1.5 (91% H2H n=23) | Over 2.5 (83% H2H)
+     • Wolverhampton vs Manchester Blue: Under 3.5 (modèle 73%)
+     • Burnley vs Fulham: Under 3.5 (modèle 73%)
+     • Bournemouth vs N. Forest: Under 3.5 (modèle 73%)
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 01:00 Mada — 10 matchs — Analyse Under/Over + HT complète
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Match                                  Cotes             Buts att O0.5   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   HT pick  HT 1/X/2       Score HT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+C. Palace vs Wolverhampton             1.64/4.09/4.88      3.0      95🔥    80⭐    64     35     42     65     55   1        44/38/18       1-0
+Fulham vs Newcastle                    2.45/3.92/2.52      3.5      97🔥    87⭐    69     47     31     53     74✓  X        31/36/33       1-1
+London Blues vs Brentford              1.86/3.66/4.00      2.8      94🔥    77✓    43     31     47     69     44   X        38/40/21       1-0
+West Ham vs Bournemouth                2.03/4.06/3.10      3.0      95🔥    80⭐    62     35     42     65     60   1        42/39/20       1-0
+London Reds vs A. Villa                1.36/5.18/7.65      3.1      95🔥    81⭐    58     37     40     63     52   1        49/36/15       1-0
+Leeds vs Burnley                       3.39/3.90/1.96      3.1      96🔥    82⭐    69     38     39     62     73✓  2        22/38/41       1-1
+Manchester Blue vs Everton             1.23/6.04/12.48     3.0      95🔥    80✓    64     35     43     65     44   1        57/34/8        1-0
+Manchester Red vs Spurs                1.91/4.04/3.47      3.3      96🔥    84⭐    71✓    41     37     59     66   X        35/37/27       1-1
+Liverpool vs N. Forest                 1.19/6.95/13.10     3.2      96🔥    82⭐    63     39     39     61     37   1        60/32/8        1-0
+Brighton vs Sunderland                 1.53/4.60/5.35      3.3      96🔥    84⭐    63     41     37     59     56   1        52/34/14       1-0
+
+  📝 LÉGENDE :
+     🔥 ≥90%   ⭐ ≥80%   ✓ ≥70%   (sans marqueur) <70%
+
+  💡 Recommandations pour 01:00:
+     • Fulham vs Newcastle: BTTS Oui (80% H2H) | Over 1.5 (modèle 87%)
+     • London Blues vs Brentford: Under 3.5 (86% H2H)
+     • London Reds vs A. Villa: Over 1.5 (90% H2H n=21) | Under 3.5 (81% H2H)
+     • Leeds vs Burnley: Over 1.5 (91% H2H n=22) | BTTS Oui (86% H2H)
+     • Manchester Blue vs Everton: Over 1.5 (96% H2H n=24)
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 01:02 Mada — 10 matchs — Analyse Under/Over + HT complète
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Match                                  Cotes             Buts att O0.5   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   HT pick  HT 1/X/2       Score HT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Brentford vs Sunderland                1.62/4.57/4.49      3.2      96🔥    83⭐    60     41     37     59     55   1        48/36/17       1-0
+A. Villa vs Brighton                   1.71/4.53/3.92      3.4      97🔥    86⭐    74✓    45     34     55     68   1        42/36/22       1-1
+Spurs vs London Reds                   4.47/4.14/1.68      2.9      94🔥    78✓    65     32     45     68     56   X        22/40/37       1-1
+Wolverhampton vs Manchester Red        2.42/3.46/2.79      2.6      93🔥    74✓    47     27     51     73✓    54   X        26/43/32       1-1
+Burnley vs London Blues                3.36/3.52/2.09      2.8      94🔥    76✓    51     30     48     70✓    57   X        23/41/36       1-1
+Everton vs C. Palace                   2.50/3.01/3.05      2.2      89⭐    65     38     19     61     81⭐    45   X        27/47/26       1-0
+Newcastle vs Leeds                     1.17/6.98/16.18     3.4      97🔥    85⭐    69     44     34     56     37   1        62/30/8        1-0
+N. Forest vs Manchester Blue           4.35/3.65/1.80      2.5      92🔥    72✓    46     25     53     75✓    44   X        17/42/41       0-1
+Liverpool vs West Ham                  1.21/6.54/11.99     3.3      96🔥    84⭐    68     41     37     59     47   1        61/31/8        1-0
+Bournemouth vs Fulham                  2.55/3.28/2.76      2.7      93🔥    75✓    55     29     49     71✓    56   X        32/42/27       1-1
+
+  📝 LÉGENDE :
+     🔥 ≥90%   ⭐ ≥80%   ✓ ≥70%   (sans marqueur) <70%
+
+  💡 Recommandations pour 01:02:
+     • A. Villa vs Brighton: Over 1.5 (95% H2H n=21) | Over 2.5 (81% H2H) | Over 1.5 (modèle 86%)
+     • Spurs vs London Reds: Under 3.5 (80% H2H)
+     • Wolverhampton vs Manchester Red: Under 3.5 (83% H2H) | Under 3.5 (modèle 73%)
+     • Burnley vs London Blues: Under 3.5 (modèle 70%)
+     • Everton vs C. Palace: Under 3.5 (91% H2H) | Under 3.5 (modèle 81%)
+     • Newcastle vs Leeds: Over 1.5 (90% H2H n=21) | Over 1.5 (modèle 85%)
+     • N. Forest vs Manchester Blue: Under 3.5 (82% H2H) | Under 3.5 (modèle 75%)
+     • Liverpool vs West Ham: Over 1.5 (100% H2H n=22)
+     • Bournemouth vs Fulham: Under 3.5 (modèle 71%)
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 01:04 Mada — 8 matchs — Analyse Under/Over + HT complète
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Match                                  Cotes             Buts att O0.5   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   HT pick  HT 1/X/2       Score HT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Leeds vs Bournemouth                   4.38/4.23/1.68      3.0      95🔥    80✓    61     35     43     65     57   X        23/39/38       1-1
+C. Palace vs N. Forest                 1.70/4.01/4.49      2.8      94🔥    77✓    55     31     47     69     52   1        44/39/17       1-0
+Manchester Red vs Everton              1.69/3.55/5.33      2.6      93🔥    74✓    49     27     51     73✓    54   X        41/41/17       1-0
+London Blues vs Newcastle              2.01/3.89/3.28      3.2      96🔥    82⭐    61     39     39     61     57   X        35/38/27       1-1
+Sunderland vs Burnley                  4.06/4.03/1.77      2.8      94🔥    77✓    71✓    32     46     68     57   2        16/39/44       0-1
+Fulham vs Liverpool                    3.12/4.13/2.01      3.4      97🔥    85⭐    75✓    44     34     56     73✓  X        27/37/36       1-1
+A. Villa vs Spurs                      1.69/4.55/4.04      3.4      97🔥    85⭐    66     44     34     56     63   1        40/36/24       1-1
+Manchester Blue vs West Ham            1.21/7.00/11.21     3.5      97🔥    86⭐    70✓    45     33     55     50   1        63/30/8        1-0
+
+  📝 LÉGENDE :
+     🔥 ≥90%   ⭐ ≥80%   ✓ ≥70%   (sans marqueur) <70%
+
+  💡 Recommandations pour 01:04:
+     • Manchester Red vs Everton: Under 3.5 (modèle 73%)
+     • Sunderland vs Burnley: Over 2.5 (88% H2H)
+     • Fulham vs Liverpool: Over 1.5 (95% H2H n=20) | Over 2.5 (85% H2H) | BTTS Oui (80% H2H)
+     • A. Villa vs Spurs: Over 1.5 (modèle 85%)
+     • Manchester Blue vs West Ham: Over 1.5 (100% H2H n=19) | Over 1.5 (modèle 86%)
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 01:06 Mada — 9 matchs — Analyse Under/Over + HT complète
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Match                                  Cotes             Buts att O0.5   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   HT pick  HT 1/X/2       Score HT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+N. Forest vs Manchester Red            2.06/3.46/3.49      2.7      93🔥    75✓    58     28     50     72✓    63   X        32/42/26       1-1
+Everton vs London Reds                 6.16/3.60/1.61      2.5      92🔥    71✓    40     24     55     76✓    40   X        16/43/41       0-1
+Bournemouth vs London Blues            2.46/3.38/2.79      2.8      94🔥    77✓    58     32     46     68     57   X        29/41/30       1-1
+Manchester Blue vs Fulham              1.33/5.50/7.78      3.2      96🔥    83⭐    62     40     38     60     48   1        55/34/11       1-0
+Burnley vs Brentford                   3.84/3.50/1.95      2.6      92🔥    72✓    46     25     53     75✓    51   X        25/43/32       1-1
+West Ham vs C. Palace                  2.32/3.46/2.95      2.5      91🔥    70✓    46     23     55     77✓    56   X        31/44/25       1-0
+Newcastle vs Sunderland                1.24/6.27/10.48     3.4      97🔥    85⭐    70     44     34     56     57   1        57/32/11       1-0
+Spurs vs Brighton                      1.97/4.35/3.09      3.4      97🔥    86⭐    75✓    45     34     55     69   1        38/36/26       1-1
+Wolverhampton vs A. Villa              2.48/3.40/2.76      2.6      93🔥    74✓    54     27     51     73✓    60   X        26/43/31       1-1
+
+  📝 LÉGENDE :
+     🔥 ≥90%   ⭐ ≥80%   ✓ ≥70%   (sans marqueur) <70%
+
+  💡 Recommandations pour 01:06:
+     • N. Forest vs Manchester Red: Under 3.5 (modèle 72%)
+     • Everton vs London Reds: Under 3.5 (90% H2H) | Under 3.5 (modèle 76%)
+     • Burnley vs Brentford: Under 3.5 (modèle 75%)
+     • West Ham vs C. Palace: Under 3.5 (modèle 77%)
+     • Newcastle vs Sunderland: Over 1.5 (modèle 85%)
+     • Spurs vs Brighton: Over 2.5 (83% H2H) | Over 1.5 (modèle 86%)
+     • Wolverhampton vs A. Villa: Under 3.5 (modèle 73%)

@@ -1,0 +1,922 @@
+{
+  "generated_at": "2026-06-12",
+  "league": "InstantLeague-8035",
+  "pass_a_rows": 7711,
+  "pass_a_skipped": {
+    "corrupted": 388
+  },
+  "pass_b_skipped": {
+    "goals_null": 75,
+    "corrupted": 84
+  },
+  "E1_ftts_homefav_le150": {
+    "full": {
+      "n": 1792,
+      "wins": 1382,
+      "wr": 0.7712,
+      "roi_pct": 6.48,
+      "roi_se_pct": 1.38,
+      "roi_z": 4.7,
+      "avg_odds": 1.385,
+      "implied_wr": 0.7222
+    },
+    "weekly": {
+      "2026-W22": {
+        "n": 1,
+        "wins": 1,
+        "wr": 1.0,
+        "roi_pct": 30.0,
+        "roi_se_pct": null,
+        "roi_z": null,
+        "avg_odds": 1.3,
+        "implied_wr": 0.7692
+      },
+      "2026-W23": {
+        "n": 1131,
+        "wins": 881,
+        "wr": 0.779,
+        "roi_pct": 7.55,
+        "roi_se_pct": 1.72,
+        "roi_z": 4.4,
+        "avg_odds": 1.385,
+        "implied_wr": 0.7222
+      },
+      "2026-W24": {
+        "n": 660,
+        "wins": 500,
+        "wr": 0.7576,
+        "roi_pct": 4.62,
+        "roi_se_pct": 2.32,
+        "roi_z": 1.99,
+        "avg_odds": 1.385,
+        "implied_wr": 0.7221
+      }
+    },
+    "daily": {
+      "2026-05-29": {
+        "n": 1,
+        "wins": 1,
+        "wr": 1.0,
+        "roi_pct": 30.0,
+        "roi_se_pct": null,
+        "roi_z": null,
+        "avg_odds": 1.3,
+        "implied_wr": 0.7692
+      },
+      "2026-06-02": {
+        "n": 81,
+        "wins": 54,
+        "wr": 0.6667,
+        "roi_pct": -8.4,
+        "roi_se_pct": 7.27,
+        "roi_z": -1.16,
+        "avg_odds": 1.382,
+        "implied_wr": 0.7233
+      },
+      "2026-06-03": {
+        "n": 142,
+        "wins": 113,
+        "wr": 0.7958,
+        "roi_pct": 9.42,
+        "roi_se_pct": 4.7,
+        "roi_z": 2.0,
+        "avg_odds": 1.381,
+        "implied_wr": 0.7239
+      },
+      "2026-06-04": {
+        "n": 154,
+        "wins": 121,
+        "wr": 0.7857,
+        "roi_pct": 7.7,
+        "roi_se_pct": 4.58,
+        "roi_z": 1.68,
+        "avg_odds": 1.38,
+        "implied_wr": 0.7246
+      },
+      "2026-06-05": {
+        "n": 433,
+        "wins": 341,
+        "wr": 0.7875,
+        "roi_pct": 8.96,
+        "roi_se_pct": 2.74,
+        "roi_z": 3.27,
+        "avg_odds": 1.385,
+        "implied_wr": 0.7222
+      },
+      "2026-06-06": {
+        "n": 311,
+        "wins": 244,
+        "wr": 0.7846,
+        "roi_pct": 8.67,
+        "roi_se_pct": 3.26,
+        "roi_z": 2.66,
+        "avg_odds": 1.388,
+        "implied_wr": 0.7203
+      },
+      "2026-06-07": {
+        "n": 10,
+        "wins": 8,
+        "wr": 0.8,
+        "roi_pct": 11.9,
+        "roi_se_pct": 18.72,
+        "roi_z": 0.64,
+        "avg_odds": 1.406,
+        "implied_wr": 0.7112
+      },
+      "2026-06-10": {
+        "n": 92,
+        "wins": 70,
+        "wr": 0.7609,
+        "roi_pct": 5.03,
+        "roi_se_pct": 6.21,
+        "roi_z": 0.81,
+        "avg_odds": 1.384,
+        "implied_wr": 0.7226
+      },
+      "2026-06-11": {
+        "n": 38,
+        "wins": 30,
+        "wr": 0.7895,
+        "roi_pct": 7.39,
+        "roi_se_pct": 9.2,
+        "roi_z": 0.8,
+        "avg_odds": 1.376,
+        "implied_wr": 0.7266
+      },
+      "2026-06-12": {
+        "n": 530,
+        "wins": 400,
+        "wr": 0.7547,
+        "roi_pct": 4.35,
+        "roi_se_pct": 2.6,
+        "roi_z": 1.67,
+        "avg_odds": 1.386,
+        "implied_wr": 0.7217
+      }
+    },
+    "last5_active_days": {
+      "2026-06-06": {
+        "n": 311,
+        "wins": 244,
+        "wr": 0.7846,
+        "roi_pct": 8.67,
+        "roi_se_pct": 3.26,
+        "roi_z": 2.66,
+        "avg_odds": 1.388,
+        "implied_wr": 0.7203
+      },
+      "2026-06-07": {
+        "n": 10,
+        "wins": 8,
+        "wr": 0.8,
+        "roi_pct": 11.9,
+        "roi_se_pct": 18.72,
+        "roi_z": 0.64,
+        "avg_odds": 1.406,
+        "implied_wr": 0.7112
+      },
+      "2026-06-10": {
+        "n": 92,
+        "wins": 70,
+        "wr": 0.7609,
+        "roi_pct": 5.03,
+        "roi_se_pct": 6.21,
+        "roi_z": 0.81,
+        "avg_odds": 1.384,
+        "implied_wr": 0.7226
+      },
+      "2026-06-11": {
+        "n": 38,
+        "wins": 30,
+        "wr": 0.7895,
+        "roi_pct": 7.39,
+        "roi_se_pct": 9.2,
+        "roi_z": 0.8,
+        "avg_odds": 1.376,
+        "implied_wr": 0.7266
+      },
+      "2026-06-12": {
+        "n": 530,
+        "wins": 400,
+        "wr": 0.7547,
+        "roi_pct": 4.35,
+        "roi_se_pct": 2.6,
+        "roi_z": 1.67,
+        "avg_odds": 1.386,
+        "implied_wr": 0.7217
+      }
+    },
+    "cusum": {
+      "n": 1792,
+      "calib": {
+        "max_bridge": 11.053,
+        "p_value": 0.0,
+        "at_index": 1791,
+        "at_date": "2026-06-12 19:04",
+        "final_excess_wins": 223.0,
+        "mean_wr": 0.7712,
+        "mean_implied": 0.6468
+      },
+      "regime": {
+        "max_bridge": 1.074,
+        "p_value": 0.1989,
+        "at_index": 1079,
+        "at_date": "2026-06-06 15:22",
+        "wr_pre": 0.7889,
+        "wr_post": 0.7444,
+        "n_pre": 1080,
+        "n_post": 712
+      }
+    }
+  },
+  "E2_extremefav_110_120": {
+    "full": {
+      "n": 382,
+      "wins": 325,
+      "wr": 0.8508,
+      "roi_pct": -1.0,
+      "roi_se_pct": 2.13,
+      "roi_z": -0.47,
+      "avg_odds": 1.165,
+      "implied_wr": 0.8587
+    },
+    "weekly": {
+      "2026-W22": {
+        "n": 10,
+        "wins": 8,
+        "wr": 0.8,
+        "roi_pct": -8.1,
+        "roi_se_pct": 15.33,
+        "roi_z": -0.53,
+        "avg_odds": 1.155,
+        "implied_wr": 0.8658
+      },
+      "2026-W23": {
+        "n": 241,
+        "wins": 210,
+        "wr": 0.8714,
+        "roi_pct": 1.46,
+        "roi_se_pct": 2.52,
+        "roi_z": 0.58,
+        "avg_odds": 1.165,
+        "implied_wr": 0.8585
+      },
+      "2026-W24": {
+        "n": 131,
+        "wins": 107,
+        "wr": 0.8168,
+        "roi_pct": -4.98,
+        "roi_se_pct": 3.95,
+        "roi_z": -1.26,
+        "avg_odds": 1.165,
+        "implied_wr": 0.8586
+      }
+    },
+    "daily": {
+      "2026-05-28": {
+        "n": 6,
+        "wins": 4,
+        "wr": 0.6667,
+        "roi_pct": -23.67,
+        "roi_se_pct": 24.15,
+        "roi_z": -0.98,
+        "avg_odds": 1.157,
+        "implied_wr": 0.8646
+      },
+      "2026-05-29": {
+        "n": 4,
+        "wins": 4,
+        "wr": 1.0,
+        "roi_pct": 15.25,
+        "roi_se_pct": 1.44,
+        "roi_z": 10.62,
+        "avg_odds": 1.152,
+        "implied_wr": 0.8677
+      },
+      "2026-06-02": {
+        "n": 21,
+        "wins": 18,
+        "wr": 0.8571,
+        "roi_pct": -0.57,
+        "roi_se_pct": 9.09,
+        "roi_z": -0.06,
+        "avg_odds": 1.161,
+        "implied_wr": 0.861
+      },
+      "2026-06-03": {
+        "n": 27,
+        "wins": 24,
+        "wr": 0.8889,
+        "roi_pct": 3.59,
+        "roi_se_pct": 7.2,
+        "roi_z": 0.5,
+        "avg_odds": 1.167,
+        "implied_wr": 0.8571
+      },
+      "2026-06-04": {
+        "n": 39,
+        "wins": 36,
+        "wr": 0.9231,
+        "roi_pct": 7.51,
+        "roi_se_pct": 5.05,
+        "roi_z": 1.49,
+        "avg_odds": 1.167,
+        "implied_wr": 0.8571
+      },
+      "2026-06-05": {
+        "n": 89,
+        "wins": 72,
+        "wr": 0.809,
+        "roi_pct": -5.89,
+        "roi_se_pct": 4.88,
+        "roi_z": -1.21,
+        "avg_odds": 1.163,
+        "implied_wr": 0.8599
+      },
+      "2026-06-06": {
+        "n": 64,
+        "wins": 59,
+        "wr": 0.9219,
+        "roi_pct": 7.56,
+        "roi_se_pct": 3.96,
+        "roi_z": 1.91,
+        "avg_odds": 1.167,
+        "implied_wr": 0.857
+      },
+      "2026-06-07": {
+        "n": 1,
+        "wins": 1,
+        "wr": 1.0,
+        "roi_pct": 15.0,
+        "roi_se_pct": null,
+        "roi_z": null,
+        "avg_odds": 1.15,
+        "implied_wr": 0.8696
+      },
+      "2026-06-10": {
+        "n": 17,
+        "wins": 15,
+        "wr": 0.8824,
+        "roi_pct": 2.53,
+        "roi_se_pct": 9.38,
+        "roi_z": 0.27,
+        "avg_odds": 1.164,
+        "implied_wr": 0.8595
+      },
+      "2026-06-11": {
+        "n": 11,
+        "wins": 9,
+        "wr": 0.8182,
+        "roi_pct": -4.36,
+        "roi_se_pct": 14.28,
+        "roi_z": -0.31,
+        "avg_odds": 1.165,
+        "implied_wr": 0.8587
+      },
+      "2026-06-12": {
+        "n": 103,
+        "wins": 83,
+        "wr": 0.8058,
+        "roi_pct": -6.29,
+        "roi_se_pct": 4.56,
+        "roi_z": -1.38,
+        "avg_odds": 1.165,
+        "implied_wr": 0.8584
+      }
+    },
+    "last5_active_days": {
+      "2026-06-06": {
+        "n": 64,
+        "wins": 59,
+        "wr": 0.9219,
+        "roi_pct": 7.56,
+        "roi_se_pct": 3.96,
+        "roi_z": 1.91,
+        "avg_odds": 1.167,
+        "implied_wr": 0.857
+      },
+      "2026-06-07": {
+        "n": 1,
+        "wins": 1,
+        "wr": 1.0,
+        "roi_pct": 15.0,
+        "roi_se_pct": null,
+        "roi_z": null,
+        "avg_odds": 1.15,
+        "implied_wr": 0.8696
+      },
+      "2026-06-10": {
+        "n": 17,
+        "wins": 15,
+        "wr": 0.8824,
+        "roi_pct": 2.53,
+        "roi_se_pct": 9.38,
+        "roi_z": 0.27,
+        "avg_odds": 1.164,
+        "implied_wr": 0.8595
+      },
+      "2026-06-11": {
+        "n": 11,
+        "wins": 9,
+        "wr": 0.8182,
+        "roi_pct": -4.36,
+        "roi_se_pct": 14.28,
+        "roi_z": -0.31,
+        "avg_odds": 1.165,
+        "implied_wr": 0.8587
+      },
+      "2026-06-12": {
+        "n": 103,
+        "wins": 83,
+        "wr": 0.8058,
+        "roi_pct": -6.29,
+        "roi_se_pct": 4.56,
+        "roi_z": -1.38,
+        "avg_odds": 1.165,
+        "implied_wr": 0.8584
+      }
+    },
+    "cusum": {
+      "n": 382,
+      "calib": {
+        "max_bridge": 2.179,
+        "p_value": 0.0002,
+        "at_index": 277,
+        "at_date": "2026-06-11 23:21",
+        "final_excess_wins": 15.5,
+        "mean_wr": 0.8508,
+        "mean_implied": 0.8103
+      },
+      "regime": {
+        "max_bridge": 1.105,
+        "p_value": 0.1737,
+        "at_index": 131,
+        "at_date": "2026-06-05 14:43",
+        "wr_pre": 0.9091,
+        "wr_post": 0.82,
+        "n_pre": 132,
+        "n_post": 250
+      }
+    }
+  },
+  "T1_proxy_fav_le130": {
+    "full": {
+      "n": 889,
+      "wins": 709,
+      "wr": 0.7975,
+      "roi_pct": -3.21,
+      "roi_se_pct": 1.64,
+      "roi_z": -1.95,
+      "avg_odds": 1.217,
+      "implied_wr": 0.8219
+    },
+    "weekly": {
+      "2026-W22": {
+        "n": 23,
+        "wins": 18,
+        "wr": 0.7826,
+        "roi_pct": -5.65,
+        "roi_se_pct": 10.65,
+        "roi_z": -0.53,
+        "avg_odds": 1.213,
+        "implied_wr": 0.8247
+      },
+      "2026-W23": {
+        "n": 551,
+        "wins": 442,
+        "wr": 0.8022,
+        "roi_pct": -2.75,
+        "roi_se_pct": 2.07,
+        "roi_z": -1.33,
+        "avg_odds": 1.216,
+        "implied_wr": 0.8225
+      },
+      "2026-W24": {
+        "n": 315,
+        "wins": 249,
+        "wr": 0.7905,
+        "roi_pct": -3.85,
+        "roi_se_pct": 2.81,
+        "roi_z": -1.37,
+        "avg_odds": 1.219,
+        "implied_wr": 0.8207
+      }
+    },
+    "daily": {
+      "2026-05-28": {
+        "n": 15,
+        "wins": 11,
+        "wr": 0.7333,
+        "roi_pct": -10.73,
+        "roi_se_pct": 14.45,
+        "roi_z": -0.74,
+        "avg_odds": 1.219,
+        "implied_wr": 0.8206
+      },
+      "2026-05-29": {
+        "n": 8,
+        "wins": 7,
+        "wr": 0.875,
+        "roi_pct": 3.87,
+        "roi_se_pct": 14.92,
+        "roi_z": 0.26,
+        "avg_odds": 1.201,
+        "implied_wr": 0.8325
+      },
+      "2026-06-02": {
+        "n": 50,
+        "wins": 36,
+        "wr": 0.72,
+        "roi_pct": -13.18,
+        "roi_se_pct": 7.76,
+        "roi_z": -1.7,
+        "avg_odds": 1.214,
+        "implied_wr": 0.8237
+      },
+      "2026-06-03": {
+        "n": 73,
+        "wins": 59,
+        "wr": 0.8082,
+        "roi_pct": -1.56,
+        "roi_se_pct": 5.68,
+        "roi_z": -0.28,
+        "avg_odds": 1.222,
+        "implied_wr": 0.8186
+      },
+      "2026-06-04": {
+        "n": 78,
+        "wins": 68,
+        "wr": 0.8718,
+        "roi_pct": 5.62,
+        "roi_se_pct": 4.65,
+        "roi_z": 1.21,
+        "avg_odds": 1.217,
+        "implied_wr": 0.8217
+      },
+      "2026-06-05": {
+        "n": 207,
+        "wins": 158,
+        "wr": 0.7633,
+        "roi_pct": -7.43,
+        "roi_se_pct": 3.61,
+        "roi_z": -2.06,
+        "avg_odds": 1.214,
+        "implied_wr": 0.8238
+      },
+      "2026-06-06": {
+        "n": 139,
+        "wins": 117,
+        "wr": 0.8417,
+        "roi_pct": 1.9,
+        "roi_se_pct": 3.78,
+        "roi_z": 0.5,
+        "avg_odds": 1.215,
+        "implied_wr": 0.8231
+      },
+      "2026-06-07": {
+        "n": 4,
+        "wins": 4,
+        "wr": 1.0,
+        "roi_pct": 23.75,
+        "roi_se_pct": 3.25,
+        "roi_z": 7.31,
+        "avg_odds": 1.238,
+        "implied_wr": 0.8081
+      },
+      "2026-06-10": {
+        "n": 46,
+        "wins": 35,
+        "wr": 0.7609,
+        "roi_pct": -7.52,
+        "roi_se_pct": 7.76,
+        "roi_z": -0.97,
+        "avg_odds": 1.222,
+        "implied_wr": 0.8184
+      },
+      "2026-06-11": {
+        "n": 21,
+        "wins": 17,
+        "wr": 0.8095,
+        "roi_pct": -2.33,
+        "roi_se_pct": 10.63,
+        "roi_z": -0.22,
+        "avg_odds": 1.206,
+        "implied_wr": 0.8294
+      },
+      "2026-06-12": {
+        "n": 248,
+        "wins": 197,
+        "wr": 0.7944,
+        "roi_pct": -3.3,
+        "roi_se_pct": 3.15,
+        "roi_z": -1.05,
+        "avg_odds": 1.219,
+        "implied_wr": 0.8203
+      }
+    },
+    "last5_active_days": {
+      "2026-06-06": {
+        "n": 139,
+        "wins": 117,
+        "wr": 0.8417,
+        "roi_pct": 1.9,
+        "roi_se_pct": 3.78,
+        "roi_z": 0.5,
+        "avg_odds": 1.215,
+        "implied_wr": 0.8231
+      },
+      "2026-06-07": {
+        "n": 4,
+        "wins": 4,
+        "wr": 1.0,
+        "roi_pct": 23.75,
+        "roi_se_pct": 3.25,
+        "roi_z": 7.31,
+        "avg_odds": 1.238,
+        "implied_wr": 0.8081
+      },
+      "2026-06-10": {
+        "n": 46,
+        "wins": 35,
+        "wr": 0.7609,
+        "roi_pct": -7.52,
+        "roi_se_pct": 7.76,
+        "roi_z": -0.97,
+        "avg_odds": 1.222,
+        "implied_wr": 0.8184
+      },
+      "2026-06-11": {
+        "n": 21,
+        "wins": 17,
+        "wr": 0.8095,
+        "roi_pct": -2.33,
+        "roi_se_pct": 10.63,
+        "roi_z": -0.22,
+        "avg_odds": 1.206,
+        "implied_wr": 0.8294
+      },
+      "2026-06-12": {
+        "n": 248,
+        "wins": 197,
+        "wr": 0.7944,
+        "roi_pct": -3.3,
+        "roi_se_pct": 3.15,
+        "roi_z": -1.05,
+        "avg_odds": 1.219,
+        "implied_wr": 0.8203
+      }
+    },
+    "cusum": {
+      "n": 889,
+      "calib": {
+        "max_bridge": 1.743,
+        "p_value": 0.0046,
+        "at_index": 791,
+        "at_date": "2026-06-12 13:12",
+        "final_excess_wins": 18.4,
+        "mean_wr": 0.7975,
+        "mean_implied": 0.7769
+      },
+      "regime": {
+        "max_bridge": 0.67,
+        "p_value": 0.7599,
+        "at_index": 335,
+        "at_date": "2026-06-05 17:01",
+        "wr_pre": 0.8214,
+        "wr_post": 0.783,
+        "n_pre": 336,
+        "n_post": 553
+      }
+    }
+  },
+  "FAV_base_le150": {
+    "full": {
+      "n": 2260,
+      "wins": 1641,
+      "wr": 0.7261,
+      "roi_pct": -4.12,
+      "roi_se_pct": 1.25,
+      "roi_z": -3.28,
+      "avg_odds": 1.331,
+      "implied_wr": 0.7513
+    },
+    "weekly": {
+      "2026-W22": {
+        "n": 69,
+        "wins": 50,
+        "wr": 0.7246,
+        "roi_pct": -4.1,
+        "roi_se_pct": 7.25,
+        "roi_z": -0.57,
+        "avg_odds": 1.333,
+        "implied_wr": 0.7504
+      },
+      "2026-W23": {
+        "n": 1408,
+        "wins": 1023,
+        "wr": 0.7266,
+        "roi_pct": -4.19,
+        "roi_se_pct": 1.59,
+        "roi_z": -2.64,
+        "avg_odds": 1.331,
+        "implied_wr": 0.7515
+      },
+      "2026-W24": {
+        "n": 783,
+        "wins": 568,
+        "wr": 0.7254,
+        "roi_pct": -4.0,
+        "roi_se_pct": 2.14,
+        "roi_z": -1.87,
+        "avg_odds": 1.331,
+        "implied_wr": 0.751
+      }
+    },
+    "daily": {
+      "2026-05-28": {
+        "n": 38,
+        "wins": 25,
+        "wr": 0.6579,
+        "roi_pct": -13.74,
+        "roi_se_pct": 10.31,
+        "roi_z": -1.33,
+        "avg_odds": 1.322,
+        "implied_wr": 0.7562
+      },
+      "2026-05-29": {
+        "n": 31,
+        "wins": 25,
+        "wr": 0.8065,
+        "roi_pct": 7.71,
+        "roi_se_pct": 9.79,
+        "roi_z": 0.79,
+        "avg_odds": 1.345,
+        "implied_wr": 0.7434
+      },
+      "2026-06-02": {
+        "n": 120,
+        "wins": 82,
+        "wr": 0.6833,
+        "roi_pct": -10.69,
+        "roi_se_pct": 5.63,
+        "roi_z": -1.9,
+        "avg_odds": 1.318,
+        "implied_wr": 0.7585
+      },
+      "2026-06-03": {
+        "n": 174,
+        "wins": 126,
+        "wr": 0.7241,
+        "roi_pct": -4.69,
+        "roi_se_pct": 4.53,
+        "roi_z": -1.04,
+        "avg_odds": 1.328,
+        "implied_wr": 0.7528
+      },
+      "2026-06-04": {
+        "n": 189,
+        "wins": 146,
+        "wr": 0.7725,
+        "roi_pct": 1.56,
+        "roi_se_pct": 4.08,
+        "roi_z": 0.38,
+        "avg_odds": 1.33,
+        "implied_wr": 0.752
+      },
+      "2026-06-05": {
+        "n": 534,
+        "wins": 371,
+        "wr": 0.6948,
+        "roi_pct": -8.19,
+        "roi_se_pct": 2.66,
+        "roi_z": -3.07,
+        "avg_odds": 1.331,
+        "implied_wr": 0.7515
+      },
+      "2026-06-06": {
+        "n": 379,
+        "wins": 288,
+        "wr": 0.7599,
+        "roi_pct": 0.42,
+        "roi_se_pct": 2.94,
+        "roi_z": 0.14,
+        "avg_odds": 1.335,
+        "implied_wr": 0.7489
+      },
+      "2026-06-07": {
+        "n": 12,
+        "wins": 10,
+        "wr": 0.8333,
+        "roi_pct": 10.67,
+        "roi_se_pct": 15.13,
+        "roi_z": 0.7,
+        "avg_odds": 1.35,
+        "implied_wr": 0.7407
+      },
+      "2026-06-10": {
+        "n": 107,
+        "wins": 75,
+        "wr": 0.7009,
+        "roi_pct": -7.51,
+        "roi_se_pct": 5.94,
+        "roi_z": -1.27,
+        "avg_odds": 1.326,
+        "implied_wr": 0.7539
+      },
+      "2026-06-11": {
+        "n": 47,
+        "wins": 37,
+        "wr": 0.7872,
+        "roi_pct": 3.47,
+        "roi_se_pct": 8.07,
+        "roi_z": 0.43,
+        "avg_odds": 1.319,
+        "implied_wr": 0.7581
+      },
+      "2026-06-12": {
+        "n": 629,
+        "wins": 456,
+        "wr": 0.725,
+        "roi_pct": -3.96,
+        "roi_se_pct": 2.39,
+        "roi_z": -1.66,
+        "avg_odds": 1.333,
+        "implied_wr": 0.75
+      }
+    },
+    "last5_active_days": {
+      "2026-06-06": {
+        "n": 379,
+        "wins": 288,
+        "wr": 0.7599,
+        "roi_pct": 0.42,
+        "roi_se_pct": 2.94,
+        "roi_z": 0.14,
+        "avg_odds": 1.335,
+        "implied_wr": 0.7489
+      },
+      "2026-06-07": {
+        "n": 12,
+        "wins": 10,
+        "wr": 0.8333,
+        "roi_pct": 10.67,
+        "roi_se_pct": 15.13,
+        "roi_z": 0.7,
+        "avg_odds": 1.35,
+        "implied_wr": 0.7407
+      },
+      "2026-06-10": {
+        "n": 107,
+        "wins": 75,
+        "wr": 0.7009,
+        "roi_pct": -7.51,
+        "roi_se_pct": 5.94,
+        "roi_z": -1.27,
+        "avg_odds": 1.326,
+        "implied_wr": 0.7539
+      },
+      "2026-06-11": {
+        "n": 47,
+        "wins": 37,
+        "wr": 0.7872,
+        "roi_pct": 3.47,
+        "roi_se_pct": 8.07,
+        "roi_z": 0.43,
+        "avg_odds": 1.319,
+        "implied_wr": 0.7581
+      },
+      "2026-06-12": {
+        "n": 629,
+        "wins": 456,
+        "wr": 0.725,
+        "roi_pct": -3.96,
+        "roi_se_pct": 2.39,
+        "roi_z": -1.66,
+        "avg_odds": 1.333,
+        "implied_wr": 0.75
+      }
+    },
+    "cusum": {
+      "n": 2260,
+      "calib": {
+        "max_bridge": 1.476,
+        "p_value": 0.0257,
+        "at_index": 2004,
+        "at_date": "2026-06-12 13:12",
+        "final_excess_wins": 28.3,
+        "mean_wr": 0.7261,
+        "mean_implied": 0.7136
+      },
+      "regime": {
+        "max_bridge": 0.661,
+        "p_value": 0.7755,
+        "at_index": 1087,
+        "at_date": "2026-06-06 00:00",
+        "wr_pre": 0.7132,
+        "wr_post": 0.7381,
+        "n_pre": 1088,
+        "n_post": 1172
+      }
+    }
+  }
+}

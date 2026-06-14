@@ -1,0 +1,457 @@
+{
+ "shrink_h": 0.7378440642343844,
+ "shrink_a": 0.7622191151988287,
+ "shrink_h_se": 0.08378178263827574,
+ "shrink_a_se": 0.09336081869203335,
+ "logloss": {
+  "published": 0.9602839951786344,
+  "blended": 0.9598501358146666,
+  "factor": 0.9637205839005282,
+  "p_blend_beats_pub": 0.29098840951256966
+ },
+ "n_test_usable": 2320,
+ "n_tests_scanned": 30,
+ "grid": [
+  {
+   "model": "blend",
+   "ev_min": 0.0,
+   "odds_min": 1.0,
+   "n": 574,
+   "roi_pct": -2.79,
+   "wr": 0.2021,
+   "avg_odds": 6.263,
+   "pvalue": 0.61444,
+   "sel_mix": {
+    "0": 211,
+    "1": 13,
+    "2": 350
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.0,
+   "odds_min": 1.6,
+   "n": 564,
+   "roi_pct": -2.98,
+   "wr": 0.1933,
+   "avg_odds": 6.347,
+   "pvalue": 0.619869,
+   "sel_mix": {
+    "0": 201,
+    "1": 13,
+    "2": 350
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.0,
+   "odds_min": 2.0,
+   "n": 547,
+   "roi_pct": -2.87,
+   "wr": 0.1828,
+   "avg_odds": 6.488,
+   "pvalue": 0.612406,
+   "sel_mix": {
+    "0": 184,
+    "1": 13,
+    "2": 350
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.02,
+   "odds_min": 1.0,
+   "n": 360,
+   "roi_pct": 3.75,
+   "wr": 0.1861,
+   "avg_odds": 7.042,
+   "pvalue": 0.389479,
+   "sel_mix": {
+    "0": 153,
+    "1": 1,
+    "2": 206
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.02,
+   "odds_min": 1.6,
+   "n": 359,
+   "roi_pct": 3.61,
+   "wr": 0.1838,
+   "avg_odds": 7.057,
+   "pvalue": 0.393862,
+   "sel_mix": {
+    "0": 152,
+    "1": 1,
+    "2": 206
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.02,
+   "odds_min": 2.0,
+   "n": 353,
+   "roi_pct": 3.36,
+   "wr": 0.1756,
+   "avg_odds": 7.146,
+   "pvalue": 0.402594,
+   "sel_mix": {
+    "0": 146,
+    "1": 1,
+    "2": 206
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.04,
+   "odds_min": 1.0,
+   "n": 231,
+   "roi_pct": 12.6,
+   "wr": 0.1775,
+   "avg_odds": 7.642,
+   "pvalue": 0.244181,
+   "sel_mix": {
+    "0": 118,
+    "2": 113
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.04,
+   "odds_min": 1.6,
+   "n": 231,
+   "roi_pct": 12.6,
+   "wr": 0.1775,
+   "avg_odds": 7.642,
+   "pvalue": 0.244181,
+   "sel_mix": {
+    "0": 118,
+    "2": 113
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.04,
+   "odds_min": 2.0,
+   "n": 231,
+   "roi_pct": 12.6,
+   "wr": 0.1775,
+   "avg_odds": 7.642,
+   "pvalue": 0.244181,
+   "sel_mix": {
+    "0": 118,
+    "2": 113
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.06,
+   "odds_min": 1.0,
+   "n": 134,
+   "roi_pct": 14.25,
+   "wr": 0.1716,
+   "avg_odds": 8.247,
+   "pvalue": 0.285171,
+   "sel_mix": {
+    "0": 82,
+    "2": 52
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.06,
+   "odds_min": 1.6,
+   "n": 134,
+   "roi_pct": 14.25,
+   "wr": 0.1716,
+   "avg_odds": 8.247,
+   "pvalue": 0.285171,
+   "sel_mix": {
+    "0": 82,
+    "2": 52
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.06,
+   "odds_min": 2.0,
+   "n": 134,
+   "roi_pct": 14.25,
+   "wr": 0.1716,
+   "avg_odds": 8.247,
+   "pvalue": 0.285171,
+   "sel_mix": {
+    "0": 82,
+    "2": 52
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.08,
+   "odds_min": 1.0,
+   "n": 71,
+   "roi_pct": 24.68,
+   "wr": 0.1972,
+   "avg_odds": 9.144,
+   "pvalue": 0.223066,
+   "sel_mix": {
+    "0": 40,
+    "2": 31
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.08,
+   "odds_min": 1.6,
+   "n": 71,
+   "roi_pct": 24.68,
+   "wr": 0.1972,
+   "avg_odds": 9.144,
+   "pvalue": 0.223066,
+   "sel_mix": {
+    "0": 40,
+    "2": 31
+   }
+  },
+  {
+   "model": "blend",
+   "ev_min": 0.08,
+   "odds_min": 2.0,
+   "n": 71,
+   "roi_pct": 24.68,
+   "wr": 0.1972,
+   "avg_odds": 9.144,
+   "pvalue": 0.223066,
+   "sel_mix": {
+    "0": 40,
+    "2": 31
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.0,
+   "odds_min": 1.0,
+   "n": 1798,
+   "roi_pct": -4.12,
+   "wr": 0.282,
+   "avg_odds": 4.58,
+   "pvalue": 0.821439,
+   "sel_mix": {
+    "0": 597,
+    "1": 257,
+    "2": 944
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.0,
+   "odds_min": 1.6,
+   "n": 1671,
+   "roi_pct": -4.32,
+   "wr": 0.249,
+   "avg_odds": 4.823,
+   "pvalue": 0.815745,
+   "sel_mix": {
+    "0": 471,
+    "1": 257,
+    "2": 943
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.0,
+   "odds_min": 2.0,
+   "n": 1569,
+   "roi_pct": -5.26,
+   "wr": 0.2256,
+   "avg_odds": 5.018,
+   "pvalue": 0.849928,
+   "sel_mix": {
+    "0": 403,
+    "1": 257,
+    "2": 909
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.02,
+   "odds_min": 1.0,
+   "n": 1545,
+   "roi_pct": -4.09,
+   "wr": 0.2712,
+   "avg_odds": 4.782,
+   "pvalue": 0.79467,
+   "sel_mix": {
+    "0": 499,
+    "1": 187,
+    "2": 859
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.02,
+   "odds_min": 1.6,
+   "n": 1450,
+   "roi_pct": -4.25,
+   "wr": 0.2421,
+   "avg_odds": 5.004,
+   "pvalue": 0.789619,
+   "sel_mix": {
+    "0": 404,
+    "1": 187,
+    "2": 859
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.02,
+   "odds_min": 2.0,
+   "n": 1364,
+   "roi_pct": -5.13,
+   "wr": 0.2192,
+   "avg_odds": 5.204,
+   "pvalue": 0.821475,
+   "sel_mix": {
+    "0": 345,
+    "1": 187,
+    "2": 832
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.04,
+   "odds_min": 1.0,
+   "n": 1310,
+   "roi_pct": -1.33,
+   "wr": 0.2611,
+   "avg_odds": 5.038,
+   "pvalue": 0.593257,
+   "sel_mix": {
+    "0": 417,
+    "1": 119,
+    "2": 774
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.04,
+   "odds_min": 1.6,
+   "n": 1257,
+   "roi_pct": -1.66,
+   "wr": 0.2403,
+   "avg_odds": 5.19,
+   "pvalue": 0.611464,
+   "sel_mix": {
+    "0": 364,
+    "1": 119,
+    "2": 774
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.04,
+   "odds_min": 2.0,
+   "n": 1191,
+   "roi_pct": -2.09,
+   "wr": 0.2208,
+   "avg_odds": 5.377,
+   "pvalue": 0.633008,
+   "sel_mix": {
+    "0": 312,
+    "1": 119,
+    "2": 760
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.06,
+   "odds_min": 1.0,
+   "n": 1120,
+   "roi_pct": -0.01,
+   "wr": 0.25,
+   "avg_odds": 5.304,
+   "pvalue": 0.500791,
+   "sel_mix": {
+    "0": 363,
+    "1": 74,
+    "2": 683
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.06,
+   "odds_min": 1.6,
+   "n": 1087,
+   "roi_pct": -0.25,
+   "wr": 0.2346,
+   "avg_odds": 5.421,
+   "pvalue": 0.515324,
+   "sel_mix": {
+    "0": 330,
+    "1": 74,
+    "2": 683
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.06,
+   "odds_min": 2.0,
+   "n": 1032,
+   "roi_pct": -0.68,
+   "wr": 0.2151,
+   "avg_odds": 5.613,
+   "pvalue": 0.539586,
+   "sel_mix": {
+    "0": 282,
+    "1": 74,
+    "2": 676
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.08,
+   "odds_min": 1.0,
+   "n": 972,
+   "roi_pct": 0.76,
+   "wr": 0.2387,
+   "avg_odds": 5.556,
+   "pvalue": 0.456566,
+   "sel_mix": {
+    "0": 335,
+    "1": 43,
+    "2": 594
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.08,
+   "odds_min": 1.6,
+   "n": 949,
+   "roi_pct": 0.59,
+   "wr": 0.2266,
+   "avg_odds": 5.655,
+   "pvalue": 0.467143,
+   "sel_mix": {
+    "0": 312,
+    "1": 43,
+    "2": 594
+   }
+  },
+  {
+   "model": "factor",
+   "ev_min": 0.08,
+   "odds_min": 2.0,
+   "n": 905,
+   "roi_pct": -0.14,
+   "wr": 0.2066,
+   "avg_odds": 5.842,
+   "pvalue": 0.507357,
+   "sel_mix": {
+    "0": 269,
+    "1": 43,
+    "2": 593
+   }
+  }
+ ]
+}

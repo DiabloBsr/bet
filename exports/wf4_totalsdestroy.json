@@ -1,0 +1,341 @@
+{
+  "dup_results_events": 0,
+  "survivorship_per_league": {
+    "InstantLeague-8035": {
+      "with_odds": 17551,
+      "no_result": 9182,
+      "pct_missing": 52.3
+    },
+    "InstantLeague-8036": {
+      "with_odds": 1610,
+      "no_result": 140,
+      "pct_missing": 8.7
+    },
+    "InstantLeague-8037": {
+      "with_odds": 1640,
+      "no_result": 150,
+      "pct_missing": 9.1
+    },
+    "InstantLeague-8042": {
+      "with_odds": 1422,
+      "no_result": 153,
+      "pct_missing": 10.8
+    },
+    "InstantLeague-8043": {
+      "with_odds": 1422,
+      "no_result": 153,
+      "pct_missing": 10.8
+    },
+    "InstantLeague-8044": {
+      "with_odds": 1413,
+      "no_result": 153,
+      "pct_missing": 10.8
+    },
+    "InstantLeague-8056": {
+      "with_odds": 3042,
+      "no_result": 198,
+      "pct_missing": 6.5
+    },
+    "InstantLeague-8060": {
+      "with_odds": 1980,
+      "no_result": 168,
+      "pct_missing": 8.5
+    },
+    "InstantLeague-8065": {
+      "with_odds": 3960,
+      "no_result": 216,
+      "pct_missing": 5.5
+    }
+  },
+  "fresh_extraction": {
+    "kept": 23136,
+    "corrupt": 388,
+    "dupe": 0,
+    "guard": 0,
+    "badodds": 3,
+    "settle_mismatch": 0
+  },
+  "ou_market_keys": {
+    "> 3.5": 23136,
+    "< 3.5": 23136
+  },
+  "snapshot_status_counts": {
+    "upcoming": 23136
+  },
+  "lambda_audit_max_dev": 0.0,
+  "fresh_under": {
+    "pooled9": {
+      "n": 22326,
+      "wr": 0.6669,
+      "roi": -0.05805,
+      "odds": 1.458,
+      "p": 0.0
+    },
+    "8035": {
+      "n": 7981,
+      "wr": 0.6318,
+      "roi": -0.06729,
+      "odds": 1.5,
+      "p": 0.0
+    },
+    "newleagues": {
+      "n": 14345,
+      "wr": 0.6865,
+      "roi": -0.05291,
+      "odds": 1.435,
+      "p": 0.0
+    },
+    "fav_min_odds_lt_1.3": {
+      "n": 2591,
+      "wr": 0.5724,
+      "roi": -0.06773,
+      "odds": 1.672,
+      "p": 3.3e-05
+    },
+    "fav_min_odds_le_1.3": {
+      "n": 2752,
+      "wr": 0.5694,
+      "roi": -0.07493,
+      "odds": 1.669,
+      "p": 2e-06
+    }
+  },
+  "look_ahead": {
+    "opening_after_start": 15569,
+    "pct": 67.29
+  },
+  "capture_minus_start_min": {
+    "q01": -5176.1,
+    "q05": -2842.4,
+    "q25": -0.3,
+    "q50": 0.5,
+    "q75": 1.2,
+    "q95": 3.4,
+    "q99": 7.7
+  },
+  "under_by_lookahead": {
+    "captured_before_start": {
+      "n": 7347,
+      "wr": 0.6618,
+      "roi": -0.06307,
+      "odds": 1.455,
+      "p": 0.0
+    },
+    "captured_after_start": {
+      "n": 14979,
+      "wr": 0.6695,
+      "roi": -0.05559,
+      "odds": 1.459,
+      "p": 0.0
+    }
+  },
+  "fav13_under_noLA": {
+    "n": 781,
+    "wr": 0.5531,
+    "roi": -0.07967,
+    "odds": 1.693,
+    "p": 0.008592
+  },
+  "settlement": {
+    "with_goals_json_pct": 90.9,
+    "excluded_mismatch": 0
+  },
+  "walkforward_8035_under": {
+    "blanket_train": {
+      "n": 5586,
+      "wr": 0.6312,
+      "roi": -0.06712,
+      "odds": 1.5,
+      "p": 0.0
+    },
+    "blanket_test": {
+      "n": 2395,
+      "wr": 0.633,
+      "roi": -0.06771,
+      "odds": 1.499,
+      "p": 5e-06
+    },
+    "fav13_train": {
+      "n": 610,
+      "wr": 0.5361,
+      "roi": -0.07751,
+      "odds": 1.735,
+      "p": 0.027203
+    },
+    "fav13_test": {
+      "n": 251,
+      "wr": 0.4861,
+      "roi": -0.15845,
+      "odds": 1.744,
+      "p": 0.004028
+    },
+    "cut_date": "2026-06-12 01:53:56.000000"
+  },
+  "subperiods_under": {
+    "2026-05-B": {
+      "pooled": {
+        "n": 244,
+        "wr": 0.6516,
+        "roi": -0.01951,
+        "odds": 1.51,
+        "p": 0.678328
+      },
+      "fav13": {
+        "n": 21,
+        "wr": 0.619,
+        "roi": 0.07571,
+        "odds": 1.718,
+        "p": 0.692401
+      }
+    },
+    "2026-06-A": {
+      "pooled": {
+        "n": 22082,
+        "wr": 0.6671,
+        "roi": -0.05848,
+        "odds": 1.457,
+        "p": 0.0
+      },
+      "fav13": {
+        "n": 2570,
+        "wr": 0.572,
+        "roi": -0.06891,
+        "odds": 1.672,
+        "p": 2.6e-05
+      }
+    }
+  },
+  "bootstrap_fav13_under": {
+    "roi": -0.06773,
+    "ci95": [
+      -0.1,
+      -0.03609
+    ],
+    "p_roi_pos": 0.0
+  },
+  "bootstrap_blanket_under": {
+    "roi": -0.05805,
+    "ci95": [
+      -0.06719,
+      -0.04877
+    ],
+    "p_roi_pos": 0.0
+  },
+  "fresh_oos_under": {
+    "n_events": 1937,
+    "n": 1862,
+    "wr": 0.666,
+    "roi": -0.07271,
+    "odds": 1.446,
+    "p": 6e-06
+  },
+  "fresh_oos_fav13_under": {
+    "n": 239,
+    "wr": 0.5272,
+    "roi": -0.15339,
+    "odds": 1.652,
+    "p": 0.004369
+  },
+  "under_pocket_scan": {
+    "n_segments_n150": 92,
+    "n_positive": 3,
+    "n_pass_thresholds": 0,
+    "top8": [
+      {
+        "seg": "lam[3.4-99)_dom-new",
+        "n": 431,
+        "wr": 0.529,
+        "roi": 0.0171,
+        "odds": 1.926,
+        "p": 0.712816
+      },
+      {
+        "seg": "lam[3.6-99)_dom-new",
+        "n": 247,
+        "wr": 0.5061,
+        "roi": 0.01364,
+        "odds": 2.004,
+        "p": 0.831157
+      },
+      {
+        "seg": "odds_u[1.5-1.7)_coupes",
+        "n": 1771,
+        "wr": 0.6318,
+        "roi": 0.00023,
+        "odds": 1.584,
+        "p": 0.98984
+      },
+      {
+        "seg": "odds_u[2.5-99)_all",
+        "n": 180,
+        "wr": 0.3667,
+        "roi": -0.00061,
+        "odds": 2.819,
+        "p": 0.995053
+      },
+      {
+        "seg": "odds_u[2.5-99)_coupes",
+        "n": 180,
+        "wr": 0.3667,
+        "roi": -0.00061,
+        "odds": 2.819,
+        "p": 0.995053
+      },
+      {
+        "seg": "fav<1.15_all",
+        "n": 719,
+        "wr": 0.6008,
+        "roi": -0.01373,
+        "odds": 1.669,
+        "p": 0.654557
+      },
+      {
+        "seg": "lam[3.0-3.4)_coupes",
+        "n": 1400,
+        "wr": 0.595,
+        "roi": -0.01805,
+        "odds": 1.655,
+        "p": 0.405501
+      },
+      {
+        "seg": "lam[2.8-3.2)_coupes",
+        "n": 1907,
+        "wr": 0.6287,
+        "roi": -0.02217,
+        "odds": 1.555,
+        "p": 0.198611
+      }
+    ]
+  },
+  "domnew_lam34_under_fresh": {
+    "n": 431,
+    "wr": 0.529,
+    "roi": 0.0171,
+    "odds": 1.926,
+    "p": 0.712816
+  },
+  "domnew_lam34_under_OOSonly": {
+    "n": 44,
+    "wr": 0.5227,
+    "roi": 0.01909,
+    "odds": 1.926,
+    "p": 0.898159
+  },
+  "coupes_lam3034_under_fresh": {
+    "n": 1400,
+    "wr": 0.595,
+    "roi": -0.01805,
+    "odds": 1.655,
+    "p": 0.405501
+  },
+  "margin_ou35": {
+    "mean_pct": 6.0,
+    "std_pct": 0.166,
+    "n": 22326
+  },
+  "under_calibration": {
+    "wr_real": 0.6669,
+    "implied_offered": 0.7082,
+    "implied_fair": 0.6681
+  }
+}

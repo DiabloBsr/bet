@@ -1,0 +1,7 @@
+V5/V10 (n_train=5712)
+
+🌍 Saison récente (20 dernières) depuis 2026-06-12 01:49:56
+   🔥 EN FORME : London Reds(94%/16), Wolverhampton(60%/15), Bournemouth(53%/17), West Ham(53%/19), Brentford(62%/16), London Blues(67%/18), Burnley(38%/16)
+   ❄️  EN PERTE : Newcastle(27%/15), Fulham(19%/16), C. Palace(20%/15), Spurs(31%/16)
+
+Round 09:37 introuvable. Dispo : []

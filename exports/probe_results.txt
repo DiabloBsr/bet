@@ -1,0 +1,83 @@
+﻿=== Step 1 : load /results page ===
+
+=== Step 2 : fetch via browser context (skip differents) ===
+  skip=0 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=4 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=8 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=20 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=50 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=100 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=200 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=500 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  skip=1000 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+=== Step 3 : maximum take possible ? ===
+  take=50 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  take=100 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  take=500 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  take=1000 err: Page.evaluate: TypeError: Failed to fetch
+    at https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:26392
+    at Fe.s.<computed> (https://bet261.mg/polyfills.e85d18ec1472ee8e1fdc.js:1:20440)
+    at eval (eval at evaluate (:302:30), <anonymous>:2:44)
+    at UtilityScript.evaluate (<anonymous>:309:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)

@@ -1,0 +1,26 @@
+Train n=2555, Test n=1096
+Liste noire V9 : {'London Blues'}
+
+Rounds test : 221
+
+=== V8 (sans biais équipe) ===
+  Bankroll final : 124.65u (+24.65u)
+  Paris : 491
+  Drawdown max : -25.9%
+  SPÉCULATIF    n= 359  acc=  5.0%  ROI=+35.46%
+  MODÉRÉ        n=  60  acc= 51.7%  ROI= +8.33%
+  SÉCURISÉ      n=  72  acc= 62.5%  ROI= -3.12%
+
+=== V9 (avec biais équipe + blacklist) ===
+  Bankroll final : 127.72u (+27.72u)
+  Paris : 483
+  Drawdown max : -27.5%
+  SPÉCULATIF    n= 358  acc=  5.0%  ROI=+32.86%
+  MODÉRÉ        n=  55  acc= 49.1%  ROI= +2.65%
+  SÉCURISÉ      n=  70  acc= 65.7%  ROI= +1.95%
+
+============================================================
+Δ V9 vs V8 : +3.08u
+  SÉCURISÉ      Acc: 62.5% → 65.7% (Δ +3.2pp)   ROI: -3.12% → +1.95% (Δ +5.07pp)
+  MODÉRÉ        Acc: 51.7% → 49.1% (Δ -2.6pp)   ROI: +8.33% → +2.65% (Δ -5.68pp)
+  SPÉCULATIF    Acc: 5.0% → 5.0% (Δ +0.0pp)   ROI: +35.46% → +32.86% (Δ -2.61pp)

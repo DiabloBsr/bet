@@ -1,0 +1,61 @@
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  🎯 ANALYSE DEEP : A. Villa vs Fulham
+     Cotes : 1.67 / 4.19 / 4.50
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1️⃣ H2H — CONFRONTATIONS DIRECTES (toutes confrontations historiques)
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   A. Villa home vs Fulham : n=12 (10W / 2D / 0L)
+   Scores fréquents : 2-1(4/12) · 3-1(3/12) · 3-2(3/12)
+   Cote home moyenne historique : 1.67  (vs cote actuelle 1.67)
+   ROI historique : parier 1=+39.0%, X=-31.8%, 2=-100.0%
+   Fulham home vs A. Villa : n=12 (5W / 3D / 4L)
+
+2️⃣ PERFORMANCE HOME / AWAY (toutes confrontations)
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   A. Villa HOME : n=223, 57% wins, buts marqués 1.99, encaissés 1.11
+      Clean sheets : 27%   BTTS : 63%   Over 2.5 : 66%
+   Fulham AWAY : n=203, 28% wins, buts marqués 1.19, encaissés 1.64
+      Clean sheets : 14%   BTTS : 60%   Over 2.5 : 61%
+
+3️⃣ PATTERNS DE COTES (que se passe-t-il à cette cote précise ?)
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   💎 PAIRE OR HOME : n=11, win=82%, ROI +36%
+   Probas vig-free : 1=56.5%  X=22.5%  2=21.0%
+
+4️⃣ SÉRIES ET CYCLES
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   A. Villa (home, 5 derniers) : WWWWD
+   Fulham (away, 5 derniers) : LLWLW
+   ⚠️ Note empirique : en virtuel Sporty-Tech, les séries ne prédisent PAS le prochain match
+      (testé : streak ≥ 5 → ROI -16%, gambler's fallacy)
+
+5️⃣ BUTS (Over/Under, BTTS, score exact)
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   H2H buts : moyenne 3.92, Over 1.5=100%, Over 2.5=100%, BTTS=100%
+   💎 OVER 2.5 GOLD : 100% historique sur n=12 → PARIER OVER 2.5
+   💎 BTTS OUI GOLD : 100% historique sur n=12 → PARIER BTTS OUI
+
+6️⃣ MI-TEMPS
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   H2H mi-temps : 1=50%  X=50%  2=0%
+   Retournements HT→FT : 3/10 (30%)
+
+7️⃣ ALGORITHME VIRTUEL
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   ⚠️ Note empirique : Sporty-Tech n'a PAS de cycle de correction validé
+      (rounds indépendants RNG, gambler's fallacy débunkée)
+   ✅ Edge réel exploitable : HT/FT comebacks (1/2 ROI +104%, 2/1 ROI +28%)
+      = bookmaker sous-évalue les comebacks à cote 30-100
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  ✅ VERDICT FINAL
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+   ✅ PRONOSTIC : 1  (A. Villa)
+   ✅ COTE     : @1.67
+   ✅ CONFIANCE: 10/10
+   ✅ TYPE     : SÉCURISÉ
+   ✅ JUSTIFICATION : H2H domine 83% + PAIRE OR home n=11 ROI+36%
+   ✅ SCORE PROBABLE : 2-1 (récurrent 4/12 fois H2H)

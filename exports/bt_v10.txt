@@ -1,0 +1,25 @@
+=== Backtest V8 vs V9 vs V10 — n=3695 ===
+
+Train n=2586, Test n=1109, Rounds=220
+
+=== V8 ===
+  Bankroll final : 118.79u (+18.79u)
+  Paris : 474
+  SÉCURISÉ      n=  76  acc= 59.2%  ROI= -8.43%
+  MODÉRÉ        n=  29  acc= 20.7%  ROI=-31.09%
+  SPÉCULATIF    n= 369  acc=  5.1%  ROI=+46.84%
+
+=== V9 ===
+  Bankroll final : 118.80u (+18.80u)
+  Paris : 457
+  SÉCURISÉ      n=  65  acc= 61.5%  ROI= +1.86%
+  MODÉRÉ        n=  22  acc= 27.3%  ROI=-15.66%
+  SPÉCULATIF    n= 370  acc=  4.6%  ROI=+21.69%
+
+=== V10 ===
+  Bankroll final : 157.77u (+57.77u)
+  Paris : 500
+  SÉCURISÉ      n=  66  acc= 65.2%  ROI=+10.65%
+  MODÉRÉ        n=  90  acc= 43.3%  ROI= -9.57%
+  SPÉCULATIF    n= 344  acc=  7.0%  ROI=+31.73%
+

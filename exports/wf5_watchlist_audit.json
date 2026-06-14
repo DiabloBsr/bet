@@ -1,0 +1,334 @@
+{
+  "frozen_at_v1": "2026-06-11T17:00:00",
+  "frozen_at_v2": "2026-06-12T01:30:00",
+  "dataset_n": 7619,
+  "dataset_max_ts": "2026-06-12 16:38:56",
+  "rules": {
+    "promotion": "z>=2 & n>=80 & roi>0",
+    "demotion": "n>=80 & (roi<=-10% | z<=-1.5)"
+  },
+  "signals": {
+    "fade_serie_5plus": {
+      "frozen_at": "2026-06-11 17:00:00",
+      "histo": {
+        "n": 103,
+        "wins": 29,
+        "wr": 0.2816,
+        "avg_cote": 5.416,
+        "roi": -0.0693,
+        "p_implied": 0.2668,
+        "z": 0.338,
+        "first_ts": "2026-05-28 23:32:50",
+        "last_ts": "2026-06-11 11:42:56"
+      },
+      "forward": {
+        "n": 35,
+        "wins": 10,
+        "wr": 0.2857,
+        "avg_cote": 4.608,
+        "roi": -0.0337,
+        "p_implied": 0.2723,
+        "z": 0.179,
+        "first_ts": "2026-06-12 06:08:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 35,
+        "wins": 10,
+        "wr": 0.2857,
+        "avg_cote": 4.608,
+        "roi": -0.0337,
+        "p_implied": 0.2723,
+        "z": 0.179,
+        "first_ts": "2026-06-12 06:08:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "fade_serie_5plus_draw": {
+      "frozen_at": "2026-06-11 17:00:00",
+      "histo": {
+        "n": 103,
+        "wins": 21,
+        "wr": 0.2039,
+        "avg_cote": 4.657,
+        "roi": -0.0874,
+        "p_implied": 0.2103,
+        "z": -0.159,
+        "first_ts": "2026-05-28 23:32:50",
+        "last_ts": "2026-06-11 11:42:56"
+      },
+      "forward": {
+        "n": 35,
+        "wins": 11,
+        "wr": 0.3143,
+        "avg_cote": 4.423,
+        "roi": 0.3311,
+        "p_implied": 0.2169,
+        "z": 1.398,
+        "first_ts": "2026-06-12 06:08:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 35,
+        "wins": 11,
+        "wr": 0.3143,
+        "avg_cote": 4.423,
+        "roi": 0.3311,
+        "p_implied": 0.2169,
+        "z": 1.398,
+        "first_ts": "2026-06-12 06:08:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "sous_regime_rebond": {
+      "frozen_at": "2026-06-11 17:00:00",
+      "histo": {
+        "n": 96,
+        "wins": 40,
+        "wr": 0.4167,
+        "avg_cote": 2.936,
+        "roi": -0.0521,
+        "p_implied": 0.4094,
+        "z": 0.145,
+        "first_ts": "2026-06-02 19:46:56",
+        "last_ts": "2026-06-10 20:12:56"
+      },
+      "forward": {
+        "n": 67,
+        "wins": 36,
+        "wr": 0.5373,
+        "avg_cote": 2.473,
+        "roi": 0.0472,
+        "p_implied": 0.4701,
+        "z": 1.102,
+        "first_ts": "2026-06-12 06:20:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 67,
+        "wins": 36,
+        "wr": 0.5373,
+        "avg_cote": 2.473,
+        "roi": 0.0472,
+        "p_implied": 0.4701,
+        "z": 1.102,
+        "first_ts": "2026-06-12 06:20:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "standings_pos_gap5": {
+      "frozen_at": "2026-06-11 17:00:00",
+      "histo": {
+        "n": 884,
+        "wins": 225,
+        "wr": 0.2545,
+        "avg_cote": 4.212,
+        "roi": -0.0304,
+        "p_implied": 0.2518,
+        "z": 0.185,
+        "first_ts": "2026-05-28 22:40:50",
+        "last_ts": "2026-06-11 14:02:56"
+      },
+      "forward": {
+        "n": 268,
+        "wins": 76,
+        "wr": 0.2836,
+        "avg_cote": 4.324,
+        "roi": 0.1868,
+        "p_implied": 0.2512,
+        "z": 1.222,
+        "first_ts": "2026-06-11 22:20:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 268,
+        "wins": 76,
+        "wr": 0.2836,
+        "avg_cote": 4.324,
+        "roi": 0.1868,
+        "p_implied": 0.2512,
+        "z": 1.222,
+        "first_ts": "2026-06-11 22:20:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "standings_pts_gap5": {
+      "frozen_at": "2026-06-11 17:00:00",
+      "histo": {
+        "n": 581,
+        "wins": 156,
+        "wr": 0.2685,
+        "avg_cote": 3.984,
+        "roi": -0.0201,
+        "p_implied": 0.26,
+        "z": 0.465,
+        "first_ts": "2026-05-28 22:50:50",
+        "last_ts": "2026-06-11 11:42:56"
+      },
+      "forward": {
+        "n": 212,
+        "wins": 61,
+        "wr": 0.2877,
+        "avg_cote": 3.97,
+        "roi": 0.1151,
+        "p_implied": 0.2613,
+        "z": 0.876,
+        "first_ts": "2026-06-12 01:12:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 212,
+        "wins": 61,
+        "wr": 0.2877,
+        "avg_cote": 3.97,
+        "roi": 0.1151,
+        "p_implied": 0.2613,
+        "z": 0.876,
+        "first_ts": "2026-06-12 01:12:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "value_home_vs_alltime": {
+      "frozen_at": "2026-06-11 17:00:00",
+      "histo": {
+        "n": 66,
+        "wins": 19,
+        "wr": 0.2879,
+        "avg_cote": 3.439,
+        "roi": -0.0409,
+        "p_implied": 0.2845,
+        "z": 0.06,
+        "first_ts": "2026-05-29 00:59:50",
+        "last_ts": "2026-06-11 11:42:56"
+      },
+      "forward": {
+        "n": 25,
+        "wins": 9,
+        "wr": 0.36,
+        "avg_cote": 3.371,
+        "roi": 0.2008,
+        "p_implied": 0.2869,
+        "z": 0.808,
+        "first_ts": "2026-06-11 19:44:56",
+        "last_ts": "2026-06-12 16:18:56"
+      },
+      "forward_clean": {
+        "n": 25,
+        "wins": 9,
+        "wr": 0.36,
+        "avg_cote": 3.371,
+        "roi": 0.2008,
+        "p_implied": 0.2869,
+        "z": 0.808,
+        "first_ts": "2026-06-11 19:44:56",
+        "last_ts": "2026-06-12 16:18:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "value_jitter_pair": {
+      "frozen_at": "2026-06-12 01:30:00",
+      "histo": {
+        "n": 2648,
+        "wins": 1033,
+        "wr": 0.3901,
+        "avg_cote": 3.646,
+        "roi": -0.0488,
+        "p_implied": 0.3832,
+        "z": 0.734,
+        "first_ts": "2026-06-03 19:14:56",
+        "last_ts": "2026-06-12 01:12:56"
+      },
+      "forward": {
+        "n": 1477,
+        "wins": 588,
+        "wr": 0.3981,
+        "avg_cote": 3.498,
+        "roi": -0.0053,
+        "p_implied": 0.3828,
+        "z": 1.21,
+        "first_ts": "2026-06-12 01:31:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 1477,
+        "wins": 588,
+        "wr": 0.3981,
+        "avg_cote": 3.498,
+        "roi": -0.0053,
+        "p_implied": 0.3828,
+        "z": 1.21,
+        "first_ts": "2026-06-12 01:31:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "mitps_longshot_global": {
+      "frozen_at": "2026-06-12 01:30:00",
+      "histo": {
+        "n": 792,
+        "wins": 137,
+        "wr": 0.173,
+        "avg_cote": 7.186,
+        "roi": 0.1832,
+        "p_implied": 0.141,
+        "z": 2.585,
+        "first_ts": "2026-05-28 22:42:50",
+        "last_ts": "2026-06-12 01:12:56"
+      },
+      "forward": {
+        "n": 233,
+        "wins": 38,
+        "wr": 0.1631,
+        "avg_cote": 6.807,
+        "roi": 0.0894,
+        "p_implied": 0.1463,
+        "z": 0.725,
+        "first_ts": "2026-06-12 01:31:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "forward_clean": {
+        "n": 233,
+        "wins": 38,
+        "wr": 0.1631,
+        "avg_cote": 6.807,
+        "roi": 0.0894,
+        "p_implied": 0.1463,
+        "z": 0.725,
+        "first_ts": "2026-06-12 01:31:56",
+        "last_ts": "2026-06-12 16:38:56"
+      },
+      "verdict": "CONTINUER",
+      "n_forward_corrupted": 0
+    },
+    "follow_drift": {
+      "frozen_at": "2026-06-12 01:30:00",
+      "histo": {
+        "n": 794,
+        "wins": 328,
+        "wr": 0.4131,
+        "avg_cote": 3.325,
+        "roi": 0.0158,
+        "p_implied": 0.3935,
+        "z": 1.133,
+        "first_ts": "2026-05-28 22:32:50",
+        "last_ts": "2026-06-06 19:43:56"
+      },
+      "forward": null,
+      "forward_clean": null,
+      "verdict": "INCONNU (0 pari forward)",
+      "n_forward_corrupted": 0
+    }
+  }
+}

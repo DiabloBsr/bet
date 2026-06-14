@@ -1,0 +1,48 @@
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  PORTEFEUILLE V8 — Round 15:45 Mada — 9 matchs analysés
+  Bankroll 100u — Cap par round : 10% (10.0u max)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📋 3 PARIS SÉLECTIONNÉS (diversifiés sur 3 catégories)
+
+━━━ PARI #1  [🔴 SPÉCULATIF]  Confiance 4.1/10
+     Match : Sunderland vs London Reds
+     Pari  : HT/FT 2/1  @100.00
+     Je parie HT/FT 2/1 (London Reds mène à HT, Sunderland gagne au final) — cote 100.00.
+       Comeback du HOME (Sunderland) attendu, p_emp 3.7% vs bookmaker 1.0%.
+       → EV +274%, confiance 4.1/10
+     Mise  :  0.14u   Gain si OK : +13.71u   EV : + 0.38u
+
+━━━ PARI #2  [🔴 SPÉCULATIF]  Confiance 4.4/10
+     Match : N. Forest vs West Ham
+     Pari  : HT/FT 1/2  @61.66
+     Je parie HT/FT 1/2 (N. Forest mène à HT, West Ham gagne au final) — cote 61.66.
+       C'est un pari spéculatif sur un comeback de l'AWAY (West Ham).
+       Le bookmaker price ça à 1.6% mais l'empirique sur 3400+ matchs montre 4.6%.
+       Edge brut : +3.0pp en notre faveur.
+       → EV +185%, confiance 4.4/10
+     Mise  :  0.15u   Gain si OK : + 9.27u   EV : + 0.28u
+
+━━━ PARI #3  [🟢 SÉCURISÉ]  Confiance 6.5/10
+     Match : London Blues vs C. Palace
+     Pari  : 1X2 1  @1.71
+     Je parie HOME (London Blues) — cote 1.71.
+       Probabilité empirique : 59.5%, marché : 55.2%, edge +4.3pp.
+       → EV +11%, confiance 6.5/10
+     Mise  :  0.62u   Gain si OK : + 0.44u   EV : + 0.07u
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+📊 SYNTHÈSE DU PORTEFEUILLE
+   Total misé        :   0.91u / 100u (0.9%)
+   Gain attendu (EV) : + 0.73u
+   ROI attendu       : +79.9%
+   Répartition       : 🟢 1 sécurisé(s) | 🟡 0 modéré(s) | 🔴 2 spéculatif(s)
+
+⚠️  RISK MANAGEMENT
+   • Variance attendue : élevée sur les paris spéculatifs (acc ~4%)
+   • Drawdown possible : 30-50 paris perdants consécutifs sont normaux
+   • Stop-loss conseillé : si bankroll perd 20% (-20u), pause de 5 rounds
+   • Stop-win conseillé : si bankroll +30% (+30u), retire 50% des gains
+   • Ne JAMAIS combler une perte en augmentant les mises (Martingale = ruine)
+════════════════════════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,30 @@
+Rounds disponibles : 382
+
+=== Sample 30 rounds (out of 382) — 200 simulations ===
+  Bankroll final : médiane 100.1u, moyenne 101.6u
+  P10 / P90      : 92.2u / 111.9u
+  P(profit)      : 50.5%
+  P(perte >20%)  : 0.0%
+  Drawdown moyen : -6.3%
+
+=== Sample 60 rounds (out of 382) — 200 simulations ===
+  Bankroll final : médiane 100.6u, moyenne 102.6u
+  P10 / P90      : 88.7u / 118.4u
+  P(profit)      : 56.0%
+  P(perte >20%)  : 0.0%
+  Drawdown moyen : -9.3%
+
+=== Sample 100 rounds (out of 382) — 200 simulations ===
+  Bankroll final : médiane 103.7u, moyenne 105.2u
+  P10 / P90      : 90.2u / 123.6u
+  P(profit)      : 61.0%
+  P(perte >20%)  : 2.0%
+  Drawdown moyen : -11.9%
+
+=== Sample 191 rounds (out of 382) — 1 simulations ===
+  Bankroll final : médiane 123.7u, moyenne 123.7u
+  P10 / P90      : 123.7u / 123.7u
+  P(profit)      : 100.0%
+  P(perte >20%)  : 0.0%
+  Drawdown moyen : -9.5%
+

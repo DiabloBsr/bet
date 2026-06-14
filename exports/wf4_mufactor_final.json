@@ -1,0 +1,1080 @@
+{
+ "n_ht_gt_ft": 0,
+ "v5_coefs_7030": {
+  "home": [
+   0.14246626389124467,
+   0.8543654526979376,
+   0.7378440642343883
+  ],
+  "away": [
+   0.05741963536528607,
+   1.022669347042023,
+   0.7622191151988269
+  ]
+ },
+ "v5_strict7030": {
+  "n": 445,
+  "roi_pct": 7.86,
+  "wr": 0.1843,
+  "avg_odds": 7.07,
+  "z": 0.48,
+  "p_mc": 0.24479333333333334,
+  "distinct_pair_sel": 121
+ },
+ "v5_strict7030_guard": {
+  "n": 445,
+  "roi_pct": 7.86,
+  "wr": 0.1843,
+  "avg_odds": 7.07,
+  "z": 0.48,
+  "p_mc": 0.24479333333333334,
+  "distinct_pair_sel": 121
+ },
+ "v5_rolling": {
+  "n": 813,
+  "roi_pct": 18.69,
+  "wr": 0.2079,
+  "avg_odds": 7.031,
+  "z": 2.1,
+  "p_mc": 0.01744
+ },
+ "v5_rolling_guard": {
+  "n": 813,
+  "roi_pct": 18.69,
+  "wr": 0.2079,
+  "avg_odds": 7.031,
+  "z": 2.1,
+  "p_mc": 0.01744
+ },
+ "v5_folds": [
+  {
+   "fold": "0.4-0.55",
+   "n": 182,
+   "roi_pct": 42.71
+  },
+  {
+   "fold": "0.55-0.7",
+   "n": 208,
+   "roi_pct": 15.03
+  },
+  {
+   "fold": "0.7-0.85",
+   "n": 203,
+   "roi_pct": 6.33
+  },
+  {
+   "fold": "0.85-1.0",
+   "n": 220,
+   "roi_pct": 13.7
+  }
+ ],
+ "v5_rolling_distinct_pair_sel": 141,
+ "audit_winning_bets": [
+  {
+   "bet": {
+    "id": 3365,
+    "pair": [
+     "Liverpool",
+     "London Blues"
+    ],
+    "sel": "A",
+    "odd": 8.06,
+    "won": 1
+   },
+   "db": {
+    "home": "Liverpool",
+    "away": "London Blues",
+    "score": "1-2",
+    "open_odds": [
+     1.33,
+     5.38,
+     8.06
+    ]
+   }
+  },
+  {
+   "bet": {
+    "id": 2315,
+    "pair": [
+     "Manchester Blue",
+     "Everton"
+    ],
+    "sel": "A",
+    "odd": 13.3,
+    "won": 1
+   },
+   "db": {
+    "home": "Manchester Blue",
+    "away": "Everton",
+    "score": "0-1",
+    "open_odds": [
+     1.21,
+     6.37,
+     13.3
+    ]
+   }
+  },
+  {
+   "bet": {
+    "id": 12673,
+    "pair": [
+     "Leeds",
+     "Liverpool"
+    ],
+    "sel": "H",
+    "odd": 10.1,
+    "won": 1
+   },
+   "db": {
+    "home": "Leeds",
+    "away": "Liverpool",
+    "score": "2-1",
+    "open_odds": [
+     10.1,
+     6.21,
+     1.25
+    ]
+   }
+  }
+ ],
+ "deviant_pairs_actionable": [
+  {
+   "home": "Sunderland",
+   "away": "London Reds",
+   "n_hist": 17,
+   "res_h": -0.466,
+   "res_a": 0.115,
+   "bet": "H",
+   "ev": 0.292,
+   "last_odds": [
+    24.02,
+    8.18,
+    1.12
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Manchester Blue",
+   "n_hist": 28,
+   "res_h": -0.4,
+   "res_a": 0.056,
+   "bet": "H",
+   "ev": 0.231,
+   "last_odds": [
+    19.63,
+    7.59,
+    1.14
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Fulham",
+   "n_hist": 19,
+   "res_h": -0.378,
+   "res_a": 0.158,
+   "bet": "H",
+   "ev": 0.193,
+   "last_odds": [
+    7.18,
+    4.55,
+    1.43
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Brentford",
+   "n_hist": 19,
+   "res_h": -0.418,
+   "res_a": 0.087,
+   "bet": "H",
+   "ev": 0.188,
+   "last_odds": [
+    7.54,
+    4.6,
+    1.41
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Brighton",
+   "n_hist": 22,
+   "res_h": -0.208,
+   "res_a": 0.205,
+   "bet": "H",
+   "ev": 0.159,
+   "last_odds": [
+    7.83,
+    5.46,
+    1.34
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Spurs",
+   "n_hist": 20,
+   "res_h": -0.277,
+   "res_a": 0.155,
+   "bet": "H",
+   "ev": 0.157,
+   "last_odds": [
+    7.81,
+    5.47,
+    1.33
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "London Blues",
+   "n_hist": 21,
+   "res_h": -0.203,
+   "res_a": 0.133,
+   "bet": "H",
+   "ev": 0.152,
+   "last_odds": [
+    7.3,
+    4.64,
+    1.41
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "London Reds",
+   "n_hist": 23,
+   "res_h": -0.359,
+   "res_a": -0.064,
+   "bet": "H",
+   "ev": 0.145,
+   "last_odds": [
+    10.3,
+    4.98,
+    1.31
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Newcastle",
+   "n_hist": 25,
+   "res_h": -0.157,
+   "res_a": 0.095,
+   "bet": "H",
+   "ev": 0.139,
+   "last_odds": [
+    9.59,
+    5.69,
+    1.28
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "C. Palace",
+   "n_hist": 21,
+   "res_h": -0.347,
+   "res_a": 0.125,
+   "bet": "H",
+   "ev": 0.133,
+   "last_odds": [
+    6.06,
+    3.95,
+    1.56
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "West Ham",
+   "n_hist": 17,
+   "res_h": -0.283,
+   "res_a": 0.154,
+   "bet": "H",
+   "ev": 0.133,
+   "last_odds": [
+    5.04,
+    4.07,
+    1.62
+   ]
+  },
+  {
+   "home": "C. Palace",
+   "away": "London Reds",
+   "n_hist": 18,
+   "res_h": -0.158,
+   "res_a": 0.038,
+   "bet": "H",
+   "ev": 0.13,
+   "last_odds": [
+    5.56,
+    3.94,
+    1.6
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Everton",
+   "n_hist": 19,
+   "res_h": -0.29,
+   "res_a": 0.146,
+   "bet": "H",
+   "ev": 0.12,
+   "last_odds": [
+    4.69,
+    3.31,
+    1.84
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "Wolverhampton",
+   "n_hist": 29,
+   "res_h": 0.058,
+   "res_a": -0.107,
+   "bet": "A",
+   "ev": 0.118,
+   "last_odds": [
+    1.17,
+    7.27,
+    14.42
+   ]
+  },
+  {
+   "home": "Fulham",
+   "away": "London Reds",
+   "n_hist": 22,
+   "res_h": -0.157,
+   "res_a": 0.068,
+   "bet": "H",
+   "ev": 0.118,
+   "last_odds": [
+    5.53,
+    4.15,
+    1.57
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Liverpool",
+   "n_hist": 16,
+   "res_h": -0.153,
+   "res_a": 0.1,
+   "bet": "H",
+   "ev": 0.116,
+   "last_odds": [
+    12.4,
+    6.73,
+    1.2
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "Manchester Blue",
+   "n_hist": 23,
+   "res_h": -0.291,
+   "res_a": -0.141,
+   "bet": "H",
+   "ev": 0.115,
+   "last_odds": [
+    8.55,
+    4.62,
+    1.38
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Manchester Red",
+   "n_hist": 18,
+   "res_h": -0.247,
+   "res_a": 0.115,
+   "bet": "H",
+   "ev": 0.111,
+   "last_odds": [
+    5.98,
+    4.12,
+    1.54
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Bournemouth",
+   "n_hist": 18,
+   "res_h": -0.145,
+   "res_a": 0.278,
+   "bet": "H",
+   "ev": 0.107,
+   "last_odds": [
+    5.25,
+    4.37,
+    1.56
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Wolverhampton",
+   "n_hist": 17,
+   "res_h": -0.233,
+   "res_a": 0.171,
+   "bet": "H",
+   "ev": 0.104,
+   "last_odds": [
+    4.34,
+    3.78,
+    1.77
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "London Reds",
+   "n_hist": 20,
+   "res_h": -0.212,
+   "res_a": 0.111,
+   "bet": "H",
+   "ev": 0.104,
+   "last_odds": [
+    17.91,
+    7.3,
+    1.15
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Sunderland",
+   "n_hist": 24,
+   "res_h": -0.17,
+   "res_a": 0.413,
+   "bet": "H",
+   "ev": 0.103,
+   "last_odds": [
+    3.58,
+    3.78,
+    1.94
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Leeds",
+   "n_hist": 21,
+   "res_h": -0.416,
+   "res_a": 0.214,
+   "bet": "H",
+   "ev": 0.102,
+   "last_odds": [
+    3.13,
+    3.21,
+    2.33
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Everton",
+   "n_hist": 20,
+   "res_h": -0.032,
+   "res_a": 0.121,
+   "bet": "H",
+   "ev": 0.101,
+   "last_odds": [
+    4.15,
+    3.23,
+    1.96
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "A. Villa",
+   "n_hist": 25,
+   "res_h": -0.27,
+   "res_a": 0.013,
+   "bet": "H",
+   "ev": 0.098,
+   "last_odds": [
+    6.19,
+    4.16,
+    1.52
+   ]
+  },
+  {
+   "home": "A. Villa",
+   "away": "West Ham",
+   "n_hist": 23,
+   "res_h": 0.168,
+   "res_a": -0.038,
+   "bet": "A",
+   "ev": 0.094,
+   "last_odds": [
+    1.4,
+    5.11,
+    6.78
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "Sunderland",
+   "n_hist": 18,
+   "res_h": -0.301,
+   "res_a": 0.197,
+   "bet": "H",
+   "ev": 0.094,
+   "last_odds": [
+    2.52,
+    3.46,
+    2.68
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "London Blues",
+   "n_hist": 22,
+   "res_h": 0.115,
+   "res_a": -0.167,
+   "bet": "A",
+   "ev": 0.093,
+   "last_odds": [
+    1.33,
+    5.42,
+    8.17
+   ]
+  },
+  {
+   "home": "Everton",
+   "away": "London Reds",
+   "n_hist": 20,
+   "res_h": -0.165,
+   "res_a": -0.015,
+   "bet": "H",
+   "ev": 0.091,
+   "last_odds": [
+    6.18,
+    3.62,
+    1.61
+   ]
+  },
+  {
+   "home": "Manchester Blue",
+   "away": "London Blues",
+   "n_hist": 23,
+   "res_h": 0.175,
+   "res_a": 0.066,
+   "bet": "A",
+   "ev": 0.091,
+   "last_odds": [
+    1.29,
+    5.93,
+    8.47
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Spurs",
+   "n_hist": 15,
+   "res_h": -0.02,
+   "res_a": 0.148,
+   "bet": "H",
+   "ev": 0.091,
+   "last_odds": [
+    6.49,
+    5.21,
+    1.4
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "Burnley",
+   "n_hist": 20,
+   "res_h": 0.055,
+   "res_a": 0.086,
+   "bet": "A",
+   "ev": 0.089,
+   "last_odds": [
+    1.14,
+    8.33,
+    15.39
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "N. Forest",
+   "n_hist": 27,
+   "res_h": 0.132,
+   "res_a": -0.134,
+   "bet": "A",
+   "ev": 0.089,
+   "last_odds": [
+    1.19,
+    6.97,
+    13.12
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Burnley",
+   "n_hist": 21,
+   "res_h": 0.073,
+   "res_a": 0.288,
+   "bet": "H",
+   "ev": 0.089,
+   "last_odds": [
+    3.47,
+    3.89,
+    1.94
+   ]
+  },
+  {
+   "home": "C. Palace",
+   "away": "Manchester Blue",
+   "n_hist": 24,
+   "res_h": -0.084,
+   "res_a": -0.038,
+   "bet": "H",
+   "ev": 0.086,
+   "last_odds": [
+    4.63,
+    3.77,
+    1.73
+   ]
+  },
+  {
+   "home": "Sunderland",
+   "away": "Burnley",
+   "n_hist": 16,
+   "res_h": -0.176,
+   "res_a": 0.317,
+   "bet": "H",
+   "ev": 0.085,
+   "last_odds": [
+    3.85,
+    3.89,
+    1.84
+   ]
+  },
+  {
+   "home": "London Blues",
+   "away": "Wolverhampton",
+   "n_hist": 17,
+   "res_h": 0.083,
+   "res_a": -0.077,
+   "bet": "A",
+   "ev": 0.08,
+   "last_odds": [
+    1.38,
+    4.93,
+    7.53
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "Manchester Red",
+   "n_hist": 24,
+   "res_h": 0.089,
+   "res_a": -0.197,
+   "bet": "A",
+   "ev": 0.077,
+   "last_odds": [
+    1.29,
+    5.56,
+    9.61
+   ]
+  },
+  {
+   "home": "A. Villa",
+   "away": "Spurs",
+   "n_hist": 22,
+   "res_h": 0.143,
+   "res_a": -0.0,
+   "bet": "A",
+   "ev": 0.074,
+   "last_odds": [
+    1.62,
+    4.73,
+    4.3
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "Fulham",
+   "n_hist": 13,
+   "res_h": -0.238,
+   "res_a": -0.073,
+   "bet": "H",
+   "ev": 0.073,
+   "last_odds": [
+    3.64,
+    3.44,
+    2.02
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "Spurs",
+   "n_hist": 25,
+   "res_h": -0.167,
+   "res_a": -0.045,
+   "bet": "H",
+   "ev": 0.07,
+   "last_odds": [
+    3.94,
+    4.0,
+    1.8
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "Brentford",
+   "n_hist": 22,
+   "res_h": -0.081,
+   "res_a": -0.222,
+   "bet": "A",
+   "ev": 0.068,
+   "last_odds": [
+    1.36,
+    5.05,
+    7.97
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Fulham",
+   "n_hist": 11,
+   "res_h": -0.113,
+   "res_a": 0.13,
+   "bet": "H",
+   "ev": 0.066,
+   "last_odds": [
+    5.58,
+    4.2,
+    1.56
+   ]
+  },
+  {
+   "home": "Manchester Red",
+   "away": "A. Villa",
+   "n_hist": 18,
+   "res_h": 0.099,
+   "res_a": -0.217,
+   "bet": "A",
+   "ev": 0.066,
+   "last_odds": [
+    1.75,
+    3.77,
+    4.47
+   ]
+  },
+  {
+   "home": "Newcastle",
+   "away": "Manchester Red",
+   "n_hist": 18,
+   "res_h": 0.099,
+   "res_a": -0.172,
+   "bet": "A",
+   "ev": 0.065,
+   "last_odds": [
+    1.39,
+    4.82,
+    7.44
+   ]
+  },
+  {
+   "home": "Fulham",
+   "away": "Manchester Blue",
+   "n_hist": 24,
+   "res_h": -0.085,
+   "res_a": -0.003,
+   "bet": "H",
+   "ev": 0.063,
+   "last_odds": [
+    4.56,
+    4.07,
+    1.68
+   ]
+  },
+  {
+   "home": "Brentford",
+   "away": "London Reds",
+   "n_hist": 26,
+   "res_h": -0.081,
+   "res_a": 0.103,
+   "bet": "H",
+   "ev": 0.062,
+   "last_odds": [
+    4.78,
+    4.18,
+    1.64
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "London Blues",
+   "n_hist": 21,
+   "res_h": 0.057,
+   "res_a": 0.104,
+   "bet": "H",
+   "ev": 0.062,
+   "last_odds": [
+    5.84,
+    4.4,
+    1.51
+   ]
+  },
+  {
+   "home": "West Ham",
+   "away": "London Reds",
+   "n_hist": 19,
+   "res_h": -0.173,
+   "res_a": -0.013,
+   "bet": "H",
+   "ev": 0.062,
+   "last_odds": [
+    6.22,
+    4.29,
+    1.5
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "C. Palace",
+   "n_hist": 20,
+   "res_h": 0.005,
+   "res_a": -0.196,
+   "bet": "A",
+   "ev": 0.062,
+   "last_odds": [
+    1.31,
+    5.27,
+    9.58
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Manchester Blue",
+   "n_hist": 21,
+   "res_h": -0.139,
+   "res_a": 0.036,
+   "bet": "H",
+   "ev": 0.059,
+   "last_odds": [
+    14.32,
+    6.58,
+    1.19
+   ]
+  },
+  {
+   "home": "Wolverhampton",
+   "away": "London Reds",
+   "n_hist": 25,
+   "res_h": -0.19,
+   "res_a": -0.051,
+   "bet": "H",
+   "ev": 0.059,
+   "last_odds": [
+    6.64,
+    4.13,
+    1.5
+   ]
+  },
+  {
+   "home": "A. Villa",
+   "away": "N. Forest",
+   "n_hist": 19,
+   "res_h": 0.283,
+   "res_a": -0.043,
+   "bet": "A",
+   "ev": 0.058,
+   "last_odds": [
+    1.37,
+    5.3,
+    7.07
+   ]
+  },
+  {
+   "home": "Newcastle",
+   "away": "Everton",
+   "n_hist": 20,
+   "res_h": 0.083,
+   "res_a": -0.162,
+   "bet": "A",
+   "ev": 0.056,
+   "last_odds": [
+    1.31,
+    5.02,
+    10.08
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "Everton",
+   "n_hist": 22,
+   "res_h": -0.167,
+   "res_a": -0.099,
+   "bet": "H",
+   "ev": 0.056,
+   "last_odds": [
+    2.84,
+    2.98,
+    2.69
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Brentford",
+   "n_hist": 22,
+   "res_h": -0.166,
+   "res_a": 0.07,
+   "bet": "H",
+   "ev": 0.054,
+   "last_odds": [
+    5.94,
+    4.12,
+    1.54
+   ]
+  },
+  {
+   "home": "Newcastle",
+   "away": "Liverpool",
+   "n_hist": 20,
+   "res_h": 0.178,
+   "res_a": -0.13,
+   "bet": "A",
+   "ev": 0.054,
+   "last_odds": [
+    1.76,
+    4.25,
+    3.9
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Manchester Red",
+   "n_hist": 15,
+   "res_h": 0.021,
+   "res_a": 0.101,
+   "bet": "H",
+   "ev": 0.052,
+   "last_odds": [
+    5.01,
+    3.96,
+    1.64
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "Newcastle",
+   "n_hist": 21,
+   "res_h": 0.149,
+   "res_a": -0.172,
+   "bet": "A",
+   "ev": 0.051,
+   "last_odds": [
+    1.46,
+    4.91,
+    5.91
+   ]
+  },
+  {
+   "home": "Leeds",
+   "away": "Brighton",
+   "n_hist": 21,
+   "res_h": 0.047,
+   "res_a": 0.184,
+   "bet": "H",
+   "ev": 0.05,
+   "last_odds": [
+    6.18,
+    4.92,
+    1.44
+   ]
+  },
+  {
+   "home": "A. Villa",
+   "away": "Newcastle",
+   "n_hist": 22,
+   "res_h": 0.287,
+   "res_a": -0.075,
+   "bet": "A",
+   "ev": 0.049,
+   "last_odds": [
+    1.85,
+    4.2,
+    3.57
+   ]
+  },
+  {
+   "home": "Newcastle",
+   "away": "N. Forest",
+   "n_hist": 23,
+   "res_h": 0.165,
+   "res_a": -0.117,
+   "bet": "A",
+   "ev": 0.048,
+   "last_odds": [
+    1.26,
+    6.11,
+    9.95
+   ]
+  },
+  {
+   "home": "Liverpool",
+   "away": "A. Villa",
+   "n_hist": 17,
+   "res_h": 0.065,
+   "res_a": -0.292,
+   "bet": "A",
+   "ev": 0.048,
+   "last_odds": [
+    1.31,
+    5.46,
+    8.87
+   ]
+  },
+  {
+   "home": "Burnley",
+   "away": "Brentford",
+   "n_hist": 22,
+   "res_h": -0.293,
+   "res_a": -0.133,
+   "bet": "H",
+   "ev": 0.046,
+   "last_odds": [
+    3.77,
+    3.39,
+    2.0
+   ]
+  },
+  {
+   "home": "Spurs",
+   "away": "Newcastle",
+   "n_hist": 21,
+   "res_h": 0.112,
+   "res_a": -0.04,
+   "bet": "A",
+   "ev": 0.045,
+   "last_odds": [
+    2.11,
+    4.24,
+    2.86
+   ]
+  },
+  {
+   "home": "Newcastle",
+   "away": "Brighton",
+   "n_hist": 28,
+   "res_h": 0.097,
+   "res_a": -0.036,
+   "bet": "A",
+   "ev": 0.043,
+   "last_odds": [
+    1.46,
+    4.96,
+    5.76
+   ]
+  },
+  {
+   "home": "Manchester Red",
+   "away": "London Reds",
+   "n_hist": 20,
+   "res_h": -0.12,
+   "res_a": -0.054,
+   "bet": "H",
+   "ev": 0.042,
+   "last_odds": [
+    4.26,
+    3.52,
+    1.85
+   ]
+  }
+ ]
+}

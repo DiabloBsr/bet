@@ -1,0 +1,97 @@
+Loading n_train=3622...
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 15:53 — 8 matchs
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 PRÉDICTIONS PAR MATCH
+
+━━━ MATCH 1  London Blues vs Manchester Red  cotes 1.68/3.93/4.76
+     HT pick : X  (1-1)
+     FT pick : 1 (52%)  Score : 1-1
+     Top 3 scores : 1-1(11%) · 2-1(11%) · 1-0(8%)
+     Buts attendus : 2.85  P(+2.5)=54%  P(BTTS)=56%
+     HT/FT : 1/1 (29%)
+
+━━━ MATCH 2  Wolverhampton vs Leeds  cotes 1.62/3.83/5.48
+     HT pick : X  (1-0)
+     FT pick : 1 (55%)  Score : 1-1
+     Top 3 scores : 1-1(12%) · 2-1(11%) · 1-0(10%)
+     Buts attendus : 2.55  P(+2.5)=47%  P(BTTS)=48%
+     HT/FT : 1/1 (31%)
+
+━━━ MATCH 3  C. Palace vs Liverpool  cotes 3.15/3.80/2.09
+     HT pick : X  (1-1)
+     FT pick : 2 (43%)  Score : 1-1
+     Top 3 scores : 1-1(11%) · 1-2(9%) · 2-1(8%)
+     Buts attendus : 2.99  P(+2.5)=57%  P(BTTS)=60%
+     HT/FT : 1/1 (22%)
+
+━━━ MATCH 4  Sunderland vs Brentford  cotes 6.94/4.39/1.45
+     HT pick : 2  (0-1)
+     FT pick : 2 (64%)  Score : 0-1
+     Top 3 scores : 0-1(13%) · 0-2(11%) · 1-2(10%)
+     Buts attendus : 2.65  P(+2.5)=49%  P(BTTS)=42%
+     HT/FT : 2/2 (31%)
+
+━━━ MATCH 5  Burnley vs Manchester Blue  cotes 8.09/4.47/1.40
+     HT pick : 2  (0-1)
+     FT pick : 2 (65%)  Score : 0-1
+     Top 3 scores : 0-1(13%) · 0-2(11%) · 1-2(10%)
+     Buts attendus : 2.70  P(+2.5)=51%  P(BTTS)=43%
+     HT/FT : 2/2 (31%)
+
+━━━ MATCH 6  Spurs vs Everton  cotes 1.62/4.11/5.06
+     HT pick : 1  (1-0)
+     FT pick : 1 (57%)  Score : 1-1
+     Top 3 scores : 1-1(11%) · 2-1(11%) · 2-0(9%)
+     Buts attendus : 2.74  P(+2.5)=52%  P(BTTS)=50%
+     HT/FT : 1/1 (34%)
+
+━━━ MATCH 7  A. Villa vs Brighton  cotes 1.66/4.57/4.16
+     HT pick : 1  (1-1)
+     FT pick : 1 (54%)  Score : 2-1
+     Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+     Buts attendus : 3.31  P(+2.5)=64%  P(BTTS)=63%
+     HT/FT : 1/1 (32%)
+
+━━━ MATCH 8  N. Forest vs Newcastle  cotes 2.49/3.65/2.60
+     HT pick : X  (1-1)
+     FT pick : 2 (37%)  Score : 1-1
+     Top 3 scores : 1-1(12%) · 2-1(10%) · 1-2(9%)
+     Buts attendus : 3.06  P(+2.5)=59%  P(BTTS)=61%
+     HT/FT : 1/1 (23%)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+🎯 RECHERCHE COMBO SAFE — cote cible ~5.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Candidats safe trouvés : 4
+
+  [1] London Blues vs Manchester Red           1 @1.68  p_model=62.8%  EV=+8.1%
+  [2] Wolverhampton vs Leeds                   1 @1.62  p_model=62.8%  EV=+4.2%
+  [3] Spurs vs Everton                         1 @1.62  p_model=62.8%  EV=+4.2%
+  [4] A. Villa vs Brighton                     1 @1.66  p_model=60.3%  EV=+6.8%
+
+💡 COMBINAISONS POSSIBLES (cote totale ≈ 5.0) :
+
+  COMBO 1 ⭐⭐  cote TOTAL = 4.41  proba_combinée = 24.8%  EV = +9%
+     • London Blues vs Manchester Red           1 @1.68  (p=63%)
+     • Wolverhampton vs Leeds                   1 @1.62  (p=63%)
+     • Spurs vs Everton                         1 @1.62  (p=63%)
+
+  COMBO 2 ⭐⭐⭐  cote TOTAL = 4.52  proba_combinée = 23.8%  EV = +7%
+     • London Blues vs Manchester Red           1 @1.68  (p=63%)
+     • Wolverhampton vs Leeds                   1 @1.62  (p=63%)
+     • A. Villa vs Brighton                     1 @1.66  (p=60%)
+
+  COMBO 3 ⭐⭐⭐  cote TOTAL = 4.52  proba_combinée = 23.8%  EV = +7%
+     • London Blues vs Manchester Red           1 @1.68  (p=63%)
+     • Spurs vs Everton                         1 @1.62  (p=63%)
+     • A. Villa vs Brighton                     1 @1.66  (p=60%)
+
+  COMBO 4 ⭐⭐  cote TOTAL = 4.36  proba_combinée = 23.8%  EV = +4%
+     • Wolverhampton vs Leeds                   1 @1.62  (p=63%)
+     • Spurs vs Everton                         1 @1.62  (p=63%)
+     • A. Villa vs Brighton                     1 @1.66  (p=60%)
+

@@ -1,0 +1,127 @@
+==============================================================================================================
+  CALCUL EXHAUSTIF DES BIAIS — toutes les données disponibles
+==============================================================================================================
+
+Total matchs : 4308
+Période       : 2026-05-28 22:15:50+00:00 → 2026-06-04 18:38:56+00:00
+
+==============================================================================================================
+1️⃣  BIAIS EN TANT QUE HOME FAVORI (cote_home la plus basse)
+==============================================================================================================
+
+Total matchs avec home favori : 3127
+Win rate global home fav      : 57.69%
+
+Équipe                 n      win%      cote moy   expected%   écart      verdict
+--------------------------------------------------------------------------------------------------------------
+Burnley                56      48.2%     2.41      39.4%       +8.8pp   ROI +18.2%  ⭐⭐ WHITE LIST
+C. Palace              163     57.1%     1.95      49.4%       +7.7pp   ROI  +9.7%  ⭐⭐ WHITE LIST
+Brighton               172     62.8%     1.74      55.3%       +7.5pp   ROI  +6.9%  ⭐⭐ WHITE LIST
+Brentford              160     60.6%     1.78      54.1%       +6.5pp   ROI  +7.4%  ⭐⭐ WHITE LIST
+N. Forest              185     52.4%     1.97      48.7%       +3.7pp   ROI  +2.4%  ⭐ Bon
+Liverpool              221     74.7%     1.37      71.1%       +3.6pp   ROI  -1.9%  ⭐ Bon
+Manchester Red         188     56.9%     1.78      54.1%       +2.8pp   ROI  -1.1%  ⭐ Bon
+London Reds            211     70.1%     1.40      68.8%       +1.3pp   ROI  -3.6%  neutre
+Fulham                 172     51.7%     1.90      50.5%       +1.2pp   ROI  -3.2%  neutre
+London Blues           196     58.2%     1.67      57.8%       +0.4pp   ROI  -3.4%  neutre
+Manchester Blue        222     71.6%     1.33      72.8%       -1.2pp   ROI  -8.4%  neutre
+Bournemouth            176     44.3%     2.12      45.6%       -1.3pp   ROI  -8.5%  neutre
+A. Villa               192     59.9%     1.56      61.6%       -1.7pp   ROI  -8.1%  neutre
+Newcastle              204     65.7%     1.44      67.4%       -1.7pp   ROI  -9.6%  neutre
+West Ham               141     44.7%     2.05      47.1%       -2.4pp   ROI -10.4%  ⚠️ Trap modéré
+Spurs                  184     52.7%     1.73      55.6%       -2.9pp   ROI -10.3%  ⚠️ Trap modéré
+Wolverhampton          139     42.4%     2.10      45.7%       -3.2pp   ROI -11.5%  ⚠️ Trap modéré
+Everton                145     37.2%     2.16      44.6%       -7.3pp   ROI -22.5%  ❌❌ BLACK LIST
+
+==============================================================================================================
+2️⃣  STABILITÉ TEMPORELLE (3 segments)
+==============================================================================================================
+
+Équipe                 S1 bias        S2 bias        S3 bias        stabilité
+--------------------------------------------------------------------------------------------------------------
+C. Palace               +3.0pp         +3.9pp        +16.4pp        ~ même direction
+Burnley                +10.5pp         +4.5pp         +9.9pp        ~ semi-stable
+Liverpool               +0.5pp         +4.2pp         +6.1pp        ~ semi-stable
+Bournemouth             -5.9pp         -1.7pp         +4.6pp        ✗ variable
+N. Forest               +6.1pp         +1.4pp         +3.3pp        ✓ stable
+London Blues            +8.3pp         -8.7pp         +2.5pp        ✗ variable
+Brentford               +6.3pp        +12.7pp         +1.3pp        ~ même direction
+Manchester Red          +5.7pp         +2.8pp         -0.0pp        ✗ variable
+Brighton               +12.5pp        +10.4pp         -0.3pp        ✗ variable
+Manchester Blue         +2.5pp         -6.3pp         -0.4pp        ✗ variable
+London Reds             +3.0pp         +2.0pp         -0.8pp        ✗ variable
+A. Villa                +0.1pp         -4.3pp         -1.2pp        ✗ variable
+Fulham                 +15.5pp         -7.5pp         -4.3pp        ✗ variable
+Spurs                   -2.2pp         -0.7pp         -5.3pp        ✓ stable
+West Ham                +0.7pp         -1.1pp         -7.0pp        ✗ variable
+Newcastle               +2.6pp         +0.6pp         -8.0pp        ✗ variable
+Everton                -11.8pp         +0.4pp         -8.4pp        ✗ variable
+Wolverhampton           +4.0pp         +1.0pp        -14.4pp        ✗ variable
+
+==============================================================================================================
+3️⃣  BIAIS PAR BRACKET DE COTE (où le trap fait mal)
+==============================================================================================================
+
+Équipe                 cote 1.5-1.7 ROI     cote 1.7-1.9 ROI     cote 1.9-2.2 ROI
+--------------------------------------------------------------------------------------------------------------
+Burnley                —                    —                    n= 10 ROI=-39.6%
+C. Palace              n= 33 ROI= +7.9%     n= 39 ROI=+19.8%     n= 40 ROI= -1.1%
+Brighton               n= 57 ROI=+14.2%     n= 40 ROI= -0.6%     n= 40 ROI=+27.9%
+Brentford              n= 52 ROI= -1.8%     n= 38 ROI= -0.4%     n= 42 ROI= +6.3%
+N. Forest              n= 30 ROI=-23.5%     n= 42 ROI=+28.6%     n= 66 ROI= +7.7%
+Liverpool              —                    —                    —
+Manchester Red         n= 62 ROI= +7.4%     n= 23 ROI=-13.4%     n= 70 ROI= +2.1%
+Manchester Blue        n= 11 ROI= +0.5%     —                    —
+Bournemouth            n= 16 ROI=+10.1%     n= 44 ROI=-22.0%     n= 27 ROI= -3.2%
+A. Villa               n= 58 ROI= +0.8%     n= 34 ROI= -6.6%     —
+Newcastle              n= 14 ROI= -2.4%     n= 11 ROI=-34.5%     —
+West Ham               n= 16 ROI=-10.2%     n= 39 ROI= -3.4%     n= 29 ROI=-30.0%
+Spurs                  n= 56 ROI= -8.2%     n= 40 ROI= -9.8%     n= 45 ROI=-20.9%
+Wolverhampton          n= 11 ROI=-10.4%     n= 26 ROI=-16.1%     n= 59 ROI=-19.6%
+Everton                —                    n= 20 ROI=-10.7%     n= 52 ROI=-15.4%
+
+==============================================================================================================
+4️⃣  BIAIS EN TANT QU'AWAY FAVORI (cote_away la plus basse)
+==============================================================================================================
+
+Total matchs avec away favori : 1175
+Win rate global away fav      : 53.87%
+
+Équipe                 n      win%      cote moy   expected%   écart      verdict
+--------------------------------------------------------------------------------------------------------------
+West Ham               32      62.5%     1.94      50.1%      +12.4pp   ⭐⭐ AWAY GOOD
+London Blues           43      65.1%     1.83      53.8%      +11.3pp   ⭐⭐ AWAY GOOD
+A. Villa               36      66.7%     1.74      55.6%      +11.1pp   ⭐⭐ AWAY GOOD
+Everton                31      54.8%     2.05      47.2%       +7.6pp   ⭐⭐ AWAY GOOD
+Spurs                  61      57.4%     1.92      52.4%       +4.9pp   ⭐ Bon away
+Manchester Red         37      56.8%     1.82      53.3%       +3.5pp   ⭐ Bon away
+Manchester Blue        177     59.9%     1.72      56.8%       +3.0pp   ⭐ Bon away
+Brentford              65      50.8%     2.05      48.9%       +1.9pp   neutre
+Bournemouth            31      51.6%     1.93      50.6%       +1.0pp   neutre
+Brighton               75      49.3%     2.00      50.3%       -0.9pp   neutre
+Newcastle              93      46.2%     2.02      49.4%       -3.1pp   ⚠️ Faible away
+London Reds            196     55.6%     1.65      59.1%       -3.4pp   ⚠️ Faible away
+C. Palace              36      50.0%     1.76      54.8%       -4.8pp   ⚠️ Faible away
+Liverpool              154     45.5%     1.94      50.5%       -5.1pp   ❌❌ AWAY TRAP
+
+==============================================================================================================
+📋 LISTES FINALES (toutes données + stabilité confirmée)
+==============================================================================================================
+
+🟢 HOME FAVORI WHITELIST (parier 1 en confiance) :
+     • Burnley                bias +8.8pp  (~ semi-stable)
+     • C. Palace              bias +7.7pp  (~ même direction)
+     • Brighton               bias +7.5pp  (✗ variable)
+     • Brentford              bias +6.5pp  (~ même direction)
+
+❌ HOME FAVORI BLACKLIST (NE PAS parier 1) :
+     • Everton                bias -7.3pp  (✗ variable)
+
+🟢 AWAY FAVORI WHITELIST (parier 2 en confiance) :
+     • West Ham               bias +12.4pp
+     • London Blues           bias +11.3pp
+     • A. Villa               bias +11.1pp
+     • Everton                bias +7.6pp
+
+❌ AWAY FAVORI BLACKLIST (NE PAS parier 2) :
+     • Liverpool              bias -5.1pp

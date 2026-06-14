@@ -1,0 +1,77 @@
+Loading n_train=3676...
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  V9 — Round 21:58 Mada — 10 matchs
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 PRÉDICTIONS COMPLÈTES + ANALYSE V9
+
+━━━ MATCH 1  Brentford vs C. Palace  cotes 1.92/3.84/3.59
+     HT pick : X (score 1-0)    FT pick : 1 (48%) score 1-1
+     Top 3 scores : 1-1(11%) · 2-1(10%) · 1-0(8%)
+     Buts : 2.73  P(+2.5)=51%  P(BTTS)=54%   HT/FT : 1/1 (29%)
+     🎰 HT/FT 1/2 @51  EV+77% SPÉCULATIF
+     🎰 HT/FT 2/1 @32  EV+84% SPÉCULATIF
+
+━━━ MATCH 2  London Blues vs Everton  cotes 1.54/3.89/6.50
+     HT pick : X (score 1-0)    FT pick : 1 (58%) score 1-0
+     Top 3 scores : 1-0(13%) · 2-0(11%) · 2-1(9%)
+     Buts : 2.55  P(+2.5)=47%  P(BTTS)=46%   HT/FT : 1/1 (33%)
+     🎰 HT/FT 1/2 @100  EV+186% SPÉCULATIF
+
+━━━ MATCH 3  London Reds vs Sunderland  cotes 1.22/6.76/10.46
+     HT pick : 1 (score 1-0)    FT pick : 1 (75%) score 3-0
+     Top 3 scores : 3-0(12%) · 2-0(11%) · 4-0(9%)
+     Buts : 3.55  P(+2.5)=68%  P(BTTS)=50%   HT/FT : 1/1 (47%)
+     🎰 HT/FT 1/2 @100  EV+108% SPÉCULATIF
+
+━━━ MATCH 4  Fulham vs Liverpool  cotes 3.24/4.05/1.98
+     HT pick : X (score 1-1)    FT pick : 2 (46%) score 1-1
+     Top 3 scores : 1-1(10%) · 1-2(9%) · 2-1(8%)
+     Buts : 3.34  P(+2.5)=65%  P(BTTS)=65%   HT/FT : 2/2 (23%)
+     ❌ 2 @1.98  AWAY BLACKLIST Liverpool bias-5.1pp
+     🎰 HT/FT 1/2 @28  EV+64% SPÉCULATIF
+
+━━━ MATCH 5  Manchester Red vs West Ham  cotes 1.59/4.16/5.20
+     HT pick : 1 (score 1-0)    FT pick : 1 (59%) score 2-1
+     Top 3 scores : 2-1(11%) · 1-1(11%) · 2-0(9%)
+     Buts : 2.97  P(+2.5)=57%  P(BTTS)=53%   HT/FT : 1/1 (36%)
+     🎰 HT/FT 1/2 @71  EV+53% SPÉCULATIF
+     🎰 HT/FT 2/1 @32  EV+60% SPÉCULATIF
+
+━━━ MATCH 6  N. Forest vs Manchester Blue  cotes 4.19/3.57/1.85
+     HT pick : X (score 0-1)    FT pick : 2 (52%) score 0-1
+     Top 3 scores : 0-1(12%) · 1-1(11%) · 1-2(10%)
+     Buts : 2.59  P(+2.5)=48%  P(BTTS)=48%   HT/FT : 2/2 (26%)
+     🎰 HT/FT 1/2 @34  EV+148% SPÉCULATIF
+     🎰 HT/FT 2/1 @76  EV+85% SPÉCULATIF
+
+━━━ MATCH 7  Leeds vs Spurs  cotes 6.08/4.93/1.44
+     HT pick : 2 (score 0-1)    FT pick : 2 (65%) score 0-1
+     Top 3 scores : 0-1(10%) · 1-2(10%) · 0-2(9%)
+     Buts : 3.42  P(+2.5)=66%  P(BTTS)=57%   HT/FT : 2/2 (33%)
+
+━━━ MATCH 8  Brighton vs Burnley  cotes 1.45/4.99/5.83
+     HT pick : 1 (score 1-0)    FT pick : 1 (65%) score 2-1
+     Top 3 scores : 2-1(11%) · 3-0(8%) · 2-0(8%)
+     Buts : 3.55  P(+2.5)=68%  P(BTTS)=58%   HT/FT : 1/1 (41%)
+     🎰 HT/FT 1/2 @70  EV+101% SPÉCULATIF
+     🎰 HT/FT 2/1 @24  EV+86% SPÉCULATIF
+
+━━━ MATCH 9  Bournemouth vs A. Villa  cotes 2.30/3.30/3.11
+     HT pick : X (score 1-1)    FT pick : 1 (40%) score 1-1
+     Top 3 scores : 1-1(12%) · 2-1(9%) · 0-1(8%)
+     Buts : 2.69  P(+2.5)=50%  P(BTTS)=55%   HT/FT : 1/1 (24%)
+     🎰 HT/FT 1/2 @52  EV+82% SPÉCULATIF
+     🎰 HT/FT 2/1 @47  EV+229% SPÉCULATIF
+
+━━━ MATCH 10  Wolverhampton vs Newcastle  cotes 3.02/3.77/2.16
+     HT pick : 2 (score 1-1)    FT pick : 2 (46%) score 1-1
+     Top 3 scores : 1-1(12%) · 1-2(10%) · 0-2(8%)
+     Buts : 3.07  P(+2.5)=59%  P(BTTS)=60%   HT/FT : 2/2 (25%)
+     🎰 HT/FT 2/1 @43  EV+213% SPÉCULATIF
+
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+🎯 0 CANDIDATS SAFE V9
+══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+

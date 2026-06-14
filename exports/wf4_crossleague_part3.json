@@ -1,0 +1,2469 @@
+{
+ "bias_by_mu": {
+  "8035": [
+   null,
+   {
+    "mu_b": "[1.8-2.3)",
+    "n": 758,
+    "bias": 0.266,
+    "se": 0.051,
+    "p": 2.588627652340364e-07
+   },
+   {
+    "mu_b": "[2.3-2.8)",
+    "n": 2860,
+    "bias": 0.302,
+    "se": 0.026,
+    "p": 4.828505425845019e-30
+   },
+   {
+    "mu_b": "[2.8-3.3)",
+    "n": 2647,
+    "bias": 0.109,
+    "se": 0.028,
+    "p": 8.347945679835819e-05
+   },
+   {
+    "mu_b": "[3.3-9)",
+    "n": 1136,
+    "bias": -0.131,
+    "se": 0.044,
+    "p": 0.0030843176574281246
+   }
+  ],
+  "8035-old": [
+   null,
+   {
+    "mu_b": "[1.8-2.3)",
+    "n": 561,
+    "bias": 0.319,
+    "se": 0.059,
+    "p": 1.1641656255362602e-07
+   },
+   {
+    "mu_b": "[2.3-2.8)",
+    "n": 2127,
+    "bias": 0.326,
+    "se": 0.03,
+    "p": 3.520356576527773e-26
+   },
+   {
+    "mu_b": "[2.8-3.3)",
+    "n": 1978,
+    "bias": 0.112,
+    "se": 0.032,
+    "p": 0.0004109613969061731
+   },
+   {
+    "mu_b": "[3.3-9)",
+    "n": 845,
+    "bias": -0.144,
+    "se": 0.051,
+    "p": 0.00459532653826209
+   }
+  ],
+  "8035-recent": [
+   null,
+   {
+    "mu_b": "[1.8-2.3)",
+    "n": 197,
+    "bias": 0.116,
+    "se": 0.1,
+    "p": 0.250309842299052
+   },
+   {
+    "mu_b": "[2.3-2.8)",
+    "n": 733,
+    "bias": 0.235,
+    "se": 0.052,
+    "p": 7.988278392724015e-06
+   },
+   {
+    "mu_b": "[2.8-3.3)",
+    "n": 669,
+    "bias": 0.098,
+    "se": 0.056,
+    "p": 0.07959822798043625
+   },
+   {
+    "mu_b": "[3.3-9)",
+    "n": 291,
+    "bias": -0.093,
+    "se": 0.089,
+    "p": 0.3017506538381644
+   }
+  ],
+  "ALL-NEW": [
+   {
+    "mu_b": "[0-1.8)",
+    "n": 1920,
+    "bias": 0.199,
+    "se": 0.028,
+    "p": 3.727123843839702e-12
+   },
+   {
+    "mu_b": "[1.8-2.3)",
+    "n": 2319,
+    "bias": 0.303,
+    "se": 0.029,
+    "p": 2.1698961048198645e-25
+   },
+   {
+    "mu_b": "[2.3-2.8)",
+    "n": 3207,
+    "bias": 0.211,
+    "se": 0.026,
+    "p": 1.0973332126015215e-15
+   },
+   {
+    "mu_b": "[2.8-3.3)",
+    "n": 2510,
+    "bias": 0.069,
+    "se": 0.029,
+    "p": 0.019071788804488586
+   },
+   {
+    "mu_b": "[3.3-9)",
+    "n": 1443,
+    "bias": -0.33,
+    "se": 0.038,
+    "p": 2.3351454751415458e-17
+   }
+  ],
+  "CHAMP-NEW": [
+   {
+    "mu_b": "[0-1.8)",
+    "n": 735,
+    "bias": 0.192,
+    "se": 0.05,
+    "p": 0.00011780285543184887
+   },
+   {
+    "mu_b": "[1.8-2.3)",
+    "n": 1814,
+    "bias": 0.31,
+    "se": 0.032,
+    "p": 4.399745515328525e-21
+   },
+   {
+    "mu_b": "[2.3-2.8)",
+    "n": 1298,
+    "bias": 0.22,
+    "se": 0.041,
+    "p": 1.0888048660136962e-07
+   },
+   {
+    "mu_b": "[2.8-3.3)",
+    "n": 802,
+    "bias": 0.079,
+    "se": 0.05,
+    "p": 0.11539456935846212
+   },
+   {
+    "mu_b": "[3.3-9)",
+    "n": 430,
+    "bias": -0.158,
+    "se": 0.068,
+    "p": 0.021698398285053468
+   }
+  ],
+  "CUP": [
+   {
+    "mu_b": "[0-1.8)",
+    "n": 1185,
+    "bias": 0.204,
+    "se": 0.034,
+    "p": 4.317445322318557e-09
+   },
+   {
+    "mu_b": "[1.8-2.3)",
+    "n": 505,
+    "bias": 0.28,
+    "se": 0.062,
+    "p": 8.49679021866474e-06
+   },
+   {
+    "mu_b": "[2.3-2.8)",
+    "n": 1909,
+    "bias": 0.204,
+    "se": 0.034,
+    "p": 1.900666166248103e-09
+   },
+   {
+    "mu_b": "[2.8-3.3)",
+    "n": 1708,
+    "bias": 0.065,
+    "se": 0.036,
+    "p": 0.0763969328088315
+   },
+   {
+    "mu_b": "[3.3-9)",
+    "n": 1013,
+    "bias": -0.403,
+    "se": 0.046,
+    "p": 1.144467415556386e-17
+   }
+  ]
+ },
+ "8035_subgroups": {
+  "old-J0": null,
+  "old-J1-38": {
+   "n": 5511,
+   "cells": {
+    "0-0": {
+     "obs": 200,
+     "exp": 353.5,
+     "ratio": 0.566,
+     "p": 8.380316573745262e-20
+    },
+    "1-0": {
+     "obs": 386,
+     "exp": 523.4,
+     "ratio": 0.737,
+     "p": 5.4701997711646595e-11
+    },
+    "0-1": {
+     "obs": 294,
+     "exp": 418.2,
+     "ratio": 0.703,
+     "p": 4.1024495308891996e-11
+    },
+    "1-1": {
+     "obs": 535,
+     "exp": 575.1,
+     "ratio": 0.93,
+     "p": 0.07797875097274312
+    },
+    "2-1": {
+     "obs": 572,
+     "exp": 449.3,
+     "ratio": 1.273,
+     "p": 5.977677977824279e-09
+    },
+    "1-2": {
+     "obs": 456,
+     "exp": 345.6,
+     "ratio": 1.32,
+     "p": 4.2878797739217595e-09
+    },
+    "2-2": {
+     "obs": 350,
+     "exp": 252.2,
+     "ratio": 1.388,
+     "p": 2.2758175051184006e-09
+    },
+    "DRAWS": {
+     "obs": 1126,
+     "exp": 1241.1,
+     "ratio": 0.907,
+     "p": 0.00018290354545473007
+    }
+   }
+  },
+  "recent-J0": null,
+  "recent-all": {
+   "n": 1890,
+   "cells": {
+    "0-0": {
+     "obs": 103,
+     "exp": 121.7,
+     "ratio": 0.846,
+     "p": 0.08280938242079199
+    },
+    "1-0": {
+     "obs": 119,
+     "exp": 180.1,
+     "ratio": 0.661,
+     "p": 5.01303739386764e-07
+    },
+    "0-1": {
+     "obs": 91,
+     "exp": 143.6,
+     "ratio": 0.634,
+     "p": 1.6662435196601417e-06
+    },
+    "1-1": {
+     "obs": 219,
+     "exp": 198.2,
+     "ratio": 1.105,
+     "p": 0.12361881857078585
+    },
+    "2-1": {
+     "obs": 159,
+     "exp": 154.6,
+     "ratio": 1.029,
+     "p": 0.7055353023918451
+    },
+    "1-2": {
+     "obs": 143,
+     "exp": 119.0,
+     "ratio": 1.201,
+     "p": 0.02594660098414789
+    },
+    "2-2": {
+     "obs": 98,
+     "exp": 87.0,
+     "ratio": 1.126,
+     "p": 0.22709300944308475
+    },
+    "DRAWS": {
+     "obs": 431,
+     "exp": 427.8,
+     "ratio": 1.008,
+     "p": 0.8690139949898523
+    }
+   }
+  },
+  "oldrec_0-0": {
+   "old": 0.03629105425512611,
+   "recent": 0.054497354497354496,
+   "z": -3.4468604304470962,
+   "p": 0.0005671414914466493
+  },
+  "oldrec_draw": {
+   "old": 0.20431863545636,
+   "recent": 0.22804232804232805,
+   "z": -2.1836055403801526,
+   "p": 0.02899124609859946
+  },
+  "oldrec_2-1": {
+   "old": 0.10379241516966067,
+   "recent": 0.08412698412698413,
+   "z": 2.4727099381714046,
+   "p": 0.013409292891532521
+  }
+ },
+ "roi_scan": [
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-0",
+   "n": 5180,
+   "wr": 0.0334,
+   "roi": -0.4228,
+   "avg_odds": 19.395,
+   "p": 1.335161815676094e-19
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-1",
+   "n": 5180,
+   "wr": 0.0525,
+   "roi": -0.1129,
+   "avg_odds": 20.392,
+   "p": 0.05624358824456925
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-2",
+   "n": 5002,
+   "wr": 0.0404,
+   "roi": -0.14,
+   "avg_odds": 31.021,
+   "p": 0.06428902638109334
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-3",
+   "n": 3831,
+   "wr": 0.0365,
+   "roi": -0.0571,
+   "avg_odds": 41.486,
+   "p": 0.5670230258063731
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-4",
+   "n": 1726,
+   "wr": 0.0313,
+   "roi": 0.1499,
+   "avg_odds": 46.7,
+   "p": 0.4178013199336372
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-5",
+   "n": 760,
+   "wr": 0.0171,
+   "roi": -0.3882,
+   "avg_odds": 57.546,
+   "p": 0.06233805132875369
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "0-6",
+   "n": 150,
+   "wr": 0.0133,
+   "roi": -0.4663,
+   "avg_odds": 60.763,
+   "p": 0.2136483603306215
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "1-0",
+   "n": 5180,
+   "wr": 0.0687,
+   "roi": -0.0501,
+   "avg_odds": 15.091,
+   "p": 0.32860527579306
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "1-1",
+   "n": 5180,
+   "wr": 0.0986,
+   "roi": -0.1551,
+   "avg_odds": 9.075,
+   "p": 2.234854542239845e-05
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "1-2",
+   "n": 5180,
+   "wr": 0.0838,
+   "roi": -0.0069,
+   "avg_odds": 14.471,
+   "p": 0.88968799884492
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "1-3",
+   "n": 4756,
+   "wr": 0.0391,
+   "roi": -0.1509,
+   "avg_odds": 32.547,
+   "p": 0.03958530868651994
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "1-4",
+   "n": 2583,
+   "wr": 0.0225,
+   "roi": -0.173,
+   "avg_odds": 50.81,
+   "p": 0.1694662336423981
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "1-5",
+   "n": 339,
+   "wr": 0.0147,
+   "roi": -0.0115,
+   "avg_odds": 66.263,
+   "p": 0.9800675309412578
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "2-0",
+   "n": 5116,
+   "wr": 0.0686,
+   "roi": -0.0499,
+   "avg_odds": 17.242,
+   "p": 0.3790572872310526
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "2-1",
+   "n": 5180,
+   "wr": 0.1039,
+   "roi": -0.0232,
+   "avg_odds": 10.39,
+   "p": 0.5979444527552007
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "2-2",
+   "n": 5180,
+   "wr": 0.0653,
+   "roi": -0.0712,
+   "avg_odds": 15.714,
+   "p": 0.15792015897097322
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "2-3",
+   "n": 4885,
+   "wr": 0.027,
+   "roi": -0.0918,
+   "avg_odds": 40.737,
+   "p": 0.27557202001956904
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "2-4",
+   "n": 644,
+   "wr": 0.0124,
+   "roi": 0.1252,
+   "avg_odds": 78.652,
+   "p": 0.752412500558181
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "3-0",
+   "n": 4736,
+   "wr": 0.0608,
+   "roi": -0.0719,
+   "avg_odds": 22.882,
+   "p": 0.2842356704832737
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "3-1",
+   "n": 5082,
+   "wr": 0.0632,
+   "roi": -0.1076,
+   "avg_odds": 19.9,
+   "p": 0.05363937163392051
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "3-2",
+   "n": 5063,
+   "wr": 0.0348,
+   "roi": -0.0522,
+   "avg_odds": 30.832,
+   "p": 0.5049086444701985
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "3-3",
+   "n": 1385,
+   "wr": 0.0101,
+   "roi": -0.2266,
+   "avg_odds": 78.352,
+   "p": 0.27964387068323726
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "4-0",
+   "n": 3975,
+   "wr": 0.0423,
+   "roi": -0.0694,
+   "avg_odds": 35.256,
+   "p": 0.4073045362534924
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "4-1",
+   "n": 4219,
+   "wr": 0.0341,
+   "roi": -0.1762,
+   "avg_odds": 32.373,
+   "p": 0.023730415647634298
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "4-2",
+   "n": 2461,
+   "wr": 0.0179,
+   "roi": 0.1299,
+   "avg_odds": 68.058,
+   "p": 0.45521097646394704
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "5-0",
+   "n": 2470,
+   "wr": 0.0263,
+   "roi": -0.2153,
+   "avg_odds": 46.631,
+   "p": 0.0693491933404353
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "5-1",
+   "n": 1881,
+   "wr": 0.0186,
+   "roi": -0.0654,
+   "avg_odds": 57.917,
+   "p": 0.6956605592902217
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Score exact",
+   "sel": "6-0",
+   "n": 837,
+   "wr": 0.0119,
+   "roi": -0.4138,
+   "avg_odds": 61.633,
+   "p": 0.04373950442976737
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "0",
+   "n": 5180,
+   "wr": 0.0334,
+   "roi": -0.4228,
+   "avg_odds": 19.395,
+   "p": 1.335161815676094e-19
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "1",
+   "n": 5180,
+   "wr": 0.1212,
+   "roi": -0.0854,
+   "avg_odds": 8.006,
+   "p": 0.01639337999817242
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "2",
+   "n": 5180,
+   "wr": 0.2054,
+   "roi": -0.1388,
+   "avg_odds": 4.279,
+   "p": 5.891787153958755e-09
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "3",
+   "n": 5180,
+   "wr": 0.2722,
+   "roi": -0.0411,
+   "avg_odds": 3.527,
+   "p": 0.05957067143096032
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "4",
+   "n": 5180,
+   "wr": 0.2093,
+   "roi": -0.0677,
+   "avg_odds": 4.551,
+   "p": 0.007948742258805892
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "5",
+   "n": 5180,
+   "wr": 0.1191,
+   "roi": -0.1189,
+   "avg_odds": 7.984,
+   "p": 0.0006998712509975337
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "6(=6+)",
+   "n": 5166,
+   "wr": 0.0395,
+   "roi": -0.0595,
+   "avg_odds": 29.318,
+   "p": 0.410401864407825
+  },
+  {
+   "group": "8035-wf-train",
+   "market": "Total de buts",
+   "sel": "6(=exactly6)",
+   "n": 5166,
+   "wr": 0.0395,
+   "roi": -0.0595,
+   "avg_odds": 29.318,
+   "p": 0.410401864407825
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "0-0",
+   "n": 2221,
+   "wr": 0.0585,
+   "roi": -0.072,
+   "avg_odds": 19.333,
+   "p": 0.40183787521172143
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "0-1",
+   "n": 2221,
+   "wr": 0.0509,
+   "roi": -0.1254,
+   "avg_odds": 20.299,
+   "p": 0.16032054846697397
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "0-2",
+   "n": 2144,
+   "wr": 0.0378,
+   "roi": -0.173,
+   "avg_odds": 30.761,
+   "p": 0.11055560543105183
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "0-3",
+   "n": 1662,
+   "wr": 0.0385,
+   "roi": 0.0385,
+   "avg_odds": 41.848,
+   "p": 0.8131888951249122
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "0-4",
+   "n": 736,
+   "wr": 0.0367,
+   "roi": 0.5798,
+   "avg_odds": 45.565,
+   "p": 0.09378249041955114
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "0-5",
+   "n": 339,
+   "wr": 0.0265,
+   "roi": 0.3629,
+   "avg_odds": 61.145,
+   "p": 0.45070016011017167
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "1-0",
+   "n": 2221,
+   "wr": 0.0671,
+   "roi": -0.0337,
+   "avg_odds": 14.99,
+   "p": 0.6770389841933842
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "1-1",
+   "n": 2221,
+   "wr": 0.1094,
+   "roi": -0.072,
+   "avg_odds": 9.03,
+   "p": 0.21311659892394763
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "1-2",
+   "n": 2221,
+   "wr": 0.0743,
+   "roi": -0.1144,
+   "avg_odds": 14.415,
+   "p": 0.12119789090128873
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "1-3",
+   "n": 2027,
+   "wr": 0.0385,
+   "roi": -0.1253,
+   "avg_odds": 31.873,
+   "p": 0.25743348203132477
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "1-4",
+   "n": 1104,
+   "wr": 0.0172,
+   "roi": -0.4286,
+   "avg_odds": 50.843,
+   "p": 0.004027583845965091
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "1-5",
+   "n": 142,
+   "wr": 0.0,
+   "roi": -1.0,
+   "avg_odds": 70.396,
+   "p": 1.0
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "2-0",
+   "n": 2198,
+   "wr": 0.0673,
+   "roi": -0.1039,
+   "avg_odds": 17.139,
+   "p": 0.18522285225721102
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "2-1",
+   "n": 2221,
+   "wr": 0.0869,
+   "roi": -0.221,
+   "avg_odds": 10.27,
+   "p": 5.5185467747856135e-05
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "2-2",
+   "n": 2221,
+   "wr": 0.0495,
+   "roi": -0.3001,
+   "avg_odds": 15.631,
+   "p": 7.007116543994946e-06
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "2-3",
+   "n": 2081,
+   "wr": 0.0303,
+   "roi": -0.0281,
+   "avg_odds": 40.178,
+   "p": 0.8231408041371435
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "2-4",
+   "n": 293,
+   "wr": 0.0171,
+   "roi": 0.0391,
+   "avg_odds": 79.137,
+   "p": 0.9328162602068605
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "3-0",
+   "n": 2049,
+   "wr": 0.061,
+   "roi": -0.1,
+   "avg_odds": 23.526,
+   "p": 0.2770311778131762
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "3-1",
+   "n": 2187,
+   "wr": 0.0718,
+   "roi": 0.1062,
+   "avg_odds": 19.878,
+   "p": 0.31334922575482715
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "3-2",
+   "n": 2182,
+   "wr": 0.0325,
+   "roi": -0.2046,
+   "avg_odds": 30.95,
+   "p": 0.04096770669923764
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "3-3",
+   "n": 588,
+   "wr": 0.0136,
+   "roi": 0.0164,
+   "avg_odds": 77.954,
+   "p": 0.9638978183193918
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "4-0",
+   "n": 1690,
+   "wr": 0.0343,
+   "roi": -0.2542,
+   "avg_odds": 35.12,
+   "p": 0.02416646235419085
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "4-1",
+   "n": 1801,
+   "wr": 0.0389,
+   "roi": -0.1072,
+   "avg_odds": 32.64,
+   "p": 0.3948953428581765
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "4-2",
+   "n": 1040,
+   "wr": 0.0183,
+   "roi": 0.2094,
+   "avg_odds": 67.87,
+   "p": 0.4572829064346082
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "5-0",
+   "n": 1058,
+   "wr": 0.0284,
+   "roi": -0.1121,
+   "avg_odds": 47.519,
+   "p": 0.5516579403966198
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "5-1",
+   "n": 792,
+   "wr": 0.024,
+   "roi": 0.2191,
+   "avg_odds": 57.884,
+   "p": 0.46780482300809345
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Score exact",
+   "sel": "6-0",
+   "n": 345,
+   "wr": 0.0145,
+   "roi": -0.2927,
+   "avg_odds": 60.456,
+   "p": 0.3928710472555398
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "0",
+   "n": 2221,
+   "wr": 0.0585,
+   "roi": -0.072,
+   "avg_odds": 19.333,
+   "p": 0.40183787521172143
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "1",
+   "n": 2221,
+   "wr": 0.118,
+   "roi": -0.0976,
+   "avg_odds": 7.982,
+   "p": 0.07514006462551664
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "2",
+   "n": 2221,
+   "wr": 0.213,
+   "roi": -0.1135,
+   "avg_odds": 4.271,
+   "p": 0.0019142913247807525
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "3",
+   "n": 2221,
+   "wr": 0.2472,
+   "roi": -0.1308,
+   "avg_odds": 3.528,
+   "p": 4.867501873768805e-05
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "4",
+   "n": 2221,
+   "wr": 0.1977,
+   "roi": -0.1143,
+   "avg_odds": 4.56,
+   "p": 0.0028573105478027004
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "5",
+   "n": 2221,
+   "wr": 0.1256,
+   "roi": -0.0935,
+   "avg_odds": 8.022,
+   "p": 0.07933295414544257
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "6(=6+)",
+   "n": 2215,
+   "wr": 0.0402,
+   "roi": -0.1771,
+   "avg_odds": 29.546,
+   "p": 0.05890467135797227
+  },
+  {
+   "group": "8035-wf-test",
+   "market": "Total de buts",
+   "sel": "6(=exactly6)",
+   "n": 2215,
+   "wr": 0.0402,
+   "roi": -0.1771,
+   "avg_odds": 29.546,
+   "p": 0.05890467135797227
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "0-0",
+   "n": 1890,
+   "wr": 0.0545,
+   "roi": -0.1175,
+   "avg_odds": 19.375,
+   "p": 0.20059363796650642
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "0-1",
+   "n": 1890,
+   "wr": 0.0481,
+   "roi": -0.1512,
+   "avg_odds": 20.33,
+   "p": 0.12033853812338641
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "0-2",
+   "n": 1828,
+   "wr": 0.0367,
+   "roi": -0.1762,
+   "avg_odds": 30.874,
+   "p": 0.13750823577186683
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "0-3",
+   "n": 1416,
+   "wr": 0.0403,
+   "roi": 0.1306,
+   "avg_odds": 42.022,
+   "p": 0.4789983985930101
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "0-4",
+   "n": 627,
+   "wr": 0.0351,
+   "roi": 0.4582,
+   "avg_odds": 46.086,
+   "p": 0.1996311099562259
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "0-5",
+   "n": 285,
+   "wr": 0.0211,
+   "roi": 0.1182,
+   "avg_odds": 61.816,
+   "p": 0.8105925747585709
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "1-0",
+   "n": 1890,
+   "wr": 0.063,
+   "roi": -0.1118,
+   "avg_odds": 14.948,
+   "p": 0.17439332069483904
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "1-1",
+   "n": 1890,
+   "wr": 0.1159,
+   "roi": -0.0189,
+   "avg_odds": 9.019,
+   "p": 0.7681084864400052
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "1-2",
+   "n": 1890,
+   "wr": 0.0757,
+   "roi": -0.0934,
+   "avg_odds": 14.394,
+   "p": 0.24924423775039606
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "1-3",
+   "n": 1730,
+   "wr": 0.0399,
+   "roi": -0.1183,
+   "avg_odds": 32.1,
+   "p": 0.31350793000412713
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "1-4",
+   "n": 942,
+   "wr": 0.018,
+   "roi": -0.3873,
+   "avg_odds": 51.067,
+   "p": 0.022672647239503324
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "1-5",
+   "n": 114,
+   "wr": 0.0,
+   "roi": -1.0,
+   "avg_odds": 70.318,
+   "p": 1.0
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "2-0",
+   "n": 1873,
+   "wr": 0.0705,
+   "roi": -0.0502,
+   "avg_odds": 17.085,
+   "p": 0.5686899408498014
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "2-1",
+   "n": 1890,
+   "wr": 0.0841,
+   "roi": -0.2533,
+   "avg_odds": 10.173,
+   "p": 1.2070075183314143e-05
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "2-2",
+   "n": 1890,
+   "wr": 0.0519,
+   "roi": -0.2805,
+   "avg_odds": 15.548,
+   "p": 0.00010716851024411663
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "2-3",
+   "n": 1777,
+   "wr": 0.0293,
+   "roi": -0.0572,
+   "avg_odds": 40.27,
+   "p": 0.6716871397653752
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "2-4",
+   "n": 244,
+   "wr": 0.0164,
+   "roi": -0.0532,
+   "avg_odds": 78.957,
+   "p": 0.9098894504032669
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "3-0",
+   "n": 1749,
+   "wr": 0.0652,
+   "roi": -0.0279,
+   "avg_odds": 23.594,
+   "p": 0.788855008953905
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "3-1",
+   "n": 1866,
+   "wr": 0.0702,
+   "roi": 0.09,
+   "avg_odds": 19.865,
+   "p": 0.43125486758236564
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "3-2",
+   "n": 1861,
+   "wr": 0.0312,
+   "roi": -0.2784,
+   "avg_odds": 30.854,
+   "p": 0.003957701006113182
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "3-3",
+   "n": 503,
+   "wr": 0.0119,
+   "roi": -0.1164,
+   "avg_odds": 77.869,
+   "p": 0.7491550021719879
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "4-0",
+   "n": 1443,
+   "wr": 0.0367,
+   "roi": -0.2172,
+   "avg_odds": 35.155,
+   "p": 0.07639701680323098
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "4-1",
+   "n": 1537,
+   "wr": 0.039,
+   "roi": -0.0758,
+   "avg_odds": 32.636,
+   "p": 0.5911815573866488
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "4-2",
+   "n": 889,
+   "wr": 0.0157,
+   "roi": 0.0204,
+   "avg_odds": 67.643,
+   "p": 0.9413330852500698
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "5-0",
+   "n": 898,
+   "wr": 0.0256,
+   "roi": -0.1861,
+   "avg_odds": 47.318,
+   "p": 0.3488346474598958
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "5-1",
+   "n": 677,
+   "wr": 0.0236,
+   "roi": 0.1262,
+   "avg_odds": 57.864,
+   "p": 0.6800916839346323
+  },
+  {
+   "group": "8035-recent",
+   "market": "Score exact",
+   "sel": "6-0",
+   "n": 298,
+   "wr": 0.0101,
+   "roi": -0.3651,
+   "avg_odds": 60.776,
+   "p": 0.32915763336347015
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "0",
+   "n": 1890,
+   "wr": 0.0545,
+   "roi": -0.1175,
+   "avg_odds": 19.375,
+   "p": 0.20059363796650642
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "1",
+   "n": 1890,
+   "wr": 0.1111,
+   "roi": -0.1532,
+   "avg_odds": 7.993,
+   "p": 0.00797140320006252
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "2",
+   "n": 1890,
+   "wr": 0.2212,
+   "roi": -0.0811,
+   "avg_odds": 4.273,
+   "p": 0.04346090726546166
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "3",
+   "n": 1890,
+   "wr": 0.2513,
+   "roi": -0.1162,
+   "avg_odds": 3.528,
+   "p": 0.0009308363089055174
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "4",
+   "n": 1890,
+   "wr": 0.2021,
+   "roi": -0.0979,
+   "avg_odds": 4.557,
+   "p": 0.019057469340109684
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "5",
+   "n": 1890,
+   "wr": 0.1206,
+   "roi": -0.1289,
+   "avg_odds": 8.013,
+   "p": 0.023440213772731016
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "6(=6+)",
+   "n": 1886,
+   "wr": 0.0392,
+   "roi": -0.1748,
+   "avg_odds": 29.546,
+   "p": 0.09117234921882596
+  },
+  {
+   "group": "8035-recent",
+   "market": "Total de buts",
+   "sel": "6(=exactly6)",
+   "n": 1886,
+   "wr": 0.0392,
+   "roi": -0.1748,
+   "avg_odds": 29.546,
+   "p": 0.09117234921882596
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-0",
+   "n": 11366,
+   "wr": 0.0948,
+   "roi": -0.1294,
+   "avg_odds": 16.418,
+   "p": 0.00010009055393673951
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-1",
+   "n": 11340,
+   "wr": 0.0661,
+   "roi": -0.1169,
+   "avg_odds": 18.996,
+   "p": 0.002025412160131576
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-2",
+   "n": 10337,
+   "wr": 0.0463,
+   "roi": -0.102,
+   "avg_odds": 28.178,
+   "p": 0.04124428463546091
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-3",
+   "n": 7762,
+   "wr": 0.0393,
+   "roi": -0.1233,
+   "avg_odds": 38.11,
+   "p": 0.04395480836399657
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-4",
+   "n": 4071,
+   "wr": 0.0219,
+   "roi": -0.1377,
+   "avg_odds": 49.483,
+   "p": 0.1988781432220359
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-5",
+   "n": 1540,
+   "wr": 0.0188,
+   "roi": -0.2572,
+   "avg_odds": 57.25,
+   "p": 0.10450706841116346
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "0-6",
+   "n": 272,
+   "wr": 0.0147,
+   "roi": -0.0349,
+   "avg_odds": 62.93,
+   "p": 0.9435687830219954
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "1-0",
+   "n": 11401,
+   "wr": 0.0867,
+   "roi": -0.1001,
+   "avg_odds": 13.873,
+   "p": 0.002034777336316843
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "1-1",
+   "n": 11399,
+   "wr": 0.1079,
+   "roi": -0.0848,
+   "avg_odds": 9.698,
+   "p": 0.0013508001786586559
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "1-2",
+   "n": 10938,
+   "wr": 0.0702,
+   "roi": -0.0906,
+   "avg_odds": 17.747,
+   "p": 0.017327064665039842
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "1-3",
+   "n": 8921,
+   "wr": 0.0399,
+   "roi": -0.1079,
+   "avg_odds": 32.492,
+   "p": 0.05685557124852334
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "1-4",
+   "n": 5008,
+   "wr": 0.025,
+   "roi": -0.1344,
+   "avg_odds": 47.587,
+   "p": 0.13318805756984722
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "1-5",
+   "n": 967,
+   "wr": 0.0114,
+   "roi": -0.4734,
+   "avg_odds": 64.45,
+   "p": 0.008296426100390535
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "2-0",
+   "n": 11246,
+   "wr": 0.0722,
+   "roi": -0.1338,
+   "avg_odds": 17.831,
+   "p": 0.00014621935668131773
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "2-1",
+   "n": 11325,
+   "wr": 0.0842,
+   "roi": -0.1009,
+   "avg_odds": 12.973,
+   "p": 0.0008999234622277813
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "2-2",
+   "n": 10615,
+   "wr": 0.0529,
+   "roi": -0.1339,
+   "avg_odds": 21.518,
+   "p": 0.0007433170774836396
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "2-3",
+   "n": 8196,
+   "wr": 0.0292,
+   "roi": -0.0561,
+   "avg_odds": 40.987,
+   "p": 0.41430639227216437
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "2-4",
+   "n": 1826,
+   "wr": 0.0192,
+   "roi": 0.303,
+   "avg_odds": 69.518,
+   "p": 0.18262905048953182
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "3-0",
+   "n": 10261,
+   "wr": 0.0608,
+   "roi": -0.0584,
+   "avg_odds": 26.395,
+   "p": 0.22623889591726942
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "3-1",
+   "n": 10584,
+   "wr": 0.0478,
+   "roi": -0.1815,
+   "avg_odds": 23.906,
+   "p": 1.060347476140434e-05
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "3-2",
+   "n": 9402,
+   "wr": 0.0298,
+   "roi": -0.1551,
+   "avg_odds": 38.151,
+   "p": 0.005591941653039652
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "3-3",
+   "n": 2517,
+   "wr": 0.0155,
+   "roi": 0.0683,
+   "avg_odds": 72.047,
+   "p": 0.7036650917675539
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "4-0",
+   "n": 7465,
+   "wr": 0.039,
+   "roi": -0.1286,
+   "avg_odds": 38.315,
+   "p": 0.04407445482219488
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "4-1",
+   "n": 7913,
+   "wr": 0.0306,
+   "roi": -0.1018,
+   "avg_odds": 40.325,
+   "p": 0.13057947643098003
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "4-2",
+   "n": 2868,
+   "wr": 0.0126,
+   "roi": -0.32,
+   "avg_odds": 65.337,
+   "p": 0.007517771335683117
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "5-0",
+   "n": 3971,
+   "wr": 0.036,
+   "roi": 0.0427,
+   "avg_odds": 44.067,
+   "p": 0.6923097070401694
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "5-1",
+   "n": 2559,
+   "wr": 0.0188,
+   "roi": -0.0943,
+   "avg_odds": 56.869,
+   "p": 0.506158405892958
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Score exact",
+   "sel": "6-0",
+   "n": 1412,
+   "wr": 0.0191,
+   "roi": -0.3707,
+   "avg_odds": 50.041,
+   "p": 0.006865746640787075
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "0",
+   "n": 11366,
+   "wr": 0.0948,
+   "roi": -0.1294,
+   "avg_odds": 16.418,
+   "p": 0.00010009055393673951
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "1",
+   "n": 11401,
+   "wr": 0.1525,
+   "roi": -0.1143,
+   "avg_odds": 7.175,
+   "p": 2.4735103961700533e-07
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "2",
+   "n": 11401,
+   "wr": 0.2219,
+   "roi": -0.1027,
+   "avg_odds": 4.224,
+   "p": 2.2523472990938977e-10
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "3",
+   "n": 11399,
+   "wr": 0.2343,
+   "roi": -0.0916,
+   "avg_odds": 4.399,
+   "p": 2.4393125691132317e-08
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "4",
+   "n": 11290,
+   "wr": 0.1642,
+   "roi": -0.155,
+   "avg_odds": 7.391,
+   "p": 2.0142070795563554e-13
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "5",
+   "n": 10897,
+   "wr": 0.1055,
+   "roi": -0.1108,
+   "avg_odds": 13.318,
+   "p": 0.0003569103971430832
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "6(=6+)",
+   "n": 9151,
+   "wr": 0.0401,
+   "roi": -0.0175,
+   "avg_odds": 34.41,
+   "p": 0.7701110157058092
+  },
+  {
+   "group": "POOLED-ALL-NEW",
+   "market": "Total de buts",
+   "sel": "6(=exactly6)",
+   "n": 9151,
+   "wr": 0.0401,
+   "roi": -0.0175,
+   "avg_odds": 34.41,
+   "p": 0.7701110157058092
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "0-0",
+   "n": 5079,
+   "wr": 0.0866,
+   "roi": -0.1753,
+   "avg_odds": 13.825,
+   "p": 5.1149065122970135e-05
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "0-1",
+   "n": 5079,
+   "wr": 0.0689,
+   "roi": -0.1393,
+   "avg_odds": 16.913,
+   "p": 0.006819974899715811
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "0-2",
+   "n": 4812,
+   "wr": 0.0441,
+   "roi": -0.1356,
+   "avg_odds": 29.389,
+   "p": 0.0559688207592649
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "0-3",
+   "n": 3417,
+   "wr": 0.0351,
+   "roi": -0.1465,
+   "avg_odds": 42.39,
+   "p": 0.11564609614174243
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "0-4",
+   "n": 1431,
+   "wr": 0.0182,
+   "roi": -0.2599,
+   "avg_odds": 53.264,
+   "p": 0.1228893800104986
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "0-5",
+   "n": 406,
+   "wr": 0.0148,
+   "roi": -0.3513,
+   "avg_odds": 62.416,
+   "p": 0.21157102524875504
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "1-0",
+   "n": 5079,
+   "wr": 0.0906,
+   "roi": -0.14,
+   "avg_odds": 11.537,
+   "p": 0.0009091307657395643
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "1-1",
+   "n": 5079,
+   "wr": 0.1229,
+   "roi": -0.0523,
+   "avg_odds": 8.247,
+   "p": 0.1574772864315639
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "1-2",
+   "n": 5042,
+   "wr": 0.0658,
+   "roi": -0.1335,
+   "avg_odds": 16.598,
+   "p": 0.012621648871420248
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "1-3",
+   "n": 4148,
+   "wr": 0.0333,
+   "roi": -0.1422,
+   "avg_odds": 37.072,
+   "p": 0.098661850622999
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "1-4",
+   "n": 1811,
+   "wr": 0.0204,
+   "roi": -0.1533,
+   "avg_odds": 54.871,
+   "p": 0.33286023526409103
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "1-5",
+   "n": 199,
+   "wr": 0.005,
+   "roi": -0.692,
+   "avg_odds": 67.983,
+   "p": 0.024322592289140875
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "2-0",
+   "n": 5071,
+   "wr": 0.0787,
+   "roi": -0.1349,
+   "avg_odds": 15.244,
+   "p": 0.0043689041881577635
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "2-1",
+   "n": 5079,
+   "wr": 0.0916,
+   "roi": -0.0959,
+   "avg_odds": 10.522,
+   "p": 0.021432736267569915
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "2-2",
+   "n": 5064,
+   "wr": 0.0515,
+   "roi": -0.1049,
+   "avg_odds": 21.374,
+   "p": 0.06971035840561558
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "2-3",
+   "n": 3759,
+   "wr": 0.0226,
+   "roi": -0.0784,
+   "avg_odds": 49.184,
+   "p": 0.47547737190265327
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "2-4",
+   "n": 399,
+   "wr": 0.015,
+   "roi": 0.1582,
+   "avg_odds": 71.781,
+   "p": 0.7421585709015983
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "3-0",
+   "n": 4790,
+   "wr": 0.0605,
+   "roi": -0.0933,
+   "avg_odds": 24.944,
+   "p": 0.15353198944818167
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "3-1",
+   "n": 4973,
+   "wr": 0.0452,
+   "roi": -0.2203,
+   "avg_odds": 23.591,
+   "p": 0.00018930380707609886
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "3-2",
+   "n": 4562,
+   "wr": 0.0272,
+   "roi": -0.0965,
+   "avg_odds": 43.645,
+   "p": 0.2831311770074524
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "3-3",
+   "n": 748,
+   "wr": 0.012,
+   "roi": -0.1739,
+   "avg_odds": 73.756,
+   "p": 0.5371503056384801
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "4-0",
+   "n": 3580,
+   "wr": 0.033,
+   "roi": -0.2089,
+   "avg_odds": 39.903,
+   "p": 0.01722584217603649
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "4-1",
+   "n": 3684,
+   "wr": 0.0271,
+   "roi": -0.1911,
+   "avg_odds": 42.495,
+   "p": 0.04148030524476582
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "4-2",
+   "n": 1039,
+   "wr": 0.0125,
+   "roi": -0.3106,
+   "avg_odds": 68.151,
+   "p": 0.12153556050169545
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "5-0",
+   "n": 1734,
+   "wr": 0.0311,
+   "roi": 0.0436,
+   "avg_odds": 46.88,
+   "p": 0.7909013159844992
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "5-1",
+   "n": 1021,
+   "wr": 0.0176,
+   "roi": -0.0589,
+   "avg_odds": 62.253,
+   "p": 0.7972362929732077
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Score exact",
+   "sel": "6-0",
+   "n": 475,
+   "wr": 0.0147,
+   "roi": -0.4208,
+   "avg_odds": 58.067,
+   "p": 0.06085340912594199
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "0",
+   "n": 5079,
+   "wr": 0.0866,
+   "roi": -0.1753,
+   "avg_odds": 13.825,
+   "p": 5.1149065122970135e-05
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "1",
+   "n": 5079,
+   "wr": 0.1595,
+   "roi": -0.1341,
+   "avg_odds": 6.286,
+   "p": 9.310304750668203e-06
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "2",
+   "n": 5079,
+   "wr": 0.2436,
+   "roi": -0.0764,
+   "avg_odds": 3.863,
+   "p": 0.001021308397595909
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "3",
+   "n": 5079,
+   "wr": 0.2388,
+   "roi": -0.0985,
+   "avg_odds": 3.823,
+   "p": 1.5728168319330254e-05
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "4",
+   "n": 5079,
+   "wr": 0.1561,
+   "roi": -0.1526,
+   "avg_odds": 6.148,
+   "p": 1.9680114787032383e-07
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "5",
+   "n": 5079,
+   "wr": 0.0898,
+   "roi": -0.0916,
+   "avg_odds": 14.19,
+   "p": 0.06277411752625985
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "6(=6+)",
+   "n": 4070,
+   "wr": 0.0305,
+   "roi": -0.0507,
+   "avg_odds": 43.198,
+   "p": 0.6065119248654574
+  },
+  {
+   "group": "POOLED-CHAMP-NEW",
+   "market": "Total de buts",
+   "sel": "6(=exactly6)",
+   "n": 4070,
+   "wr": 0.0305,
+   "roi": -0.0507,
+   "avg_odds": 43.198,
+   "p": 0.6065119248654574
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-0",
+   "n": 6287,
+   "wr": 0.1015,
+   "roi": -0.0924,
+   "avg_odds": 18.513,
+   "p": 0.059066730567107845
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-1",
+   "n": 6261,
+   "wr": 0.0639,
+   "roi": -0.0987,
+   "avg_odds": 20.685,
+   "p": 0.0696303101091036
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-2",
+   "n": 5525,
+   "wr": 0.0483,
+   "roi": -0.0727,
+   "avg_odds": 27.123,
+   "p": 0.3000428894096452
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-3",
+   "n": 4345,
+   "wr": 0.0426,
+   "roi": -0.105,
+   "avg_odds": 34.744,
+   "p": 0.19575115214992156
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-4",
+   "n": 2640,
+   "wr": 0.0239,
+   "roi": -0.0715,
+   "avg_odds": 47.433,
+   "p": 0.603911297607608
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-5",
+   "n": 1134,
+   "wr": 0.0203,
+   "roi": -0.2236,
+   "avg_odds": 55.401,
+   "p": 0.23978188460430272
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "0-6",
+   "n": 228,
+   "wr": 0.0132,
+   "roi": -0.0766,
+   "avg_odds": 62.562,
+   "p": 0.8880052385921622
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "1-0",
+   "n": 6322,
+   "wr": 0.0835,
+   "roi": -0.0681,
+   "avg_odds": 15.75,
+   "p": 0.1533542834353474
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "1-1",
+   "n": 6320,
+   "wr": 0.0959,
+   "roi": -0.1109,
+   "avg_odds": 10.864,
+   "p": 0.0029680284983942835
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "1-2",
+   "n": 5896,
+   "wr": 0.0739,
+   "roi": -0.0539,
+   "avg_odds": 18.729,
+   "p": 0.31635144447251007
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "1-3",
+   "n": 4773,
+   "wr": 0.0457,
+   "roi": -0.0781,
+   "avg_odds": 28.511,
+   "p": 0.29730529811828577
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "1-4",
+   "n": 3197,
+   "wr": 0.0275,
+   "roi": -0.1237,
+   "avg_odds": 43.46,
+   "p": 0.2510714398339703
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "1-5",
+   "n": 768,
+   "wr": 0.013,
+   "roi": -0.4168,
+   "avg_odds": 63.534,
+   "p": 0.04851458108052677
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "2-0",
+   "n": 6175,
+   "wr": 0.0669,
+   "roi": -0.1328,
+   "avg_odds": 19.955,
+   "p": 0.009253019381542677
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "2-1",
+   "n": 6246,
+   "wr": 0.0781,
+   "roi": -0.105,
+   "avg_odds": 14.966,
+   "p": 0.01567110504124062
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "2-2",
+   "n": 5551,
+   "wr": 0.0542,
+   "roi": -0.1604,
+   "avg_odds": 21.649,
+   "p": 0.0032990777829967444
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "2-3",
+   "n": 4437,
+   "wr": 0.0347,
+   "roi": -0.0372,
+   "avg_odds": 34.042,
+   "p": 0.6665400498061015
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "2-4",
+   "n": 1427,
+   "wr": 0.0203,
+   "roi": 0.3435,
+   "avg_odds": 68.885,
+   "p": 0.1830362367433228
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "3-0",
+   "n": 5471,
+   "wr": 0.061,
+   "roi": -0.0279,
+   "avg_odds": 27.665,
+   "p": 0.6911295294164903
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "3-1",
+   "n": 5611,
+   "wr": 0.0501,
+   "roi": -0.1471,
+   "avg_odds": 24.185,
+   "p": 0.010513326380817707
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "3-2",
+   "n": 4840,
+   "wr": 0.0322,
+   "roi": -0.2104,
+   "avg_odds": 32.973,
+   "p": 0.002023642635844635
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "3-3",
+   "n": 1769,
+   "wr": 0.017,
+   "roi": 0.1706,
+   "avg_odds": 71.325,
+   "p": 0.44979049224365764
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "4-0",
+   "n": 3885,
+   "wr": 0.0445,
+   "roi": -0.0545,
+   "avg_odds": 36.852,
+   "p": 0.5546815802569147
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "4-1",
+   "n": 4229,
+   "wr": 0.0336,
+   "roi": -0.024,
+   "avg_odds": 38.435,
+   "p": 0.8024952393509679
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "4-2",
+   "n": 1829,
+   "wr": 0.0126,
+   "roi": -0.3254,
+   "avg_odds": 63.738,
+   "p": 0.029193847528304142
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "5-0",
+   "n": 2237,
+   "wr": 0.0398,
+   "roi": 0.0419,
+   "avg_odds": 41.886,
+   "p": 0.7689340766031415
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "5-1",
+   "n": 1538,
+   "wr": 0.0195,
+   "roi": -0.1179,
+   "avg_odds": 53.295,
+   "p": 0.5137411780914481
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Score exact",
+   "sel": "6-0",
+   "n": 937,
+   "wr": 0.0213,
+   "roi": -0.3453,
+   "avg_odds": 45.973,
+   "p": 0.0452937666655222
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "0",
+   "n": 6287,
+   "wr": 0.1015,
+   "roi": -0.0924,
+   "avg_odds": 18.513,
+   "p": 0.059066730567107845
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "1",
+   "n": 6322,
+   "wr": 0.1469,
+   "roi": -0.0984,
+   "avg_odds": 7.889,
+   "p": 0.0019143437396402785
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "2",
+   "n": 6322,
+   "wr": 0.2045,
+   "roi": -0.1239,
+   "avg_odds": 4.515,
+   "p": 3.396786690194884e-08
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "3",
+   "n": 6320,
+   "wr": 0.2307,
+   "roi": -0.0861,
+   "avg_odds": 4.863,
+   "p": 0.00021645637888248413
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "4",
+   "n": 6211,
+   "wr": 0.1708,
+   "roi": -0.1569,
+   "avg_odds": 8.408,
+   "p": 1.5494877073499297e-07
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "5",
+   "n": 5818,
+   "wr": 0.1193,
+   "roi": -0.1277,
+   "avg_odds": 12.557,
+   "p": 0.0011228580566319732
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "6(=6+)",
+   "n": 5081,
+   "wr": 0.0478,
+   "roi": 0.009,
+   "avg_odds": 27.371,
+   "p": 0.9031148727399498
+  },
+  {
+   "group": "POOLED-CUP",
+   "market": "Total de buts",
+   "sel": "6(=exactly6)",
+   "n": 5081,
+   "wr": 0.0478,
+   "roi": 0.009,
+   "avg_odds": 27.371,
+   "p": 0.9031148727399498
+  }
+ ],
+ "n_tests_part3": 259
+}

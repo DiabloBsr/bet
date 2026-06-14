@@ -1,0 +1,73 @@
+{
+ "dedup": {
+  "n_dropped": 180,
+  "dup_same_score": 180,
+  "dup_diff_score": 0,
+  "zone_n": 7255,
+  "real": 0.5494,
+  "imp": 0.5337,
+  "z": 2.68,
+  "roi_yes_pct": -2.93
+ },
+ "oos": {
+  "n_total": 931,
+  "zone_n": 303,
+  "real": 0.4488,
+  "imp": 0.5147,
+  "z": -2.31,
+  "roi_yes_pct": -21.93,
+  "max_resid": 6.661338147750939e-16
+ },
+ "oos_by_league": {
+  "InstantLeague-8035": {
+   "n": 37,
+   "real": 0.6757,
+   "imp": 0.5695,
+   "z": 1.38
+  },
+  "InstantLeague-8036": {
+   "n": 41,
+   "real": 0.4146,
+   "imp": 0.4481,
+   "z": -0.44
+  },
+  "InstantLeague-8037": {
+   "n": 24,
+   "real": 0.2917,
+   "imp": 0.4455,
+   "z": -1.66
+  },
+  "InstantLeague-8042": {
+   "n": 23,
+   "real": 0.5652,
+   "imp": 0.5629,
+   "z": 0.02
+  },
+  "InstantLeague-8056": {
+   "n": 47,
+   "real": 0.5319,
+   "imp": 0.6019,
+   "z": -0.96
+  },
+  "InstantLeague-8060": {
+   "n": 31,
+   "real": 0.1613,
+   "imp": 0.2773,
+   "z": -1.76
+  },
+  "InstantLeague-8065": {
+   "n": 68,
+   "real": 0.4853,
+   "imp": 0.5842,
+   "z": -1.63
+  }
+ },
+ "combined": {
+  "n": 7558,
+  "real": 0.5454,
+  "imp": 0.533,
+  "z": 2.17,
+  "dev_pts": 1.24,
+  "roi_yes_pct": -3.69
+ }
+}

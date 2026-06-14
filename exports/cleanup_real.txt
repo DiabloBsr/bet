@@ -1,0 +1,58 @@
+BDD : D:\AGENTOVA\SAMY\virtual-sports-scraper\data\virtual_sports.db
+📦 Backup : data\virtual_sports_BACKUP_20260605_105425.db
+   ✅ Backup créé (74.4 MB)
+
+================================================================================
+AVANT NETTOYAGE
+================================================================================
+  events                 :     9451 lignes
+  odds_snapshots         :    16230 lignes
+  results                :     8545 lignes
+  rankings_snapshots     :    11743 lignes
+  scrape_runs            :      863 lignes
+
+================================================================================
+NETTOYAGE - 6 ÉTAPES
+================================================================================
+
+1️⃣  Events sans odds_snapshot      : 4137 à supprimer
+   ✅ Supprimé 4137 events
+
+2️⃣  Results avec finished_at corrompu (>1j décalage) : 1405 à supprimer
+   → Cause : bug match_key dedup (vieux résultats attachés aux nouveaux events)
+   ✅ Supprimé 1405 results corrompus
+
+3️⃣  Groupes d'events dupliqués : 158
+   ✅ Supprimé 158 events dupliqués
+
+4️⃣  Events sans expected_start : 49
+   ✅ Supprimé 49 events
+
+5️⃣  Odds_snapshots orphelins : 2788
+   ✅ Supprimé 2788 snapshots
+
+6️⃣  Scrape_runs zombies (status=running) : 3
+   ✅ Marqué 3 runs comme erreur
+
+================================================================================
+APRÈS NETTOYAGE
+================================================================================
+  events                 :     5107 lignes
+  odds_snapshots         :    13442 lignes
+  results                :     3225 lignes
+  rankings_snapshots     :    11743 lignes
+  scrape_runs            :      863 lignes
+
+⚙️  VACUUM (compactage)...
+   ✅ BDD compactée. Taille finale : 59.7 MB
+
+================================================================================
+RÉSUMÉ DES ACTIONS
+================================================================================
+  orphan_events             :   4137
+  corrupt_results           :   1405
+  dup_events                :    158
+  no_date                   :     49
+  orphan_odds               :   2788
+  zombie_runs               :      3
+  TOTAL                     :   8540

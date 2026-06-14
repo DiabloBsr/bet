@@ -1,0 +1,38 @@
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  PORTEFEUILLE V8 — Round 14:04 Mada — 10 matchs analysés
+  Bankroll 100u — Cap par round : 10% (10.0u max)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📋 2 PARIS SÉLECTIONNÉS (diversifiés sur 3 catégories)
+
+━━━ PARI #1  [🔴 SPÉCULATIF]  Confiance 5.4/10
+     Match : Sunderland vs Leeds
+     Pari  : HT/FT 2/1  @65.47
+     Je parie HT/FT 2/1 (Leeds mène à HT, Sunderland gagne au final) — cote 65.47.
+       Comeback du HOME (Sunderland) attendu, p_emp 7.8% vs bookmaker 1.5%.
+       → EV +413%, confiance 5.4/10
+     Mise  :  0.32u   Gain si OK : +20.67u   EV : + 1.33u
+
+━━━ PARI #2  [🔴 SPÉCULATIF]  Confiance 5.0/10
+     Match : Bournemouth vs C. Palace
+     Pari  : HT/FT 2/1  @47.63
+     Je parie HT/FT 2/1 (C. Palace mène à HT, Bournemouth gagne au final) — cote 47.63.
+       Comeback du HOME (Bournemouth) attendu, p_emp 6.8% vs bookmaker 2.1%.
+       → EV +225%, confiance 5.0/10
+     Mise  :  0.24u   Gain si OK : +11.27u   EV : + 0.54u
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+📊 SYNTHÈSE DU PORTEFEUILLE
+   Total misé        :   0.56u / 100u (0.6%)
+   Gain attendu (EV) : + 1.87u
+   ROI attendu       : +332.7%
+   Répartition       : 🟢 0 sécurisé(s) | 🟡 0 modéré(s) | 🔴 2 spéculatif(s)
+
+⚠️  RISK MANAGEMENT
+   • Variance attendue : élevée sur les paris spéculatifs (acc ~4%)
+   • Drawdown possible : 30-50 paris perdants consécutifs sont normaux
+   • Stop-loss conseillé : si bankroll perd 20% (-20u), pause de 5 rounds
+   • Stop-win conseillé : si bankroll +30% (+30u), retire 50% des gains
+   • Ne JAMAIS combler une perte en augmentant les mises (Martingale = ruine)
+════════════════════════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,25 @@
+{
+ "h1_fraction_global": 0.4516,
+ "h1_fraction_by_balance": {
+  "serre": 0.4464,
+  "leger": 0.4482,
+  "marque": 0.4554,
+  "ecrase": 0.455
+ },
+ "f_home": 0.4792,
+ "f_away": 0.4744,
+ "ht_1x2_emp": [
+  0.3588,
+  0.4119,
+  0.2293
+ ],
+ "ht_1x2_model": [
+  0.3747,
+  0.3787,
+  0.2466
+ ],
+ "ht_score_top1": 0.2595,
+ "ht_score_top3": 0.5761,
+ "ht_home_lead_blown": 0.1513,
+ "ht_away_lead_blown": 0.2708
+}

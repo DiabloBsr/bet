@@ -1,0 +1,48 @@
+=== V8 ANALYSE — n_train=3599 ===
+
+📊 ANALYSE 1X2 — probas modèle + EV par issue
+#  Match                               Cotes              p_model 1/X/2      EV 1/X/2               Action
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+1  C. Palace vs Leeds                  1.45/4.28/7.28     66/21/12           -4.8/-10.2/-10.1       ❌ pas de value
+2  Liverpool vs Manchester Blue        2.02/3.60/3.48     47/27/27           -3.6/-2.3/-5.0         ❌ pas de value
+3  Wolverhampton vs Spurs              2.68/3.87/2.33     37/21/43           -0.8/-18.8/+0.6        ❌ pas de value
+4  Burnley vs Sunderland               2.48/3.47/2.72     38/28/34           -8.2/-5.8/-8.9         ❌ pas de value
+5  Fulham vs Everton                   1.84/3.55/4.26     53/27/21           -0.5/-3.6/-10.3        ❌ pas de value
+6  London Reds vs Bournemouth          1.27/6.25/8.86     71/17/12           -4.5/+13.1/+9.5        ✅ X @6.25 EV+13.1%
+7  West Ham vs Newcastle               3.03/3.86/2.12     33/22/45           -3.3/-19.0/-8.5        ❌ pas de value
+8  A. Villa vs Manchester Red          1.62/4.22/4.89     63/21/16           +4.7/-11.5/-18.3       ✅ 1 @1.62 EV+4.7%
+9  N. Forest vs London Blues           2.11/3.60/3.24     43/28/29           -12.8/-2.3/-11.6       ❌ pas de value
+10 Brentford vs Brighton               2.03/4.39/2.95     47/21/33           -3.1/-7.9/-1.2         ❌ pas de value
+
+=== PARIS RECOMMANDÉS — Détails ===
+
+🔴 PARI #6 [SPÉCULATIF]
+   Match  : London Reds vs Bournemouth
+   Cotes  : 1.27/6.25/8.86
+   Pari   : X (nul) @6.25
+   Proba  : 17.1%  (marché impliqué 16.0%)
+   EV     : +13.1%
+   Mise   : 0.07u (Kelly fractionnaire 5%)
+   Gain si OK : +0.35u
+
+🟢 PARI #8 [SÉCURISÉ]
+   Match  : A. Villa vs Manchester Red
+   Cotes  : 1.62/4.22/4.89
+   Pari   : 1 (A. Villa) @1.62
+   Proba  : 63.2%  (marché impliqué 61.7%)
+   EV     : +4.7%
+   Raison : ✓ Près du bracket HOME 1.7 (proba modèle > marché)
+   Mise   : 0.94u (Kelly fractionnaire 25%)
+   Gain si OK : +0.59u
+
+Traceback (most recent call last):
+  File "D:\AGENTOVA\SAMY\virtual-sports-scraper\scripts\_predict_screenshot.py", line 123, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "D:\AGENTOVA\SAMY\virtual-sports-scraper\scripts\_predict_screenshot.py", line 114, in main
+    total_stake = sum(max(0, min((pk["cote"] - 1) * pk["p"] - (1 - pk["p"])) / (pk["cote"] - 1)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AGENTOVA\SAMY\virtual-sports-scraper\scripts\_predict_screenshot.py", line 114, in <genexpr>
+    total_stake = sum(max(0, min((pk["cote"] - 1) * pk["p"] - (1 - pk["p"])) / (pk["cote"] - 1)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'float' object is not iterable

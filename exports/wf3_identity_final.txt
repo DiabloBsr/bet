@@ -1,0 +1,35 @@
+n=5859
+facteurs calibration: H x1.0114 D x0.9743 A x1.0017
+
+cotes evaluees (online, n_prior>=5): 11877 sur 5859 matchs
+distribution EV estime: q50=0.939 q90=0.973 q97.5=0.995 max=1.052
+part des cotes avec EV_est>1.00 : 1.83%
+
+--- ROI par seuil d'EV estime (FULL online walk-forward) ---
+EV>0.98: n=775 ROI=+10.46% (se 8.7%) WR=28.5% avg_odds=5.35 [H:355 D:0 A:420]
+EV>1.00: n=217 ROI=+6.41% (se 16.8%) WR=21.2% avg_odds=6.95 [H:81 D:0 A:136]
+EV>1.01: n=105 ROI=-4.42% (se 24.2%) WR=16.2% avg_odds=7.60 [H:34 D:0 A:71]
+EV>1.02: n=50 ROI=+20.60% (se 40.0%) WR=20.0% avg_odds=7.87 [H:19 D:0 A:31]
+EV>1.03: n=17 ROI=+75.18% (se 88.0%) WR=23.5% avg_odds=9.53 [H:5 D:0 A:12]
+
+--- ROI par seuil, fenetre OOS stricte (derniers 30%) ---
+EV>0.98: n=345 ROI=+18.62% (se 12.8%) WR=30.1% avg_odds=5.25 p_binom_vs_implied=0.065
+EV>1.00: n=94 ROI=+23.83% (se 28.4%) WR=23.4% avg_odds=7.21 p_binom_vs_implied=0.232
+EV>1.01: n=40 ROI=-10.85% (se 39.9%) WR=12.5% avg_odds=8.91 p_binom_vs_implied=1.000
+EV>1.02: n=18 ROI=+51.44% (se 73.3%) WR=22.2% avg_odds=9.27 p_binom_vs_implied=0.282
+baselines OOS bet-all: H=-2.4% D=-15.5% A=-5.3%
+
+--- sanity: EV_est>1 est-il du jitter reel ou du bruit de base ? ---
+n_prior moyen des bets EV>1: 10.3 (bruit base ~0.0024 vs jitter 0.0078)
+part de la variance du signal due au bruit d'estimation: 9%
+
+--- EV>1.00 (full) par issue ---
+H: n=81 ROI=-11.47% (se 26.5%) WR=18.5% odds=6.69
+D: n=0 (trop peu)
+A: n=136 ROI=+17.07% (se 21.7%) WR=22.8% odds=7.11
+
+--- plafond theorique du jitter cosmetique ---
+simulation: part EV>1 = 1.19% ; EV moyen | EV>1 = 1.0101
+=> plafond ROI attendu sur les bets EV>1: +1.01%
+
+DONE

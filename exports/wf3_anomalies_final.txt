@@ -1,0 +1,183 @@
+events=13225 results=8963 snapshots=26132
+
+[A0a] results dupliques (>=2 lignes results pour le meme event_id): 0 events
+[A0b] doublons (team_a,team_b,expected_start) finis: 80 groupes, 80 events a exclure, 0 groupes a scores DIVERGENTS
+dataset travail (fini, dedup, round!=0): 8883
+
+[A1] HT > FT (buts qui disparaissent): 94
+     event_id          team_a        team_b  score_a  score_b  ht_score_a  ht_score_b              expected_start round_info
+10         50       C. Palace      A. Villa        2        0         1.0         2.0  2026-05-28 23:59:50.000000          7
+39        187       C. Palace  London Blues        0        2         1.0         0.0  2026-06-05 09:23:56.000000         21
+75        324      Sunderland      West Ham        1        4         2.0         0.0  2026-06-06 01:37:56.000000         34
+80        334       Newcastle       Burnley        0        0         2.0         1.0  2026-06-06 14:49:56.000000         35
+88        345     London Reds         Leeds        5        0         1.0         1.0  2026-05-28 22:19:50.000000         36
+102       397       Brentford       Everton        0        0         0.0         2.0  2026-06-06 05:49:56.000000          2
+114       418           Spurs    Sunderland        0        2         3.0         0.0  2026-06-06 15:06:56.000000          4
+117       421    London Blues     Newcastle        0        0         1.0         0.0  2026-06-06 00:39:56.000000          5
+125       431       N. Forest        Fulham        1        0         0.0         2.0  2026-06-05 11:33:56.000000          7
+136       456           Leeds  London Blues        1        2         0.0         3.0  2026-05-28 22:42:50.000000          8
+138       458         Burnley      West Ham        0        2         1.0         0.0  2026-06-05 16:51:56.000000          8
+139       459          Fulham     Newcastle        0        1         1.0         1.0  2026-06-06 04:42:56.000000          8
+147       468     Bournemouth        Fulham        2        0         2.0         1.0  2026-06-05 16:53:56.000000          9
+150       471  Manchester Red   London Reds        0        3         1.0         1.0  2026-06-06 06:05:56.000000         10
+175       506     Bournemouth         Leeds        1        0         1.0         1.0  2026-06-06 15:24:56.000000         13
+
+[A2] goals_json absent/null: 652 ; parse error: 0
+[A2] goals_json INCOHERENT avec score final (compte/dernier cumul/monotonie): 392
+     goals_json manquant ALORS QUE score>0 (perte de timeline): 331
+[A3] cutoff minute<=44: coherence HT 7758/8231 = 94.25%
+[A3] cutoff minute<=45: coherence HT 8141/8231 = 98.91%
+[A3] cutoff minute<=46: coherence HT 7854/8231 = 95.42%
+[A3] ht_score manquant: 337 ; goals_json INCOHERENT avec ht_score (cut=45): 90
+[A3bis] mecanisme ht_score faux (n=184): SWAP home/away=0, == HT d'un match simultane=65 (attendu par HASARD: 97.3), autre=119
+        exemples empruntes (event -> donneurs candidats): [(420, [13041]), (1009, [9647]), (1572, [2560, 2562]), (1941, [3359, 13922]), (2107, [11315])]
+[A3bis] HT faux mais goals_json coherent avec FT (HT RECONSTRUCTIBLE): 1/184
+
+[A4] events finis SANS aucun snapshot de cotes: 3024
+[A4] cotes 1X2 placeholder (1.01/100/1000): 0
+[A4] overround 1X2 aberrant (<1.00 ou >1.30): 0  [range observe: 1.0562 - 1.0637, mediane 1.0600]
+[A4] extra_markets manquant (snapshot present): 0 ; parse fail: 0
+[A4] CAPS (echantillon 3000 events): min cote=0.94, max cote=100.0
+     valeurs >50: [np.float64(50.01), np.float64(50.02), np.float64(50.03), np.float64(50.04), np.float64(50.05), np.float64(50.06), np.float64(50.07), np.float64(50.08), np.float64(50.09), np.float64(50.1), np.float64(50.11), np.float64(50.12), np.float64(50.13), np.float64(50.14), np.float64(50.15), np.float64(50.16), np.float64(50.17), np.float64(50.19), np.float64(50.2), np.float64(50.21)]  | n(=100.0)=31771  n(95<v<100)=1035
+     valeurs <1.10: [np.float64(0.94), np.float64(0.95), np.float64(0.96), np.float64(0.97), np.float64(0.98), np.float64(0.99), np.float64(1.0), np.float64(1.01), np.float64(1.02), np.float64(1.03), np.float64(1.04), np.float64(1.05), np.float64(1.06), np.float64(1.07), np.float64(1.08), np.float64(1.09)] | n(=1.01)=515  n(1.01<v<1.05)=1478
+
+[A5] distribution totale buts: max indiv 6/6, total max 6
+0     444
+1    1077
+2    1831
+3    2327
+4    1809
+5    1055
+6     340
+[A5] scores aberrants (indiv>6 ou total>8 ou negatif): 0
+
+===== BILAN CENSUS =====
+  HT_GT_FT            :    94  (1.06%)
+  GOALS_VS_FT         :   392  (4.41%)
+  GOALS_VS_HT         :    90  (1.01%)
+  ODDS_PLACEHOLDER    :     0  (0.00%)
+  OVERROUND_ABERRANT  :     0  (0.00%)
+  SCORE_ABERRANT      :     0  (0.00%)
+  NO_ODDS             :  3024  (34.04%)
+  CORROMPU HARD (hors NO_ODDS/soft): 393 / 8883 = 4.42%
+  co-occurrence des flags (n_flags): {1: 210, 2: 183}
+  HT>FT qui sont AUSSI incoherents goals_json: 94/94
+
+===== MECANISME GOALS_VS_FT =====
+direction du desaccord: {'json>FT': 237, 'json==FT(mais repartition/ordre faux)': 39, 'json<FT': 116}
+timeline INTERNE coherente (le json est un vrai match, juste pas le bon): 392/392
+dernier cumul json == FT d'un match simultane: 127/359 (attendu par hasard: 117.6)
+   binomial test vs hasard: p=0.3115
+runs (>=5 resultats) avec >=80% de GOALS_VS_FT: 8 (attendu si i.i.d.: 0.00)
+   -> runs touches: [(64, '7/7'), (68, '4/5'), (69, '4/5'), (109, '4/5'), (189, '4/5'), (197, '4/5'), (202, '7/7'), (225, '4/5')]
+delai scrape (h): bad mediane=-71.68 vs good mediane=0.05  Mann-Whitney p=1.45e-154
+
+===== STRUCTURE DES ANOMALIES =====
+
+-- HT_GT_FT (n=94)
+   chi2 par round: chi2=34.2 p=0.5534
+   chi2 par heure: chi2=20.9 p=0.5865
+   KS temporel vs population: D=0.215 p=2.97e-04
+   CUSUM max |dev|=20.3 a la date 2026-06-06 15:52:56 (position 6968/8883)
+   top dates: {datetime.date(2026, 6, 5): np.int64(32), datetime.date(2026, 6, 6): np.int64(32), datetime.date(2026, 6, 3): np.int64(14), datetime.date(2026, 5, 28): np.int64(6), datetime.date(2026, 5, 29): np.int64(5)}
+   top scrape_run_id: run 191: 5/14, run 197: 3/5, run 33: 3/7, run 66: 3/16, run 54: 3/11
+
+-- GOALS_VS_FT (n=392)
+   chi2 par round: chi2=49.9 p=0.0622
+   chi2 par heure: chi2=45.1 p=0.0038
+   KS temporel vs population: D=0.213 p=2.17e-15
+   CUSUM max |dev|=83.7 a la date 2026-06-06 15:56:56 (position 6985/8883)
+   top dates: {datetime.date(2026, 6, 5): np.int64(155), datetime.date(2026, 6, 6): np.int64(131), datetime.date(2026, 6, 3): np.int64(43), datetime.date(2026, 5, 29): np.int64(20), datetime.date(2026, 6, 2): np.int64(18)}
+   top scrape_run_id: run 191: 9/14, run 64: 7/7, run 202: 7/7, run 222: 7/9, run 54: 6/11
+
+-- GOALS_VS_HT (n=90)
+   chi2 par round: chi2=42.6 p=0.2074
+   chi2 par heure: chi2=25.3 p=0.3346
+   KS temporel vs population: D=0.220 p=2.99e-04
+   CUSUM max |dev|=19.8 a la date 2026-06-06 15:44:56 (position 6928/8883)
+   top dates: {datetime.date(2026, 6, 5): np.int64(36), datetime.date(2026, 6, 6): np.int64(31), datetime.date(2026, 6, 4): np.int64(12), datetime.date(2026, 6, 3): np.int64(10), datetime.date(2026, 6, 2): np.int64(1)}
+   top scrape_run_id: run 340: 2/6, run 925: 2/28, run 885: 2/35, run 505: 2/11, run 442: 2/10
+
+-- HT_MISSING (n=337)
+   chi2 par round: chi2=79.0 p=0.0000
+   chi2 par heure: chi2=797.9 p=0.0000
+   KS temporel vs population: D=0.947 p=4.84e-322
+   CUSUM max |dev|=319.1 a la date 2026-06-02 19:28:56 (position 391/8883)
+   top dates: {datetime.date(2026, 5, 28): np.int64(120), datetime.date(2026, 5, 29): np.int64(119), datetime.date(2026, 6, 2): np.int64(95), datetime.date(2026, 6, 3): np.int64(1), datetime.date(2026, 6, 5): np.int64(1)}
+   top scrape_run_id: run 66: 9/16, run 61: 9/10, run 251: 9/15, run 38: 8/12, run 56: 6/7
+
+-- GOALS_JSON_MISSING (n=652)
+   chi2 par round: chi2=45.9 p=0.1258
+   chi2 par heure: chi2=362.6 p=0.0000
+   KS temporel vs population: D=0.473 p=1.20e-124
+   CUSUM max |dev|=308.3 a la date 2026-06-02 19:42:56 (position 404/8883)
+   top dates: {datetime.date(2026, 5, 28): np.int64(121), datetime.date(2026, 5, 29): np.int64(120), datetime.date(2026, 6, 5): np.int64(111), datetime.date(2026, 6, 2): np.int64(109), datetime.date(2026, 6, 6): np.int64(51)}
+   top scrape_run_id: run 61: 9/10, run 66: 9/16, run 251: 9/15, run 38: 8/12, run 56: 6/7
+
+-- NO_ODDS (n=3024)
+   chi2 par round: chi2=140.4 p=0.0000
+   chi2 par heure: chi2=527.2 p=0.0000
+   KS temporel vs population: D=0.278 p=2.08e-154
+   CUSUM max |dev|=841.8 a la date 2026-06-05 18:10:56 (position 3588/8883)
+   top dates: {datetime.date(2026, 6, 11): np.int64(1000), datetime.date(2026, 6, 5): np.int64(945), datetime.date(2026, 6, 6): np.int64(749), datetime.date(2026, 6, 10): np.int64(220), datetime.date(2026, 6, 7): np.int64(110)}
+   top scrape_run_id: run 1355: 40/40, run 1374: 40/40, run 1380: 40/40, run 1431: 40/40, run 1429: 40/40
+
+-- TOUT_CORROMPU (n=393)
+   chi2 par round: chi2=49.0 p=0.0734
+   chi2 par heure: chi2=44.1 p=0.0052
+   KS temporel vs population: D=0.213 p=2.00e-15
+   CUSUM max |dev|=83.9 a la date 2026-06-06 15:56:56 (position 6985/8883)
+   top dates: {datetime.date(2026, 6, 5): np.int64(156), datetime.date(2026, 6, 6): np.int64(131), datetime.date(2026, 6, 3): np.int64(43), datetime.date(2026, 5, 29): np.int64(20), datetime.date(2026, 6, 2): np.int64(18)}
+   top scrape_run_id: run 191: 9/14, run 64: 7/7, run 202: 7/7, run 222: 7/9, run 54: 6/11
+
+===== IMPACT SUR 3 MESURES CLES =====
+
+--- 3a. Calibration favori (devig proportionnel) ---
+
+  [AVEC corrompus] n=5859  favori: attendu 55.82% vs observe 56.07%  | MACE=1.25pts | z=0.39 p=0.6963
+     bin p~0.387: obs 0.396 (n=733)
+     bin p~0.433: obs 0.421 (n=732)
+     bin p~0.481: obs 0.463 (n=732)
+     bin p~0.524: obs 0.525 (n=733)
+     bin p~0.568: obs 0.602 (n=732)
+     bin p~0.619: obs 0.609 (n=732)
+     bin p~0.681: obs 0.684 (n=732)
+     bin p~0.773: obs 0.784 (n=733)
+
+  [SANS corrompus] n=5471  favori: attendu 55.89% vs observe 57.17%  | MACE=1.56pts | z=1.98 p=0.0475
+     bin p~0.387: obs 0.396 (n=684)
+     bin p~0.434: obs 0.441 (n=685)
+     bin p~0.482: obs 0.471 (n=684)
+     bin p~0.524: obs 0.536 (n=683)
+     bin p~0.569: obs 0.615 (n=683)
+     bin p~0.620: obs 0.623 (n=684)
+     bin p~0.682: obs 0.694 (n=684)
+     bin p~0.773: obs 0.798 (n=684)
+
+  [corrompus seuls] n=388  favori: attendu 54.93% vs observe 40.46%  | MACE=14.47pts | z=-5.90 p=0.0000
+     bin p~0.386: obs 0.367 (n=49)
+     bin p~0.429: obs 0.271 (n=48)
+     bin p~0.470: obs 0.327 (n=49)
+     bin p~0.514: obs 0.292 (n=48)
+     bin p~0.555: obs 0.417 (n=48)
+     bin p~0.604: obs 0.510 (n=49)
+     bin p~0.669: obs 0.479 (n=48)
+     bin p~0.767: obs 0.571 (n=49)
+
+--- 3b. Distribution des scores ---
+  chi2 homogeneite AVEC vs SANS: chi2=15.62 dof=25 p=0.9256
+   (1, 1): AVEC 10.18%  SANS 10.25%  (delta 0.071pts)
+   (2, 1): AVEC 9.91%  SANS 10.04%  (delta 0.129pts)
+   (1, 2): AVEC 8.03%  SANS 8.15%  (delta 0.124pts)
+   (1, 0): AVEC 6.83%  SANS 6.91%  (delta 0.081pts)
+   (2, 0): AVEC 6.59%  SANS 6.69%  (delta 0.105pts)
+   (2, 2): AVEC 6.28%  SANS 6.43%  (delta 0.149pts)
+   (3, 1): AVEC 6.15%  SANS 6.22%  (delta 0.073pts)
+   (3, 0): AVEC 5.44%  SANS 5.54%  (delta 0.099pts)
+  moyenne buts: AVEC 2.9574  SANS 2.9952
+
+--- 3c. Taux BTTS ---
+  BTTS AVEC: 57.54% (n=8883)  SANS: 58.27% (n=8490)  z=-0.976 p=0.3289
+  BTTS corrompus seuls: 41.73% (n=393) vs clean 58.27% -> binomial p=0.0000
+
+exports/corrupted_events.json ecrit: 473 events corrompus (hard), + soft: ht_missing=337, gj_missing=652, no_odds=3024

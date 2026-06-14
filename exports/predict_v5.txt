@@ -1,0 +1,28 @@
+=== ROUND 12:51 (Mada) — HT-ONLY PREDICTIONS ===
+n_train=4793 | HT samples=6344 | Matches: 10
+
+Match                                 HT pk  HT_p%   HT_cote  HT 1/X/2       H2H_HT (n,1/X/2)       tier
+---------------------------------------------------------------------------------------------------------------------------------------
+Newcastle vs Brighton                 1       49.3  1.99     49/35/16       n14 43/43/14           +0.11
+Sunderland vs Leeds                   X       48.7  1.81     20/49/32       n15 0/53/47            -0.22
+Bournemouth vs Everton                X       44.4  1.75     35/44/21       n17 12/76/12           +0.14
+Burnley vs N. Forest                  X       43.5  1.99     32/43/24       n16 31/38/31           -0.06
+Wolverhampton vs Fulham               X       43.2  1.96     27/43/30       n19 21/53/26           -0.18
+London Blues vs London Reds           X       42.6  1.95     23/43/34       n15 33/27/40           -0.30
+Manchester Red vs Manchester Blue     X       42.2  1.92     22/42/36       n16 25/44/31           -0.27
+West Ham vs A. Villa                  X       42.2  2.03     32/42/25       n17 41/29/29           -0.04
+C. Palace vs Liverpool                X       40.4  2.15     28/40/32       n18 6/72/22            -0.33
+Brentford vs Spurs                    X       36.8  2.47     35/37/29       n15 47/47/7            -0.15
+
+=== PICKS LES PLUS SURS (HT only, classés par confiance) ===
+
+🟡 TIER 2 — V5 pick aligné avec H2H_HT (n≥10, H2H≥50%)
+   Sunderland vs Leeds                   HT-X @1.81  V5=48.7%  H2H=53% (n=15)
+   Bournemouth vs Everton                HT-X @1.75  V5=44.4%  H2H=76% (n=17)
+   Wolverhampton vs Fulham               HT-X @1.96  V5=43.2%  H2H=53% (n=19)
+   C. Palace vs Liverpool                HT-X @2.15  V5=40.4%  H2H=72% (n=18)
+
+🔵 TIER 3 — HT-X combo (équilibré, V5≥40%, H2H_X≥40%, n≥10)
+   Bournemouth vs Everton                HT-X @1.75  V5=44.4%  H2H_X=76% (n=17)
+   Wolverhampton vs Fulham               HT-X @1.96  V5=43.2%  H2H_X=53% (n=19)
+

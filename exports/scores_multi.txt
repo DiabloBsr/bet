@@ -1,0 +1,165 @@
+Modèle V5 (n_train=3130)
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 18:54 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  A. Villa vs Newcastle                      2-1(10%)  1-1(10%)  1-2(8%)  T3:29%  
+  Burnley vs Spurs                           1-1(11%)  1-2(9%)  2-2(8%)  T3:29%  
+  London Blues vs Liverpool                  1-1(12%)  2-1(10%)  1-2(9%)  T3:30%  
+  Brentford vs Everton                       1-1(11%)  2-1(11%)  1-0(9%)  T3:31%  
+  C. Palace vs Manchester Blue               1-2(11%)  1-1(10%)  0-2(10%)  T3:32%  
+  Sunderland vs London Reds                  0-3(18%)  0-2(10%)  0-4(9%)  T3:37%  
+  Fulham vs Leeds                            2-1(11%)  3-0(10%)  2-0(10%)  T3:31%  
+  Wolverhampton vs Manchester Red            1-1(13%)  2-1(10%)  1-2(9%)  T3:31%  
+  Bournemouth vs West Ham                    1-1(11%)  2-1(11%)  1-0(10%)  T3:32%  
+  Brighton vs N. Forest                      2-1(11%)  1-1(10%)  2-0(9%)  T3:30%  
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 18:56 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Manchester Blue vs Fulham                  3-0(11%)  2-1(11%)  2-0(9%)  T3:31%  
+  Newcastle vs Sunderland                    3-0(11%)  2-0(11%)  3-1(9%)  T3:31%  
+  Leeds vs Bournemouth                       1-2(11%)  1-1(10%)  0-2(8%)  T3:29%  
+  Manchester Red vs C. Palace                1-1(11%)  2-1(11%)  1-0(11%)  T3:33%  
+  Everton vs London Blues                    1-1(14%)  2-1(9%)  1-2(9%)  T3:32%  
+  Spurs vs West Ham                          2-1(11%)  1-1(10%)  3-1(8%)  T3:29%  
+  Liverpool vs Wolverhampton                 3-0(13%)  2-0(12%)  4-0(9%)  T3:33%  
+  N. Forest vs Burnley                       2-1(11%)  1-1(11%)  2-0(8%)  T3:30%  
+  London Reds vs Brighton                    2-1(11%)  3-0(8%)  1-1(8%)  T3:28%  
+  Brentford vs A. Villa                      2-1(11%)  1-1(11%)  1-0(8%)  T3:30%  
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 18:58 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Sunderland vs Brentford                    1-2(11%)  0-2(11%)  0-1(10%)  T3:33%  
+  Brighton vs Newcastle                      1-1(12%)  2-1(10%)  1-2(8%)  T3:30%  
+  West Ham vs N. Forest                      1-1(11%)  2-1(11%)  1-0(10%)  T3:32%  
+  C. Palace vs Liverpool                     1-2(11%)  1-1(11%)  2-2(8%)  T3:30%  
+  Fulham vs Manchester Red                   1-1(11%)  2-1(11%)  1-0(9%)  T3:30%  
+  Burnley vs London Reds                     0-2(11%)  1-2(11%)  0-1(10%)  T3:33%  
+  Leeds vs Manchester Blue                   0-3(17%)  1-3(10%)  0-2(9%)  T3:36%  
+  London Blues vs A. Villa                   1-1(11%)  2-1(11%)  1-0(9%)  T3:31%  
+  Wolverhampton vs Everton                   1-1(13%)  2-1(10%)  0-0(9%)  T3:32%  
+  Bournemouth vs Spurs                       1-1(13%)  2-1(9%)  1-2(9%)  T3:31%  
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:00 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Everton vs C. Palace                       1-1(14%)  0-1(10%)  0-0(9%)  T3:33%  
+  Liverpool vs Fulham                        3-0(11%)  2-1(11%)  2-0(10%)  T3:32%  
+  London Reds vs West Ham                    3-0(11%)  2-0(11%)  3-1(9%)  T3:31%  
+  N. Forest vs Spurs                         1-1(12%)  2-1(10%)  1-2(9%)  T3:31%  
+  Manchester Red vs Leeds                    3-0(11%)  2-0(11%)  2-1(11%)  T3:32%  
+  Brentford vs Brighton                      1-1(11%)  2-1(10%)  1-2(8%)  T3:29%  
+  Newcastle vs Burnley                       3-0(11%)  2-0(10%)  3-1(9%)  T3:31%  
+  London Blues vs Sunderland                 2-1(11%)  3-0(10%)  1-1(9%)  T3:30%  
+  Manchester Blue vs Bournemouth             3-0(12%)  2-0(11%)  3-1(9%)  T3:31%  
+  A. Villa vs Wolverhampton                  2-1(11%)  3-0(10%)  2-0(9%)  T3:30%  
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:02 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Burnley vs Brentford                       1-1(13%)  1-2(9%)  0-1(8%)  T3:30%  
+  Manchester Blue vs Manchester Red          2-0(11%)  3-0(11%)  2-1(9%)  T3:31%  
+  Leeds vs Liverpool                         0-3(15%)  1-3(10%)  1-2(10%)  T3:35%  
+  Spurs vs London Reds                       1-2(11%)  1-1(10%)  0-2(8%)  T3:29%  
+  West Ham vs Newcastle                      1-2(11%)  2-2(10%)  1-1(9%)  T3:29%  
+  Wolverhampton vs Sunderland                1-1(11%)  2-1(11%)  1-0(9%)  T3:31%  
+  C. Palace vs A. Villa                      1-1(11%)  2-1(11%)  1-0(9%)  T3:31%  
+  Fulham vs Everton                          2-1(11%)  1-0(11%)  1-1(11%)  T3:33%  
+  Brighton vs London Blues                   2-1(11%)  1-1(11%)  1-0(9%)  T3:30%  
+  Bournemouth vs N. Forest                   1-0(11%)  2-1(11%)  1-1(11%)  T3:33%  
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:04 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Everton vs Leeds                           1-0(12%)  1-1(11%)  2-1(10%)  T3:34%  
+  Newcastle vs Spurs                         2-1(11%)  1-1(8%)  3-0(8%)  T3:28%  
+  Manchester Red vs Bournemouth              2-1(11%)  1-1(10%)  2-0(8%)  T3:30%  💎 GOLD 1-0+3-1=64%(n=11)
+  Sunderland vs C. Palace                    1-1(11%)  1-2(11%)  0-2(11%)  T3:32%  
+  London Blues vs Burnley                    2-1(11%)  3-0(10%)  1-1(9%)  T3:29%  
+  Wolverhampton vs Brighton                  1-2(10%)  2-2(10%)  1-1(9%)  T3:29%  
+  Brentford vs West Ham                      2-1(11%)  1-1(10%)  2-0(8%)  T3:29%  
+  Liverpool vs Manchester Blue               1-1(12%)  1-0(10%)  2-1(10%)  T3:33%  
+  A. Villa vs Fulham                         2-1(11%)  1-1(11%)  2-0(8%)  T3:30%  💎 DOM 3-1=38%
+  London Reds vs N. Forest                   3-0(11%)  2-0(11%)  3-1(9%)  T3:32%  
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:06 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Burnley vs Wolverhampton                   1-1(14%)  2-1(10%)  1-0(9%)  T3:32%  💎 DOM 1-0=38%
+  West Ham vs London Blues                   1-1(12%)  2-1(10%)  1-2(9%)  T3:31%  
+  Spurs vs Brentford                         1-1(11%)  2-1(11%)  1-0(8%)  T3:30%  
+  Bournemouth vs London Reds                 1-2(11%)  1-1(11%)  0-1(10%)  T3:31%  
+  N. Forest vs Newcastle                     1-1(12%)  2-1(10%)  1-2(9%)  T3:31%  
+  C. Palace vs Brighton                      1-1(11%)  2-1(10%)  1-2(8%)  T3:30%  
+  Manchester Blue vs Everton                 2-0(12%)  3-0(12%)  3-1(9%)  T3:33%  💎 GOLD 3-0+2-1=60%(n=10) 💎 DOM 3-0=40%
+  Manchester Red vs Liverpool                1-1(13%)  2-1(10%)  1-2(9%)  T3:31%  
+  Fulham vs Sunderland                       2-1(11%)  1-1(10%)  3-1(8%)  T3:29%  
+  Leeds vs A. Villa                          1-2(11%)  1-1(10%)  0-2(9%)  T3:30%  
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  🎯 TOP PICKS SCORE EXACT — par stratégie
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  📊 TOP 1 SINGLE (mise simple, ~10-15% accuracy attendu) :
+     18:54  Sunderland vs London Reds                   → 0-3  (18%)
+     18:58  Leeds vs Manchester Blue                    → 0-3  (17%)
+     19:02  Leeds vs Liverpool                          → 0-3  (15%)
+     18:56  Everton vs London Blues                     → 1-1  (14%)
+     19:06  Burnley vs Wolverhampton                    → 1-1  (14%)
+     19:00  Everton vs C. Palace                        → 1-1  (14%)
+     18:58  Wolverhampton vs Everton                    → 1-1  (13%)
+     18:58  Bournemouth vs Spurs                        → 1-1  (13%)
+     18:54  Wolverhampton vs Manchester Red             → 1-1  (13%)
+     18:56  Liverpool vs Wolverhampton                  → 3-0  (13%)
+
+  📊 COMBO TOP 2 (parier 2 scores, ~20-25% accuracy attendu) :
+     18:54  Sunderland vs London Reds                   → 0-3 + 0-2  (27%)
+     18:58  Leeds vs Manchester Blue                    → 0-3 + 1-3  (26%)
+     19:02  Leeds vs Liverpool                          → 0-3 + 1-3  (25%)
+     18:56  Liverpool vs Wolverhampton                  → 3-0 + 2-0  (25%)
+     19:06  Manchester Blue vs Everton                  → 2-0 + 3-0  (25%) 💎
+     18:58  Wolverhampton vs Everton                    → 1-1 + 2-1  (23%)
+     19:00  Everton vs C. Palace                        → 1-1 + 0-1  (23%)
+     19:06  Burnley vs Wolverhampton                    → 1-1 + 2-1  (23%)
+     19:04  Everton vs Leeds                            → 1-0 + 1-1  (23%)
+     18:56  Everton vs London Blues                     → 1-1 + 2-1  (23%)
+
+  📊 COMBO TOP 3 (parier 3 scores, ~30-35% accuracy attendu) :
+     18:54  Sunderland vs London Reds                   → 0-3 + 0-2 + 0-4  (37%)
+     18:58  Leeds vs Manchester Blue                    → 0-3 + 1-3 + 0-2  (36%)
+     19:02  Leeds vs Liverpool                          → 0-3 + 1-3 + 1-2  (35%)
+     19:04  Everton vs Leeds                            → 1-0 + 1-1 + 2-1  (34%)
+     19:02  Bournemouth vs N. Forest                    → 1-0 + 2-1 + 1-1  (33%)
+     18:56  Liverpool vs Wolverhampton                  → 3-0 + 2-0 + 4-0  (33%)
+     18:56  Manchester Red vs C. Palace                 → 1-1 + 2-1 + 1-0  (33%)
+     18:58  Burnley vs London Reds                      → 0-2 + 1-2 + 0-1  (33%)
+     19:06  Manchester Blue vs Everton                  → 2-0 + 3-0 + 3-1  (33%) 💎
+     19:02  Fulham vs Everton                           → 2-1 + 1-0 + 1-1  (33%)
+
+  💎 SCORE_COMBO_GOLD (paires historiques validées) :
+     19:04  Manchester Red vs Bournemouth               → voir signal GOLD ci-dessus
+     19:06  Manchester Blue vs Everton                  → voir signal GOLD ci-dessus
+
+  💎 SCORE DOMINANT (rate 30-44%, sweet spot) :
+     19:04  Manchester Red vs Bournemouth
+     19:04  A. Villa vs Fulham
+     19:06  Burnley vs Wolverhampton
+     19:06  Manchester Blue vs Everton

@@ -1,0 +1,65 @@
+Modèle V5 (n_train=3266)
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 20:11 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  London Blues vs Spurs                      1-1(12%)  2-1(9%)  1-2(8%)  T3:29%  
+  London Reds vs Newcastle                   2-1(11%)  1-1(10%)  3-1(8%)  T3:29%  
+  A. Villa vs Leeds                          2-0(12%)  3-0(12%)  3-1(9%)  T3:33%  
+  N. Forest vs Burnley                       2-1(11%)  1-1(10%)  2-0(8%)  T3:30%  
+  Manchester Red vs Fulham                   1-1(12%)  2-1(11%)  1-0(9%)  T3:31%  
+  Wolverhampton vs Everton                   1-1(13%)  2-1(10%)  0-0(9%)  T3:32%  
+  Liverpool vs Brighton                      2-1(11%)  3-0(10%)  2-0(9%)  T3:30%  
+  Brentford vs C. Palace                     1-1(11%)  2-1(11%)  1-0(9%)  T3:31%  
+  Sunderland vs Bournemouth                  1-2(11%)  1-1(10%)  0-2(9%)  T3:30%  
+  West Ham vs Manchester Blue                1-2(11%)  1-1(10%)  0-2(10%)  T3:31%  
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  🎯 TOP PICKS SCORE EXACT — par stratégie
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  📊 TOP 1 SINGLE (mise simple, ~10-15% accuracy attendu) :
+     20:11  Wolverhampton vs Everton                    → 1-1  (13%)
+     20:11  A. Villa vs Leeds                           → 2-0  (12%)
+     20:11  London Blues vs Spurs                       → 1-1  (12%)
+     20:11  Manchester Red vs Fulham                    → 1-1  (12%)
+     20:11  Brentford vs C. Palace                      → 1-1  (11%)
+     20:11  N. Forest vs Burnley                        → 2-1  (11%)
+     20:11  London Reds vs Newcastle                    → 2-1  (11%)
+     20:11  Sunderland vs Bournemouth                   → 1-2  (11%)
+     20:11  West Ham vs Manchester Blue                 → 1-2  (11%)
+     20:11  Liverpool vs Brighton                       → 2-1  (11%)
+
+  📊 COMBO TOP 2 (parier 2 scores, ~20-25% accuracy attendu) :
+     20:11  A. Villa vs Leeds                           → 2-0 + 3-0  (24%)
+     20:11  Wolverhampton vs Everton                    → 1-1 + 2-1  (23%)
+     20:11  Manchester Red vs Fulham                    → 1-1 + 2-1  (22%)
+     20:11  Brentford vs C. Palace                      → 1-1 + 2-1  (22%)
+     20:11  N. Forest vs Burnley                        → 2-1 + 1-1  (22%)
+     20:11  West Ham vs Manchester Blue                 → 1-2 + 1-1  (21%)
+     20:11  Sunderland vs Bournemouth                   → 1-2 + 1-1  (21%)
+     20:11  London Reds vs Newcastle                    → 2-1 + 1-1  (21%)
+     20:11  Liverpool vs Brighton                       → 2-1 + 3-0  (21%)
+     20:11  London Blues vs Spurs                       → 1-1 + 2-1  (20%)
+
+  📊 COMBO TOP 3 (parier 3 scores, ~30-35% accuracy attendu) :
+     20:11  A. Villa vs Leeds                           → 2-0 + 3-0 + 3-1  (33%)
+     20:11  Wolverhampton vs Everton                    → 1-1 + 2-1 + 0-0  (32%)
+     20:11  Manchester Red vs Fulham                    → 1-1 + 2-1 + 1-0  (31%)
+     20:11  Brentford vs C. Palace                      → 1-1 + 2-1 + 1-0  (31%)
+     20:11  West Ham vs Manchester Blue                 → 1-2 + 1-1 + 0-2  (31%)
+     20:11  Sunderland vs Bournemouth                   → 1-2 + 1-1 + 0-2  (30%)
+     20:11  Liverpool vs Brighton                       → 2-1 + 3-0 + 2-0  (30%)
+     20:11  N. Forest vs Burnley                        → 2-1 + 1-1 + 2-0  (30%)
+     20:11  London Reds vs Newcastle                    → 2-1 + 1-1 + 3-1  (29%)
+     20:11  London Blues vs Spurs                       → 1-1 + 2-1 + 1-2  (29%)
+
+  💎 SCORE_COMBO_GOLD (paires historiques validées) :
+     (aucune paire GOLD sur ces rounds)
+
+  💎 SCORE DOMINANT (rate 30-44%, sweet spot) :
+     (aucune paire DOMINANT)

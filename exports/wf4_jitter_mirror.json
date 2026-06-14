@@ -1,0 +1,195 @@
+{
+ "neg_jitter_open_test": [
+  {
+   "thr": -0.02,
+   "sels": "all",
+   "n": 1005,
+   "roi_pct": -3.36,
+   "wr": 0.2647,
+   "avg_odds": 4.604,
+   "p": 0.5794111722241806
+  },
+  {
+   "thr": -0.02,
+   "sels": "h+a",
+   "n": 791,
+   "roi_pct": 2.11,
+   "wr": 0.2882,
+   "avg_odds": 4.546,
+   "p": 0.7645123251928873
+  },
+  {
+   "thr": -0.04,
+   "sels": "all",
+   "n": 249,
+   "roi_pct": 6.93,
+   "wr": 0.245,
+   "avg_odds": 5.831,
+   "p": 0.6159405896768806
+  },
+  {
+   "thr": -0.04,
+   "sels": "h+a",
+   "n": 234,
+   "roi_pct": 11.52,
+   "wr": 0.2564,
+   "avg_odds": 5.826,
+   "p": 0.42692110740325
+  },
+  {
+   "thr": -0.06,
+   "sels": "all",
+   "n": 62,
+   "roi_pct": 22.45,
+   "wr": 0.2419,
+   "avg_odds": 6.87,
+   "p": 0.473220498015408
+  },
+  {
+   "thr": -0.06,
+   "sels": "h+a",
+   "n": 62,
+   "roi_pct": 22.45,
+   "wr": 0.2419,
+   "avg_odds": 6.87,
+   "p": 0.473220498015408
+  }
+ ],
+ "repricing_close_below_mean": [
+  {
+   "thr": -0.01,
+   "split": "train",
+   "n": 794,
+   "roi_pct": -6.41,
+   "wr": 0.2947,
+   "avg_odds": 4.227,
+   "p": 0.27450820797264164
+  },
+  {
+   "thr": -0.01,
+   "split": "test",
+   "n": 0
+  },
+  {
+   "thr": -0.02,
+   "split": "train",
+   "n": 463,
+   "roi_pct": -7.44,
+   "wr": 0.2808,
+   "avg_odds": 4.572,
+   "p": 0.3510125415356059
+  },
+  {
+   "thr": -0.02,
+   "split": "test",
+   "n": 0
+  },
+  {
+   "thr": -0.04,
+   "split": "train",
+   "n": 137,
+   "roi_pct": -13.49,
+   "wr": 0.219,
+   "avg_odds": 5.594,
+   "p": 0.3702526987697232
+  },
+  {
+   "thr": -0.04,
+   "split": "test",
+   "n": 0
+  }
+ ],
+ "follow_drift_by_sel": {
+  "train": {
+   "by_sel": [
+    {
+     "sel": "away",
+     "n": 243,
+     "roi_open": 0.1102,
+     "roi_close": 0.0568,
+     "wr": 0.2881,
+     "avg_odds": 4.9556
+    },
+    {
+     "sel": "draw",
+     "n": 82,
+     "roi_open": -0.0144,
+     "roi_close": -0.056,
+     "wr": 0.1829,
+     "avg_odds": 5.2952
+    },
+    {
+     "sel": "home",
+     "n": 147,
+     "roi_open": 0.3689,
+     "roi_close": 0.3035,
+     "wr": 0.4762,
+     "avg_odds": 3.8183
+    }
+   ],
+   "home_away_open": {
+    "n": 390,
+    "roi_pct": 20.77,
+    "wr": 0.359,
+    "avg_odds": 4.527,
+    "p": 0.039934791262723035
+   },
+   "home_away_close": {
+    "roi_pct": 14.98,
+    "p": 0.11901721317899205,
+    "n": 390
+   }
+  },
+  "test": {
+   "by_sel": [],
+   "home_away_open": {
+    "n": 0
+   },
+   "home_away_close": {
+    "roi_pct": NaN,
+    "p": NaN,
+    "n": 0
+   }
+  },
+  "pooled": {
+   "by_sel": [
+    {
+     "sel": "away",
+     "n": 243,
+     "roi_open": 0.1102,
+     "roi_close": 0.0568,
+     "wr": 0.2881,
+     "avg_odds": 4.9556
+    },
+    {
+     "sel": "draw",
+     "n": 82,
+     "roi_open": -0.0144,
+     "roi_close": -0.056,
+     "wr": 0.1829,
+     "avg_odds": 5.2952
+    },
+    {
+     "sel": "home",
+     "n": 147,
+     "roi_open": 0.3689,
+     "roi_close": 0.3035,
+     "wr": 0.4762,
+     "avg_odds": 3.8183
+    }
+   ],
+   "home_away_open": {
+    "n": 390,
+    "roi_pct": 20.77,
+    "wr": 0.359,
+    "avg_odds": 4.527,
+    "p": 0.039934791262723035
+   },
+   "home_away_close": {
+    "roi_pct": 14.98,
+    "p": 0.11901721317899205,
+    "n": 390
+   }
+  }
+ }
+}

@@ -1,0 +1,153 @@
+==============================================================================================================
+  💎 GOLD MINE : Combinaisons les plus profitables (HOME bracket + équipe)
+==============================================================================================================
+
+  Équipe                 Bracket cote   n     Win%     ROI        Cote moy
+--------------------------------------------------------------------------------------------------------------
+  Fulham                 [3.0;100.0]    37    35.1%   +53.27%   4.43
+  West Ham               [2.5;3.0]      32    53.1%   +41.34%   2.66
+  Brighton               [3.0;100.0]    23    34.8%   +39.35%   3.98
+  N. Forest              [3.0;100.0]    24    29.2%   +37.08%   4.47
+  Wolverhampton          [3.0;100.0]    43    27.9%   +29.00%   4.75
+  N. Forest              [1.7;1.9]      42    71.4%   +28.62%   1.80
+  London Blues           [2.1;2.5]      16    56.2%   +28.31%   2.28
+  Brighton               [1.9;2.1]      37    64.9%   +26.76%   1.96
+  N. Forest              [1.9;2.1]      30    60.0%   +22.70%   2.05
+  C. Palace              [2.1;2.5]      61    54.1%   +21.64%   2.24
+  C. Palace              [1.7;1.9]      39    66.7%   +19.79%   1.80
+  Fulham                 [1.9;2.1]      31    58.1%   +18.16%   2.04
+  Burnley                [2.1;2.5]      25    48.0%   +16.84%   2.43
+  Brighton               [1.5;1.7]      57    71.9%   +14.21%   1.58
+  N. Forest              [2.5;3.0]      17    41.2%   +11.88%   2.71
+  C. Palace              [1.5;1.7]      35    68.6%   +10.94%   1.62
+  Fulham                 [1.5;1.7]      37    67.6%   +10.68%   1.63
+  Bournemouth            [1.5;1.7]      16    68.8%   +10.06%   1.60
+
+==============================================================================================================
+  💎 GOLD MINE : AWAY bracket profitable (parier 2)
+==============================================================================================================
+
+  Équipe                 Bracket cote   n     Win%     ROI        Cote moy
+--------------------------------------------------------------------------------------------------------------
+  Brentford              [4.0;100.0]    74    24.3%   +34.00%   5.95
+  London Blues           [2.5;3.0]      53    49.1%   +33.62%   2.75
+  Everton                [1.7;1.9]      16    68.8%   +24.50%   1.80
+  A. Villa               [1.5;1.7]      27    77.8%   +23.70%   1.59
+  A. Villa               [4.0;100.0]    72    19.4%   +22.17%   6.76
+  London Blues           [3.0;4.0]      64    35.9%   +21.08%   3.34
+  Manchester Red         [4.0;100.0]    85    20.0%   +20.65%   6.80
+  Spurs                  [4.0;100.0]    48    22.9%   +18.94%   5.91
+  Brentford              [3.0;4.0]      42    35.7%   +16.83%   3.35
+  London Blues           [1.9;2.1]      16    56.2%   +14.19%   2.03
+  A. Villa               [3.0;4.0]      91    34.1%   +14.01%   3.41
+  Wolverhampton          [4.0;100.0]    175   18.3%   +12.62%   7.07
+  Brighton               [2.1;2.5]      32    46.9%   +12.38%   2.38
+  London Reds            [1.9;2.1]      25    56.0%   +11.20%   2.00
+  London Blues           [4.0;100.0]    65    15.4%   +10.42%   6.44
+  Bournemouth            [1.5;1.7]      16    68.8%   +10.19%   1.60
+
+==============================================================================================================
+  🔥 PAIRES OR : Adversaires spécifiques (home favori) — ROI ≥ +20%
+==============================================================================================================
+
+  Home                   vs    Away                   n     Win%     ROI        Cote
+--------------------------------------------------------------------------------------------------------------
+  Leeds                  vs    Manchester Blue        8     25.0%   +266.00%   14.94
+  Fulham                 vs    London Reds            15    40.0%   +114.07%   5.36
+  Sunderland             vs    C. Palace              15    33.3%   +109.20%   6.21
+  Brentford              vs    Newcastle              9     88.9%   +105.56%   2.32
+  Sunderland             vs    Bournemouth            8     37.5%   +102.00%   5.37
+  Burnley                vs    Brentford              13    53.8%   +101.31%   3.71
+  Wolverhampton          vs    London Reds            10    30.0%   +97.60%   6.57
+  Leeds                  vs    London Reds            9     11.1%   +94.22%   18.76
+  N. Forest              vs    London Reds            11    36.4%   +84.09%   5.02
+  C. Palace              vs    Spurs                  10    80.0%   +78.00%   2.23
+  West Ham               vs    Liverpool              12    50.0%   +76.17%   3.57
+  Everton                vs    Manchester Blue        9     33.3%   +74.56%   5.22
+  Burnley                vs    Wolverhampton          12    66.7%   +63.42%   2.46
+  Brentford              vs    Spurs                  9     77.8%   +61.78%   2.08
+  Brighton               vs    London Reds            11    36.4%   +59.55%   4.36
+  West Ham               vs    Brighton               10    60.0%   +54.90%   2.54
+  C. Palace              vs    Bournemouth            11    81.8%   +53.00%   1.87
+  N. Forest              vs    Everton                12    83.3%   +52.08%   1.83
+  Manchester Red         vs    Bournemouth            12    91.7%   +50.42%   1.64
+  Spurs                  vs    West Ham               13    92.3%   +49.62%   1.62
+  Burnley                vs    C. Palace              9     44.4%   +47.44%   3.29
+  London Blues           vs    Newcastle              12    75.0%   +47.00%   1.96
+  Wolverhampton          vs    Fulham                 11    54.5%   +42.00%   2.63
+  Fulham                 vs    Liverpool              13    46.2%   +41.92%   3.07
+  Brighton               vs    Spurs                  11    72.7%   +41.91%   1.96
+
+==============================================================================================================
+  🔥 PAIRES OR AWAY : Visiteur gagne (n>=8) — ROI ≥ +20%
+==============================================================================================================
+
+  Match                                                   n     Win%     ROI        Cote
+--------------------------------------------------------------------------------------------------------------
+  Liverpool vs London Blues (parier London Blues)         10    40.0%   +219.60%   7.81
+  A. Villa vs Leeds (parier Leeds)                        12    25.0%   +185.33%   11.34
+  Newcastle vs Fulham (parier Fulham)                     11    45.5%   +183.64%   6.26
+  Liverpool vs A. Villa (parier A. Villa)                 10    30.0%   +170.00%   9.18
+  London Blues vs Everton (parier Everton)                14    42.9%   +166.36%   6.23
+  Newcastle vs Wolverhampton (parier Wolverhampton)       12    25.0%   +166.17%   10.34
+  London Reds vs Brentford (parier Brentford)             12    41.7%   +155.50%   6.17
+  Manchester Blue vs Wolverhampton (parier Wolverhampton) 11    18.2%   +136.73%   13.07
+  Spurs vs Sunderland (parier Sunderland)                 9     44.4%   +132.67%   5.30
+  Wolverhampton vs London Blues (parier London Blues)     10    90.0%   +131.00%   2.56
+  London Blues vs Wolverhampton (parier Wolverhampton)    9     33.3%   +128.78%   6.86
+  London Blues vs Spurs (parier Spurs)                    13    53.8%   +110.77%   3.89
+  London Reds vs C. Palace (parier C. Palace)             11    27.3%   +108.73%   7.66
+  Everton vs Wolverhampton (parier Wolverhampton)         10    50.0%   +103.70%   4.04
+  Newcastle vs N. Forest (parier N. Forest)               10    20.0%   +99.30%   10.10
+  Manchester Red vs Burnley (parier Burnley)              10    30.0%   +87.70%   6.36
+  London Reds vs Bournemouth (parier Bournemouth)         9     22.2%   +85.67%   8.25
+  A. Villa vs Everton (parier Everton)                    11    27.3%   +84.82%   6.82
+  Manchester Blue vs Bournemouth (parier Bournemouth)     11    18.2%   +79.18%   9.90
+  A. Villa vs Brentford (parier Brentford)                12    41.7%   +78.92%   4.22
+  London Reds vs West Ham (parier West Ham)               11    18.2%   +74.64%   9.29
+  N. Forest vs Wolverhampton (parier Wolverhampton)       14    35.7%   +73.57%   4.85
+  Fulham vs Brighton (parier Brighton)                    11    63.6%   +72.27%   2.69
+  Manchester Blue vs London Blues (parier London Blues)   13    23.1%   +71.85%   7.73
+  Fulham vs Newcastle (parier Newcastle)                  13    69.2%   +67.85%   2.41
+
+==============================================================================================================
+  ❌ TRAPS À ÉVITER : HOME bracket (ROI ≤ -20%)
+==============================================================================================================
+
+  Sunderland             [3.0;100.0]    220  Win=  9.5%   ROI=-42.74%   cote~8.19
+  West Ham               [1.9;2.1]      24   Win= 33.3%   ROI=-33.17%   cote~2.02
+  London Blues           [3.0;100.0]    20   Win= 20.0%   ROI=-32.85%   cote~3.42
+  Bournemouth            [3.0;100.0]    34   Win= 14.7%   ROI=-32.79%   cote~4.82
+  Wolverhampton          [2.5;3.0]      62   Win= 25.8%   ROI=-31.18%   cote~2.66
+  Everton                [2.5;3.0]      66   Win= 25.8%   ROI=-30.35%   cote~2.66
+  Wolverhampton          [1.9;2.1]      34   Win= 35.3%   ROI=-29.50%   cote~1.99
+  Manchester Red         [3.0;100.0]    22   Win= 18.2%   ROI=-27.23%   cote~3.97
+  Everton                [2.1;2.5]      44   Win= 31.8%   ROI=-25.77%   cote~2.34
+  N. Forest              [1.5;1.7]      30   Win= 46.7%   ROI=-23.47%   cote~1.63
+  Spurs                  [1.9;2.1]      43   Win= 39.5%   ROI=-22.28%   cote~1.95
+  Bournemouth            [1.7;1.9]      44   Win= 43.2%   ROI=-22.05%   cote~1.81
+
+==============================================================================================================
+  ❌ PAIRES TRAP HOME (ROI ≤ -30%)
+==============================================================================================================
+
+  Leeds                  vs Liverpool              n=11  Win=  0.0% ROI=-100.00% cote~9.58
+  Leeds                  vs London Blues           n=11  Win=  0.0% ROI=-100.00% cote~5.71
+  Leeds                  vs Spurs                  n=13  Win=  0.0% ROI=-100.00% cote~6.22
+  Sunderland             vs Manchester Red         n=11  Win=  0.0% ROI=-100.00% cote~6.05
+  Sunderland             vs Spurs                  n=12  Win=  0.0% ROI=-100.00% cote~7.48
+  Sunderland             vs London Blues           n=10  Win=  0.0% ROI=-100.00% cote~7.10
+  Sunderland             vs London Reds            n=12  Win=  0.0% ROI=-100.00% cote~22.89
+  Sunderland             vs Manchester Blue        n=18  Win=  0.0% ROI=-100.00% cote~18.62
+  Sunderland             vs A. Villa               n=14  Win=  0.0% ROI=-100.00% cote~6.13
+  Wolverhampton          vs London Blues           n=10  Win=  0.0% ROI=-100.00% cote~2.58
+  Spurs                  vs Sunderland             n=9   Win= 11.1% ROI=-83.56% cote~1.50
+  Liverpool              vs Manchester Blue        n=10  Win= 10.0% ROI=-79.70% cote~2.06
+  Sunderland             vs Leeds                  n=13  Win=  7.7% ROI=-76.23% cote~3.23
+  Sunderland             vs Everton                n=16  Win=  6.2% ROI=-70.31% cote~4.84
+  C. Palace              vs Liverpool              n=10  Win= 10.0% ROI=-68.20% cote~3.08
+  Leeds                  vs A. Villa               n=14  Win=  7.1% ROI=-64.86% cote~5.03
+  Brentford              vs London Reds            n=13  Win=  7.7% ROI=-64.23% cote~4.72
+  Manchester Blue        vs London Reds            n=12  Win= 16.7% ROI=-62.33% cote~2.25
+  Burnley                vs Newcastle              n=11  Win=  9.1% ROI=-61.64% cote~4.28
+  Everton                vs Spurs                  n=13  Win= 15.4% ROI=-59.54% cote~2.60

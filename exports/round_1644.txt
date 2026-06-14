@@ -1,0 +1,238 @@
+V5/V10 (n_train=5482)
+
+🌍 Saison récente (20 dernières) depuis 2026-06-11 10:21:56
+   🔥 EN FORME : Brentford(69%/13), Everton(58%/12), Newcastle(83%/12)
+   ❄️  EN PERTE : Spurs(31%/13), Manchester Blue(57%/14), Liverpool(57%/14), London Blues(43%/14)
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 16:44 Mada — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─ MATCH 1  N. Forest vs Brighton
+│  Cotes 1X2 : 2.20 / 3.80 / 2.92
+│  H2H récents : 4-1(1/15) 2-1(1/15) 1-1(1/15)
+│  ── HT ──
+│  Pick HT  : X  (30/41/28)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 1 (41%)  Score modal : 1-1
+│  Top 3 scores V5 : 1-1(11%) · 2-1(10%) · 1-2(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-0(18%) · 3-0(13%) · 2-2(13%)
+│  ── BUTS ──
+│  Buts attendus : 2.92
+│  Over 1.5 : 82%  Over 2.5 : 60%  Over 3.5 : 35%
+│  Under 3.5 : 65%  BTTS : 62%
+│  Saison home : 47% wr (15 matchs), Δ vs global +0.3pp
+│  ── SIGNAUX ──
+│  ⚠️  ⚠️ TRAP : Bucket cote @2.20 en MS_early — EDGE -7.9pp historique, ROI -19.1%
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 2  Burnley vs West Ham
+│  Cotes 1X2 : 2.55 / 3.42 / 2.67
+│  H2H récents : 0-4(1/13) 0-0(1/13) 2-2(1/13)
+│  ── HT ──
+│  Pick HT  : X  (29/43/28)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 1 (37%)  Score modal : 1-1
+│  Top 3 scores V5 : 1-1(13%) · 2-1(10%) · 1-2(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-2(15%) · 0-1(13%) · 1-1(12%)
+│  ── BUTS ──
+│  Buts attendus : 2.75
+│  Over 1.5 : 77%  Over 2.5 : 53%  Over 3.5 : 29%
+│  Under 3.5 : 71%  BTTS : 57%
+│  Saison home : 36% wr (11 matchs), Δ vs global +4.6pp
+│  ── SIGNAUX ──
+│  ⚠️  ❄️ West Ham CHUTE en MS_early (-14pp vs global) — TRAP sur '2'
+│  ⚠️  ⚠️ TRAP : Bucket cote @2.55 en MS_early — EDGE -7.9pp historique, ROI -19.1%
+│  ⭐ BRACKET GOLD HOME : Burnley @2.55  ROI+51%
+│  🔥🔥 MULTI : 1 @2.55  EV+65% conf 5.8/10
+│  🔥🔥 MULTI : 2 @2.67  EV+37% conf 6.2/10
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 3  Spurs vs Sunderland
+│  Cotes 1X2 : 1.53 / 4.85 / 5.04
+│  H2H récents : 0-2(1/13) 0-1(1/13) 0-0(1/13)
+│  ── HT ──
+│  Pick HT  : 1  (48/36/16)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (61%)  Score modal : 2-1
+│  Top 3 scores V5 : 2-1(11%) · 1-1(9%) · 3-1(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-0(18%) · 2-1(17%) · 1-1(12%)
+│  ── BUTS ──
+│  Buts attendus : 3.36
+│  Over 1.5 : 88%  Over 2.5 : 69%  Over 3.5 : 46%
+│  Under 3.5 : 54%  BTTS : 62%
+│  Saison home : 31% wr (13 matchs), Δ vs global -12.2pp
+│  ❄️  Spurs EN PERTE saison (31% vs 50% global, n=13)
+│  ── SIGNAUX ──
+│  🎯 📈 home_strong en MS_early → O2.5 73%
+│  📊 Scores profile home_strong en MS_early : 2-1(13%)
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 4  A. Villa vs Wolverhampton
+│  Cotes 1X2 : 1.37 / 5.23 / 7.23
+│  H2H récents : 1-0(1/13) 4-1(1/13) 0-1(1/13)
+│  ── HT ──
+│  Pick HT  : 1  (50/37/14)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (66%)  Score modal : 2-1
+│  Top 3 scores V5 : 2-1(11%) · 3-0(9%) · 2-0(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 3-1(16%) · 2-0(15%) · 2-1(12%)
+│  ── BUTS ──
+│  Buts attendus : 3.14
+│  Over 1.5 : 85%  Over 2.5 : 65%  Over 3.5 : 41%
+│  Under 3.5 : 59%  BTTS : 55%
+│  Saison home : 57% wr (14 matchs), Δ vs global -1.5pp
+│  ── SIGNAUX ──
+│  🎯 📈 home_strong en MS_early → O2.5 73%
+│  📊 Scores profile home_strong en MS_early : 2-1(13%)
+│  🟢 TIER 1 STANDARD → 1 @1.37  (WR attendu 72%, V5 69% ≥ 60%, cote ≤ 1.70, 0 trap)
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 5  Fulham vs Everton
+│  Cotes 1X2 : 1.82 / 3.62 / 4.29
+│  H2H récents : 3-1(1/13) 0-1(1/13) 1-3(1/13)
+│  ── HT ──
+│  Pick HT  : X  (40/41/19)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (51%)  Score modal : 1-1
+│  Top 3 scores V5 : 1-1(12%) · 2-1(11%) · 1-0(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-0(17%) · 1-1(16%) · 2-1(12%)
+│  ── BUTS ──
+│  Buts attendus : 2.89
+│  Over 1.5 : 78%  Over 2.5 : 54%  Over 3.5 : 30%
+│  Under 3.5 : 70%  BTTS : 55%
+│  Saison home : 54% wr (13 matchs), Δ vs global +3.7pp
+│  ── SIGNAUX ──
+│  🎯 📉 home_slight en MS_early → U2.5 45%
+│  📊 Scores profile home_slight en MS_early : 1-1(13%)
+│  🎰 EXOTIC S4 : Total de buts '1' @5.78  mise 0.4u
+│     S4 home_slight MS_early → exactement 1 but (16.5%). ROI +13%/+40%, cote ~7.7 (plus gros volume de wins)
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 6  Bournemouth vs Leeds
+│  Cotes 1X2 : 1.58 / 3.77 / 6.20
+│  H2H récents : 3-1(1/12) 4-1(1/12) 3-0(1/12)
+│  ── HT ──
+│  Pick HT  : X  (43/44/13)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (58%)  Score modal : 2-0
+│  Top 3 scores V5 : 2-0(12%) · 1-0(11%) · 2-1(11%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-1(22%) · 2-0(20%) · 2-1(11%)
+│  ── BUTS ──
+│  Buts attendus : 2.36
+│  Over 1.5 : 72%  Over 2.5 : 46%  Over 3.5 : 23%
+│  Under 3.5 : 77%  BTTS : 44%
+│  Saison home : 38% wr (13 matchs), Δ vs global +0.2pp
+│  ── SIGNAUX ──
+│  🎯 🔥 Bournemouth PEAK en MS_early (+10pp vs global)
+│  🎯 📈 home_strong en MS_early → O2.5 73%
+│  🟢 STRATEGY ENGINE → 1 @1.58  (strength 0.50, segment MS_early, J8)
+│  📊 Scores profile home_strong en MS_early : 2-1(13%)
+│  🟢 TIER 1 STANDARD → 1 @1.58  (WR attendu 72%, V5 60% ≥ 60%, cote ≤ 1.70, 0 trap)
+│  ⭐ BRACKET GOLD HOME : Bournemouth @1.58  ROI+31%
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 7  Newcastle vs Manchester Red
+│  Cotes 1X2 : 1.38 / 4.86 / 7.62
+│  H2H récents : 1-2(1/16) 2-4(1/16) 4-1(1/16)
+│  ── HT ──
+│  Pick HT  : 1  (49/38/13)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (65%)  Score modal : 2-1
+│  Top 3 scores V5 : 2-1(11%) · 2-0(10%) · 3-0(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 3-0(15%) · 1-1(13%) · 2-1(12%)
+│  ── BUTS ──
+│  Buts attendus : 2.99
+│  Over 1.5 : 82%  Over 2.5 : 60%  Over 3.5 : 36%
+│  Under 3.5 : 64%  BTTS : 51%
+│  Saison home : 83% wr (12 matchs), Δ vs global +9.0pp
+│  ── SIGNAUX ──
+│  🎯 📈 home_strong en MS_early → O2.5 73%
+│  📊 Scores profile home_strong en MS_early : 2-1(13%)
+│  🟢 TIER 1 STANDARD → 1 @1.38  (WR attendu 72%, V5 69% ≥ 60%, cote ≤ 1.70, 0 trap)
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 8  London Blues vs Manchester Blue
+│  Cotes 1X2 : 3.27 / 3.50 / 2.14
+│  H2H récents : 2-3(1/11) 0-1(1/11) 2-0(1/11)
+│  ── HT ──
+│  Pick HT  : X  (24/43/33)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 2 (43%)  Score modal : 1-2
+│  Top 3 scores V5 : 1-2(11%) · 1-1(10%) · 0-1(9%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-2(17%) · 1-1(17%) · 2-1(11%)
+│  ── BUTS ──
+│  Buts attendus : 2.66
+│  Over 1.5 : 77%  Over 2.5 : 52%  Over 3.5 : 28%
+│  Under 3.5 : 72%  BTTS : 56%
+│  Saison home : 43% wr (14 matchs), Δ vs global -7.3pp
+│  ── SIGNAUX ──
+│  🎯 💰 Bucket cote @3.27 en MS_early — EDGE +6.0pp, ROI +18.1%
+│  ⚠️  ⚠️ TRAP : Bucket cote @2.14 en MS_early — EDGE -16.9pp historique, ROI -33.1%
+│  🟢 STRATEGY ENGINE → 1 @3.27  (strength 0.48, segment MS_early, J8)
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 9  Liverpool vs London Reds
+│  Cotes 1X2 : 2.23 / 3.49 / 3.08
+│  H2H récents : 0-1(1/12) 1-2(1/12) 2-1(1/12)
+│  ── HT ──
+│  Pick HT  : X  (34/44/22)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (43%)  Score modal : 1-1
+│  Top 3 scores V5 : 1-1(12%) · 2-1(10%) · 0-0(8%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-1(15%) · 2-1(13%) · 0-0(12%)
+│  ── BUTS ──
+│  Buts attendus : 2.60
+│  Over 1.5 : 77%  Over 2.5 : 52%  Over 3.5 : 28%
+│  Under 3.5 : 72%  BTTS : 56%
+│  Saison home : 57% wr (14 matchs), Δ vs global -9.2pp
+│  ── SIGNAUX ──
+│  ⚠️  ⚠️ TRAP : Bucket cote @2.23 en MS_early — EDGE -7.9pp historique, ROI -19.1%
+│  ⚠️  PAIRE OR HOME bloquée : Liverpool en perte saison (skip)
+│  💎💎 COMBO SCORE : 2-0(40%) + 1-1(10%) = 50% (n=10)
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 10  C. Palace vs Brentford
+│  Cotes 1X2 : 2.32 / 3.43 / 2.95
+│  H2H récents : 3-1(1/10) 1-1(1/10) 1-0(1/10)
+│  ── HT ──
+│  Pick HT  : X  (34/42/23)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 1 (42%)  Score modal : 1-1
+│  Top 3 scores V5 : 1-1(12%) · 2-1(10%) · 1-2(8%)
+│  🎯 Top 3 V2 ENSEMBLE : 1-1(14%) · 2-1(13%) · 1-2(13%)
+│  ── BUTS ──
+│  Buts attendus : 2.79
+│  Over 1.5 : 78%  Over 2.5 : 53%  Over 3.5 : 29%
+│  Under 3.5 : 71%  BTTS : 57%
+│  Saison home : 42% wr (12 matchs), Δ vs global -4.2pp
+│  ── SIGNAUX ──
+│  ⚠️  ⚠️ TRAP : Bucket cote @2.32 en MS_early — EDGE -7.9pp historique, ROI -19.1%
+│  🔥🔥 MULTI : 1 @2.32  EV+47% conf 6.0/10
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  📋 RÉCAP DES PICKS RECOMMANDÉS
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MULTI (3):
+     • Burnley vs West Ham                      1 @2.55  (58%)
+     • Burnley vs West Ham                      2 @2.67  (62%)
+     • C. Palace vs Brentford                   1 @2.32  (60%)
+
+  TIER_1_STANDARD (3):
+     • A. Villa vs Wolverhampton                1 @1.37  (72%)
+     • Bournemouth vs Leeds                     1 @1.58  (72%)
+     • Newcastle vs Manchester Red              1 @1.38  (72%)
+
+  EXOTIC_S4 (1):
+     • Fulham vs Everton                        Total de buts 1 @5.78  (16%)
+
+  STRATEGY (2):
+     • Bournemouth vs Leeds                     1 @1.58  (25%)
+     • London Blues vs Manchester Blue          1 @3.27  (24%)
+
+  COMBO_SCORE (1):
+     • Liverpool vs London Reds                 2-0 + 1-1   (50%)
+

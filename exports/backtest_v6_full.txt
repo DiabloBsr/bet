@@ -1,0 +1,51 @@
+=== BACKTEST V6 FULL — n=3418 ===
+
+=== Signal par signal (5-fold cumulé) ===
+
+--- ht_ft_1_2 ---
+  ALL : n= 2735  acc= 3.80%  ROI=+104.09%  cote_med=52.5
+  EV≥0.0: n= 1821  acc= 3.79%  ROI=+119.55%
+  EV≥0.2: n= 1439  acc= 3.61%  ROI=+121.81%
+  EV≥0.5: n=  859  acc= 2.68%  ROI= +62.65%
+  EV≥1.0: n=  214  acc= 1.87%  ROI=  -7.40%
+  EV≥1.5: n=   63  acc= 1.59%  ROI= -18.21%
+  Fold1: n=  683  acc= 2.64%  ROI= +33.11%
+  Fold2: n=  683  acc= 3.66%  ROI= +92.42%
+  Fold3: n=  683  acc= 2.93%  ROI= +64.21%
+  Fold4: n=  686  acc= 5.98%  ROI=+226.10%
+
+--- ht_ft_2_1 ---
+  ALL : n= 2735  acc= 3.47%  ROI= +27.79%  cote_med=34.6
+  EV≥0.0: n= 2223  acc= 3.60%  ROI= +29.80%
+  EV≥0.2: n= 1975  acc= 3.85%  ROI= +40.41%
+  EV≥0.5: n= 1618  acc= 4.20%  ROI= +53.55%
+  EV≥1.0: n= 1170  acc= 4.36%  ROI= +67.27%
+  EV≥1.5: n=  711  acc= 3.94%  ROI= +71.17%
+  EV≥2.0: n=  438  acc= 3.88%  ROI= +84.16%
+  Fold1: n=  683  acc= 4.10%  ROI= +61.17%
+  Fold2: n=  683  acc= 3.95%  ROI= +36.51%
+  Fold3: n=  683  acc= 3.07%  ROI=  +9.86%
+  Fold4: n=  686  acc= 2.77%  ROI=  +3.72%
+
+--- upset_1_0 ---
+  ALL : n=  297  acc= 6.40%  ROI= +42.11%  cote_med=22.0
+  EV≥0.0: n=  168  acc= 8.33%  ROI= +85.57%
+  EV≥0.2: n=   75  acc= 4.00%  ROI= +18.05%
+  Fold1: n=   70  acc= 5.71%  ROI= +38.96%
+  Fold2: n=   76  acc= 6.58%  ROI= +78.09%
+  Fold3: n=   82  acc= 4.88%  ROI= -10.70%
+  Fold4: n=   69  acc= 8.70%  ROI= +68.43%
+
+--- outsider_ht1 ---
+  ALL : n=  386  acc=18.39%  ROI=  +2.26%  cote_med=5.4
+  EV≥0.0: n=  125  acc=19.20%  ROI= +11.61%
+  Fold2: n=   85  acc=20.00%  ROI=  -0.98%
+  Fold3: n=  152  acc=13.16%  ROI= -23.83%
+  Fold4: n=  149  acc=22.82%  ROI= +30.72%
+
+=== STRATÉGIE PORTEFEUILLE (tous signaux, EV >= 0.5) ===
+  Tous paris : n=2524  acc=3.76%  ROI=+57.06%
+    ht_ft_1_2            n=  859  ROI= +62.65%
+    ht_ft_2_1            n= 1618  ROI= +53.55%
+    upset_1_0            n=   32  ROI= +27.72%
+    outsider_ht1         n=   15  ROI=+177.60%

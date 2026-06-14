@@ -1,0 +1,349 @@
+{
+ "n_events": 23598,
+ "A1_drift": {
+  "n_events_spanning": 785,
+  "mean_drift_pwinner": -0.0,
+  "se": 0.00027,
+  "z": -0.02,
+  "n": 785
+ },
+ "A2_sharpness": [
+  {
+   "league": "InstantLeague-8035",
+   "n_early": 3888,
+   "n_late": 4153,
+   "logloss_early": 0.9386,
+   "logloss_late": 0.9529,
+   "p_diff": 0.2099303925440788,
+   "homegap_early": 0.0149,
+   "homegap_late": 0.012
+  },
+  {
+   "league": "InstantLeague-8036",
+   "n_early": 440,
+   "n_late": 1060,
+   "logloss_early": 0.9847,
+   "logloss_late": 1.0158,
+   "p_diff": 0.2137823524206379,
+   "homegap_early": 0.0042,
+   "homegap_late": -0.0289
+  },
+  {
+   "league": "InstantLeague-8037",
+   "n_early": 450,
+   "n_late": 1070,
+   "logloss_early": 0.9694,
+   "logloss_late": 0.966,
+   "p_diff": 0.8903005357012178,
+   "homegap_early": 0.0197,
+   "homegap_late": 0.0117
+  },
+  {
+   "league": "InstantLeague-8042",
+   "n_early": 413,
+   "n_late": 892,
+   "logloss_early": 0.9939,
+   "logloss_late": 1.003,
+   "p_diff": 0.7370780618511774,
+   "homegap_early": 0.01,
+   "homegap_late": -0.0024
+  },
+  {
+   "league": "InstantLeague-8043",
+   "n_early": 441,
+   "n_late": 873,
+   "logloss_early": 0.9451,
+   "logloss_late": 0.9666,
+   "p_diff": 0.4608709753294646,
+   "homegap_early": 0.033,
+   "homegap_late": -0.0086
+  },
+  {
+   "league": "InstantLeague-8044",
+   "n_early": 450,
+   "n_late": 855,
+   "logloss_early": 0.9423,
+   "logloss_late": 0.9355,
+   "p_diff": 0.8126221843405715,
+   "homegap_early": -0.0264,
+   "homegap_late": 0.0098
+  },
+  {
+   "league": "InstantLeague-8056",
+   "n_early": 504,
+   "n_late": 2412,
+   "logloss_early": 0.8981,
+   "logloss_late": 0.869,
+   "p_diff": 0.3532360669983245,
+   "homegap_early": 0.0023,
+   "homegap_late": -0.0092
+  },
+  {
+   "league": "InstantLeague-8060",
+   "n_early": 479,
+   "n_late": 1378,
+   "logloss_early": 0.9226,
+   "logloss_late": 0.9118,
+   "p_diff": 0.7309623805282244,
+   "homegap_early": 0.035,
+   "homegap_late": -0.0096
+  },
+  {
+   "league": "InstantLeague-8065",
+   "n_early": 623,
+   "n_late": 3217,
+   "logloss_early": 1.0067,
+   "logloss_late": 1.016,
+   "p_diff": 0.6131608084532625,
+   "homegap_early": 0.0158,
+   "homegap_late": -0.0104
+  },
+  {
+   "league": "ALL-NEW",
+   "n_early": 3800,
+   "n_late": 11757,
+   "logloss_early": 0.9586,
+   "logloss_late": 0.9585,
+   "p_diff": 0.9969379817871771,
+   "homegap_early": 0.0119,
+   "homegap_late": -0.0075
+  }
+ ],
+ "A3_early_only": {
+  "n_early": 7688,
+  "margins": {
+   "InstantLeague-8035": 0.06,
+   "InstantLeague-8036": 0.06,
+   "InstantLeague-8037": 0.06,
+   "InstantLeague-8042": 0.0601,
+   "InstantLeague-8043": 0.0599,
+   "InstantLeague-8044": 0.06,
+   "InstantLeague-8056": 0.06,
+   "InstantLeague-8060": 0.0601,
+   "InstantLeague-8065": 0.06
+  },
+  "global_calib": [
+   {
+    "league": "InstantLeague-8035",
+    "n": 3888,
+    "obs": [
+     0.4928,
+     0.2045,
+     0.3027
+    ],
+    "exp": [
+     0.4779,
+     0.2256,
+     0.2965
+    ],
+    "p": 0.006655108983770885
+   },
+   {
+    "league": "InstantLeague-8036",
+    "n": 440,
+    "obs": [
+     0.4432,
+     0.3182,
+     0.2386
+    ],
+    "exp": [
+     0.439,
+     0.2788,
+     0.2821
+    ],
+    "p": 0.06677175296752426
+   },
+   {
+    "league": "InstantLeague-8037",
+    "n": 450,
+    "obs": [
+     0.4933,
+     0.28,
+     0.2267
+    ],
+    "exp": [
+     0.4736,
+     0.2797,
+     0.2467
+    ],
+    "p": 0.5755103443667996
+   },
+   {
+    "league": "InstantLeague-8042",
+    "n": 413,
+    "obs": [
+     0.4673,
+     0.2349,
+     0.2978
+    ],
+    "exp": [
+     0.4574,
+     0.2447,
+     0.2979
+    ],
+    "p": 0.8813417996342294
+   },
+   {
+    "league": "InstantLeague-8043",
+    "n": 441,
+    "obs": [
+     0.5238,
+     0.2063,
+     0.2698
+    ],
+    "exp": [
+     0.4908,
+     0.2194,
+     0.2897
+    ],
+    "p": 0.3825835468970347
+   },
+   {
+    "league": "InstantLeague-8044",
+    "n": 450,
+    "obs": [
+     0.4356,
+     0.2844,
+     0.28
+    ],
+    "exp": [
+     0.462,
+     0.2634,
+     0.2746
+    ],
+    "p": 0.4765759713083395
+   },
+   {
+    "league": "InstantLeague-8056",
+    "n": 504,
+    "obs": [
+     0.5397,
+     0.2044,
+     0.256
+    ],
+    "exp": [
+     0.5374,
+     0.2038,
+     0.2588
+    ],
+    "p": 0.9891284769762629
+   },
+   {
+    "league": "InstantLeague-8060",
+    "n": 479,
+    "obs": [
+     0.4468,
+     0.3319,
+     0.2213
+    ],
+    "exp": [
+     0.4118,
+     0.3568,
+     0.2315
+    ],
+    "p": 0.2910914965780229
+   },
+   {
+    "league": "InstantLeague-8065",
+    "n": 623,
+    "obs": [
+     0.3965,
+     0.2151,
+     0.3884
+    ],
+    "exp": [
+     0.3806,
+     0.236,
+     0.3833
+    ],
+    "p": 0.4470935727036076
+   },
+   {
+    "league": "POOLED-ALL-NEW",
+    "n": 3800,
+    "obs": [
+     0.4658,
+     0.2574,
+     0.2768
+    ],
+    "exp": [
+     0.4539,
+     0.2594,
+     0.2868
+    ],
+    "p": 0.2793665525295593
+   }
+  ],
+  "ou35_poolednew": {
+   "n": 3580,
+   "obs": 0.3078,
+   "exp": 0.3041,
+   "p": 0.6238592452993817
+  },
+  "bucket_cells": {
+   "n_cells": 24,
+   "n_p_lt_01": 0,
+   "sig": []
+  }
+ },
+ "B_halves": [
+  {
+   "half": "H1",
+   "n": 7778,
+   "span": [
+    "2026-06-12 01:09:36.000000",
+    "2026-06-12 12:51:56.000000"
+   ],
+   "calib1x2_p": 0.6524076313704004,
+   "obs": [
+    0.4469,
+    0.2584,
+    0.2947
+   ],
+   "exp": [
+    0.4515,
+    0.2544,
+    0.2941
+   ],
+   "ou35": {
+    "n": 7373,
+    "obs": 0.313,
+    "exp": 0.3169,
+    "p": 0.4833927485274442
+   }
+  },
+  {
+   "half": "H2",
+   "n": 7779,
+   "span": [
+    "2026-06-12 12:51:56.000000",
+    "2026-06-12 21:13:40.000000"
+   ],
+   "calib1x2_p": 0.9571738177358304,
+   "obs": [
+    0.4499,
+    0.2567,
+    0.2934
+   ],
+   "exp": [
+    0.4509,
+    0.2553,
+    0.2939
+   ],
+   "ou35": {
+    "n": 7351,
+    "obs": 0.314,
+    "exp": 0.3148,
+    "p": 0.8901450281291976
+   }
+  }
+ ],
+ "C_bootstrap_ou": {
+  "n": 14724,
+  "gap": -0.00236,
+  "ci95": [
+   -0.00957,
+   0.00451
+  ]
+ }
+}

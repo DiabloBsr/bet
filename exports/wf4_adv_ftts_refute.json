@@ -1,0 +1,261 @@
+{
+ "minid_vs_fetchedat_violations": 0,
+ "settlement_ht_contradictions": {
+  "n_contra": 0,
+  "n_bets": 5040
+ },
+ "groups": {
+  "champs-new (5 ligues)": {
+   "label": "champs-new (5 ligues)",
+   "n": 1377,
+   "wr": 0.7792,
+   "roi_pct": 5.38,
+   "avg_odds": 1.36,
+   "p_two_sided": 0.0004279393446816031
+  },
+  "8035-recent (>=06-12)": {
+   "label": "8035-recent (>=06-12)",
+   "n": 582,
+   "wr": 0.7509,
+   "roi_pct": 3.72,
+   "avg_odds": 1.385,
+   "p_two_sided": 0.13532228813611352
+  },
+  "8035-old (<06-12)": {
+   "label": "8035-old (<06-12)",
+   "n": 1262,
+   "wr": 0.7781,
+   "roi_pct": 7.38,
+   "avg_odds": 1.384,
+   "p_two_sided": 5.585111198513856e-06
+  },
+  "NEW-ERA champs pooled (claim)": {
+   "label": "NEW-ERA champs pooled (claim)",
+   "n": 1959,
+   "wr": 0.7708,
+   "roi_pct": 4.89,
+   "avg_odds": 1.368,
+   "p_two_sided": 0.00017866281863128638
+  },
+  "cups pooled": {
+   "label": "cups pooled",
+   "n": 1819,
+   "wr": 0.7653,
+   "roi_pct": -0.64,
+   "avg_odds": 1.309,
+   "p_two_sided": 0.6249613059427084
+  },
+  "EVERYTHING new-era (champs+cups, no carve-out)": {
+   "label": "EVERYTHING new-era (champs+cups, no carve-out)",
+   "n": 3778,
+   "wr": 0.7681,
+   "roi_pct": 2.23,
+   "avg_odds": 1.339,
+   "p_two_sided": 0.01651084441653653
+  }
+ },
+ "per_league": {
+  "InstantLeague-8035": {
+   "label": "InstantLeague-8035",
+   "n": 1844,
+   "wr": 0.7695,
+   "roi_pct": 6.23,
+   "avg_odds": 1.385,
+   "p_two_sided": 4.917132825687231e-06
+  },
+  "InstantLeague-8036": {
+   "label": "InstantLeague-8036",
+   "n": 269,
+   "wr": 0.7212,
+   "roi_pct": 0.15,
+   "avg_odds": 1.391,
+   "p_two_sided": 0.9688395496958083
+  },
+  "InstantLeague-8037": {
+   "label": "InstantLeague-8037",
+   "n": 303,
+   "wr": 0.8185,
+   "roi_pct": 10.41,
+   "avg_odds": 1.35,
+   "p_two_sided": 0.0005746895383460606
+  },
+  "InstantLeague-8042": {
+   "label": "InstantLeague-8042",
+   "n": 214,
+   "wr": 0.7243,
+   "roi_pct": 0.17,
+   "avg_odds": 1.393,
+   "p_two_sided": 0.9684083912345871
+  },
+  "InstantLeague-8043": {
+   "label": "InstantLeague-8043",
+   "n": 311,
+   "wr": 0.7781,
+   "roi_pct": 7.37,
+   "avg_odds": 1.386,
+   "p_two_sided": 0.024361233531365777
+  },
+  "InstantLeague-8044": {
+   "label": "InstantLeague-8044",
+   "n": 280,
+   "wr": 0.8357,
+   "roi_pct": 6.76,
+   "avg_odds": 1.288,
+   "p_two_sided": 0.019652829033665737
+  },
+  "InstantLeague-8056": {
+   "label": "InstantLeague-8056",
+   "n": 1161,
+   "wr": 0.7717,
+   "roi_pct": -0.22,
+   "avg_odds": 1.303,
+   "p_two_sided": 0.8940249484453094
+  },
+  "InstantLeague-8060": {
+   "label": "InstantLeague-8060",
+   "n": 399,
+   "wr": 0.7719,
+   "roi_pct": -4.04,
+   "avg_odds": 1.254,
+   "p_two_sided": 0.1315565673057196
+  },
+  "InstantLeague-8065": {
+   "label": "InstantLeague-8065",
+   "n": 259,
+   "wr": 0.7259,
+   "roi_pct": 2.67,
+   "avg_odds": 1.418,
+   "p_two_sided": 0.49698016765962083
+  }
+ },
+ "forward_holdout_champs": {
+  "label": "post-cache champs (pure forward)",
+  "n": 462,
+  "wr": 0.7597,
+  "roi_pct": 2.92,
+  "avg_odds": 1.364,
+  "p_two_sided": 0.28295221400560333
+ },
+ "forward_holdout_cups": {
+  "label": "post-cache cups",
+  "n": 447,
+  "wr": 0.7629,
+  "roi_pct": -1.37,
+  "avg_odds": 1.306,
+  "p_two_sided": 0.6046032309389613
+ },
+ "dups_in_claim_set": {
+  "n_dup_pairs_30min": 98,
+  "same_outcome": 80
+ },
+ "lag_minutes_hist_claimset": {
+  "-4": 3,
+  "-3": 30,
+  "-2": 27,
+  "-1": 490,
+  "0": 845,
+  "1": 407,
+  "2": 64,
+  "3": 36,
+  "4": 10,
+  "5": 12,
+  "6": 6,
+  "7": 10,
+  "8": 3,
+  "9": 4,
+  "10": 2,
+  "11": 3,
+  "12": 2,
+  "13": 4,
+  "14": 1
+ },
+ "strict_prekickoff": {
+  "label": "claim set, strictly pre-kickoff",
+  "n": 550,
+  "wr": 0.7818,
+  "roi_pct": 6.39,
+  "avg_odds": 1.369,
+  "p_two_sided": 0.008291159812639896
+ },
+ "lag_le_1min": {
+  "label": "claim set, lag <= +1 min",
+  "n": 1395,
+  "wr": 0.767,
+  "roi_pct": 4.17,
+  "avg_odds": 1.366,
+  "p_two_sided": 0.007179355585771344
+ },
+ "tercile_1": {
+  "label": "tercile 1 (earliest)",
+  "n": 653,
+  "wr": 0.7825,
+  "roi_pct": 6.57,
+  "avg_odds": 1.367,
+  "p_two_sided": 0.0031160633541099207
+ },
+ "tercile_2": {
+  "label": "tercile 2",
+  "n": 653,
+  "wr": 0.7734,
+  "roi_pct": 5.28,
+  "avg_odds": 1.369,
+  "p_two_sided": 0.019069447150468065
+ },
+ "tercile_3": {
+  "label": "tercile 3 (latest)",
+  "n": 653,
+  "wr": 0.7565,
+  "roi_pct": 2.82,
+  "avg_odds": 1.368,
+  "p_two_sided": 0.22031971005929507
+ },
+ "half_1": {
+  "label": "half 1",
+  "n": 979,
+  "wr": 0.7794,
+  "roi_pct": 6.1,
+  "avg_odds": 1.367,
+  "p_two_sided": 0.000813475766298107
+ },
+ "half_2": {
+  "label": "half 2",
+  "n": 980,
+  "wr": 0.7622,
+  "roi_pct": 3.68,
+  "avg_odds": 1.369,
+  "p_two_sided": 0.04880707297402895
+ },
+ "bootstrap_iid": {
+  "ci": [
+   2.31,
+   2.73,
+   4.86,
+   7.03,
+   7.42
+  ],
+  "p_le_0": 5e-05
+ },
+ "bootstrap_cluster": {
+  "n_clusters": 851,
+  "ci": [
+   2.32,
+   2.72,
+   4.91,
+   7.02,
+   7.46
+  ],
+  "p_le_0": 0.0
+ },
+ "worst_case": {
+  "label": "claim set + all ambiguous settled as LOSS",
+  "n": 1959,
+  "wr": 0.7708,
+  "roi_pct": 4.89,
+  "avg_odds": 1.368,
+  "p_two_sided": 0.00017866281863128638
+ },
+ "worst_case_added": {
+  "gj_mismatch_losses": 0,
+  "unsettleable_losses": 0
+ }
+}

@@ -1,0 +1,72 @@
+matchs finis+cotes = 5859
+matchs avec mu causale (>=3 occurrences passees) = 4719
+
+========================================================================================
+1. LOGLOSS (pleine periode, mu causale)
+========================================================================================
+  logloss3 open      = 0.9579
+  logloss3 last      = 0.9575
+  logloss3 mu_causal = 0.9577
+  open vs mu : delta=+0.00021  t=+0.71 p=0.478
+  last vs mu : delta=-0.00016  t=-0.54 p=0.590
+  open vs last : delta=+0.00036  t=+2.03 p=0.042
+
+========================================================================================
+2. y_home ~ logit(mu) + dev (pleine periode)
+========================================================================================
+n=4719  std(dev)=0.0384
+coef(mu) =+0.945 +- 0.041
+coef(dev)=+0.330 +- 0.817  IC95=[-1.27,+1.93]
+  0 = jitter cosmetique ; 1 = le resultat est tire des cotes affichees du jour
+variante dev_last : coef=+1.384 +- 0.823
+
+========================================================================================
+3. FADE deviation vs mu causale (pleine periode, AUCUNE selection)
+========================================================================================
+   thr=0.03 sides=(0, 2) exec=open : n=2078 roi=  -1.17% wr= 38.7% cote= 3.78
+      null[truth=cotes]= -5.67%+-3.6 p=0.1058 | null[truth=mu]= -2.53%+-3.6 p=0.3527
+   thr=0.05 sides=(0, 2) exec=open : n= 959 roi=  -1.75% wr= 37.1% cote= 3.91
+      null[truth=cotes]= -5.73%+-5.4 p=0.2318 | null[truth=mu]= -1.51%+-5.5 p=0.5112
+   thr=0.07 sides=(0, 2) exec=open : n= 330 roi=  +6.19% wr= 38.8% cote= 3.87
+      null[truth=cotes]= -5.67%+-9.3 p=0.1014 | null[truth=mu]= -0.46%+-9.4 p=0.2359
+
+   thr=0.05 sides=(0,) exec=open : n= 453 roi=  -9.21% wr= 42.8% cote= 3.05
+      null[truth=cotes]= -5.77%+-6.6 p=0.6926 | null[truth=mu]= -2.01%+-6.7 p=0.8582
+   thr=0.05 sides=(2,) exec=open : n= 506 roi=  +4.93% wr= 32.0% cote= 4.67
+      null[truth=cotes]= -5.67%+-8.3 p=0.1027 | null[truth=mu]= -1.01%+-8.6 p=0.2417
+   thr=0.05 sides=(0, 2) exec=last : n= 939 roi=  -5.29% wr= 37.3% cote= 3.89
+      null[truth=cotes]= -5.67%+-5.5 p=0.4632 | null[truth=mu]= -1.60%+-5.6 p=0.7406
+
+   stabilite par tiers (fade thr=0.05, 2 cotes) :
+   thr=0.05 sides=(0, 2) exec=open : n= 350 roi= -20.78% wr= 33.1% cote= 3.77
+      null[truth=cotes]= -5.68%+-8.7 p=0.9647 | null[truth=mu]= -1.62%+-9.0 p=0.9889
+   thr=0.05 sides=(0, 2) exec=open : n= 284 roi=  +7.97% wr= 38.4% cote= 4.12
+      null[truth=cotes]= -5.68%+-10.3 p=0.0954 | null[truth=mu]= -1.44%+-10.5 p=0.1828
+   thr=0.05 sides=(0, 2) exec=open : n= 325 roi= +10.26% wr= 40.3% cote= 3.87
+      null[truth=cotes]= -5.58%+-9.2 p=0.0488 | null[truth=mu]= -1.54%+-9.4 p=0.1088
+
+========================================================================================
+4. DRIFT INTRA-EVENT pleine periode (bet aux dernieres cotes)
+========================================================================================
+events gap>=5min : 1015
+   follow thr=0.03 : n= 557 roi=  +5.30% wr= 42.0% cote= 3.32  null[truth=last] E=-5.66% p=0.0449
+   follow thr=0.05 : n= 322 roi=  +1.75% wr= 42.2% cote= 3.41  null[truth=last] E=-5.55% p=0.1963
+   fade   thr=0.03 : n= 557 roi=  -3.67% wr= 35.2% cote= 3.61  null[truth=last] E=-5.69% p=0.3797
+   fade   thr=0.05 : n= 322 roi=  -1.46% wr= 37.6% cote= 3.50  null[truth=last] E=-5.62% p=0.3075
+
+   stabilite par tiers (follow thr=0.03) :
+   follow thr=0.03 : n= 182 roi= -11.57% wr= 37.9% cote= 3.39  null[truth=last] E=-5.68% p=0.6898
+   follow thr=0.03 : n= 193 roi= +11.40% wr= 45.6% cote= 3.27  null[truth=last] E=-5.69% p=0.0604
+   follow thr=0.03 : n= 182 roi= +15.69% wr= 42.3% cote= 3.32  null[truth=last] E=-5.65% p=0.0352
+
+========================================================================================
+5. DECOMPOSITION : jitter publication vs variance vraie inter-occurrences
+========================================================================================
+var jitter intra-event (logit p_home)        = 0.001282  (std=0.0358)
+var inter-occurrences within-pair (openings) = 0.001294  (std=0.0360)
+variance vraie residuelle (btw - jit)        = +0.000013  (std=0.0036)
+part de la variance inter-occurrence expliquee par le jitter = 99.0%
+
+========================================================================================
+FIN
+========================================================================================

@@ -1,0 +1,286 @@
+{
+ "cutoff": "2026-06-06",
+ "n_oos_raw": 3413,
+ "n_oos_dedup": 3233,
+ "dups_removed": 180,
+ "families": {
+  "SCORE_DOMINANT_GOLD": {
+   "label": "SCORE_DOMINANT_GOLD dedup",
+   "n_oos": 209,
+   "hits": 28,
+   "hit_rate_oos": 0.134,
+   "hit_rate_is_weighted": 0.4307,
+   "baseline_global_weighted": 0.0739,
+   "market_implied_avg": 0.1063,
+   "z_vs_baseline": 3.32,
+   "z_vs_implied": 1.3,
+   "roi_oos": 0.3226,
+   "roi_n": 209,
+   "roi_z": 1.28,
+   "per_pair": [
+    {
+     "pair": "Fulham v Manchester Blue",
+     "target": "1-2",
+     "n_oos": 12,
+     "hit_oos": 0.083
+    },
+    {
+     "pair": "C. Palace v Spurs",
+     "target": "2-1",
+     "n_oos": 6,
+     "hit_oos": 0.167
+    },
+    {
+     "pair": "Burnley v Manchester Blue",
+     "target": "1-2",
+     "n_oos": 6,
+     "hit_oos": 0.167
+    },
+    {
+     "pair": "Newcastle v West Ham",
+     "target": "3-0",
+     "n_oos": 6,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "Wolverhampton v Fulham",
+     "target": "2-1",
+     "n_oos": 9,
+     "hit_oos": 0.111
+    },
+    {
+     "pair": "Bournemouth v Manchester Blue",
+     "target": "1-1",
+     "n_oos": 3,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "Manchester Red v Bournemouth",
+     "target": "1-0",
+     "n_oos": 8,
+     "hit_oos": 0.125
+    },
+    {
+     "pair": "Burnley v Liverpool",
+     "target": "0-2",
+     "n_oos": 11,
+     "hit_oos": 0.182
+    },
+    {
+     "pair": "A. Villa v C. Palace",
+     "target": "2-0",
+     "n_oos": 7,
+     "hit_oos": 0.286
+    },
+    {
+     "pair": "Leeds v Brentford",
+     "target": "1-2",
+     "n_oos": 7,
+     "hit_oos": 0.286
+    },
+    {
+     "pair": "Brighton v Manchester Red",
+     "target": "2-1",
+     "n_oos": 9,
+     "hit_oos": 0.111
+    },
+    {
+     "pair": "Manchester Red v Wolverhampton",
+     "target": "1-0",
+     "n_oos": 12,
+     "hit_oos": 0.083
+    },
+    {
+     "pair": "West Ham v A. Villa",
+     "target": "1-1",
+     "n_oos": 9,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "Bournemouth v Brentford",
+     "target": "1-1",
+     "n_oos": 8,
+     "hit_oos": 0.125
+    },
+    {
+     "pair": "Liverpool v London Reds",
+     "target": "2-0",
+     "n_oos": 9,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "Manchester Blue v Everton",
+     "target": "3-0",
+     "n_oos": 7,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "C. Palace v Burnley",
+     "target": "4-0",
+     "n_oos": 8,
+     "hit_oos": 0.25
+    },
+    {
+     "pair": "C. Palace v Manchester Red",
+     "target": "1-2",
+     "n_oos": 7,
+     "hit_oos": 0.143
+    },
+    {
+     "pair": "Burnley v Wolverhampton",
+     "target": "1-0",
+     "n_oos": 10,
+     "hit_oos": 0.2
+    },
+    {
+     "pair": "Everton v Bournemouth",
+     "target": "1-1",
+     "n_oos": 11,
+     "hit_oos": 0.273
+    },
+    {
+     "pair": "Bournemouth v Everton",
+     "target": "1-1",
+     "n_oos": 6,
+     "hit_oos": 0.5
+    },
+    {
+     "pair": "N. Forest v Everton",
+     "target": "3-0",
+     "n_oos": 10,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "A. Villa v Liverpool",
+     "target": "1-2",
+     "n_oos": 8,
+     "hit_oos": 0.125
+    },
+    {
+     "pair": "A. Villa v Fulham",
+     "target": "3-1",
+     "n_oos": 8,
+     "hit_oos": 0.25
+    },
+    {
+     "pair": "Newcastle v Manchester Blue",
+     "target": "0-0",
+     "n_oos": 12,
+     "hit_oos": 0.0
+    }
+   ]
+  },
+  "SCORE_COMBO_GOLD": {
+   "label": "SCORE_COMBO_GOLD dedup",
+   "n_oos": 129,
+   "hits": 25,
+   "hit_rate_oos": 0.1938,
+   "hit_rate_is_weighted": 0.6137,
+   "baseline_global_weighted": 0.1464,
+   "market_implied_avg": 0.2084,
+   "z_vs_baseline": 1.52,
+   "z_vs_implied": -0.41,
+   "roi_oos": -0.0303,
+   "roi_n": 129,
+   "roi_z": -0.16,
+   "per_pair": [
+    {
+     "pair": "Fulham v Manchester Blue",
+     "target": "1-2+0-1",
+     "n_oos": 12,
+     "hit_oos": 0.25
+    },
+    {
+     "pair": "C. Palace v Spurs",
+     "target": "2-1+3-1",
+     "n_oos": 6,
+     "hit_oos": 0.333
+    },
+    {
+     "pair": "Burnley v Manchester Blue",
+     "target": "1-2+0-1",
+     "n_oos": 6,
+     "hit_oos": 0.333
+    },
+    {
+     "pair": "Newcastle v West Ham",
+     "target": "3-0+2-0",
+     "n_oos": 6,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "Wolverhampton v Fulham",
+     "target": "2-1+1-1",
+     "n_oos": 9,
+     "hit_oos": 0.222
+    },
+    {
+     "pair": "Bournemouth v Manchester Blue",
+     "target": "1-1+0-3",
+     "n_oos": 3,
+     "hit_oos": 0.0
+    },
+    {
+     "pair": "Manchester Red v Bournemouth",
+     "target": "1-0+3-1",
+     "n_oos": 8,
+     "hit_oos": 0.125
+    },
+    {
+     "pair": "Burnley v Liverpool",
+     "target": "0-2+0-1",
+     "n_oos": 11,
+     "hit_oos": 0.182
+    },
+    {
+     "pair": "A. Villa v C. Palace",
+     "target": "2-0+1-1",
+     "n_oos": 7,
+     "hit_oos": 0.286
+    },
+    {
+     "pair": "Leeds v Brentford",
+     "target": "1-2+0-3",
+     "n_oos": 7,
+     "hit_oos": 0.286
+    },
+    {
+     "pair": "Brighton v Manchester Red",
+     "target": "2-1+3-1",
+     "n_oos": 9,
+     "hit_oos": 0.111
+    },
+    {
+     "pair": "Manchester Red v Wolverhampton",
+     "target": "1-0+1-2",
+     "n_oos": 12,
+     "hit_oos": 0.25
+    },
+    {
+     "pair": "West Ham v A. Villa",
+     "target": "1-1+2-0",
+     "n_oos": 9,
+     "hit_oos": 0.111
+    },
+    {
+     "pair": "Bournemouth v Brentford",
+     "target": "1-1+3-1",
+     "n_oos": 8,
+     "hit_oos": 0.125
+    },
+    {
+     "pair": "Liverpool v London Reds",
+     "target": "2-0+1-1",
+     "n_oos": 9,
+     "hit_oos": 0.333
+    },
+    {
+     "pair": "Manchester Blue v Everton",
+     "target": "3-0+2-1",
+     "n_oos": 7,
+     "hit_oos": 0.0
+    }
+   ]
+  }
+ }
+}

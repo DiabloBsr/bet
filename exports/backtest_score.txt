@@ -1,0 +1,12 @@
+Sample n=2791
+
+V5 fit | empirical_buckets=20
+
+=== SCORE EXACT BACKTEST (n_test=838) ===
+
+  V5 OLD modal (score_blend)       : Top-1 = 12.29%  (n_hit=103)
+  V5 NEW enriched Top-1 (modal)    : Top-1 = 11.10%  (n_hit=93)
+  V5 NEW enriched Top-3            : Top-3 = 29.71%  (n_hit=249)
+  V5 NEW enriched Top-5            : Top-5 = 47.73%  (n_hit=400)
+
+  Gain Top-1 enriched vs old : -1.19 pp

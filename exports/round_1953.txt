@@ -1,0 +1,185 @@
+V5/V10 (n_train=3217)
+
+🌍 Saison récente (20 dernières) depuis 2026-06-05 16:24:56
+   🔥 EN FORME : Spurs(86%/7), West Ham(71%/7), Everton(57%/7), Sunderland(33%/6), London Blues(75%/4), Leeds(29%/7)
+   ❄️  EN PERTE : Manchester Blue(38%/8), Bournemouth(0%/6), N. Forest(12%/8), Fulham(14%/7), Brentford(17%/6), Manchester Red(29%/7), London Reds(50%/4)
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:53 Mada — 10 matchs
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─ MATCH 1  West Ham vs C. Palace
+│  Cotes 1X2 : 2.25 / 3.44 / 3.07
+│  H2H récents : 2-2(1/6) 2-1(1/6) 1-1(1/6)
+│  ── HT ──
+│  Pick HT  : X  (31/44/25)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 1 (41%)  Score modal : 1-1
+│  Top 3 scores : 1-1(13%) · 2-1(11%) · 1-2(8%)
+│  ── BUTS ──
+│  Buts attendus : 2.48
+│  Over 1.5 : 71%  Over 2.5 : 45%  Over 3.5 : 24%
+│  Under 3.5 : 76%  BTTS : 50%
+│  Saison home : 71% wr (7 matchs), Δ vs global +14.4pp
+│  🔥 West Ham EN FORME saison (71% vs 41% global, n=7)
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 2  Brentford vs Sunderland
+│  Cotes 1X2 : 1.55 / 4.72 / 4.94
+│  H2H récents : 3-1(1/9) 1-0(1/9) 3-2(1/9)
+│  ── HT ──
+│  Pick HT  : 1  (49/35/16)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (61%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  ── BUTS ──
+│  Buts attendus : 3.23
+│  Over 1.5 : 83%  Over 2.5 : 63%  Over 3.5 : 41%
+│  Under 3.5 : 59%  BTTS : 56%
+│  Saison home : 17% wr (6 matchs), Δ vs global -13.9pp
+│  ❄️  Brentford EN PERTE saison (17% vs 49% global, n=6)
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 3  London Blues vs Everton
+│  Cotes 1X2 : 1.57 / 3.78 / 6.26
+│  H2H récents : 1-2(1/8) 3-0(1/8) 4-1(1/8)
+│  ── HT ──
+│  Pick HT  : 1  (42/42/15)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (58%)  Score modal : 2-0
+│  Top 3 scores : 2-0(12%) · 2-1(11%) · 1-0(10%)
+│  ── BUTS ──
+│  Buts attendus : 2.48
+│  Over 1.5 : 71%  Over 2.5 : 45%  Over 3.5 : 24%
+│  Under 3.5 : 76%  BTTS : 44%
+│  Saison home : 75% wr (4 matchs), Δ vs global +6.9pp
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 4  London Reds vs Burnley
+│  Cotes 1X2 : 1.19 / 7.39 / 11.97
+│  H2H récents : 3-0(1/8) 1-2(1/8) 2-0(1/8)
+│  ── HT ──
+│  Pick HT  : 1  (58/30/12)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (75%)  Score modal : 3-0
+│  Top 3 scores : 3-0(11%) · 2-0(10%) · 3-1(9%)
+│  ── BUTS ──
+│  Buts attendus : 3.67
+│  Over 1.5 : 88%  Over 2.5 : 71%  Over 3.5 : 50%
+│  Under 3.5 : 50%  BTTS : 56%
+│  Saison home : 50% wr (4 matchs), Δ vs global -5.7pp
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 5  Liverpool vs Spurs
+│  Cotes 1X2 : 1.35 / 5.58 / 7.07
+│  H2H récents : 3-0(1/9) 1-2(1/9) 4-1(1/9)
+│  ── HT ──
+│  Pick HT  : 1  (51/35/14)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (67%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 3-0(10%) · 2-0(9%)
+│  ── BUTS ──
+│  Buts attendus : 3.11
+│  Over 1.5 : 82%  Over 2.5 : 60%  Over 3.5 : 38%
+│  Under 3.5 : 62%  BTTS : 52%
+│  Saison home : 83% wr (6 matchs), Δ vs global +4.0pp
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 6  A. Villa vs Brighton
+│  Cotes 1X2 : 1.66 / 4.58 / 4.18
+│  H2H récents : 0-2(1/8) 2-1(1/8) 4-1(1/8)
+│  ── HT ──
+│  Pick HT  : 1  (41/36/23)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 1 (54%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  ── BUTS ──
+│  Buts attendus : 3.40
+│  Over 1.5 : 85%  Over 2.5 : 66%  Over 3.5 : 44%
+│  Under 3.5 : 56%  BTTS : 64%
+│  Saison home : 67% wr (6 matchs), Δ vs global +4.2pp
+│  ── SIGNAUX ──
+│  ⭐ BRACKET GOLD HOME : A. Villa @1.66  ROI+16%
+│  🔥🔥 MULTI : 1 @1.66  EV+40% conf 8.4/10
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 7  Bournemouth vs Fulham
+│  Cotes 1X2 : 2.47 / 3.29 / 2.85
+│  H2H récents : 2-0(1/12) 4-2(1/12) 1-2(1/12)
+│  ── HT ──
+│  Pick HT  : X  (32/43/25)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 1 (39%)  Score modal : 1-1
+│  Top 3 scores : 1-1(13%) · 2-1(10%) · 1-2(8%)
+│  ── BUTS ──
+│  Buts attendus : 2.61
+│  Over 1.5 : 73%  Over 2.5 : 48%  Over 3.5 : 27%
+│  Under 3.5 : 73%  BTTS : 53%
+│  Saison home : 0% wr (6 matchs), Δ vs global -16.7pp
+│  ❄️  Bournemouth EN PERTE saison (0% vs 39% global, n=6)
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 8  N. Forest vs Manchester Blue
+│  Cotes 1X2 : 4.35 / 3.65 / 1.80
+│  H2H récents : 3-2(1/7) 1-0(1/7) 1-1(1/7)
+│  ── HT ──
+│  Pick HT  : X  (18/44/38)  Score HT : 0-1
+│  ── FT ──
+│  Pick FT  : 2 (51%)  Score modal : 0-2
+│  Top 3 scores : 0-2(11%) · 1-2(11%) · 0-1(10%)
+│  ── BUTS ──
+│  Buts attendus : 2.42
+│  Over 1.5 : 70%  Over 2.5 : 44%  Over 3.5 : 23%
+│  Under 3.5 : 77%  BTTS : 46%
+│  Saison home : 12% wr (8 matchs), Δ vs global -16.5pp
+│  ❄️  N. Forest EN PERTE saison (12% vs 45% global, n=8)
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 9  Wolverhampton vs Newcastle
+│  Cotes 1X2 : 3.13 / 3.76 / 2.11
+│  H2H récents : 3-1(1/8) 2-2(1/8) 1-1(1/8)
+│  ── HT ──
+│  Pick HT  : 2  (22/38/40)  Score HT : 1-1
+│  ── FT ──
+│  Pick FT  : 2 (47%)  Score modal : 1-2
+│  Top 3 scores : 1-2(12%) · 1-1(11%) · 0-1(8%)
+│  ── BUTS ──
+│  Buts attendus : 3.03
+│  Over 1.5 : 81%  Over 2.5 : 58%  Over 3.5 : 36%
+│  Under 3.5 : 64%  BTTS : 59%
+│  Saison home : 29% wr (7 matchs), Δ vs global -4.2pp
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌─ MATCH 10  Manchester Red vs Leeds
+│  Cotes 1X2 : 1.37 / 4.60 / 8.74
+│  H2H récents : 3-1(1/8) 2-1(1/8) 4-0(1/8)
+│  ── HT ──
+│  Pick HT  : 1  (50/38/11)  Score HT : 1-0
+│  ── FT ──
+│  Pick FT  : 1 (67%)  Score modal : 3-0
+│  Top 3 scores : 3-0(11%) · 2-0(11%) · 2-1(10%)
+│  ── BUTS ──
+│  Buts attendus : 2.73
+│  Over 1.5 : 76%  Over 2.5 : 51%  Over 3.5 : 29%
+│  Under 3.5 : 71%  BTTS : 42%
+│  Saison home : 29% wr (7 matchs), Δ vs global -10.6pp
+│  ❄️  Manchester Red EN PERTE saison (29% vs 51% global, n=7)
+│  ── SIGNAUX ──
+└────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  📋 RÉCAP DES PICKS RECOMMANDÉS
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MULTI (1):
+     • A. Villa vs Brighton                     1 @1.66  (84%)
+

@@ -1,0 +1,394 @@
+
+=== V6 ANALYSE PROFESSIONNELLE — modèle entraîné sur n=3418 matchs ===
+    Probabilités empiriques globales : HT/FT 1/2 = 3.42%   HT/FT 2/1 = 3.86%   Score 1-0 (away fav) = 5.52%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Everton  vs  Sunderland
+  Cotes : 1=1.95   X=3.49   2=3.82   (overround 6.1%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @1.95  (p_implicite vig-free = 24.7%)
+     Outsider : 2  @3.82  (p_implicite vig-free = 48.3%)
+     Probabilités vig-free : 1=48.3%  X=27.0%  2=24.7%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <2.1    Bucket cote away : <4.0
+     H2H paire (n=7) : 1=29%  X=57%  2=14%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 2/1           cote  37.0  p_book  2.7%  p_emp   6.2%  EV +128.0%
+     ✓ HT/FT 1/2           cote  64.8  p_book  1.5%  p_emp   3.4%  EV +122.1%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 2/1  @36.98
+         Niveau de value  : TRÈS FORTE  (EV +128%)
+         Niveau de risque : ÉLEVÉ  (proba 6.2%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 2.7% (cote 36.98).
+           L'empirique sur 3418 matchs donne 6.2%.
+           Edge réel : +3.46pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+         AUTRES OPPORTUNITÉS VALABLES :
+           • HT/FT 1/2          @64.84  EV +122%  (TRÈS FORTE)
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 2/1           mise 0.44u  gain potentiel +16.0u
+       HT/FT 1/2           mise 0.24u  gain potentiel +15.3u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  London Reds  vs  West Ham
+  Cotes : 1=1.29   X=5.86   2=8.83   (overround 5.9%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @1.29  (p_implicite vig-free = 10.7%)
+     Outsider : 2  @8.83  (p_implicite vig-free = 73.2%)
+     Probabilités vig-free : 1=73.2%  X=16.1%  2=10.7%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <1.3    Bucket cote away : 6+
+     H2H paire (n=10) : 1=60%  X=20%  2=20%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     • Home archi-favori (ratio 0.15)
+     • Cote X haute (5.86) → match unilatéral attendu
+     • Outsider à cote très haute (8.83) → potentiel upset
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 1/2           cote 100.0  p_book  1.0%  p_emp   1.9%  EV  +92.3%
+     ✗ HT/FT 2/1           cote  27.4  p_book  3.7%  p_emp   2.2%  EV  -38.6%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 1/2  @100.00
+         Niveau de value  : FORTE  (EV +92%)
+         Niveau de risque : TRÈS ÉLEVÉ  (proba 1.9%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 1.0% (cote 100.00).
+           L'empirique sur 3418 matchs donne 1.9%.
+           Edge réel : +0.92pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 1/2           mise 0.12u  gain potentiel +11.5u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Manchester Blue  vs  Brighton
+  Cotes : 1=1.36   X=5.80   2=6.66   (overround 5.8%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @1.36  (p_implicite vig-free = 14.2%)
+     Outsider : 2  @6.66  (p_implicite vig-free = 69.5%)
+     Probabilités vig-free : 1=69.5%  X=16.3%  2=14.2%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <1.5    Bucket cote away : 6+
+     H2H paire (n=10) : 1=80%  X=10%  2=10%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     • Home archi-favori (ratio 0.20)
+     • Cote X haute (5.80) → match unilatéral attendu
+     • Outsider à cote très haute (6.66) → potentiel upset
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 1/2           cote  68.5  p_book  1.5%  p_emp   2.4%  EV  +64.3%
+     ✗ HT/FT 2/1           cote  22.0  p_book  4.5%  p_emp   3.1%  EV  -31.4%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 1/2  @68.53
+         Niveau de value  : FORTE  (EV +64%)
+         Niveau de risque : TRÈS ÉLEVÉ  (proba 2.4%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 1.5% (cote 68.53).
+           L'empirique sur 3418 matchs donne 2.4%.
+           Edge réel : +0.94pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 1/2           mise 0.12u  gain potentiel +8.0u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Burnley  vs  Fulham
+  Cotes : 1=3.36   X=3.41   2=2.13   (overround 6.0%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 2  @2.13  (p_implicite vig-free = 27.7%)
+     Outsider : X  @3.41  (p_implicite vig-free = 44.3%)
+     Probabilités vig-free : 1=28.1%  X=27.7%  2=44.3%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <4.0    Bucket cote away : <2.5
+     H2H paire (n=5) : 1=20%  X=20%  2=60%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 2/1           cote  57.3  p_book  1.7%  p_emp   8.0%  EV +358.7%
+     ✓ HT-1 outsider       cote   4.4  p_book 22.9%  p_emp  24.3%  EV   +6.1%
+     ✗ HT/FT 1/2           cote  39.3  p_book  2.5%  p_emp   2.0%  EV  -21.3%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 2/1  @57.34
+         Niveau de value  : TRÈS FORTE  (EV +359%)
+         Niveau de risque : ÉLEVÉ  (proba 8.0%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 1.7% (cote 57.34).
+           L'empirique sur 3418 matchs donne 8.0%.
+           Edge réel : +6.26pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 2/1           mise 0.80u  gain potentiel +44.8u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Manchester Red  vs  Wolverhampton
+  Cotes : 1=1.48   X=4.46   2=6.23   (overround 6.0%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @1.48  (p_implicite vig-free = 15.1%)
+     Outsider : 2  @6.23  (p_implicite vig-free = 63.7%)
+     Probabilités vig-free : 1=63.7%  X=21.1%  2=15.1%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <1.5    Bucket cote away : 6+
+     H2H paire (n=10) : 1=50%  X=20%  2=30%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     • Home archi-favori (ratio 0.24)
+     • Outsider à cote très haute (6.23) → potentiel upset
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 1/2           cote  90.1  p_book  1.1%  p_emp   2.4%  EV +116.0%
+     ✗ HT/FT 2/1           cote  30.2  p_book  3.3%  p_emp   3.1%  EV   -5.8%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 1/2  @90.08
+         Niveau de value  : FORTE  (EV +116%)
+         Niveau de risque : TRÈS ÉLEVÉ  (proba 2.4%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 1.1% (cote 90.08).
+           L'empirique sur 3418 matchs donne 2.4%.
+           Edge réel : +1.29pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 1/2           mise 0.16u  gain potentiel +14.5u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  C. Palace  vs  Brentford
+  Cotes : 1=2.26   X=3.46   2=3.03   (overround 6.2%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @2.26  (p_implicite vig-free = 27.2%)
+     Outsider : X  @3.46  (p_implicite vig-free = 41.7%)
+     Probabilités vig-free : 1=41.7%  X=27.2%  2=31.1%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <2.5    Bucket cote away : <4.0
+     H2H paire (n=9) : 1=67%  X=22%  2=11%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 2/1           cote  40.6  p_book  2.5%  p_emp   7.0%  EV +184.6%
+     ✓ HT/FT 1/2           cote  49.6  p_book  2.0%  p_emp   3.8%  EV  +89.7%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 2/1  @40.62
+         Niveau de value  : TRÈS FORTE  (EV +185%)
+         Niveau de risque : ÉLEVÉ  (proba 7.0%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 2.5% (cote 40.62).
+           L'empirique sur 3418 matchs donne 7.0%.
+           Edge réel : +4.54pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+         AUTRES OPPORTUNITÉS VALABLES :
+           • HT/FT 1/2          @49.63  EV +90%  (FORTE)
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 2/1           mise 0.58u  gain potentiel +23.1u
+       HT/FT 1/2           mise 0.23u  gain potentiel +11.2u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Leeds  vs  Spurs
+  Cotes : 1=6.21   X=5.03   2=1.43   (overround 5.9%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 2  @1.43  (p_implicite vig-free = 15.2%)
+     Outsider : 1  @6.21  (p_implicite vig-free = 66.0%)
+     Probabilités vig-free : 1=15.2%  X=18.8%  2=66.0%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : 6+    Bucket cote away : <1.5
+     H2H paire (n=10) : 1=0%  X=20%  2=80%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     • Away archi-favori (ratio 4.34)
+     • Cote X haute (5.03) → match unilatéral attendu
+     • Outsider à cote très haute (6.21) → potentiel upset
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✗ HT/FT 1/2           cote  27.8  p_book  3.6%  p_emp   3.0%  EV  -17.5%
+     ✗ HT-1 outsider       cote   6.4  p_book 15.6%  p_emp  11.3%  EV  -27.7%
+     ✗ HT/FT 2/1           cote  71.4  p_book  1.4%  p_emp   1.0%  EV  -29.3%
+     ✗ Score 1-0 (upset)   cote  30.4  p_book  3.3%  p_emp   1.0%  EV  -71.0%
+
+5️⃣  DÉCISION FINALE
+     ❌  AUCUNE OPPORTUNITÉ INTÉRESSANTE.
+         Tous les marchés sont fair-pricés ou en perte attendue.
+         RECOMMANDATION : PASSER ce match.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  N. Forest  vs  Liverpool
+  Cotes : 1=2.93   X=3.67   2=2.24   (overround 6.0%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 2  @2.24  (p_implicite vig-free = 25.7%)
+     Outsider : X  @3.67  (p_implicite vig-free = 42.1%)
+     Probabilités vig-free : 1=32.2%  X=25.7%  2=42.1%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <3.0    Bucket cote away : <2.5
+     H2H paire (n=6) : 1=17%  X=0%  2=83%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 2/1           cote  45.4  p_book  2.2%  p_emp   4.3%  EV  +94.4%
+     ✓ HT/FT 1/2           cote  35.2  p_book  2.8%  p_emp   5.0%  EV  +76.1%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 2/1  @45.36
+         Niveau de value  : FORTE  (EV +94%)
+         Niveau de risque : TRÈS ÉLEVÉ  (proba 4.3%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 2.2% (cote 45.36).
+           L'empirique sur 3418 matchs donne 4.3%.
+           Edge réel : +2.08pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+         AUTRES OPPORTUNITÉS VALABLES :
+           • HT/FT 1/2          @35.22  EV +76%  (FORTE)
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 2/1           mise 0.27u  gain potentiel +11.8u
+       HT/FT 1/2           mise 0.28u  gain potentiel +9.5u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  London Blues  vs  Newcastle
+  Cotes : 1=1.94   X=3.89   2=3.47   (overround 6.1%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @1.94  (p_implicite vig-free = 24.2%)
+     Outsider : X  @3.89  (p_implicite vig-free = 48.6%)
+     Probabilités vig-free : 1=48.6%  X=24.2%  2=27.2%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <2.1    Bucket cote away : <4.0
+     H2H paire (n=9) : 1=67%  X=22%  2=11%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 2/1           cote  31.9  p_book  3.1%  p_emp   6.2%  EV  +96.9%
+     ✓ HT/FT 1/2           cote  47.3  p_book  2.1%  p_emp   3.4%  EV  +61.8%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 2/1  @31.94
+         Niveau de value  : FORTE  (EV +97%)
+         Niveau de risque : ÉLEVÉ  (proba 6.2%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 3.1% (cote 31.94).
+           L'empirique sur 3418 matchs donne 6.2%.
+           Edge réel : +3.03pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+         AUTRES OPPORTUNITÉS VALABLES :
+           • HT/FT 1/2          @47.26  EV +62%  (FORTE)
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 2/1           mise 0.39u  gain potentiel +12.1u
+       HT/FT 1/2           mise 0.17u  gain potentiel +7.7u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Bournemouth  vs  A. Villa
+  Cotes : 1=2.28   X=3.28   2=3.17   (overround 5.9%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 1  @2.28  (p_implicite vig-free = 28.8%)
+     Outsider : X  @3.28  (p_implicite vig-free = 41.4%)
+     Probabilités vig-free : 1=41.4%  X=28.8%  2=29.8%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <2.5    Bucket cote away : <4.0
+     H2H paire (n=11) : 1=45%  X=0%  2=55%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     ✓ HT/FT 2/1           cote  46.9  p_book  2.1%  p_emp   7.0%  EV +228.8%
+     ✓ HT/FT 1/2           cote  55.3  p_book  1.8%  p_emp   3.8%  EV +111.3%
+
+5️⃣  DÉCISION FINALE
+     ✅  PRONOSTIC : HT/FT 2/1  @46.93
+         Niveau de value  : TRÈS FORTE  (EV +229%)
+         Niveau de risque : ÉLEVÉ  (proba 7.0%)
+         Type de pari     : OPPORTUNISTE OUTSIDER (cote ≥ 10)
+
+         EXPLICATION :
+           Le bookmaker price ce marché à 2.1% (cote 46.93).
+           L'empirique sur 3418 matchs donne 7.0%.
+           Edge réel : +4.88pp en notre faveur.
+           Validé out-of-sample 5-fold (n=2524) : portefeuille V6 ROI +57%.
+
+         AUTRES OPPORTUNITÉS VALABLES :
+           • HT/FT 1/2          @55.30  EV +111%  (FORTE)
+
+     PLAN DE MISE (Kelly 1/8, bankroll 100u) :
+       HT/FT 2/1           mise 0.62u  gain potentiel +28.6u
+       HT/FT 1/2           mise 0.26u  gain potentiel +13.9u
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,75 @@
+=== BACKTEST V6 — n=3400 ===
+
+  Fold1 HT/FT 1/2 ALL  n= 680  acc= 2.50%  ROI= +27.20%
+  Fold1 HT/FT 2/1 ALL  n= 680  acc= 3.97%  ROI= +56.79%
+  Fold1 1/2 EV>0.0     n= 257  acc= 1.56%  ROI= +12.97%
+  Fold1 2/1 EV>0.0     n= 599  acc= 4.17%  ROI= +69.68%
+  Fold1 1/2 EV>0.2     n= 230  acc= 1.74%  ROI= +26.23%
+  Fold1 2/1 EV>0.2     n= 529  acc= 4.16%  ROI= +72.05%
+  Fold1 1/2 EV>0.5     n= 184  acc= 1.63%  ROI= +35.12%
+  Fold1 2/1 EV>0.5     n= 472  acc= 4.24%  ROI= +74.33%
+  Fold1 1/2 EV>1.0     n=  43  acc= 0.00%  ROI=-100.00%
+  Fold1 2/1 EV>1.0     n= 423  acc= 4.49%  ROI= +86.11%
+
+  Fold2 HT/FT 1/2 ALL  n= 680  acc= 3.68%  ROI= +95.06%
+  Fold2 HT/FT 2/1 ALL  n= 680  acc= 3.97%  ROI= +37.57%
+  Fold2 1/2 EV>0.0     n= 328  acc= 2.44%  ROI= +38.94%
+  Fold2 2/1 EV>0.0     n= 558  acc= 4.30%  ROI= +51.88%
+  Fold2 1/2 EV>0.2     n= 208  acc= 2.40%  ROI= +56.51%
+  Fold2 2/1 EV>0.2     n= 537  acc= 4.47%  ROI= +57.82%
+  Fold2 1/2 EV>0.5     n= 125  acc= 3.20%  ROI= +81.20%
+  Fold2 2/1 EV>0.5     n= 437  acc= 4.81%  ROI= +74.09%
+  Fold2 1/2 EV>1.0     n=  62  acc= 1.61%  ROI= +14.13%
+  Fold2 2/1 EV>1.0     n= 320  acc= 5.94%  ROI=+115.24%
+
+  Fold3 HT/FT 1/2 ALL  n= 680  acc= 2.50%  ROI= +24.87%
+  Fold3 HT/FT 2/1 ALL  n= 680  acc= 3.09%  ROI= +10.54%
+  Fold3 1/2 EV>0.0     n= 579  acc= 2.94%  ROI= +46.65%
+  Fold3 2/1 EV>0.0     n= 529  acc= 3.40%  ROI= +10.37%
+  Fold3 1/2 EV>0.2     n= 472  acc= 1.91%  ROI= +10.33%
+  Fold3 2/1 EV>0.2     n= 443  acc= 3.39%  ROI= +12.65%
+  Fold3 1/2 EV>0.5     n= 241  acc= 1.24%  ROI= -17.18%
+  Fold3 2/1 EV>0.5     n= 349  acc= 4.01%  ROI= +36.38%
+  Fold3 1/2 EV>1.0     n=  36  acc= 2.78%  ROI=  +8.56%
+  Fold3 2/1 EV>1.0     n= 213  acc= 4.23%  ROI= +53.32%
+
+  Fold4 HT/FT 1/2 ALL  n= 680  acc= 6.47%  ROI=+264.03%
+  Fold4 HT/FT 2/1 ALL  n= 680  acc= 2.94%  ROI=  +9.07%
+  Fold4 1/2 EV>0.0     n= 513  acc= 6.63%  ROI=+303.64%
+  Fold4 2/1 EV>0.0     n= 501  acc= 2.79%  ROI=  -7.24%
+  Fold4 1/2 EV>0.2     n= 348  acc= 6.90%  ROI=+294.41%
+  Fold4 2/1 EV>0.2     n= 410  acc= 3.17%  ROI=  +5.75%
+  Fold4 1/2 EV>0.5     n= 192  acc= 5.21%  ROI=+144.45%
+  Fold4 2/1 EV>0.5     n= 301  acc= 3.65%  ROI= +19.21%
+  Fold4 1/2 EV>1.0     n=  64  acc= 3.12%  ROI= +38.00%
+  Fold4 2/1 EV>1.0     n= 171  acc= 2.34%  ROI=  -9.70%
+
+=== AGRÉGAT 5-FOLD (out-of-sample total) ===
+
+HT/FT 1/2 ALL : n=2720  acc=3.79%  ROI=+102.79%
+  EV > 0.0 : n=1677  acc= 3.76%  ROI=+118.60%  cote_med=57
+  EV > 0.2 : n=1258  acc= 3.34%  ROI= +99.46%  cote_med=55
+  EV > 0.5 : n= 742  acc= 2.70%  ROI= +54.19%  cote_med=59
+  EV > 1.0 : n= 205  acc= 1.95%  ROI=  -3.34%  cote_med=47
+  EV > 1.5 : n=  66  acc= 3.03%  ROI= +33.82%  cote_med=52
+
+HT/FT 2/1 ALL : n=2720  acc=3.49%  ROI=+28.49%
+  EV > 0.0 : n=2187  acc= 3.70%  ROI= +33.17%  cote_med=35
+  EV > 0.2 : n=1919  acc= 3.86%  ROI= +40.19%  cote_med=36
+  EV > 0.5 : n=1559  acc= 4.23%  ROI= +55.12%  cote_med=36
+  EV > 1.0 : n=1127  acc= 4.53%  ROI= +73.65%  cote_med=37
+  EV > 1.5 : n= 705  acc= 3.83%  ROI= +67.67%  cote_med=40
+  EV > 2.0 : n= 431  acc= 3.94%  ROI= +87.15%  cote_med=45
+
+=== STRATÉGIE PRATIQUE : top-K paris HT/FT par match (1 ou 2 paris/match max) ===
+Best-of HT/FT per match : n=2720  acc=3.93%  ROI=+78.87%
+  EV > 0.0 : n=2594  acc= 3.93%  ROI= +75.90%  cote_med=40
+  EV > 0.2 : n=2434  acc= 3.78%  ROI= +64.78%  cote_med=39
+  EV > 0.5 : n=1995  acc= 3.81%  ROI= +55.41%  cote_med=39
+  EV > 0.8 : n=1453  acc= 3.92%  ROI= +60.92%  cote_med=38
+  EV > 1.0 : n=1198  acc= 4.34%  ROI= +67.66%  cote_med=38
+  EV > 1.5 : n= 724  acc= 3.87%  ROI= +70.38%  cote_med=41
+  EV > 2.0 : n= 442  acc= 3.85%  ROI= +82.49%  cote_med=45
+
+=== TEST UTILE : si on paris 1/2 ET 2/1 sur chaque match ===
+Paire 1/2 + 2/1 par match : n=2720  acc_any=7.28%  ROI(sur 2u misés)=+65.64%

@@ -1,0 +1,49 @@
+=== V5 n=3057 | HT samples=2523 | ht_lambda_ratio=0.439 ===
+
+=== TABLEAU COMPLET — toutes predictions par match ===
+
+** FT + Score + Categories **
+                      match           cotes pick_FT p_FT%   edge score  tier CAT
+   N. Forest vs London Reds  5.37/3.72/1.65       2    52 -14.1%   1-1 -0.41   —
+        Fulham vs Liverpool  3.18/4.06/2.00       2    43 -14.1%   1-1 -0.18   B
+    Everton vs London Blues  2.57/3.28/2.73       2    41 +12.1%   1-1 -0.40   —
+   Leeds vs Manchester Blue 14.49/6.51/1.19       2    80  -5.1%   0-2 -0.72   A
+    West Ham vs Bournemouth  2.09/3.96/3.05       1    57 +18.3%   1-1 +0.04   —
+     Wolverhampton vs Spurs  2.58/3.89/2.41       2    49 +17.0%   1-1 -0.46   —
+     Sunderland vs Brighton  7.52/5.37/1.35       2    74  +0.1%   0-2 -0.79   A
+      A. Villa vs Newcastle  1.88/4.15/3.49       1    47 -12.1%   1-1 -0.14   —
+C. Palace vs Manchester Red  2.02/3.53/3.54       1    45  -8.9%   1-1 -0.02   —
+       Burnley vs Brentford  3.57/3.38/2.07       2    41 -16.0%   1-1 -0.32   —
+
+** HT + HT/FT + FTTS **
+                      match pick_HT p_HT(1/X/2)    HT/FT FTTS%h/a   H2H_FT  H2H_HT
+   N. Forest vs London Reds       X    20/42/38 2/2(25%)    35/58 n10 X20% n6 X33%
+        Fulham vs Liverpool       X    28/38/34 1/1(23%)    44/52  n8 X50% n4 X25%
+    Everton vs London Blues       X    24/45/31 2/2(20%)    41/50  n6 X17% n8 X75%
+   Leeds vs Manchester Blue       2     9/33/59 2/2(39%)    18/78  n6 X17% n6 X33%
+    West Ham vs Bournemouth       1    42/38/19 1/1(35%)    61/34  n8 X25% n7 X57%
+     Wolverhampton vs Spurs       X    23/40/37 2/2(25%)    39/55  n6 X17% n6 X50%
+     Sunderland vs Brighton       2    11/34/55 2/2(36%)    22/73 n11 X18% n7 X57%
+      A. Villa vs Newcastle       X    36/38/25 1/1(30%)    54/41        — n8 X38%
+C. Palace vs Manchester Red       X    34/42/24 1/1(28%)    53/40  n8 X12% n7 X57%
+       Burnley vs Brentford       X    25/45/31 1/1(21%)    42/49  n8 X12% n7 X71%
+
+===========================================================================
+RECOMMENDATIONS PAR CATEGORIE
+===========================================================================
+
+--- C1: MEGA HT-X (V5 p>=40% + cote[1.5;1.9] + tier<0.3)  [ROI +30%] ---
+  Aucun match.
+
+--- C2: H2H HT-X (H2H n>=5, X>=40%, cote[1.5;2.5])  [ROI +19%] ---
+  Aucun match.
+
+--- C3: Balanced HT-X (cote[1.5;2.0] + |tier|<0.15)  [ROI +19%] ---
+  Aucun match.
+
+--- A: Ultra Safe FT (p>=70%)  [ROI +5%] ---
+  Leeds vs Manchester Blue            | pari FT 2 @ 1.19 | p=80%
+  Sunderland vs Brighton              | pari FT 2 @ 1.35 | p=74%
+
+--- B: H2H FT X-Value (n>=5, X>=30%)  [ROI +7%] ---
+  Fulham vs Liverpool                 | pari FT X @ 4.06 | H2H_FT=n8 X50%

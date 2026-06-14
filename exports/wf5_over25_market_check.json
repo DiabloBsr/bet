@@ -1,0 +1,43 @@
+{
+ "n_events": 851,
+ "n_open_snapshots": 262,
+ "market_names_open": {
+  "Mi-tps 1X2": 262,
+  "Double Chance": 262,
+  "Mi-tps DC": 262,
+  "Score exact": 262,
+  "Mi-tps CS": 262,
+  "+/-": 262,
+  "HT/FT": 262,
+  "Total de buts": 262,
+  "G/NG": 262,
+  "Les deux équipes marquent / 1ère mi temps": 262,
+  "1X2 & Total": 262,
+  "1X2 & G/NG": 262,
+  "Total equipe domicile": 262,
+  "Total equipe extérieur": 262,
+  "G/NG equipe domicile": 262,
+  "G/NG equipe extérieur": 262,
+  "Pair/Impair": 262,
+  "Minute du premier but": 262,
+  "FTTS": 262,
+  "Multi-Buts": 262
+ },
+ "totals_keys_open": {
+  "> 3.5": 262,
+  "< 3.5": 262
+ },
+ "events_with_25_anywhere_in_opening": 177,
+ "events_with_25_in_any_snapshot": 181,
+ "snapshots_per_event_minmax": [
+  1,
+  49
+ ],
+ "sample_opening_totals": {
+  "event": 213,
+  "+/-": {
+   "> 3.5": 2.76,
+   "< 3.5": 1.43
+  }
+ }
+}

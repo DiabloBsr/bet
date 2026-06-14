@@ -1,0 +1,161 @@
+Loading models (n_train=3615)...
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  PRÉDICTION COMPLÈTE — Round 15:47 Mada — 9 matchs
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 PRÉDICTIONS COMPLÈTES — Tous les matchs
+
+━━━ MATCH 1  A. Villa vs Fulham
+     Cotes 1X2     : 1.64/4.27/4.64
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (42%)
+     Score HT      : 1-0
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (56%)
+     Score modal   : 2-1
+     Top 3 scores  : 2-1(11%) · 1-1(11%) · 2-0(8%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.09
+     P(plus 2.5)   : 60%   P(BTTS) : 58%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (33%)
+     ── VALUE V8 ───────────────────────
+     ✅ 1@1.64 EV+6%
+
+━━━ MATCH 2  Leeds vs Manchester Red
+     Cotes 1X2     : 5.04/3.94/1.65
+     ── HT ─────────────────────────────
+     Pick HT       : 2  (46%)
+     Score HT      : 0-1
+     ── FT ─────────────────────────────
+     Pick FT       : 2  (58%)
+     Score modal   : 1-1
+     Top 3 scores  : 1-1(11%) · 0-2(10%) · 0-1(10%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 2.94
+     P(plus 2.5)   : 56%   P(BTTS) : 52%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 2/2  (29%)
+
+━━━ MATCH 3  Brentford vs Newcastle
+     Cotes 1X2     : 2.34/4.14/2.56
+     ── HT ─────────────────────────────
+     Pick HT       : X  (37%)
+     Score HT      : 1-1
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (41%)
+     Score modal   : 1-1
+     Top 3 scores  : 1-1(11%) · 2-1(11%) · 1-2(9%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.34
+     P(plus 2.5)   : 65%   P(BTTS) : 66%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (27%)
+
+━━━ MATCH 4  Liverpool vs N. Forest
+     Cotes 1X2     : 1.19/7.05/13.16
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (61%)
+     Score HT      : 1-0
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (77%)
+     Score modal   : 3-0
+     Top 3 scores  : 3-0(13%) · 2-0(12%) · 4-0(9%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.21
+     P(plus 2.5)   : 62%   P(BTTS) : 39%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (48%)
+     ── VALUE V8 ───────────────────────
+     ✅ HT/FT 1/2@100 EV+113%
+
+━━━ MATCH 5  West Ham vs Burnley
+     Cotes 1X2     : 1.69/4.31/4.25
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (41%)
+     Score HT      : 1-1
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (54%)
+     Score modal   : 2-1
+     Top 3 scores  : 2-1(11%) · 1-1(11%) · 2-0(8%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.11
+     P(plus 2.5)   : 60%   P(BTTS) : 59%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (32%)
+     ── VALUE V8 ───────────────────────
+     ✅ 1@1.69 EV+9%
+     ✅ HT/FT 2/1@30 EV+52%
+
+━━━ MATCH 6  Manchester Blue vs Everton
+     Cotes 1X2     : 1.22/6.18/12.32
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (57%)
+     Score HT      : 1-0
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (74%)
+     Score modal   : 3-0
+     Top 3 scores  : 3-0(13%) · 2-0(13%) · 4-0(9%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 2.96
+     P(plus 2.5)   : 57%   P(BTTS) : 39%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (45%)
+     ── VALUE V8 ───────────────────────
+     ✅ X@6.18 EV+12%
+     ✅ HT/FT 1/2@100 EV+113%
+
+━━━ MATCH 7  Brighton vs Spurs
+     Cotes 1X2     : 1.94/4.19/3.28
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (42%)
+     Score HT      : 1-1
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (50%)
+     Score modal   : 2-1
+     Top 3 scores  : 2-1(10%) · 1-1(10%) · 1-2(7%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.28
+     P(plus 2.5)   : 64%   P(BTTS) : 62%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (33%)
+     ── VALUE V8 ───────────────────────
+     ✅ HT/FT 2/1@27 EV+62%
+
+━━━ MATCH 8  London Reds vs London Blues
+     Cotes 1X2     : 1.43/4.97/6.23
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (48%)
+     Score HT      : 1-0
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (63%)
+     Score modal   : 2-1
+     Top 3 scores  : 2-1(11%) · 2-0(9%) · 3-0(9%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.22
+     P(plus 2.5)   : 62%   P(BTTS) : 56%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (37%)
+     ── VALUE V8 ───────────────────────
+     ✅ 2@6.23 EV+6%
+     ✅ HT/FT 1/2@75 EV+72%
+
+━━━ MATCH 9  C. Palace vs Wolverhampton
+     Cotes 1X2     : 1.71/4.00/4.42
+     ── HT ─────────────────────────────
+     Pick HT       : 1  (43%)
+     Score HT      : 1-0
+     ── FT ─────────────────────────────
+     Pick FT       : 1  (55%)
+     Score modal   : 1-1
+     Top 3 scores  : 1-1(11%) · 2-1(11%) · 2-0(9%)
+     ── BUTS ───────────────────────────
+     Buts attendus : 3.02
+     P(plus 2.5)   : 58%   P(BTTS) : 56%
+     ── HT/FT ──────────────────────────
+     HT/FT pick    : 1/1  (34%)
+     ── VALUE V8 ───────────────────────
+     ✅ 1@1.71 EV+10%
+     ✅ HT/FT 2/1@30 EV+54%
+

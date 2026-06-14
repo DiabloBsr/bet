@@ -1,0 +1,18 @@
+﻿Tabs found: 10
+  Clicking tab #1: 02:34
+  Clicking tab #2: 03:27
+  CAPTURED (333427 bytes): https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/2?eventCategoryId=149496&getNext=false
+    top keys: ['round']
+  Clicking tab #3: 03:29
+  CAPTURED (333467 bytes): https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/3?eventCategoryId=149496&getNext=false
+    top keys: ['round']
+  Clicking tab #4: 03:31
+  CAPTURED (333473 bytes): https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/4?eventCategoryId=149496&getNext=false
+    top keys: ['round']
+  Clicking tab #5: 03:33
+  CAPTURED (333484 bytes): https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/5?eventCategoryId=149496&getNext=false
+    top keys: ['round']
+
+Total captured payloads: 4
+Saved payload_round_future.json from https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/2?eventCategoryId=149496&getNext=false
+Top keys: ['round']

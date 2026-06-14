@@ -1,0 +1,191 @@
+{
+ "sections": {
+  "buckets_champ6": [
+   {
+    "label": "champ6 [1.0,1.05)",
+    "n": 2,
+    "wins": 2,
+    "wr": 1.0,
+    "impl_wr": 0.9042,
+    "be_wr": 0.9615,
+    "roi_pct": 4.0,
+    "p_vs_impl": 0.8175,
+    "p_vs_be": 0.9246
+   },
+   {
+    "label": "champ6 [1.05,1.1)",
+    "n": 32,
+    "wins": 31,
+    "wr": 0.9688,
+    "impl_wr": 0.8776,
+    "be_wr": 0.9307,
+    "roi_pct": 4.06,
+    "p_vs_impl": 0.0838,
+    "p_vs_be": 0.3396
+   },
+   {
+    "label": "champ6 [1.1,1.15)",
+    "n": 169,
+    "wins": 140,
+    "wr": 0.8284,
+    "impl_wr": 0.8382,
+    "be_wr": 0.8887,
+    "roi_pct": -6.73,
+    "p_vs_impl": 0.6803,
+    "p_vs_be": 0.9932
+   },
+   {
+    "label": "champ6 [1.15,1.2)",
+    "n": 400,
+    "wins": 340,
+    "wr": 0.85,
+    "impl_wr": 0.8046,
+    "be_wr": 0.8529,
+    "roi_pct": -0.38,
+    "p_vs_impl": 0.0112,
+    "p_vs_be": 0.5992
+   },
+   {
+    "label": "champ6 [1.2,1.25)",
+    "n": 335,
+    "wins": 251,
+    "wr": 0.7493,
+    "impl_wr": 0.7724,
+    "be_wr": 0.8186,
+    "roi_pct": -8.5,
+    "p_vs_impl": 0.8586,
+    "p_vs_be": 0.9994
+   },
+   {
+    "label": "champ6 [1.25,1.3)",
+    "n": 417,
+    "wins": 320,
+    "wr": 0.7674,
+    "impl_wr": 0.7418,
+    "be_wr": 0.7863,
+    "roi_pct": -2.42,
+    "p_vs_impl": 0.1274,
+    "p_vs_be": 0.8413
+   },
+   {
+    "label": "champ6 [1.3,1.4)",
+    "n": 1087,
+    "wins": 787,
+    "wr": 0.724,
+    "impl_wr": 0.7016,
+    "be_wr": 0.7437,
+    "roi_pct": -2.63,
+    "p_vs_impl": 0.0561,
+    "p_vs_be": 0.9351
+   },
+   {
+    "label": "champ6 [1.4,1.6)",
+    "n": 2318,
+    "wins": 1466,
+    "wr": 0.6324,
+    "impl_wr": 0.6327,
+    "be_wr": 0.6707,
+    "roi_pct": -5.69,
+    "p_vs_impl": 0.5204,
+    "p_vs_be": 1.0
+   }
+  ],
+  "walkforward_test": [
+   {
+    "label": "WF-TEST 8035 cut=2026-06-11 14:20",
+    "n": 72,
+    "wins": 59,
+    "wr": 0.8194,
+    "impl_wr": 0.8036,
+    "be_wr": 0.8522,
+    "roi_pct": -3.82,
+    "p_vs_impl": 0.4364,
+    "p_vs_be": 0.8301
+   },
+   {
+    "label": "WF-TEST POOLED-6-CHAMP cut=2026-06-12 12:15",
+    "n": 109,
+    "wins": 87,
+    "wr": 0.7982,
+    "impl_wr": 0.8048,
+    "be_wr": 0.8531,
+    "roi_pct": -6.54,
+    "p_vs_impl": 0.6244,
+    "p_vs_be": 0.9555
+   },
+   {
+    "label": "WF-TEST 5-NEWCHAMP cut=2026-06-12 15:13",
+    "n": 45,
+    "wins": 33,
+    "wr": 0.7333,
+    "impl_wr": 0.8045,
+    "be_wr": 0.8527,
+    "roi_pct": -14.16,
+    "p_vs_impl": 0.9137,
+    "p_vs_be": 0.9891
+   }
+  ],
+  "increment": [
+   {
+    "label": "first354 (≈ sample du finding)",
+    "n": 354,
+    "wins": 305,
+    "wr": 0.8616,
+    "impl_wr": 0.8047,
+    "be_wr": 0.8531,
+    "roi_pct": 0.97,
+    "p_vs_impl": 0.0032,
+    "p_vs_be": 0.3587
+   },
+   {
+    "label": "INCREMENT post-finding (n=46)",
+    "n": 46,
+    "wins": 35,
+    "wr": 0.7609,
+    "impl_wr": 0.8038,
+    "be_wr": 0.8518,
+    "roi_pct": -10.78,
+    "p_vs_impl": 0.8227,
+    "p_vs_be": 0.9674
+   }
+  ],
+  "increment_newchamp": [
+   {
+    "label": "newchamp first110 (≈ replication du finding)",
+    "n": 110,
+    "wins": 96,
+    "wr": 0.8727,
+    "impl_wr": 0.8054,
+    "be_wr": 0.8535,
+    "roi_pct": 2.18,
+    "p_vs_impl": 0.043,
+    "p_vs_be": 0.341
+   },
+   {
+    "label": "newchamp INCREMENT (n=33)",
+    "n": 33,
+    "wins": 23,
+    "wr": 0.697,
+    "impl_wr": 0.804,
+    "be_wr": 0.852,
+    "roi_pct": -18.3,
+    "p_vs_impl": 0.9553,
+    "p_vs_be": 0.9939
+   }
+  ],
+  "bootstrap": {
+   "n": 400,
+   "ci95": [
+    -4.54,
+    3.55
+   ],
+   "p_roi_pos": 0.4261
+  },
+  "multiple_testing": {
+   "claim_p": 0.0032,
+   "n_tests_scanned": 505,
+   "bonferroni": 1.0,
+   "note": "p ajuste = 1.0 -> claim non significatif apres correction"
+  }
+ }
+}

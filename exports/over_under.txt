@@ -1,0 +1,150 @@
+Modèle V5 (n_train=3176)
+
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:14 — UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                  Buts   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   SIGNAL
+  -------------------------------------------------------------------------------------------------------------------
+  Leeds vs West Ham                      3.10   82   % 60   % 38   % 40   % 62   % 61   % 
+  Bournemouth vs Brentford               2.54   72   % 47   % 25   % 53   % 75   % 52   % 💎 BTTS OUI 80%
+  London Reds vs Wolverhampton           3.35   85   % 65   % 43   % 35   % 57   % 50   % 
+  Manchester Blue vs Burnley             3.83   89   % 74   % 53   % 26   % 47   % 52   % 
+  Manchester Red vs Brighton             3.12   82   % 60   % 38   % 40   % 62   % 62   % 
+  Everton vs A. Villa                    2.56   73   % 47   % 26   % 53   % 74   % 52   % 
+  N. Forest vs C. Palace                 2.41   69   % 43   % 22   % 57   % 78   % 49   % 💎 BTTS NON 83%
+  Liverpool vs Sunderland                3.51   87   % 68   % 47   % 32   % 53   % 41   % 
+  Spurs vs Fulham                        3.05   81   % 59   % 36   % 41   % 64   % 59   % 
+  Newcastle vs London Blues              3.15   82   % 61   % 39   % 39   % 61   % 55   % 💎 BTTS NON 78%
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:16 — UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                  Buts   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   SIGNAL
+  -------------------------------------------------------------------------------------------------------------------
+  C. Palace vs London Reds               2.86   78   % 54   % 32   % 46   % 68   % 57   % 
+  London Blues vs Brentford              2.64   74   % 49   % 27   % 51   % 73   % 53   % 
+  Fulham vs N. Forest                    3.01   80   % 58   % 36   % 42   % 64   % 56   % 
+  Wolverhampton vs Newcastle             3.03   81   % 58   % 36   % 42   % 64   % 59   % 
+  Brighton vs Liverpool                  3.15   82   % 61   % 39   % 39   % 61   % 63   % 
+  Sunderland vs Everton                  2.29   67   % 40   % 20   % 60   % 80   % 43   % 
+  West Ham vs Manchester Blue            2.52   72   % 46   % 25   % 54   % 75   % 47   % 
+  Leeds vs Spurs                         3.66   88   % 71   % 50   % 29   % 50   % 59   % 💎 BTTS OUI 80%
+  A. Villa vs Bournemouth                3.32   84   % 64   % 42   % 36   % 58   % 56   % 
+  Burnley vs Manchester Red              2.61   74   % 49   % 27   % 51   % 73   % 52   % 
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:18 — UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                  Buts   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   SIGNAL
+  -------------------------------------------------------------------------------------------------------------------
+  Newcastle vs C. Palace                 2.85   78   % 54   % 32   % 46   % 68   % 49   % 
+  Manchester Blue vs Spurs               3.40   85   % 66   % 44   % 34   % 56   % 58   % 
+  Everton vs Brighton                    2.79   77   % 53   % 31   % 47   % 69   % 56   % 
+  Liverpool vs Burnley                   3.50   86   % 68   % 46   % 32   % 54   % 45   % 
+  London Reds vs Fulham                  3.15   82   % 61   % 39   % 39   % 61   % 54   % 
+  Bournemouth vs London Blues            2.69   75   % 50   % 28   % 50   % 72   % 55   % 
+  Manchester Red vs West Ham             3.12   82   % 60   % 38   % 40   % 62   % 56   % 
+  A. Villa vs Sunderland                 3.50   86   % 68   % 46   % 32   % 54   % 58   % 
+  N. Forest vs Leeds                     2.47   71   % 45   % 24   % 55   % 76   % 39   % 
+  Brentford vs Wolverhampton             2.99   80   % 58   % 35   % 42   % 65   % 54   % 
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:20 — UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                  Buts   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   SIGNAL
+  -------------------------------------------------------------------------------------------------------------------
+  Manchester Blue vs N. Forest           3.41   85   % 66   % 44   % 34   % 56   % 44   % 
+  West Ham vs Liverpool                  2.95   79   % 57   % 34   % 43   % 66   % 59   % 
+  Spurs vs Manchester Red                3.02   80   % 58   % 36   % 42   % 64   % 59   % 
+  C. Palace vs Brentford                 2.79   77   % 53   % 31   % 47   % 69   % 55   % 
+  Fulham vs Newcastle                    3.29   84   % 64   % 42   % 36   % 58   % 65   % 
+  Sunderland vs Bournemouth              2.64   74   % 49   % 27   % 51   % 73   % 51   % 
+  Brighton vs A. Villa                   3.02   80   % 58   % 36   % 42   % 64   % 56   % 
+  Leeds vs London Reds                   3.72   89   % 72   % 51   % 28   % 49   % 49   % 
+  Wolverhampton vs London Blues          2.85   78   % 54   % 32   % 46   % 68   % 57   % 
+  Burnley vs Everton                     2.28   66   % 40   % 20   % 60   % 80   % 46   % 
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:22 — UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                  Buts   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   SIGNAL
+  -------------------------------------------------------------------------------------------------------------------
+  Newcastle vs Leeds                     3.27   84   % 63   % 41   % 37   % 59   % 36   % 
+  Everton vs West Ham                    2.66   74   % 50   % 28   % 50   % 72   % 53   % 💎💎 UNDER GOLD 82% (n=11)
+  A. Villa vs Burnley                    3.56   87   % 69   % 48   % 31   % 52   % 62   % 
+  Liverpool vs Spurs                     3.08   81   % 59   % 37   % 41   % 63   % 52   % 
+  Brentford vs Fulham                    2.91   79   % 56   % 33   % 44   % 67   % 57   % 
+  London Blues vs C. Palace              2.53   72   % 46   % 25   % 54   % 75   % 49   % 
+  Sunderland vs Brighton                 3.15   82   % 61   % 39   % 39   % 61   % 52   % 
+  Manchester Red vs N. Forest            2.81   77   % 53   % 31   % 47   % 69   % 51   % 💎 BTTS OUI 83%
+  Bournemouth vs Wolverhampton           2.62   74   % 49   % 27   % 51   % 73   % 50   % 
+  London Reds vs Manchester Blue         2.60   73   % 48   % 26   % 52   % 74   % 53   % 
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:24 — UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                  Buts   O1.5   O2.5   O3.5   U2.5   U3.5   BTTS   SIGNAL
+  -------------------------------------------------------------------------------------------------------------------
+  Leeds vs Brentford                     3.12   82   % 60   % 38   % 40   % 62   % 54   % 
+  Brighton vs Bournemouth                3.16   82   % 61   % 39   % 39   % 61   % 53   % 💎 BTTS NON 88%
+  West Ham vs A. Villa                   2.73   76   % 51   % 29   % 49   % 71   % 55   % 
+  Manchester Red vs London Reds          2.87   78   % 55   % 32   % 45   % 68   % 56   % ⚠️ OG hist 92% mais buts 2.9<3.5
+  C. Palace vs Wolverhampton             2.96   80   % 57   % 34   % 43   % 66   % 53   % 
+  Spurs vs Everton                       2.78   77   % 53   % 30   % 47   % 70   % 50   % 
+  N. Forest vs Liverpool                 2.86   78   % 54   % 32   % 46   % 68   % 58   % 
+  Manchester Blue vs Newcastle           3.25   84   % 63   % 41   % 37   % 59   % 57   % 💎 BTTS OUI 89%
+  Fulham vs London Blues                 3.17   82   % 61   % 39   % 39   % 61   % 63   % 
+  Burnley vs Sunderland                  2.76   76   % 52   % 30   % 48   % 70   % 56   % 
+
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  🎯 TOP PICKS UNDER / OVER
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  🔥 OVER 2.5 — Buts attendus ≥3.5 + GOLD (priorité MAX) :
+     19:14  Manchester Blue vs Burnley              Buts 3.83  O2.5 74%
+     19:20  Leeds vs London Reds                    Buts 3.72  O2.5 72%
+     19:16  Leeds vs Spurs                          Buts 3.66  O2.5 71%
+     19:22  A. Villa vs Burnley                     Buts 3.56  O2.5 69%
+     19:14  Liverpool vs Sunderland                 Buts 3.51  O2.5 68%
+     19:18  Liverpool vs Burnley                    Buts 3.50  O2.5 68%
+
+  🛡️  UNDER 2.5 — Buts ≤2.5 + GOLD (priorité MAX) :
+     19:20  Burnley vs Everton                      Buts 2.28  U2.5 60%
+
+  🛡️  UNDER 3.5 — Très défensif (≥70%) :
+     19:20  Burnley vs Everton                      Buts 2.28  U3.5 80%
+     19:16  Sunderland vs Everton                   Buts 2.29  U3.5 80%
+     19:14  N. Forest vs C. Palace                  Buts 2.41  U3.5 78%
+     19:18  N. Forest vs Leeds                      Buts 2.47  U3.5 76%
+     19:16  West Ham vs Manchester Blue             Buts 2.52  U3.5 75%
+     19:22  London Blues vs C. Palace               Buts 2.53  U3.5 75%
+     19:14  Bournemouth vs Brentford                Buts 2.54  U3.5 75%
+     19:14  Everton vs A. Villa                     Buts 2.56  U3.5 74%
+     19:22  London Reds vs Manchester Blue          Buts 2.60  U3.5 74%
+     19:16  Burnley vs Manchester Red               Buts 2.61  U3.5 73%
+
+  🔥 OVER 3.5 — High scoring (≥45%) :
+     19:14  Manchester Blue vs Burnley              Buts 3.83  O3.5 53%
+     19:20  Leeds vs London Reds                    Buts 3.72  O3.5 51%
+     19:16  Leeds vs Spurs                          Buts 3.66  O3.5 50%
+     19:22  A. Villa vs Burnley                     Buts 3.56  O3.5 48%
+     19:14  Liverpool vs Sunderland                 Buts 3.51  O3.5 47%
+     19:18  Liverpool vs Burnley                    Buts 3.50  O3.5 46%
+     19:18  A. Villa vs Sunderland                  Buts 3.50  O3.5 46%
+
+  💎 BTTS OUI — Probable ≥60% :
+     19:20  Fulham vs Newcastle                     BTTS 65%
+     19:24  Fulham vs London Blues                  BTTS 63%
+     19:16  Brighton vs Liverpool                   BTTS 63%
+     19:22  A. Villa vs Burnley                     BTTS 62%
+     19:14  Manchester Red vs Brighton              BTTS 62%
+     19:14  Leeds vs West Ham                       BTTS 61%
+
+  🛡️  BTTS NON — Pas de buts pour les 2 (≤45%) :
+     19:22  Newcastle vs Leeds                      BTTS 36%
+     19:18  N. Forest vs Leeds                      BTTS 39%
+     19:14  Liverpool vs Sunderland                 BTTS 41%
+     19:16  Sunderland vs Everton                   BTTS 43%
+     19:20  Manchester Blue vs N. Forest            BTTS 44%

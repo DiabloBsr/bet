@@ -1,0 +1,67 @@
+{
+ "funnel": {
+  "finished_today": 5560,
+  "with_snapshot": 1790,
+  "corrupted_today": 0
+ },
+ "open_snapshot_timing": {
+  "n": 1790,
+  "post_kickoff_count": 1440,
+  "min_s": -183.126064,
+  "p50_s": 39.414167,
+  "max_s": 631.258989
+ },
+ "spot_E1": [
+  {
+   "eid": 22712,
+   "match": "Brentford v Leeds",
+   "oh": 1.37,
+   "ftts1": 1.41,
+   "score": "0-0",
+   "first_goal": "None",
+   "e1_win": false
+  },
+  {
+   "eid": 22713,
+   "match": "London Reds v Brighton",
+   "oh": 1.41,
+   "ftts1": 1.46,
+   "score": "2-1",
+   "first_goal": "Away",
+   "e1_win": false
+  },
+  {
+   "eid": 22720,
+   "match": "Liverpool v Sunderland",
+   "oh": 1.19,
+   "ftts1": 1.28,
+   "score": "4-1",
+   "first_goal": "Home",
+   "e1_win": true
+  }
+ ],
+ "hist_TIER1_approx": {
+  "n": 655,
+  "wins": 522,
+  "wr": 0.7969,
+  "roi": -0.0338
+ },
+ "hist_E2": {
+  "n": 283,
+  "wins": 245,
+  "wr": 0.8657,
+  "roi": 0.0075
+ },
+ "hist_BTTS_NON": {
+  "n": 546,
+  "wins": 286,
+  "wr": 0.5238,
+  "roi": -0.0512
+ },
+ "hist_E1": {
+  "n": 1282,
+  "wins": 999,
+  "wr": 0.7793,
+  "roi": 0.075
+ }
+}

@@ -1,0 +1,343 @@
+{
+ "A_distinct_pairsel": 77,
+ "A_nbets": 231,
+ "B_calibration_subset": [
+  {
+   "delta": 0.01,
+   "n": 1321,
+   "dll_total": 2.0447043524254696,
+   "dll_mean": 0.0015478458383253947,
+   "p": 0.12382438337770885
+  },
+  {
+   "delta": 0.02,
+   "n": 528,
+   "dll_total": 1.4262944664352517,
+   "dll_mean": 0.002701315277337251,
+   "p": 0.16834036947590492
+  },
+  {
+   "delta": 0.03,
+   "n": 172,
+   "dll_total": 0.2269411416033904,
+   "dll_mean": 0.0013194252418797098,
+   "p": 0.41505786263492506
+  }
+ ],
+ "C_shrink_quartiles": [
+  {
+   "bucket": "Q1",
+   "n": 1350,
+   "b2": 0.6875313841882634,
+   "se": 0.360063219671205
+  },
+  {
+   "bucket": "Q2",
+   "n": 1355,
+   "b2": 0.7572977165066157,
+   "se": 0.23133870599012193
+  },
+  {
+   "bucket": "Q3",
+   "n": 1349,
+   "b2": 0.6810586053803077,
+   "se": 0.16977622459969313
+  },
+  {
+   "bucket": "Q4",
+   "n": 1357,
+   "b2": 0.776267767113957,
+   "se": 0.11623127835530804
+  }
+ ],
+ "D_double_chance": [
+  {
+   "ev_min": 0.0,
+   "n": 119,
+   "roi_pct": -9.5,
+   "wr": 0.3445,
+   "avg_odds": 2.81,
+   "p": 0.7856144600730979
+  },
+  {
+   "ev_min": 0.02,
+   "n": 49,
+   "roi_pct": 2.49,
+   "wr": 0.3469,
+   "avg_odds": 3.041,
+   "p": 0.45260139029003055
+  }
+ ],
+ "E_rolling": {
+  "folds": [
+   {
+    "fold": "0.4-0.55",
+    "n": 84,
+    "roi": 52.37
+   },
+   {
+    "fold": "0.55-0.7",
+    "n": 123,
+    "roi": 22.73
+   },
+   {
+    "fold": "0.7-0.85",
+    "n": 103,
+    "roi": 3.75
+   },
+   {
+    "fold": "0.85-1.0",
+    "n": 125,
+    "roi": 14.64
+   }
+  ],
+  "n": 435,
+  "roi_pct": 21.63,
+  "wr": 0.1908,
+  "avg_odds": 7.742,
+  "p": 0.06581790162376366
+ },
+ "F_deviant_pairs_top30": [
+  {
+   "home": "London Reds",
+   "away": "Sunderland",
+   "n": 22,
+   "res_h": -0.156,
+   "res_a": 0.478,
+   "mag": 0.478
+  },
+  {
+   "home": "Sunderland",
+   "away": "London Reds",
+   "n": 17,
+   "res_h": -0.466,
+   "res_a": 0.115,
+   "mag": 0.466
+  },
+  {
+   "home": "Sunderland",
+   "away": "Brentford",
+   "n": 19,
+   "res_h": -0.418,
+   "res_a": 0.087,
+   "mag": 0.418
+  },
+  {
+   "home": "Sunderland",
+   "away": "Leeds",
+   "n": 21,
+   "res_h": -0.416,
+   "res_a": 0.214,
+   "mag": 0.416
+  },
+  {
+   "home": "Leeds",
+   "away": "Sunderland",
+   "n": 24,
+   "res_h": -0.17,
+   "res_a": 0.413,
+   "mag": 0.413
+  },
+  {
+   "home": "Manchester Blue",
+   "away": "Sunderland",
+   "n": 22,
+   "res_h": -0.105,
+   "res_a": 0.411,
+   "mag": 0.411
+  },
+  {
+   "home": "London Reds",
+   "away": "Burnley",
+   "n": 16,
+   "res_h": 0.05,
+   "res_a": 0.409,
+   "mag": 0.409
+  },
+  {
+   "home": "Sunderland",
+   "away": "Manchester Blue",
+   "n": 28,
+   "res_h": -0.4,
+   "res_a": 0.056,
+   "mag": 0.4
+  },
+  {
+   "home": "Brentford",
+   "away": "Sunderland",
+   "n": 23,
+   "res_h": -0.07,
+   "res_a": 0.397,
+   "mag": 0.397
+  },
+  {
+   "home": "Sunderland",
+   "away": "Fulham",
+   "n": 19,
+   "res_h": -0.378,
+   "res_a": 0.158,
+   "mag": 0.378
+  },
+  {
+   "home": "Manchester Blue",
+   "away": "Burnley",
+   "n": 16,
+   "res_h": 0.09,
+   "res_a": 0.365,
+   "mag": 0.365
+  },
+  {
+   "home": "Burnley",
+   "away": "London Reds",
+   "n": 23,
+   "res_h": -0.359,
+   "res_a": -0.064,
+   "mag": 0.359
+  },
+  {
+   "home": "Sunderland",
+   "away": "C. Palace",
+   "n": 21,
+   "res_h": -0.347,
+   "res_a": 0.125,
+   "mag": 0.347
+  },
+  {
+   "home": "Fulham",
+   "away": "Sunderland",
+   "n": 16,
+   "res_h": -0.131,
+   "res_a": 0.347,
+   "mag": 0.347
+  },
+  {
+   "home": "London Reds",
+   "away": "Bournemouth",
+   "n": 20,
+   "res_h": 0.119,
+   "res_a": 0.343,
+   "mag": 0.343
+  },
+  {
+   "home": "Bournemouth",
+   "away": "London Reds",
+   "n": 26,
+   "res_h": -0.328,
+   "res_a": -0.112,
+   "mag": 0.328
+  },
+  {
+   "home": "Sunderland",
+   "away": "Burnley",
+   "n": 16,
+   "res_h": -0.176,
+   "res_a": 0.317,
+   "mag": 0.317
+  },
+  {
+   "home": "C. Palace",
+   "away": "Sunderland",
+   "n": 19,
+   "res_h": -0.109,
+   "res_a": 0.306,
+   "mag": 0.306
+  },
+  {
+   "home": "Burnley",
+   "away": "Sunderland",
+   "n": 18,
+   "res_h": -0.301,
+   "res_a": 0.197,
+   "mag": 0.301
+  },
+  {
+   "home": "Spurs",
+   "away": "Sunderland",
+   "n": 19,
+   "res_h": -0.168,
+   "res_a": 0.293,
+   "mag": 0.293
+  },
+  {
+   "home": "Burnley",
+   "away": "Brentford",
+   "n": 22,
+   "res_h": -0.293,
+   "res_a": -0.133,
+   "mag": 0.293
+  },
+  {
+   "home": "Liverpool",
+   "away": "A. Villa",
+   "n": 17,
+   "res_h": 0.065,
+   "res_a": -0.292,
+   "mag": 0.292
+  },
+  {
+   "home": "Burnley",
+   "away": "Manchester Blue",
+   "n": 23,
+   "res_h": -0.291,
+   "res_a": -0.141,
+   "mag": 0.291
+  },
+  {
+   "home": "N. Forest",
+   "away": "A. Villa",
+   "n": 15,
+   "res_h": 0.062,
+   "res_a": -0.291,
+   "mag": 0.291
+  },
+  {
+   "home": "Sunderland",
+   "away": "Everton",
+   "n": 19,
+   "res_h": -0.29,
+   "res_a": 0.146,
+   "mag": 0.29
+  },
+  {
+   "home": "Brentford",
+   "away": "Burnley",
+   "n": 24,
+   "res_h": 0.147,
+   "res_a": 0.289,
+   "mag": 0.289
+  },
+  {
+   "home": "Leeds",
+   "away": "Burnley",
+   "n": 21,
+   "res_h": 0.073,
+   "res_a": 0.288,
+   "mag": 0.288
+  },
+  {
+   "home": "A. Villa",
+   "away": "Newcastle",
+   "n": 22,
+   "res_h": 0.287,
+   "res_a": -0.075,
+   "mag": 0.287
+  },
+  {
+   "home": "A. Villa",
+   "away": "Liverpool",
+   "n": 16,
+   "res_h": 0.284,
+   "res_a": -0.057,
+   "mag": 0.284
+  },
+  {
+   "home": "A. Villa",
+   "away": "N. Forest",
+   "n": 19,
+   "res_h": 0.283,
+   "res_a": -0.043,
+   "mag": 0.283
+  }
+ ],
+ "n_tests_scanned_phase3": 11
+}

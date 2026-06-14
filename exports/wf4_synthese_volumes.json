@@ -1,0 +1,42 @@
+{
+ "days_all9_active": [
+  "2026-06-12"
+ ],
+ "per_day_league": {
+  "2026-06-06": {
+   "InstantLeague-8035": 1429
+  },
+  "2026-06-07": {
+   "InstantLeague-8035": 390
+  },
+  "2026-06-10": {
+   "InstantLeague-8035": 860
+  },
+  "2026-06-11": {
+   "InstantLeague-8035": 2480
+  },
+  "2026-06-12": {
+   "InstantLeague-8035": 7220,
+   "InstantLeague-8042": 1476,
+   "InstantLeague-8043": 1485,
+   "InstantLeague-8044": 1476,
+   "InstantLeague-8056": 3168,
+   "InstantLeague-8065": 4104,
+   "InstantLeague-8060": 2052,
+   "InstantLeague-8036": 1670,
+   "InstantLeague-8037": 1700
+  }
+ },
+ "events_per_day_all9": {
+  "2026-06-12": 24351
+ },
+ "ftts_rule_bets_per_day": {
+  "2026-06-12": 3366
+ },
+ "e2_fav110_120_per_day": {
+  "2026-06-12": 1081
+ },
+ "champ_events_with_odds": 25260,
+ "champ_home_le_150": 5869,
+ "trigger_rate_pct": 23.23
+}

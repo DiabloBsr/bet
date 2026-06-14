@@ -1,0 +1,63 @@
+Modèle V5 (n_train=3181)
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 19:24 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  Leeds vs Brentford                         1-2(11%)  0-2(10%)  1-1(10%)  T3:30%  💎 GOLD 1-2+0-3=56%(n=9)
+  Brighton vs Bournemouth                    2-1(11%)  1-1(10%)  2-0(8%)  T3:29%  
+  West Ham vs A. Villa                       1-1(13%)  2-1(10%)  1-2(8%)  T3:31%  💎 GOLD 1-1+2-0=56%(n=9)
+  Manchester Red vs London Reds              1-2(11%)  1-1(10%)  0-2(10%)  T3:31%  
+  Spurs vs Everton                           2-1(11%)  1-1(11%)  1-0(9%)  T3:31%  
+  N. Forest vs Liverpool                     1-2(10%)  1-1(10%)  2-2(9%)  T3:29%  
+  Manchester Blue vs Newcastle               2-1(11%)  3-0(8%)  1-1(8%)  T3:28%  
+  Fulham vs London Blues                     1-1(12%)  2-1(11%)  1-2(8%)  T3:31%  
+  Burnley vs Sunderland                      1-1(13%)  2-1(10%)  1-2(9%)  T3:31%  
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  🎯 TOP PICKS SCORE EXACT — par stratégie
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  📊 TOP 1 SINGLE (mise simple, ~10-15% accuracy attendu) :
+     19:24  Burnley vs Sunderland                       → 1-1  (13%)
+     19:24  West Ham vs A. Villa                        → 1-1  (13%) 💎
+     19:24  Fulham vs London Blues                      → 1-1  (12%)
+     19:24  Manchester Blue vs Newcastle                → 2-1  (11%)
+     19:24  Leeds vs Brentford                          → 1-2  (11%) 💎
+     19:24  Spurs vs Everton                            → 2-1  (11%)
+     19:24  Manchester Red vs London Reds               → 1-2  (11%)
+     19:24  Brighton vs Bournemouth                     → 2-1  (11%)
+     19:24  N. Forest vs Liverpool                      → 1-2  (10%)
+
+  📊 COMBO TOP 2 (parier 2 scores, ~20-25% accuracy attendu) :
+     19:24  West Ham vs A. Villa                        → 1-1 + 2-1  (23%) 💎
+     19:24  Burnley vs Sunderland                       → 1-1 + 2-1  (23%)
+     19:24  Fulham vs London Blues                      → 1-1 + 2-1  (22%)
+     19:24  Spurs vs Everton                            → 2-1 + 1-1  (22%)
+     19:24  Manchester Red vs London Reds               → 1-2 + 1-1  (21%)
+     19:24  Leeds vs Brentford                          → 1-2 + 0-2  (21%) 💎
+     19:24  Brighton vs Bournemouth                     → 2-1 + 1-1  (20%)
+     19:24  N. Forest vs Liverpool                      → 1-2 + 1-1  (20%)
+     19:24  Manchester Blue vs Newcastle                → 2-1 + 3-0  (20%)
+
+  📊 COMBO TOP 3 (parier 3 scores, ~30-35% accuracy attendu) :
+     19:24  Burnley vs Sunderland                       → 1-1 + 2-1 + 1-2  (31%)
+     19:24  West Ham vs A. Villa                        → 1-1 + 2-1 + 1-2  (31%) 💎
+     19:24  Manchester Red vs London Reds               → 1-2 + 1-1 + 0-2  (31%)
+     19:24  Spurs vs Everton                            → 2-1 + 1-1 + 1-0  (31%)
+     19:24  Fulham vs London Blues                      → 1-1 + 2-1 + 1-2  (31%)
+     19:24  Leeds vs Brentford                          → 1-2 + 0-2 + 1-1  (30%) 💎
+     19:24  N. Forest vs Liverpool                      → 1-2 + 1-1 + 2-2  (29%)
+     19:24  Brighton vs Bournemouth                     → 2-1 + 1-1 + 2-0  (29%)
+     19:24  Manchester Blue vs Newcastle                → 2-1 + 3-0 + 1-1  (28%)
+
+  💎 SCORE_COMBO_GOLD (paires historiques validées) :
+     19:24  Leeds vs Brentford                          → voir signal GOLD ci-dessus
+     19:24  West Ham vs A. Villa                        → voir signal GOLD ci-dessus
+
+  💎 SCORE DOMINANT (rate 30-44%, sweet spot) :
+     19:24  Leeds vs Brentford
+     19:24  West Ham vs A. Villa

@@ -1,0 +1,319 @@
+{
+ "null_rates": {
+  "InstantLeague-8036": {
+   "null_or_empty": 0,
+   "zero_zero": 98,
+   "total": 1080
+  },
+  "InstantLeague-8037": {
+   "null_or_empty": 0,
+   "zero_zero": 128,
+   "total": 1110
+  },
+  "InstantLeague-8042": {
+   "null_or_empty": 0,
+   "zero_zero": 66,
+   "total": 954
+  },
+  "InstantLeague-8043": {
+   "null_or_empty": 0,
+   "zero_zero": 33,
+   "total": 963
+  },
+  "InstantLeague-8044": {
+   "null_or_empty": 0,
+   "zero_zero": 115,
+   "total": 972
+  },
+  "InstantLeague-8056": {
+   "null_or_empty": 0,
+   "zero_zero": 126,
+   "total": 2088
+  },
+  "InstantLeague-8060": {
+   "null_or_empty": 0,
+   "zero_zero": 360,
+   "total": 1380
+  },
+  "InstantLeague-8065": {
+   "null_or_empty": 0,
+   "zero_zero": 152,
+   "total": 2856
+  }
+ },
+ "opening_pre_kickoff": "2880/11403",
+ "n_clean": 11403,
+ "n_tests_scanned": 26,
+ "results": {
+  "dom_home_le1.4_ftts1": {
+   "n": 717,
+   "wins": 582,
+   "wr": 0.8117,
+   "roi_pct": 6.75,
+   "avg_odds": 1.32,
+   "z": 3.195,
+   "p_one_sided": 0.000699,
+   "implied_wr": 0.7607,
+   "calib_ratio": 1.067
+  },
+  "cup_home_le1.4_ftts1": {
+   "n": 1106,
+   "wins": 872,
+   "wr": 0.7884,
+   "roi_pct": -0.67,
+   "avg_odds": 1.268,
+   "z": -0.428,
+   "p_one_sided": 0.665776,
+   "implied_wr": 0.7963,
+   "calib_ratio": 0.99
+  },
+  "dom_away_le1.4_ftts2": {
+   "n": 59,
+   "wins": 40,
+   "wr": 0.678,
+   "roi_pct": -8.32,
+   "avg_odds": 1.354,
+   "z": -1.075,
+   "p_one_sided": 0.858764,
+   "implied_wr": 0.74,
+   "calib_ratio": 0.916
+  },
+  "cup_away_le1.4_ftts2": {
+   "n": 254,
+   "wins": 201,
+   "wr": 0.7913,
+   "roi_pct": 5.59,
+   "avg_odds": 1.339,
+   "z": 1.531,
+   "p_one_sided": 0.062867,
+   "implied_wr": 0.7497,
+   "calib_ratio": 1.056
+  },
+  "dom_anyfav_le1.4_fttsfav": {
+   "n": 776,
+   "wins": 622,
+   "wr": 0.8015,
+   "roi_pct": 5.61,
+   "avg_odds": 1.323,
+   "z": 2.749,
+   "p_one_sided": 0.002989,
+   "implied_wr": 0.7591,
+   "calib_ratio": 1.056
+  },
+  "dom_home_le1.5_ftts1": {
+   "n": 1041,
+   "wins": 813,
+   "wr": 0.781,
+   "roi_pct": 5.71,
+   "avg_odds": 1.361,
+   "z": 3.066,
+   "p_one_sided": 0.001084,
+   "implied_wr": 0.7384,
+   "calib_ratio": 1.058
+  },
+  "cup_home_le1.5_ftts1": {
+   "n": 1389,
+   "wins": 1066,
+   "wr": 0.7675,
+   "roi_pct": -0.56,
+   "avg_odds": 1.306,
+   "z": -0.374,
+   "p_one_sided": 0.645822,
+   "implied_wr": 0.7742,
+   "calib_ratio": 0.991
+  },
+  "dom_away_le1.5_ftts2": {
+   "n": 125,
+   "wins": 85,
+   "wr": 0.68,
+   "roi_pct": -4.54,
+   "avg_odds": 1.408,
+   "z": -0.796,
+   "p_one_sided": 0.786866,
+   "implied_wr": 0.712,
+   "calib_ratio": 0.955
+  },
+  "cup_away_le1.5_ftts2": {
+   "n": 418,
+   "wins": 310,
+   "wr": 0.7416,
+   "roi_pct": 2.21,
+   "avg_odds": 1.387,
+   "z": 0.725,
+   "p_one_sided": 0.234117,
+   "implied_wr": 0.7244,
+   "calib_ratio": 1.024
+  },
+  "dom_anyfav_le1.5_fttsfav": {
+   "n": 1166,
+   "wins": 898,
+   "wr": 0.7702,
+   "roi_pct": 4.61,
+   "avg_odds": 1.366,
+   "z": 2.602,
+   "p_one_sided": 0.004628,
+   "implied_wr": 0.7356,
+   "calib_ratio": 1.047
+  },
+  "fttsbucket_home_1.0-1.2_all": {
+   "n": 378,
+   "wins": 326,
+   "wr": 0.8624,
+   "roi_pct": -3.08,
+   "avg_odds": 1.124,
+   "z": -1.701,
+   "p_one_sided": 0.95554,
+   "implied_wr": 0.8919,
+   "calib_ratio": 0.967
+  },
+  "fttsbucket_home_1.0-1.2_fav150": {
+   "n": 378,
+   "wins": 326,
+   "wr": 0.8624,
+   "roi_pct": -3.08,
+   "avg_odds": 1.124,
+   "z": -1.701,
+   "p_one_sided": 0.95554,
+   "implied_wr": 0.8919,
+   "calib_ratio": 0.967
+  },
+  "fttsbucket_dom_home_1.0-1.2_fav150": {
+   "n": 64,
+   "wins": 58,
+   "wr": 0.9062,
+   "roi_pct": 3.91,
+   "avg_odds": 1.147,
+   "z": 0.816,
+   "p_one_sided": 0.207295,
+   "implied_wr": 0.8727,
+   "calib_ratio": 1.038
+  },
+  "fttsbucket_home_1.2-1.4_all": {
+   "n": 1120,
+   "wins": 889,
+   "wr": 0.7937,
+   "roi_pct": 3.81,
+   "avg_odds": 1.31,
+   "z": 2.289,
+   "p_one_sided": 0.011033,
+   "implied_wr": 0.7646,
+   "calib_ratio": 1.038
+  },
+  "fttsbucket_home_1.2-1.4_fav150": {
+   "n": 1120,
+   "wins": 889,
+   "wr": 0.7937,
+   "roi_pct": 3.81,
+   "avg_odds": 1.31,
+   "z": 2.289,
+   "p_one_sided": 0.011033,
+   "implied_wr": 0.7646,
+   "calib_ratio": 1.038
+  },
+  "fttsbucket_dom_home_1.2-1.4_fav150": {
+   "n": 493,
+   "wins": 405,
+   "wr": 0.8215,
+   "roi_pct": 7.55,
+   "avg_odds": 1.311,
+   "z": 3.004,
+   "p_one_sided": 0.001333,
+   "implied_wr": 0.764,
+   "calib_ratio": 1.075
+  },
+  "fttsbucket_home_1.4-1.6_all": {
+   "n": 1989,
+   "wins": 1320,
+   "wr": 0.6637,
+   "roi_pct": -0.93,
+   "avg_odds": 1.496,
+   "z": -0.587,
+   "p_one_sided": 0.721492,
+   "implied_wr": 0.6696,
+   "calib_ratio": 0.991
+  },
+  "fttsbucket_home_1.4-1.6_fav150": {
+   "n": 919,
+   "wins": 653,
+   "wr": 0.7106,
+   "roi_pct": 2.48,
+   "avg_odds": 1.442,
+   "z": 1.132,
+   "p_one_sided": 0.12877,
+   "implied_wr": 0.6936,
+   "calib_ratio": 1.025
+  },
+  "fttsbucket_dom_home_1.4-1.6_fav150": {
+   "n": 484,
+   "wins": 350,
+   "wr": 0.7231,
+   "roi_pct": 4.08,
+   "avg_odds": 1.44,
+   "z": 1.352,
+   "p_one_sided": 0.088197,
+   "implied_wr": 0.6947,
+   "calib_ratio": 1.041
+  },
+  "fttsbucket_home_1.6-2.0_all": {
+   "n": 4258,
+   "wins": 2268,
+   "wr": 0.5326,
+   "roi_pct": -5.53,
+   "avg_odds": 1.783,
+   "z": -4.079,
+   "p_one_sided": 0.999977,
+   "implied_wr": 0.5629,
+   "calib_ratio": 0.946
+  },
+  "fttsbucket_home_1.6-2.0_fav150": {
+   "n": 0
+  },
+  "fttsbucket_dom_home_1.6-2.0_fav150": {
+   "n": 0
+  },
+  "dom_home_le1.5_ftts1_TRAIN70": {
+   "n": 729,
+   "wins": 564,
+   "wr": 0.7737,
+   "roi_pct": 4.74,
+   "avg_odds": 1.36,
+   "z": 2.13,
+   "p_one_sided": 0.01657,
+   "implied_wr": 0.7389,
+   "calib_ratio": 1.047
+  },
+  "dom_home_le1.5_ftts1_TEST30": {
+   "n": 312,
+   "wins": 249,
+   "wr": 0.7981,
+   "roi_pct": 7.99,
+   "avg_odds": 1.363,
+   "z": 2.342,
+   "p_one_sided": 0.009585,
+   "implied_wr": 0.7374,
+   "calib_ratio": 1.082
+  },
+  "all_home_le1.5_ftts1_TRAIN70": {
+   "n": 1723,
+   "wins": 1338,
+   "wr": 0.7766,
+   "roi_pct": 2.83,
+   "avg_odds": 1.332,
+   "z": 2.037,
+   "p_one_sided": 0.020808,
+   "implied_wr": 0.7572,
+   "calib_ratio": 1.026
+  },
+  "all_home_le1.5_ftts1_TEST30": {
+   "n": 707,
+   "wins": 541,
+   "wr": 0.7652,
+   "roi_pct": 0.42,
+   "avg_odds": 1.323,
+   "z": 0.199,
+   "p_one_sided": 0.421326,
+   "implied_wr": 0.7629,
+   "calib_ratio": 1.003
+  }
+ }
+}

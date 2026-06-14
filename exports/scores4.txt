@@ -1,0 +1,1014 @@
+V5 chargé (n_train=3851)
+
+Rounds : ['00:24', '00:26', '00:28', '00:30', '00:32', '00:34', '00:36']
+
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:24 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: West Ham vs Liverpool
+    Cotes : 3.57/4.05/1.88
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.6%
+       1-2 → 8.7%
+       2-1 → 8.2%
+       0-1 → 7.9%
+       2-2 → 7.1%
+    🔍 H2H : 23 matchs, score le + fréquent 2-0 (13%)
+       2-0 → 3/23 = 13%
+       1-2 → 3/23 = 13%
+       1-4 → 2/23 = 9%
+
+  MATCH 2: Fulham vs Bournemouth
+    Cotes : 1.89/4.15/3.46
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.4%
+       1-1 → 9.9%
+       1-2 → 7.3%
+       3-1 → 7.0%
+       1-0 → 6.9%
+    🔍 H2H : 22 matchs, score le + fréquent 2-2 (14%)
+       2-2 → 3/22 = 14%
+       3-2 → 3/22 = 14%
+       3-1 → 2/22 = 9%
+
+  MATCH 3: Sunderland vs Brentford
+    Cotes : 7.75/4.51/1.41
+    📊 V5 Top 5 scores Poisson+empirique:
+       0-1 → 12.5%
+       0-2 → 11.6%
+       1-2 → 10.9%
+       0-3 → 9.0%
+       1-1 → 8.0%
+    🔍 H2H : 20 matchs, score le + fréquent 0-2 (20%)
+       0-2 → 4/20 = 20%
+       0-3 → 4/20 = 20%
+       0-1 → 2/20 = 10%
+    ⭐ V5 BEST : 0-1 prob 12.5% (cote~7) → value bet
+
+  MATCH 4: Brighton vs A. Villa
+    Cotes : 1.77/3.96/4.11
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.1%
+       2-1 → 10.8%
+       2-0 → 8.5%
+       1-0 → 8.1%
+       3-1 → 7.6%
+    🔍 H2H : 24 matchs, score le + fréquent 1-0 (21%)
+       1-0 → 5/24 = 21%
+       2-2 → 4/24 = 17%
+       0-1 → 2/24 = 8%
+    ⭐ V5 BEST : 1-1 prob 11.1% (cote~8) → value bet
+
+  MATCH 5: London Reds vs Spurs
+    Cotes : 1.46/5.18/5.43
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       2-0 → 7.9%
+       3-0 → 7.5%
+       3-1 → 7.2%
+       2-2 → 6.9%
+    🔍 H2H : 18 matchs, score le + fréquent 4-1 (28%)
+       4-1 → 5/18 = 28%
+       1-1 → 4/18 = 22%
+       5-1 → 1/18 = 6%
+
+  MATCH 6: Manchester Red vs Wolverhampton
+    Cotes : 1.49/4.43/6.22
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.9%
+       1-1 → 8.9%
+       2-0 → 8.9%
+       3-0 → 8.6%
+       1-0 → 8.1%
+    🔍 H2H : 23 matchs, score le + fréquent 1-0 (17%)
+       1-0 → 4/23 = 17%
+       1-2 → 3/23 = 13%
+       0-0 → 2/23 = 9%
+    ⚠️ Score 1-0 31% (n=13) — confiance moyenne
+
+  MATCH 7: London Blues vs Burnley
+    Cotes : 1.35/5.31/7.57
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       3-0 → 9.1%
+       2-0 → 8.6%
+       3-1 → 8.5%
+       1-1 → 8.1%
+    🔍 H2H : 23 matchs, score le + fréquent 2-2 (17%)
+       2-2 → 4/23 = 17%
+       1-0 → 3/23 = 13%
+       1-1 → 3/23 = 13%
+
+  MATCH 8: C. Palace vs Everton
+    Cotes : 1.84/3.44/4.43
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.2%
+       2-1 → 10.7%
+       1-0 → 10.5%
+       2-0 → 8.6%
+       0-0 → 7.9%
+    🔍 H2H : 22 matchs, score le + fréquent 2-1 (23%)
+       2-1 → 5/22 = 23%
+       0-0 → 3/22 = 14%
+       1-1 → 2/22 = 9%
+    ⭐ V5 BEST : 1-1 prob 12.2% (cote~7) → value bet
+
+  MATCH 9: Leeds vs Newcastle
+    Cotes : 7.23/5.07/1.38
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-2 → 10.9%
+       0-2 → 10.0%
+       0-1 → 9.9%
+       0-3 → 8.8%
+       1-3 → 7.1%
+    🔍 H2H : 22 matchs, score le + fréquent 1-2 (18%)
+       1-2 → 4/22 = 18%
+       2-2 → 3/22 = 14%
+       1-3 → 2/22 = 9%
+
+  MATCH 10: Manchester Blue vs N. Forest
+    Cotes : 1.17/7.61/12.96
+    📊 V5 Top 5 scores Poisson+empirique:
+       3-0 → 13.2%
+       2-0 → 11.2%
+       4-0 → 9.1%
+       3-1 → 8.4%
+       2-1 → 7.9%
+    🔍 H2H : 25 matchs, score le + fréquent 3-0 (28%)
+       3-0 → 7/25 = 28%
+       2-1 → 4/25 = 16%
+       2-2 → 3/25 = 12%
+    ⭐ V5 BEST : 3-0 prob 13.2% (cote~7) → value bet
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:26 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: Liverpool vs Fulham
+    Cotes : 1.36/5.05/7.79
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.6%
+       3-0 → 10.2%
+       2-0 → 10.2%
+       1-0 → 8.7%
+       3-1 → 8.3%
+    🔍 H2H : 19 matchs, score le + fréquent 2-1 (32%)
+       2-1 → 6/19 = 32%
+       2-0 → 3/19 = 16%
+       1-0 → 2/19 = 11%
+
+  MATCH 2: Spurs vs A. Villa
+    Cotes : 1.81/4.14/3.74
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.7%
+       2-1 → 10.4%
+       1-2 → 7.5%
+       1-0 → 7.5%
+       2-0 → 6.8%
+    🔍 H2H : 25 matchs, score le + fréquent 1-1 (20%)
+       1-1 → 5/25 = 20%
+       1-2 → 3/25 = 12%
+       2-2 → 2/25 = 8%
+
+  MATCH 3: West Ham vs Manchester Blue
+    Cotes : 5.16/4.19/1.59
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.8%
+       0-2 → 10.2%
+       0-1 → 9.9%
+       1-2 → 9.4%
+       0-3 → 7.7%
+    🔍 H2H : 21 matchs, score le + fréquent 1-1 (24%)
+       1-1 → 5/21 = 24%
+       0-2 → 3/21 = 14%
+       2-2 → 2/21 = 10%
+
+  MATCH 4: Brentford vs Brighton
+    Cotes : 2.08/4.30/2.88
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 14.9%
+       2-2 → 10.8%
+       3-1 → 10.1%
+       1-1 → 8.7%
+       1-2 → 7.6%
+    🔍 H2H : 20 matchs, score le + fréquent 2-4 (10%)
+       2-4 → 2/20 = 10%
+       2-2 → 2/20 = 10%
+       1-1 → 2/20 = 10%
+    ⭐ V5 BEST : 2-1 prob 14.9% (cote~6) → value bet
+
+  MATCH 5: Bournemouth vs Leeds
+    Cotes : 1.61/3.67/6.05
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-0 → 12.4%
+       2-0 → 11.1%
+       2-1 → 10.3%
+       1-1 → 8.9%
+       3-0 → 8.7%
+    🔍 H2H : 22 matchs, score le + fréquent 1-0 (14%)
+       1-0 → 3/22 = 14%
+       0-1 → 3/22 = 14%
+       1-1 → 3/22 = 14%
+    ⭐ V5 BEST : 1-0 prob 12.4% (cote~7) → value bet
+
+  MATCH 6: N. Forest vs C. Palace
+    Cotes : 2.05/3.31/3.71
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.2%
+       2-1 → 9.9%
+       1-0 → 9.6%
+       0-0 → 7.6%
+       1-2 → 7.5%
+    🔍 H2H : 27 matchs, score le + fréquent 2-1 (22%)
+       2-1 → 6/27 = 22%
+       1-0 → 6/27 = 22%
+       0-0 → 5/27 = 19%
+    ⭐ V5 BEST : 1-1 prob 12.2% (cote~7) → value bet
+
+  MATCH 7: Everton vs Manchester Red
+    Cotes : 2.38/3.17/3.08
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.6%
+       2-1 → 9.2%
+       0-0 → 8.5%
+       0-1 → 8.4%
+       1-2 → 7.9%
+    🔍 H2H : 20 matchs, score le + fréquent 2-0 (15%)
+       2-0 → 3/20 = 15%
+       1-0 → 3/20 = 15%
+       1-1 → 2/20 = 10%
+    ⭐ V5 BEST : 1-1 prob 12.6% (cote~7) → value bet
+
+  MATCH 8: Wolverhampton vs London Reds
+    Cotes : 6.61/4.17/1.49
+    📊 V5 Top 5 scores Poisson+empirique:
+       0-1 → 12.1%
+       1-2 → 11.1%
+       0-2 → 11.0%
+       1-1 → 8.4%
+       0-3 → 8.4%
+    🔍 H2H : 18 matchs, score le + fréquent 1-2 (17%)
+       1-2 → 3/18 = 17%
+       1-1 → 3/18 = 17%
+       2-0 → 2/18 = 11%
+    ⭐ V5 BEST : 0-1 prob 12.1% (cote~7) → value bet
+
+  MATCH 9: Newcastle vs London Blues
+    Cotes : 1.45/4.72/6.28
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.9%
+       2-0 → 8.8%
+       3-0 → 8.8%
+       1-1 → 8.6%
+       3-1 → 8.2%
+    🔍 H2H : 20 matchs, score le + fréquent 3-0 (20%)
+       3-0 → 4/20 = 20%
+       1-1 → 2/20 = 10%
+       5-0 → 2/20 = 10%
+
+  MATCH 10: Burnley vs Sunderland
+    Cotes : 2.40/3.49/2.81
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.8%
+       2-1 → 10.4%
+       1-2 → 8.3%
+       1-0 → 7.7%
+       0-0 → 7.1%
+    🔍 H2H : 19 matchs, score le + fréquent 1-1 (26%)
+       1-1 → 5/19 = 26%
+       0-0 → 3/19 = 16%
+       2-0 → 2/19 = 11%
+    ⭐ V5 BEST : 1-1 prob 12.8% (cote~7) → value bet
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:28 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: C. Palace vs West Ham
+    Cotes : 1.81/3.87/3.99
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.9%
+       2-1 → 10.5%
+       1-0 → 8.6%
+       2-0 → 7.9%
+       1-2 → 6.9%
+    🔍 H2H : 19 matchs, score le + fréquent 1-1 (26%)
+       1-1 → 5/19 = 26%
+       2-0 → 4/19 = 21%
+       2-1 → 3/19 = 16%
+
+  MATCH 2: Sunderland vs Newcastle
+    Cotes : 8.72/5.38/1.32
+    📊 V5 Top 5 scores Poisson+empirique:
+       0-2 → 11.0%
+       1-2 → 10.7%
+       0-1 → 10.7%
+       0-3 → 9.9%
+       1-3 → 6.9%
+    🔍 H2H : 23 matchs, score le + fréquent 0-2 (17%)
+       0-2 → 4/23 = 17%
+       0-3 → 3/23 = 13%
+       1-4 → 3/23 = 13%
+    ⭐ V5 BEST : 0-2 prob 11.0% (cote~8) → value bet
+
+  MATCH 3: A. Villa vs Wolverhampton
+    Cotes : 1.33/5.47/7.87
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       3-0 → 9.4%
+       2-0 → 8.8%
+       3-1 → 8.6%
+       1-1 → 7.9%
+    🔍 H2H : 22 matchs, score le + fréquent 2-0 (27%)
+       2-0 → 6/22 = 27%
+       3-1 → 3/22 = 14%
+       4-0 → 2/22 = 9%
+
+  MATCH 4: Brighton vs Spurs
+    Cotes : 2.02/4.19/3.05
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.2%
+       1-1 → 10.1%
+       1-2 → 7.6%
+       2-2 → 7.0%
+       1-0 → 6.8%
+    🔍 H2H : 20 matchs, score le + fréquent 3-0 (20%)
+       3-0 → 4/20 = 20%
+       3-1 → 2/20 = 10%
+       2-0 → 2/20 = 10%
+
+  MATCH 5: Manchester Red vs N. Forest
+    Cotes : 1.52/4.35/5.79
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.8%
+       1-1 → 10.8%
+       2-0 → 9.3%
+       1-0 → 8.5%
+       3-1 → 7.9%
+    🔍 H2H : 23 matchs, score le + fréquent 2-1 (22%)
+       2-1 → 5/23 = 22%
+       1-1 → 4/23 = 17%
+       1-0 → 2/23 = 9%
+
+  MATCH 6: London Reds vs Everton
+    Cotes : 1.28/5.42/10.55
+    📊 V5 Top 5 scores Poisson+empirique:
+       3-0 → 12.6%
+       2-0 → 12.2%
+       2-1 → 8.6%
+       1-0 → 8.1%
+       3-1 → 7.9%
+    🔍 H2H : 25 matchs, score le + fréquent 1-1 (16%)
+       1-1 → 4/25 = 16%
+       1-0 → 4/25 = 16%
+       3-0 → 4/25 = 16%
+    ⭐ V5 BEST : 3-0 prob 12.6% (cote~7) → value bet
+
+  MATCH 7: London Blues vs Bournemouth
+    Cotes : 1.52/4.60/5.36
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.8%
+       1-1 → 10.1%
+       2-0 → 8.7%
+       3-1 → 8.3%
+       1-0 → 7.5%
+    🔍 H2H : 19 matchs, score le + fréquent 4-1 (16%)
+       4-1 → 3/19 = 16%
+       3-2 → 3/19 = 16%
+       1-1 → 3/19 = 16%
+
+  MATCH 8: Fulham vs Manchester Blue
+    Cotes : 4.37/3.97/1.73
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.6%
+       0-2 → 9.6%
+       1-2 → 9.5%
+       0-1 → 9.0%
+       0-3 → 7.4%
+    🔍 H2H : 23 matchs, score le + fréquent 1-2 (22%)
+       1-2 → 5/23 = 22%
+       0-1 → 4/23 = 17%
+       1-3 → 2/23 = 9%
+
+  MATCH 9: Brentford vs Burnley
+    Cotes : 1.48/5.09/5.31
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       2-0 → 7.6%
+       3-0 → 7.3%
+       3-1 → 7.2%
+       2-2 → 7.0%
+    🔍 H2H : 20 matchs, score le + fréquent 2-0 (15%)
+       2-0 → 3/20 = 15%
+       3-1 → 3/20 = 15%
+       2-2 → 3/20 = 15%
+
+  MATCH 10: Leeds vs Liverpool
+    Cotes : 8.90/5.75/1.29
+    📊 V5 Top 5 scores Poisson+empirique:
+       0-3 → 13.4%
+       1-2 → 11.2%
+       0-4 → 8.9%
+       1-3 → 8.8%
+       0-2 → 8.5%
+    🔍 H2H : 21 matchs, score le + fréquent 0-2 (19%)
+       0-2 → 4/21 = 19%
+       1-3 → 3/21 = 14%
+       1-2 → 3/21 = 14%
+    ⭐ V5 BEST : 0-3 prob 13.4% (cote~7) → value bet
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:30 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: Bournemouth vs Sunderland
+    Cotes : 1.79/3.74/4.30
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.6%
+       2-1 → 10.7%
+       1-0 → 8.6%
+       2-0 → 8.6%
+       3-1 → 7.2%
+    🔍 H2H : 22 matchs, score le + fréquent 1-1 (23%)
+       1-1 → 5/22 = 23%
+       0-3 → 3/22 = 14%
+       0-1 → 2/22 = 9%
+    ⭐ V5 BEST : 1-1 prob 11.6% (cote~8) → value bet
+
+  MATCH 2: West Ham vs Manchester Red
+    Cotes : 2.24/3.53/3.03
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.1%
+       2-1 → 9.7%
+       1-2 → 7.9%
+       2-0 → 7.3%
+       0-1 → 7.3%
+    🔍 H2H : 20 matchs, score le + fréquent 0-0 (15%)
+       0-0 → 3/20 = 15%
+       1-0 → 3/20 = 15%
+       2-1 → 2/20 = 10%
+    ⭐ V5 BEST : 1-1 prob 12.1% (cote~7) → value bet
+
+  MATCH 3: Fulham vs C. Palace
+    Cotes : 2.10/3.57/3.29
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.8%
+       2-1 → 9.9%
+       1-2 → 7.7%
+       2-0 → 7.6%
+       1-0 → 7.0%
+    🔍 H2H : 22 matchs, score le + fréquent 2-0 (18%)
+       2-0 → 4/22 = 18%
+       3-1 → 4/22 = 18%
+       1-1 → 3/22 = 14%
+    ⭐ V5 BEST : 1-1 prob 11.8% (cote~8) → value bet
+
+  MATCH 4: Liverpool vs London Blues
+    Cotes : 1.34/5.29/7.87
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       3-0 → 9.9%
+       2-0 → 9.7%
+       3-1 → 8.4%
+       1-0 → 8.3%
+    🔍 H2H : 22 matchs, score le + fréquent 3-0 (23%)
+       3-0 → 5/22 = 23%
+       3-1 → 4/22 = 18%
+       2-1 → 3/22 = 14%
+
+  MATCH 5: Newcastle vs Brentford
+    Cotes : 1.52/4.33/5.80
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.8%
+       1-1 → 10.5%
+       2-0 → 9.4%
+       1-0 → 8.5%
+       3-1 → 8.0%
+    🔍 H2H : 19 matchs, score le + fréquent 1-1 (21%)
+       1-1 → 4/19 = 21%
+       2-1 → 4/19 = 21%
+       3-0 → 3/19 = 16%
+
+  MATCH 6: Everton vs A. Villa
+    Cotes : 2.32/3.18/3.18
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.6%
+       2-1 → 9.2%
+       0-0 → 8.5%
+       0-1 → 8.3%
+       1-0 → 7.9%
+    🔍 H2H : 24 matchs, score le + fréquent 0-1 (21%)
+       0-1 → 5/24 = 21%
+       1-2 → 4/24 = 17%
+       0-0 → 3/24 = 12%
+    ⭐ V5 BEST : 1-1 prob 12.6% (cote~7) → value bet
+
+  MATCH 7: Wolverhampton vs Spurs
+    Cotes : 2.59/3.86/2.41
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-2 → 10.8%
+       1-1 → 10.1%
+       2-1 → 8.8%
+       2-2 → 8.1%
+       1-0 → 6.3%
+    🔍 H2H : 20 matchs, score le + fréquent 1-3 (20%)
+       1-3 → 4/20 = 20%
+       1-2 → 2/20 = 10%
+       1-0 → 2/20 = 10%
+
+  MATCH 8: Manchester Blue vs Leeds
+    Cotes : 1.12/8.58/20.52
+    📊 V5 Top 5 scores Poisson+empirique:
+       3-0 → 14.4%
+       2-0 → 11.7%
+       4-0 → 10.3%
+       3-1 → 7.8%
+       5-0 → 7.3%
+    🔍 H2H : 22 matchs, score le + fréquent 3-0 (18%)
+       3-0 → 4/22 = 18%
+       6-0 → 4/22 = 18%
+       2-0 → 4/22 = 18%
+    ⭐ V5 BEST : 3-0 prob 14.4% (cote~6) → value bet
+
+  MATCH 9: Burnley vs Brighton
+    Cotes : 3.76/3.90/1.86
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.8%
+       1-2 → 8.7%
+       0-1 → 8.2%
+       2-1 → 8.1%
+       0-2 → 7.0%
+    🔍 H2H : 21 matchs, score le + fréquent 2-2 (14%)
+       2-2 → 3/21 = 14%
+       0-1 → 3/21 = 14%
+       0-2 → 2/21 = 10%
+
+  MATCH 10: N. Forest vs London Reds
+    Cotes : 4.98/3.65/1.71
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.3%
+       0-1 → 10.3%
+       0-2 → 10.1%
+       1-2 → 9.3%
+       0-3 → 7.3%
+    🔍 H2H : 21 matchs, score le + fréquent 1-0 (14%)
+       1-0 → 3/21 = 14%
+       2-1 → 2/21 = 10%
+       2-2 → 2/21 = 10%
+    ⭐ V5 BEST : 1-1 prob 11.3% (cote~8) → value bet
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:32 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: Brentford vs Bournemouth
+    Cotes : 1.70/4.60/3.91
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-0 → 9.1%
+       2-1 → 9.0%
+       1-1 → 8.7%
+       2-2 → 8.2%
+       1-2 → 8.1%
+    🔍 H2H : 20 matchs, score le + fréquent 1-2 (15%)
+       1-2 → 3/20 = 15%
+       2-1 → 3/20 = 15%
+       3-1 → 2/20 = 10%
+
+  MATCH 2: Manchester Red vs Fulham
+    Cotes : 1.97/3.57/3.66
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.4%
+       2-1 → 10.3%
+       1-0 → 8.4%
+       1-2 → 7.5%
+       2-0 → 7.2%
+    🔍 H2H : 24 matchs, score le + fréquent 1-1 (21%)
+       1-1 → 5/24 = 21%
+       1-2 → 3/24 = 12%
+       3-1 → 2/24 = 8%
+    ⭐ V5 BEST : 1-1 prob 11.4% (cote~8) → value bet
+
+  MATCH 3: Sunderland vs Liverpool
+    Cotes : 11.92/6.60/1.21
+    📊 V5 Top 5 scores Poisson+empirique:
+       0-3 → 14.5%
+       1-2 → 10.7%
+       0-4 → 9.8%
+       0-2 → 9.5%
+       0-1 → 9.1%
+    🔍 H2H : 20 matchs, score le + fréquent 0-5 (15%)
+       0-5 → 3/20 = 15%
+       0-4 → 2/20 = 10%
+       0-3 → 2/20 = 10%
+    ⭐ V5 BEST : 0-3 prob 14.5% (cote~6) → value bet
+
+  MATCH 4: A. Villa vs N. Forest
+    Cotes : 1.37/5.24/7.05
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.8%
+       3-0 → 9.4%
+       2-0 → 9.1%
+       3-1 → 8.5%
+       1-1 → 8.1%
+    🔍 H2H : 21 matchs, score le + fréquent 2-1 (19%)
+       2-1 → 4/21 = 19%
+       1-1 → 4/21 = 19%
+       3-1 → 2/21 = 10%
+
+  MATCH 5: Spurs vs Everton
+    Cotes : 1.66/4.01/4.84
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.2%
+       2-1 → 10.8%
+       2-0 → 9.1%
+       1-0 → 8.8%
+       3-1 → 7.6%
+    🔍 H2H : 22 matchs, score le + fréquent 1-1 (14%)
+       1-1 → 3/22 = 14%
+       2-0 → 3/22 = 14%
+       2-2 → 3/22 = 14%
+    ⭐ V5 BEST : 1-1 prob 11.2% (cote~8) → value bet
+
+  MATCH 6: Leeds vs C. Palace
+    Cotes : 4.84/3.74/1.71
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.0%
+       0-2 → 10.4%
+       0-1 → 10.3%
+       1-2 → 9.4%
+       0-3 → 7.6%
+    🔍 H2H : 19 matchs, score le + fréquent 1-3 (16%)
+       1-3 → 3/19 = 16%
+       0-4 → 3/19 = 16%
+       1-0 → 3/19 = 16%
+    ⭐ V5 BEST : 1-1 prob 11.0% (cote~8) → value bet
+
+  MATCH 7: Burnley vs Newcastle
+    Cotes : 4.35/4.00/1.72
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.7%
+       1-2 → 9.5%
+       0-2 → 9.1%
+       0-1 → 8.6%
+       0-3 → 7.0%
+    🔍 H2H : 22 matchs, score le + fréquent 2-2 (18%)
+       2-2 → 4/22 = 18%
+       1-1 → 4/22 = 18%
+       1-2 → 3/22 = 14%
+
+  MATCH 8: Brighton vs Wolverhampton
+    Cotes : 1.51/4.51/5.67
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       1-1 → 10.0%
+       2-0 → 9.1%
+       3-1 → 8.3%
+       1-0 → 7.8%
+    🔍 H2H : 22 matchs, score le + fréquent 2-1 (14%)
+       2-1 → 3/22 = 14%
+       1-1 → 3/22 = 14%
+       2-0 → 3/22 = 14%
+
+  MATCH 9: London Reds vs West Ham
+    Cotes : 1.27/6.06/9.39
+    📊 V5 Top 5 scores Poisson+empirique:
+       3-0 → 12.4%
+       2-0 → 10.9%
+       3-1 → 8.6%
+       2-1 → 8.5%
+       4-0 → 8.1%
+    🔍 H2H : 18 matchs, score le + fréquent 2-0 (22%)
+       2-0 → 4/18 = 22%
+       3-2 → 2/18 = 11%
+       1-2 → 2/18 = 11%
+    ⭐ V5 BEST : 3-0 prob 12.4% (cote~7) → value bet
+
+  MATCH 10: London Blues vs Manchester Blue
+    Cotes : 3.14/3.43/2.22
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 13.3%
+       1-2 → 10.0%
+       0-1 → 9.3%
+       0-2 → 9.0%
+       2-1 → 7.0%
+    🔍 H2H : 20 matchs, score le + fréquent 1-1 (20%)
+       1-1 → 4/20 = 20%
+       2-3 → 2/20 = 10%
+       2-1 → 2/20 = 10%
+    ⭐ V5 BEST : 1-1 prob 13.3% (cote~7) → value bet
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:34 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: Newcastle vs Brighton
+    Cotes : 1.45/5.10/5.68
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.8%
+       2-0 → 8.1%
+       3-0 → 7.6%
+       3-1 → 7.2%
+       1-1 → 6.8%
+    🔍 H2H : 18 matchs, score le + fréquent 3-1 (22%)
+       3-1 → 4/18 = 22%
+       4-1 → 3/18 = 17%
+       2-1 → 2/18 = 11%
+
+  MATCH 2: Manchester Blue vs Sunderland
+    Cotes : 1.18/7.48/12.36
+    📊 V5 Top 5 scores Poisson+empirique:
+       3-0 → 13.0%
+       2-0 → 10.8%
+       4-0 → 9.1%
+       3-1 → 8.5%
+       2-1 → 7.8%
+    🔍 H2H : 21 matchs, score le + fréquent 3-0 (33%)
+       3-0 → 7/21 = 33%
+       2-1 → 4/21 = 19%
+       2-0 → 2/21 = 10%
+    ⭐ V5 BEST : 3-0 prob 13.0% (cote~7) → value bet
+
+  MATCH 3: Fulham vs London Reds
+    Cotes : 5.18/4.10/1.60
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.6%
+       0-2 → 9.5%
+       1-2 → 9.5%
+       0-1 → 8.9%
+       0-3 → 7.5%
+    🔍 H2H : 20 matchs, score le + fréquent 1-2 (20%)
+       1-2 → 4/20 = 20%
+       0-0 → 3/20 = 15%
+       2-1 → 2/20 = 10%
+
+  MATCH 4: Bournemouth vs Burnley
+    Cotes : 1.72/3.97/4.44
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.2%
+       2-1 → 10.7%
+       2-0 → 8.1%
+       1-0 → 7.8%
+       3-1 → 7.5%
+    🔍 H2H : 20 matchs, score le + fréquent 3-2 (20%)
+       3-2 → 4/20 = 20%
+       1-1 → 2/20 = 10%
+       2-1 → 2/20 = 10%
+    ⭐ V5 BEST : 1-1 prob 11.2% (cote~8) → value bet
+
+  MATCH 5: N. Forest vs Spurs
+    Cotes : 2.21/3.88/2.86
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.9%
+       2-1 → 10.4%
+       1-2 → 8.5%
+       1-0 → 6.4%
+       2-2 → 6.3%
+    🔍 H2H : 20 matchs, score le + fréquent 0-0 (20%)
+       0-0 → 4/20 = 20%
+       2-1 → 3/20 = 15%
+       1-0 → 2/20 = 10%
+    ⭐ V5 BEST : 1-1 prob 11.9% (cote~8) → value bet
+
+  MATCH 6: Everton vs Wolverhampton
+    Cotes : 1.91/3.44/4.09
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.4%
+       2-1 → 10.6%
+       1-0 → 9.8%
+       2-0 → 7.8%
+       0-1 → 7.8%
+    🔍 H2H : 24 matchs, score le + fréquent 0-2 (21%)
+       0-2 → 5/24 = 21%
+       1-0 → 4/24 = 17%
+       1-1 → 3/24 = 12%
+    💎 SCORE EXACT BON : 0-2 arrive 40% (n=10)
+
+  MATCH 7: West Ham vs A. Villa
+    Cotes : 2.25/3.63/2.94
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.6%
+       2-1 → 10.5%
+       1-2 → 8.3%
+       1-0 → 7.5%
+       2-0 → 6.9%
+    🔍 H2H : 20 matchs, score le + fréquent 1-1 (30%)
+       1-1 → 6/20 = 30%
+       0-1 → 3/20 = 15%
+       2-0 → 2/20 = 10%
+    💎💎 SCORE EXACT GOLD : 1-1 arrive 43% (n=14) ⭐⭐⭐
+
+  MATCH 8: Liverpool vs Brentford
+    Cotes : 1.39/4.82/7.51
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.6%
+       2-0 → 10.3%
+       3-0 → 10.1%
+       1-0 → 9.0%
+       1-1 → 8.2%
+    🔍 H2H : 20 matchs, score le + fréquent 4-0 (15%)
+       4-0 → 3/20 = 15%
+       1-0 → 2/20 = 10%
+       2-1 → 2/20 = 10%
+
+  MATCH 9: Leeds vs Manchester Red
+    Cotes : 4.80/3.85/1.69
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.6%
+       0-2 → 10.2%
+       0-1 → 9.6%
+       1-2 → 9.4%
+       0-3 → 7.8%
+    🔍 H2H : 21 matchs, score le + fréquent 1-1 (24%)
+       1-1 → 5/21 = 24%
+       1-0 → 3/21 = 14%
+       1-4 → 3/21 = 14%
+
+  MATCH 10: C. Palace vs London Blues
+    Cotes : 2.21/3.63/3.01
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.6%
+       2-1 → 9.8%
+       1-2 → 8.0%
+       2-0 → 7.2%
+       0-1 → 6.7%
+    🔍 H2H : 20 matchs, score le + fréquent 1-2 (25%)
+       1-2 → 5/20 = 25%
+       1-0 → 2/20 = 10%
+       3-1 → 2/20 = 10%
+    ⭐ V5 BEST : 1-1 prob 11.6% (cote~8) → value bet
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 00:36 — SCORE EXACT focus
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MATCH 1: London Reds vs Leeds
+    Cotes : 1.15/7.77/17.22
+    📊 V5 Top 5 scores Poisson+empirique:
+       3-0 → 13.9%
+       2-0 → 11.6%
+       4-0 → 9.6%
+       3-1 → 8.1%
+       2-1 → 7.6%
+    🔍 H2H : 24 matchs, score le + fréquent 2-0 (21%)
+       2-0 → 5/24 = 21%
+       5-0 → 4/24 = 17%
+       3-1 → 4/24 = 17%
+    ⭐ V5 BEST : 3-0 prob 13.9% (cote~6) → value bet
+
+  MATCH 2: Brentford vs Manchester Blue
+    Cotes : 4.14/4.14/1.73
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.8%
+       1-2 → 9.4%
+       0-2 → 9.2%
+       0-1 → 8.9%
+       0-3 → 7.0%
+    🔍 H2H : 22 matchs, score le + fréquent 1-2 (14%)
+       1-2 → 3/22 = 14%
+       1-3 → 3/22 = 14%
+       0-1 → 2/22 = 9%
+
+  MATCH 3: Wolverhampton vs N. Forest
+    Cotes : 1.95/3.73/3.57
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.7%
+       2-1 → 10.2%
+       1-0 → 8.8%
+       1-2 → 7.7%
+       2-0 → 7.1%
+    🔍 H2H : 24 matchs, score le + fréquent 1-1 (17%)
+       1-1 → 4/24 = 17%
+       2-1 → 3/24 = 12%
+       0-1 → 3/24 = 12%
+    ⭐ V5 BEST : 1-1 prob 11.7% (cote~8) → value bet
+
+  MATCH 4: Burnley vs Liverpool
+    Cotes : 5.74/4.48/1.51
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 10.3%
+       0-2 → 9.8%
+       1-2 → 9.5%
+       0-1 → 9.0%
+       0-3 → 7.9%
+    🔍 H2H : 24 matchs, score le + fréquent 1-1 (17%)
+       1-1 → 4/24 = 17%
+       0-2 → 4/24 = 17%
+       0-3 → 4/24 = 17%
+
+  MATCH 5: Spurs vs West Ham
+    Cotes : 1.60/4.56/4.61
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.7%
+       1-1 → 10.1%
+       2-0 → 8.4%
+       3-1 → 8.3%
+       1-0 → 7.3%
+    🔍 H2H : 22 matchs, score le + fréquent 1-1 (18%)
+       1-1 → 4/22 = 18%
+       1-0 → 4/22 = 18%
+       2-0 → 3/22 = 14%
+    ⚠️ Score 1-0 31% (n=13) — confiance moyenne
+
+  MATCH 6: Newcastle vs Bournemouth
+    Cotes : 1.31/5.82/8.10
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.3%
+       3-0 → 10.0%
+       2-0 → 8.9%
+       3-1 → 8.8%
+       1-1 → 7.1%
+    🔍 H2H : 23 matchs, score le + fréquent 3-0 (17%)
+       3-0 → 4/23 = 17%
+       3-1 → 3/23 = 13%
+       3-2 → 2/23 = 9%
+
+  MATCH 7: London Blues vs Manchester Red
+    Cotes : 1.66/3.92/4.90
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.5%
+       2-1 → 10.7%
+       2-0 → 8.6%
+       1-0 → 8.5%
+       3-1 → 7.3%
+    🔍 H2H : 20 matchs, score le + fréquent 2-0 (20%)
+       2-0 → 4/20 = 20%
+       1-0 → 3/20 = 15%
+       0-1 → 3/20 = 15%
+    ⭐ V5 BEST : 1-1 prob 11.5% (cote~8) → value bet
+
+  MATCH 8: Brighton vs Everton
+    Cotes : 1.69/3.69/5.03
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 11.1%
+       2-1 → 10.6%
+       2-0 → 10.0%
+       1-0 → 9.8%
+       3-1 → 7.3%
+    🔍 H2H : 23 matchs, score le + fréquent 2-0 (22%)
+       2-0 → 5/23 = 22%
+       1-1 → 4/23 = 17%
+       2-1 → 3/23 = 13%
+    ⭐ V5 BEST : 1-1 prob 11.1% (cote~8) → value bet
+
+  MATCH 9: Sunderland vs C. Palace
+    Cotes : 6.63/4.10/1.50
+    📊 V5 Top 5 scores Poisson+empirique:
+       1-1 → 12.3%
+       0-2 → 11.2%
+       1-2 → 10.4%
+       0-1 → 9.8%
+       0-3 → 8.8%
+    🔍 H2H : 24 matchs, score le + fréquent 1-0 (17%)
+       1-0 → 4/24 = 17%
+       0-3 → 4/24 = 17%
+       0-0 → 2/24 = 8%
+    ⭐ V5 BEST : 1-1 prob 12.3% (cote~7) → value bet
+
+  MATCH 10: A. Villa vs Fulham
+    Cotes : 1.62/4.31/4.77
+    📊 V5 Top 5 scores Poisson+empirique:
+       2-1 → 10.8%
+       1-1 → 10.7%
+       2-0 → 8.3%
+       3-1 → 8.0%
+       1-0 → 7.6%
+    🔍 H2H : 23 matchs, score le + fréquent 2-1 (26%)
+       2-1 → 6/23 = 26%
+       2-0 → 4/23 = 17%
+       3-2 → 4/23 = 17%
+
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  📋 SOMMAIRE SCORE EXACT — TOUS ROUNDS
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+💎💎💎 SCORE EXACT GOLD (priorité ABSOLUE — rate ≥40%, n≥12):
+   ⭐⭐⭐ [00:34] West Ham vs A. Villa                     1-1    43% (n=14, cote~2, EV~+-10%)
+
+💎 SCORE EXACT BON (rate ≥33%):
+   ⭐⭐ [00:34] Everton vs Wolverhampton                 0-2    40% (n=10, cote~2)
+
+⭐ V5 BEST SCORES (top1 ≥11%) :
+   [00:26] Brentford vs Brighton                    2-1    14.9% (modèle V5)
+   [00:32] Sunderland vs Liverpool                  0-3    14.5% (modèle V5)
+   [00:30] Manchester Blue vs Leeds                 3-0    14.4% (modèle V5)
+   [00:36] London Reds vs Leeds                     3-0    13.9% (modèle V5)
+   [00:28] Leeds vs Liverpool                       0-3    13.4% (modèle V5)
+   [00:32] London Blues vs Manchester Blue          1-1    13.3% (modèle V5)
+   [00:24] Manchester Blue vs N. Forest             3-0    13.2% (modèle V5)
+   [00:34] Manchester Blue vs Sunderland            3-0    13.0% (modèle V5)
+   [00:26] Burnley vs Sunderland                    1-1    12.8% (modèle V5)
+   [00:28] London Reds vs Everton                   3-0    12.6% (modèle V5)
+   [00:26] Everton vs Manchester Red                1-1    12.6% (modèle V5)
+   [00:30] Everton vs A. Villa                      1-1    12.6% (modèle V5)
+   [00:24] Sunderland vs Brentford                  0-1    12.5% (modèle V5)
+   [00:32] London Reds vs West Ham                  3-0    12.4% (modèle V5)
+   [00:26] Bournemouth vs Leeds                     1-0    12.4% (modèle V5)
+
+💰 PLAN DE MISE (bankroll 100u, mise 0.30-0.50u par pick):
+   💎 [00:34] West Ham vs A. Villa           1-1 → mise 0.50u (gain potentiel +0.5u)
+   ⭐ [00:34] Everton vs Wolverhampton       0-2 → mise 0.30u (gain potentiel +0.4u)
+
+   Total misé : 0.80u

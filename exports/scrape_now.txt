@@ -1,0 +1,21 @@
+2026-06-05T09:46:37Z INFO scraper.collector | navigating url=https://bet261.mg/virtual/category/instant-league/8035/matches
+2026-06-05T09:46:50Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/matches
+2026-06-05T09:46:50Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/32/playout?eventCategoryId=149852&parentEventCategoryId=8035
+2026-06-05T09:46:54Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/3?eventCategoryId=149861&getNext=true
+2026-06-05T09:46:55Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/33?eventCategoryId=149852&getNext=false
+2026-06-05T09:46:57Z INFO scraper.collector | found 10 future round tabs
+2026-06-05T09:47:00Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/34?eventCategoryId=149852&getNext=false
+2026-06-05T09:47:02Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/35?eventCategoryId=149852&getNext=false
+2026-06-05T09:47:03Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/36?eventCategoryId=149852&getNext=false
+2026-06-05T09:47:05Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/37?eventCategoryId=149852&getNext=false
+2026-06-05T09:47:06Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/38?eventCategoryId=149852&getNext=false
+2026-06-05T09:47:08Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/1?eventCategoryId=149861&getNext=false
+2026-06-05T09:47:10Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/2?eventCategoryId=149861&getNext=false
+2026-06-05T09:47:11Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/3?eventCategoryId=149861&getNext=false
+2026-06-05T09:47:13Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/4?eventCategoryId=149861&getNext=false
+2026-06-05T09:47:13Z INFO scraper.collector | navigating url=https://bet261.mg/virtual/category/instant-league/8035/results
+2026-06-05T09:47:20Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/results xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/results?skip=0&take=4
+2026-06-05T09:47:26Z INFO scraper.collector | navigating url=https://bet261.mg/virtual/category/instant-league/8035/ranking
+2026-06-05T09:47:30Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/ranking xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/ranking
+2026-06-05T09:47:38Z INFO scraper.collector | extracted events=160 rankings=20 via XHR captures=15
+2026-06-05T09:47:39Z INFO scraper.collector | iteration ok run_id=872

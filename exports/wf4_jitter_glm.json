@@ -1,0 +1,54 @@
+{
+ "glm_all": {
+  "coef_drift": 2.902,
+  "p_drift": 0.028496461669719197,
+  "coef_const": -0.0003,
+  "n": 3609
+ },
+ "glm_bootstrap_cluster": {
+  "coef_mean": 2.73,
+  "coef_sd": 1.648,
+  "p_two_sided": 0.1,
+  "n_boot": 400
+ },
+ "movers_drift>=3%": {
+  "n": 472,
+  "actual": 0.3284,
+  "p_open": 0.2695,
+  "pv_vs_open": 0.005025257573655429,
+  "p_close": 0.2825,
+  "pv_vs_close": 0.02795664496669062
+ },
+ "movers_drift>=5%": {
+  "n": 179,
+  "actual": 0.2905,
+  "p_open": 0.227,
+  "pv_vs_open": 0.049236456794879674,
+  "p_close": 0.2425,
+  "pv_vs_close": 0.13830576870240313
+ },
+ "movers_drift<=-3%": {
+  "n": 491,
+  "actual": 0.2566,
+  "p_open": 0.2761,
+  "pv_vs_open": 0.3635522443353646,
+  "p_close": 0.2633,
+  "pv_vs_close": 0.7587860130759343
+ },
+ "movers_drift<=-5%": {
+  "n": 198,
+  "actual": 0.2323,
+  "p_open": 0.2475,
+  "pv_vs_open": 0.680720322265107,
+  "p_close": 0.2321,
+  "pv_vs_close": 1.0
+ },
+ "pooled_pos_vs_neg": {
+  "edge_pos": 0.0079,
+  "n_pos": 1670,
+  "edge_neg": -0.0107,
+  "n_neg": 1681,
+  "z": 1.15,
+  "p": 0.24912517512510624
+ }
+}

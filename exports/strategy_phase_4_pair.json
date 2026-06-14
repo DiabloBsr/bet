@@ -1,0 +1,3439 @@
+{
+  "DS": {
+    "paire_or_home": [],
+    "paire_or_away": [],
+    "paire_trap_home": [],
+    "score_combo_gold": [],
+    "score_dominant": []
+  },
+  "MS_early": {
+    "paire_or_home": [
+      {
+        "pair": [
+          "Brighton",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 2.8,
+        "modal_score": "2-1",
+        "modal_rate": 0.6,
+        "avg_cote_h": 1.7900000000000003,
+        "roi_h": 0.79
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Bournemouth"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.16666666666666666,
+        "wr_a": 0.0,
+        "avg_g": 3.1666666666666665,
+        "modal_score": "4-0",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.875,
+        "roi_h": 0.5666666666666665
+      },
+      {
+        "pair": [
+          "Everton",
+          "N. Forest"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 4.0,
+        "modal_score": "4-2",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.9100000000000001,
+        "roi_h": 0.5379999999999999
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Everton"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 3.4,
+        "modal_score": "4-0",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.8519999999999999,
+        "roi_h": 0.49000000000000005
+      },
+      {
+        "pair": [
+          "London Reds",
+          "C. Palace"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 2.8,
+        "modal_score": "1-0",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.38,
+        "roi_h": 0.37999999999999995
+      },
+      {
+        "pair": [
+          "Brentford",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 3.2,
+        "modal_score": "2-1",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.65,
+        "roi_h": 0.32799999999999996
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Liverpool"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 3.2,
+        "modal_score": "2-0",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.572,
+        "roi_h": 0.25800000000000006
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Everton"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 3.4,
+        "modal_score": "3-0",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.234,
+        "roi_h": 0.23399999999999999
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "N. Forest"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 4.0,
+        "modal_score": "2-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.192,
+        "roi_h": 0.19199999999999995
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 4.2,
+        "modal_score": "4-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.1939999999999997,
+        "roi_h": -0.04400000000000004
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Burnley"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 4.0,
+        "modal_score": "2-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.158,
+        "roi_h": -0.07400000000000007
+      }
+    ],
+    "paire_or_away": [
+      {
+        "pair": [
+          "Burnley",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.0,
+        "wr_a": 1.0,
+        "avg_g": 2.8,
+        "modal_score": "1-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 7.886,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Manchester Blue"
+        ],
+        "n": 7,
+        "wr_h": 0.0,
+        "wr_x": 0.0,
+        "wr_a": 1.0,
+        "avg_g": 4.0,
+        "modal_score": "0-3",
+        "modal_rate": 0.42857142857142855,
+        "avg_cote_h": 18.607142857142858,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Brighton"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 4.2,
+        "modal_score": "0-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.254,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Everton",
+          "C. Palace"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 2.0,
+        "modal_score": "1-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 2.45,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Brighton"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 4.2,
+        "modal_score": "2-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.25,
+        "roi_h": -0.544
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Brentford"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 3.4,
+        "modal_score": "1-2",
+        "modal_rate": 0.6,
+        "avg_cote_h": 2.006,
+        "roi_h": -0.6060000000000001
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Burnley"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 3.8,
+        "modal_score": "1-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 3.95,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Liverpool"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 3.2,
+        "modal_score": "1-3",
+        "modal_rate": 0.4,
+        "avg_cote_h": 12.143999999999998,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 3.4,
+        "modal_score": "0-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 5.188000000000001,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Brentford"
+        ],
+        "n": 6,
+        "wr_h": 0.3333333333333333,
+        "wr_x": 0.0,
+        "wr_a": 0.6666666666666666,
+        "avg_g": 2.8333333333333335,
+        "modal_score": "2-1",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.9966666666666668,
+        "roi_h": -0.32833333333333337
+      }
+    ],
+    "paire_trap_home": [
+      {
+        "pair": [
+          "C. Palace",
+          "Brighton"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 4.2,
+        "modal_score": "0-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.254,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Everton",
+          "C. Palace"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 2.0,
+        "modal_score": "1-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 2.45,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 2.2,
+        "modal_score": "2-1",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.704,
+        "roi_h": -0.6599999999999999
+      },
+      {
+        "pair": [
+          "Fulham",
+          "A. Villa"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 3.2,
+        "modal_score": "2-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 2.022,
+        "roi_h": -0.5900000000000001
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Brighton"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 4.2,
+        "modal_score": "2-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.25,
+        "roi_h": -0.544
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Fulham"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 2.4,
+        "modal_score": "0-0",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.732,
+        "roi_h": -0.648
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "London Reds"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 3.8,
+        "modal_score": "1-1",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.242,
+        "roi_h": -0.554
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Brentford"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 3.4,
+        "modal_score": "1-2",
+        "modal_rate": 0.6,
+        "avg_cote_h": 2.006,
+        "roi_h": -0.6060000000000001
+      },
+      {
+        "pair": [
+          "Spurs",
+          "N. Forest"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 1.6,
+        "modal_score": "0-2",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.5420000000000003,
+        "roi_h": -0.696
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.6,
+        "wr_a": 0.2,
+        "avg_g": 2.8,
+        "modal_score": "2-2",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.8259999999999998,
+        "roi_h": -0.64
+      }
+    ],
+    "score_combo_gold": [
+      {
+        "pair": [
+          "A. Villa",
+          "Brighton"
+        ],
+        "n": 6,
+        "top1": "0-2",
+        "r1": 0.5,
+        "top2": "2-2",
+        "r2": 0.16666666666666666,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Brighton",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.6,
+        "top2": "4-0",
+        "r2": 0.2,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "0-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "A. Villa"
+        ],
+        "n": 5,
+        "top1": "1-0",
+        "r1": 0.4,
+        "top2": "2-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "London Reds"
+        ],
+        "n": 5,
+        "top1": "1-3",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Everton",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "0-1",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Fulham",
+          "A. Villa"
+        ],
+        "n": 5,
+        "top1": "2-2",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Everton"
+        ],
+        "n": 5,
+        "top1": "4-0",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Sunderland"
+        ],
+        "n": 5,
+        "top1": "0-3",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "N. Forest"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "4-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "Newcastle"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "0-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "London Reds",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "1-0",
+        "r1": 0.4,
+        "top2": "2-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Burnley"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "2-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Everton"
+        ],
+        "n": 5,
+        "top1": "3-0",
+        "r1": 0.4,
+        "top2": "4-0",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "West Ham"
+        ],
+        "n": 5,
+        "top1": "4-1",
+        "r1": 0.4,
+        "top2": "3-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "top1": "3-1",
+        "r1": 0.4,
+        "top2": "1-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Brentford"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.6,
+        "top2": "3-0",
+        "r2": 0.2,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "1-0",
+        "r1": 0.4,
+        "top2": "0-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Liverpool"
+        ],
+        "n": 5,
+        "top1": "1-3",
+        "r1": 0.4,
+        "top2": "0-3",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Manchester Blue"
+        ],
+        "n": 7,
+        "top1": "0-3",
+        "r1": 0.42857142857142855,
+        "top2": "1-4",
+        "r2": 0.14285714285714285,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Fulham"
+        ],
+        "n": 5,
+        "top1": "1-3",
+        "r1": 0.4,
+        "top2": "2-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "top1": "0-2",
+        "r1": 0.4,
+        "top2": "1-3",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      }
+    ],
+    "score_dominant": [
+      {
+        "pair": [
+          "Brighton",
+          "Wolverhampton"
+        ],
+        "n": 6,
+        "score": "1-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "A. Villa"
+        ],
+        "n": 5,
+        "score": "1-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Bournemouth"
+        ],
+        "n": 6,
+        "score": "4-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "London Reds"
+        ],
+        "n": 5,
+        "score": "1-3",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Everton",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Fulham",
+          "A. Villa"
+        ],
+        "n": 5,
+        "score": "2-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Everton"
+        ],
+        "n": 5,
+        "score": "4-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Sunderland"
+        ],
+        "n": 5,
+        "score": "0-3",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "N. Forest"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "Newcastle"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "London Reds",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "1-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Burnley"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Everton"
+        ],
+        "n": 5,
+        "score": "3-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "West Ham"
+        ],
+        "n": 5,
+        "score": "4-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Brentford"
+        ],
+        "n": 6,
+        "score": "2-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "score": "3-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "1-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Liverpool"
+        ],
+        "n": 5,
+        "score": "1-3",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Manchester Blue"
+        ],
+        "n": 7,
+        "score": "0-3",
+        "rate": 0.42857142857142855
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Fulham"
+        ],
+        "n": 5,
+        "score": "1-3",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "score": "0-2",
+        "rate": 0.4
+      }
+    ]
+  },
+  "MS_mid": {
+    "paire_or_home": [
+      {
+        "pair": [
+          "Bournemouth",
+          "A. Villa"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.0,
+        "wr_a": 0.2,
+        "avg_g": 3.2,
+        "modal_score": "2-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 2.2719999999999994,
+        "roi_h": 0.8079999999999998
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 4.0,
+        "modal_score": "5-0",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.8039999999999998,
+        "roi_h": 0.8039999999999999
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Sunderland"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.0,
+        "wr_a": 0.16666666666666666,
+        "avg_g": 2.6666666666666665,
+        "modal_score": "3-0",
+        "modal_rate": 0.16666666666666666,
+        "avg_cote_h": 1.8133333333333335,
+        "roi_h": 0.51
+      },
+      {
+        "pair": [
+          "Fulham",
+          "West Ham"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.0,
+        "wr_a": 0.16666666666666666,
+        "avg_g": 4.0,
+        "modal_score": "4-0",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.7933333333333332,
+        "roi_h": 0.5016666666666668
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.0,
+        "wr_a": 0.2,
+        "avg_g": 3.6,
+        "modal_score": "3-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.8539999999999999,
+        "roi_h": 0.4960000000000001
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Wolverhampton"
+        ],
+        "n": 7,
+        "wr_h": 0.8571428571428571,
+        "wr_x": 0.14285714285714285,
+        "wr_a": 0.0,
+        "avg_g": 3.142857142857143,
+        "modal_score": "3-1",
+        "modal_rate": 0.14285714285714285,
+        "avg_cote_h": 1.6685714285714288,
+        "roi_h": 0.43571428571428567
+      },
+      {
+        "pair": [
+          "London Blues",
+          "A. Villa"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.16666666666666666,
+        "wr_a": 0.0,
+        "avg_g": 2.6666666666666665,
+        "modal_score": "3-1",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.6716666666666669,
+        "roi_h": 0.39333333333333326
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Brighton"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 3.0,
+        "modal_score": "2-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.342,
+        "roi_h": 0.342
+      },
+      {
+        "pair": [
+          "A. Villa",
+          "C. Palace"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.0,
+        "wr_a": 0.16666666666666666,
+        "avg_g": 3.0,
+        "modal_score": "2-0",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.595,
+        "roi_h": 0.3283333333333334
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Everton"
+        ],
+        "n": 6,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 3.6666666666666665,
+        "modal_score": "3-0",
+        "modal_rate": 0.5,
+        "avg_cote_h": 1.3,
+        "roi_h": 0.30000000000000004
+      },
+      {
+        "pair": [
+          "Spurs",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 2.6,
+        "modal_score": "1-0",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.6019999999999999,
+        "roi_h": 0.28
+      },
+      {
+        "pair": [
+          "Brighton",
+          "N. Forest"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.0,
+        "wr_a": 0.16666666666666666,
+        "avg_g": 3.1666666666666665,
+        "modal_score": "4-0",
+        "modal_rate": 0.5,
+        "avg_cote_h": 1.5266666666666666,
+        "roi_h": 0.27666666666666667
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Leeds"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 3.0,
+        "modal_score": "1-0",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.6,
+        "roi_h": 0.2740000000000001
+      },
+      {
+        "pair": [
+          "Everton",
+          "Burnley"
+        ],
+        "n": 7,
+        "wr_h": 0.7142857142857143,
+        "wr_x": 0.14285714285714285,
+        "wr_a": 0.14285714285714285,
+        "avg_g": 2.7142857142857144,
+        "modal_score": "2-1",
+        "modal_rate": 0.42857142857142855,
+        "avg_cote_h": 1.7657142857142858,
+        "roi_h": 0.26285714285714284
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Fulham"
+        ],
+        "n": 7,
+        "wr_h": 0.8571428571428571,
+        "wr_x": 0.14285714285714285,
+        "wr_a": 0.0,
+        "avg_g": 2.7142857142857144,
+        "modal_score": "1-0",
+        "modal_rate": 0.42857142857142855,
+        "avg_cote_h": 1.4185714285714286,
+        "roi_h": 0.21571428571428566
+      }
+    ],
+    "paire_or_away": [
+      {
+        "pair": [
+          "Brentford",
+          "London Reds"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.0,
+        "wr_a": 1.0,
+        "avg_g": 3.4,
+        "modal_score": "0-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 4.768,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Burnley",
+          "C. Palace"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.0,
+        "wr_a": 1.0,
+        "avg_g": 3.0,
+        "modal_score": "1-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 3.278,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Everton"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.0,
+        "wr_a": 1.0,
+        "avg_g": 4.0,
+        "modal_score": "1-4",
+        "modal_rate": 0.4,
+        "avg_cote_h": 4.032,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Leeds",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.0,
+        "wr_a": 1.0,
+        "avg_g": 4.0,
+        "modal_score": "1-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 4.1659999999999995,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Burnley",
+          "London Reds"
+        ],
+        "n": 8,
+        "wr_h": 0.125,
+        "wr_x": 0.0,
+        "wr_a": 0.875,
+        "avg_g": 3.25,
+        "modal_score": "0-2",
+        "modal_rate": 0.25,
+        "avg_cote_h": 9.9075,
+        "roi_h": 0.21750000000000003
+      },
+      {
+        "pair": [
+          "Burnley",
+          "London Blues"
+        ],
+        "n": 6,
+        "wr_h": 0.16666666666666666,
+        "wr_x": 0.0,
+        "wr_a": 0.8333333333333334,
+        "avg_g": 3.1666666666666665,
+        "modal_score": "1-2",
+        "modal_rate": 0.5,
+        "avg_cote_h": 3.4716666666666662,
+        "roi_h": -0.43
+      },
+      {
+        "pair": [
+          "London Blues",
+          "London Reds"
+        ],
+        "n": 6,
+        "wr_h": 0.0,
+        "wr_x": 0.16666666666666666,
+        "wr_a": 0.8333333333333334,
+        "avg_g": 2.5,
+        "modal_score": "1-2",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 3.6933333333333334,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 2.6,
+        "modal_score": "0-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 4.395999999999999,
+        "roi_h": -0.12200000000000007
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Brentford"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 2.8,
+        "modal_score": "0-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 7.351999999999999,
+        "roi_h": 0.38599999999999995
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Newcastle"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.2,
+        "wr_a": 0.8,
+        "avg_g": 3.8,
+        "modal_score": "1-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 8.938,
+        "roi_h": -1.0
+      }
+    ],
+    "paire_trap_home": [
+      {
+        "pair": [
+          "Burnley",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.8,
+        "wr_a": 0.2,
+        "avg_g": 2.2,
+        "modal_score": "1-1",
+        "modal_rate": 0.6,
+        "avg_cote_h": 2.478,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.6,
+        "wr_a": 0.4,
+        "avg_g": 2.0,
+        "modal_score": "0-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.672,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "West Ham",
+          "C. Palace"
+        ],
+        "n": 5,
+        "wr_h": 0.0,
+        "wr_x": 0.4,
+        "wr_a": 0.6,
+        "avg_g": 2.6,
+        "modal_score": "1-2",
+        "modal_rate": 0.4,
+        "avg_cote_h": 2.276,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "West Ham",
+          "London Blues"
+        ],
+        "n": 6,
+        "wr_h": 0.0,
+        "wr_x": 0.6666666666666666,
+        "wr_a": 0.3333333333333333,
+        "avg_g": 2.6666666666666665,
+        "modal_score": "2-2",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 2.4000000000000004,
+        "roi_h": -1.0
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Manchester Red"
+        ],
+        "n": 7,
+        "wr_h": 0.14285714285714285,
+        "wr_x": 0.2857142857142857,
+        "wr_a": 0.5714285714285714,
+        "avg_g": 2.5714285714285716,
+        "modal_score": "2-3",
+        "modal_rate": 0.2857142857142857,
+        "avg_cote_h": 2.2614285714285716,
+        "roi_h": -0.6714285714285715
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "London Blues"
+        ],
+        "n": 6,
+        "wr_h": 0.16666666666666666,
+        "wr_x": 0.16666666666666666,
+        "wr_a": 0.6666666666666666,
+        "avg_g": 2.5,
+        "modal_score": "1-2",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 2.213333333333334,
+        "roi_h": -0.6316666666666667
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Burnley"
+        ],
+        "n": 6,
+        "wr_h": 0.16666666666666666,
+        "wr_x": 0.5,
+        "wr_a": 0.3333333333333333,
+        "avg_g": 2.6666666666666665,
+        "modal_score": "2-2",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.7666666666666664,
+        "roi_h": -0.7066666666666667
+      },
+      {
+        "pair": [
+          "Everton",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.2,
+        "wr_a": 0.6,
+        "avg_g": 2.4,
+        "modal_score": "1-3",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.34,
+        "roi_h": -0.524
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Leeds"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.6,
+        "wr_a": 0.2,
+        "avg_g": 2.0,
+        "modal_score": "0-0",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.472,
+        "roi_h": -0.712
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "Spurs"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 3.0,
+        "modal_score": "0-4",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.162,
+        "roi_h": -0.564
+      }
+    ],
+    "score_combo_gold": [
+      {
+        "pair": [
+          "A. Villa",
+          "Sunderland"
+        ],
+        "n": 5,
+        "top1": "2-2",
+        "r1": 0.4,
+        "top2": "5-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "A. Villa"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "1-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "London Reds"
+        ],
+        "n": 5,
+        "top1": "0-2",
+        "r1": 0.4,
+        "top2": "1-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.6,
+        "top2": "1-2",
+        "r2": 0.2,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Newcastle"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "2-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Sunderland"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "2-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brentford",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "0-3",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Leeds"
+        ],
+        "n": 5,
+        "top1": "2-0",
+        "r1": 0.4,
+        "top2": "3-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brentford",
+          "London Reds"
+        ],
+        "n": 5,
+        "top1": "0-2",
+        "r1": 0.4,
+        "top2": "0-5",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "top1": "1-0",
+        "r1": 0.4,
+        "top2": "1-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "4-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brighton",
+          "Manchester Blue"
+        ],
+        "n": 6,
+        "top1": "1-1",
+        "r1": 0.5,
+        "top2": "0-1",
+        "r2": 0.16666666666666666,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Brighton",
+          "N. Forest"
+        ],
+        "n": 6,
+        "top1": "4-0",
+        "r1": 0.5,
+        "top2": "1-0",
+        "r2": 0.16666666666666666,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Burnley",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "1-4",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Everton"
+        ],
+        "n": 5,
+        "top1": "0-1",
+        "r1": 0.4,
+        "top2": "3-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Burnley",
+          "London Blues"
+        ],
+        "n": 6,
+        "top1": "1-2",
+        "r1": 0.5,
+        "top2": "1-0",
+        "r2": 0.16666666666666666,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "2-3",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Manchester Red"
+        ],
+        "n": 7,
+        "top1": "0-0",
+        "r1": 0.2857142857142857,
+        "top2": "1-1",
+        "r2": 0.2857142857142857,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.6,
+        "top2": "2-2",
+        "r2": 0.2,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "top1": "3-2",
+        "r1": 0.4,
+        "top2": "3-0",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Brentford"
+        ],
+        "n": 5,
+        "top1": "2-2",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "N. Forest"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "2-0",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Everton",
+          "Burnley"
+        ],
+        "n": 7,
+        "top1": "2-1",
+        "r1": 0.42857142857142855,
+        "top2": "1-0",
+        "r2": 0.14285714285714285,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "Everton",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "0-1",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Everton",
+          "Newcastle"
+        ],
+        "n": 5,
+        "top1": "2-2",
+        "r1": 0.4,
+        "top2": "0-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Everton"
+        ],
+        "n": 6,
+        "top1": "1-2",
+        "r1": 0.3333333333333333,
+        "top2": "3-0",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Leeds"
+        ],
+        "n": 5,
+        "top1": "0-0",
+        "r1": 0.4,
+        "top2": "1-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Fulham",
+          "London Blues"
+        ],
+        "n": 6,
+        "top1": "2-0",
+        "r1": 0.3333333333333333,
+        "top2": "2-3",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "top1": "0-2",
+        "r1": 0.4,
+        "top2": "1-2",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Everton"
+        ],
+        "n": 5,
+        "top1": "1-4",
+        "r1": 0.4,
+        "top2": "1-3",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Liverpool"
+        ],
+        "n": 7,
+        "top1": "1-2",
+        "r1": 0.42857142857142855,
+        "top2": "2-1",
+        "r2": 0.2857142857142857,
+        "combo": 0.7142857142857142
+      },
+      {
+        "pair": [
+          "Leeds",
+          "West Ham"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "0-5",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "C. Palace"
+        ],
+        "n": 7,
+        "top1": "2-0",
+        "r1": 0.42857142857142855,
+        "top2": "2-1",
+        "r2": 0.2857142857142857,
+        "combo": 0.7142857142857142
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "Manchester Red"
+        ],
+        "n": 6,
+        "top1": "1-1",
+        "r1": 0.3333333333333333,
+        "top2": "5-1",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "Wolverhampton"
+        ],
+        "n": 7,
+        "top1": "3-1",
+        "r1": 0.2857142857142857,
+        "top2": "1-0",
+        "r2": 0.2857142857142857,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Everton"
+        ],
+        "n": 7,
+        "top1": "0-1",
+        "r1": 0.2857142857142857,
+        "top2": "3-0",
+        "r2": 0.2857142857142857,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "London Blues",
+          "London Reds"
+        ],
+        "n": 6,
+        "top1": "1-2",
+        "r1": 0.3333333333333333,
+        "top2": "0-3",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "top1": "0-1",
+        "r1": 0.4,
+        "top2": "2-2",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Sunderland"
+        ],
+        "n": 7,
+        "top1": "1-1",
+        "r1": 0.42857142857142855,
+        "top2": "2-1",
+        "r2": 0.2857142857142857,
+        "combo": 0.7142857142857142
+      },
+      {
+        "pair": [
+          "London Blues",
+          "West Ham"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.6,
+        "top2": "1-1",
+        "r2": 0.2,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Everton"
+        ],
+        "n": 6,
+        "top1": "3-0",
+        "r1": 0.5,
+        "top2": "4-1",
+        "r2": 0.16666666666666666,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Fulham"
+        ],
+        "n": 7,
+        "top1": "1-0",
+        "r1": 0.42857142857142855,
+        "top2": "2-0",
+        "r2": 0.14285714285714285,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Bournemouth"
+        ],
+        "n": 6,
+        "top1": "2-0",
+        "r1": 0.3333333333333333,
+        "top2": "1-2",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Brighton"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "2-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "top1": "2-0",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "N. Forest"
+        ],
+        "n": 5,
+        "top1": "2-0",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Brighton"
+        ],
+        "n": 6,
+        "top1": "4-0",
+        "r1": 0.3333333333333333,
+        "top2": "2-1",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Fulham"
+        ],
+        "n": 9,
+        "top1": "2-1",
+        "r1": 0.3333333333333333,
+        "top2": "1-1",
+        "r2": 0.2222222222222222,
+        "combo": 0.5555555555555556
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "London Reds"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "2-2",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "N. Forest"
+        ],
+        "n": 7,
+        "top1": "2-1",
+        "r1": 0.2857142857142857,
+        "top2": "2-2",
+        "r2": 0.2857142857142857,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "London Reds"
+        ],
+        "n": 6,
+        "top1": "1-2",
+        "r1": 0.3333333333333333,
+        "top2": "2-2",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "Sunderland"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "West Ham"
+        ],
+        "n": 7,
+        "top1": "3-0",
+        "r1": 0.2857142857142857,
+        "top2": "1-1",
+        "r2": 0.2857142857142857,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "0-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Brentford"
+        ],
+        "n": 9,
+        "top1": "1-1",
+        "r1": 0.3333333333333333,
+        "top2": "3-0",
+        "r2": 0.2222222222222222,
+        "combo": 0.5555555555555556
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Brighton"
+        ],
+        "n": 5,
+        "top1": "3-1",
+        "r1": 0.4,
+        "top2": "0-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Leeds"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "3-1",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Spurs",
+          "A. Villa"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "5-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Brentford"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.4,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "Spurs",
+          "West Ham"
+        ],
+        "n": 5,
+        "top1": "1-0",
+        "r1": 0.4,
+        "top2": "4-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Brentford"
+        ],
+        "n": 5,
+        "top1": "0-2",
+        "r1": 0.4,
+        "top2": "1-4",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "West Ham",
+          "C. Palace"
+        ],
+        "n": 5,
+        "top1": "1-2",
+        "r1": 0.4,
+        "top2": "2-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Newcastle"
+        ],
+        "n": 7,
+        "top1": "3-1",
+        "r1": 0.2857142857142857,
+        "top2": "1-0",
+        "r2": 0.2857142857142857,
+        "combo": 0.5714285714285714
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Everton"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Liverpool"
+        ],
+        "n": 6,
+        "top1": "1-1",
+        "r1": 0.3333333333333333,
+        "top2": "1-2",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "London Reds"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "1-4",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "West Ham"
+        ],
+        "n": 5,
+        "top1": "2-2",
+        "r1": 0.4,
+        "top2": "0-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      }
+    ],
+    "score_dominant": [
+      {
+        "pair": [
+          "A. Villa",
+          "C. Palace"
+        ],
+        "n": 6,
+        "score": "2-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "A. Villa",
+          "Everton"
+        ],
+        "n": 6,
+        "score": "1-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "A. Villa",
+          "Sunderland"
+        ],
+        "n": 5,
+        "score": "2-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "A. Villa"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Brentford"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "London Reds"
+        ],
+        "n": 5,
+        "score": "0-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Newcastle"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Bournemouth",
+          "Sunderland"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brentford",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "0-3",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Leeds"
+        ],
+        "n": 5,
+        "score": "2-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brentford",
+          "London Reds"
+        ],
+        "n": 5,
+        "score": "0-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "score": "1-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brighton",
+          "London Reds"
+        ],
+        "n": 6,
+        "score": "2-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Brighton"
+        ],
+        "n": 6,
+        "score": "2-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Burnley",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Everton"
+        ],
+        "n": 5,
+        "score": "0-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "score": "3-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "Brentford"
+        ],
+        "n": 5,
+        "score": "2-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "London Blues"
+        ],
+        "n": 6,
+        "score": "1-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "C. Palace",
+          "N. Forest"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Everton",
+          "A. Villa"
+        ],
+        "n": 6,
+        "score": "0-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Everton",
+          "Burnley"
+        ],
+        "n": 7,
+        "score": "2-1",
+        "rate": 0.42857142857142855
+      },
+      {
+        "pair": [
+          "Everton",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "0-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Everton",
+          "Fulham"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Everton",
+          "Newcastle"
+        ],
+        "n": 5,
+        "score": "2-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Everton"
+        ],
+        "n": 6,
+        "score": "1-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Leeds"
+        ],
+        "n": 5,
+        "score": "0-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Fulham",
+          "London Blues"
+        ],
+        "n": 6,
+        "score": "2-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Fulham",
+          "Spurs"
+        ],
+        "n": 6,
+        "score": "2-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Fulham",
+          "West Ham"
+        ],
+        "n": 6,
+        "score": "4-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Bournemouth"
+        ],
+        "n": 5,
+        "score": "0-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Everton"
+        ],
+        "n": 5,
+        "score": "1-4",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Leeds",
+          "Liverpool"
+        ],
+        "n": 7,
+        "score": "1-2",
+        "rate": 0.42857142857142855
+      },
+      {
+        "pair": [
+          "Leeds",
+          "West Ham"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "C. Palace"
+        ],
+        "n": 7,
+        "score": "2-0",
+        "rate": 0.42857142857142855
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "Everton"
+        ],
+        "n": 6,
+        "score": "3-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "Manchester Red"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "London Blues",
+          "A. Villa"
+        ],
+        "n": 6,
+        "score": "3-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "London Blues",
+          "London Reds"
+        ],
+        "n": 6,
+        "score": "1-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Blue"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "score": "0-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Sunderland"
+        ],
+        "n": 7,
+        "score": "1-1",
+        "rate": 0.42857142857142855
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Fulham"
+        ],
+        "n": 7,
+        "score": "1-0",
+        "rate": 0.42857142857142855
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Liverpool"
+        ],
+        "n": 6,
+        "score": "4-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Manchester Blue"
+        ],
+        "n": 6,
+        "score": "2-3",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "London Reds",
+          "West Ham"
+        ],
+        "n": 6,
+        "score": "3-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "A. Villa"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Bournemouth"
+        ],
+        "n": 6,
+        "score": "2-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Brighton"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Liverpool"
+        ],
+        "n": 6,
+        "score": "2-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "Manchester Red"
+        ],
+        "n": 5,
+        "score": "2-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "N. Forest"
+        ],
+        "n": 5,
+        "score": "2-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Brighton"
+        ],
+        "n": 6,
+        "score": "4-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Fulham"
+        ],
+        "n": 9,
+        "score": "2-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "London Reds"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Newcastle"
+        ],
+        "n": 6,
+        "score": "1-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "Brighton"
+        ],
+        "n": 6,
+        "score": "3-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "London Reds"
+        ],
+        "n": 6,
+        "score": "1-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "Sunderland"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "N. Forest",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Brentford"
+        ],
+        "n": 9,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Brighton"
+        ],
+        "n": 5,
+        "score": "3-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Fulham"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Leeds"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "London Blues"
+        ],
+        "n": 6,
+        "score": "3-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Spurs",
+          "A. Villa"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Spurs",
+          "Brentford"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Spurs",
+          "West Ham"
+        ],
+        "n": 5,
+        "score": "1-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Sunderland",
+          "Brentford"
+        ],
+        "n": 5,
+        "score": "0-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "West Ham",
+          "C. Palace"
+        ],
+        "n": 5,
+        "score": "1-2",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Leeds"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "West Ham",
+          "London Blues"
+        ],
+        "n": 6,
+        "score": "2-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Burnley"
+        ],
+        "n": 6,
+        "score": "2-2",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Everton"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Liverpool"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "London Reds"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "Sunderland"
+        ],
+        "n": 6,
+        "score": "1-0",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Wolverhampton",
+          "West Ham"
+        ],
+        "n": 5,
+        "score": "2-2",
+        "rate": 0.4
+      }
+    ]
+  },
+  "MS_late": {
+    "paire_or_home": [
+      {
+        "pair": [
+          "Brentford",
+          "London Blues"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 3.2,
+        "modal_score": "2-0",
+        "modal_rate": 0.4,
+        "avg_cote_h": 2.02,
+        "roi_h": 0.618
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 2.6,
+        "modal_score": "1-0",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.6020000000000003,
+        "roi_h": 0.6020000000000001
+      },
+      {
+        "pair": [
+          "Brighton",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "wr_h": 1.0,
+        "wr_x": 0.0,
+        "wr_a": 0.0,
+        "avg_g": 3.6,
+        "modal_score": "3-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.5240000000000002,
+        "roi_h": 0.524
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Leeds"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.2,
+        "wr_a": 0.0,
+        "avg_g": 3.0,
+        "modal_score": "3-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.5900000000000003,
+        "roi_h": 0.2760000000000001
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.0,
+        "wr_a": 0.2,
+        "avg_g": 2.8,
+        "modal_score": "2-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.512,
+        "roi_h": 0.21400000000000005
+      },
+      {
+        "pair": [
+          "Liverpool",
+          "West Ham"
+        ],
+        "n": 5,
+        "wr_h": 0.8,
+        "wr_x": 0.0,
+        "wr_a": 0.2,
+        "avg_g": 3.0,
+        "modal_score": "2-1",
+        "modal_rate": 0.2,
+        "avg_cote_h": 1.23,
+        "roi_h": -0.016000000000000014
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "N. Forest"
+        ],
+        "n": 6,
+        "wr_h": 0.8333333333333334,
+        "wr_x": 0.0,
+        "wr_a": 0.16666666666666666,
+        "avg_g": 3.6666666666666665,
+        "modal_score": "2-1",
+        "modal_rate": 0.3333333333333333,
+        "avg_cote_h": 1.1783333333333332,
+        "roi_h": -0.018333333333333385
+      }
+    ],
+    "paire_or_away": [
+      {
+        "pair": [
+          "Leeds",
+          "Sunderland"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 2.8,
+        "modal_score": "1-3",
+        "modal_rate": 0.2,
+        "avg_cote_h": 3.692,
+        "roi_h": -0.26799999999999996
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.0,
+        "wr_a": 0.8,
+        "avg_g": 3.4,
+        "modal_score": "0-3",
+        "modal_rate": 0.4,
+        "avg_cote_h": 3.1279999999999997,
+        "roi_h": -0.378
+      }
+    ],
+    "paire_trap_home": [
+      {
+        "pair": [
+          "Brighton",
+          "A. Villa"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.6,
+        "wr_a": 0.2,
+        "avg_g": 4.0,
+        "modal_score": "1-1",
+        "modal_rate": 0.4,
+        "avg_cote_h": 1.818,
+        "roi_h": -0.638
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Newcastle"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 2.4,
+        "modal_score": "3-1",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.18,
+        "roi_h": -0.5740000000000001
+      },
+      {
+        "pair": [
+          "West Ham",
+          "London Blues"
+        ],
+        "n": 5,
+        "wr_h": 0.2,
+        "wr_x": 0.4,
+        "wr_a": 0.4,
+        "avg_g": 2.4,
+        "modal_score": "2-2",
+        "modal_rate": 0.2,
+        "avg_cote_h": 2.4459999999999997,
+        "roi_h": -0.49800000000000005
+      }
+    ],
+    "score_combo_gold": [
+      {
+        "pair": [
+          "Brentford",
+          "London Blues"
+        ],
+        "n": 5,
+        "top1": "2-0",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "top1": "0-0",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brighton",
+          "A. Villa"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.4,
+        "top2": "3-3",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Brighton",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "top1": "3-1",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Burnley",
+          "Everton"
+        ],
+        "n": 5,
+        "top1": "1-1",
+        "r1": 0.6,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.8
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "top1": "0-3",
+        "r1": 0.4,
+        "top2": "2-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Brighton"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "3-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "N. Forest"
+        ],
+        "n": 6,
+        "top1": "2-1",
+        "r1": 0.3333333333333333,
+        "top2": "3-0",
+        "r2": 0.3333333333333333,
+        "combo": 0.6666666666666666
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "top1": "2-1",
+        "r1": 0.4,
+        "top2": "1-0",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "top1": "0-0",
+        "r1": 0.4,
+        "top2": "3-2",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Leeds"
+        ],
+        "n": 5,
+        "top1": "3-1",
+        "r1": 0.4,
+        "top2": "4-1",
+        "r2": 0.2,
+        "combo": 0.6000000000000001
+      }
+    ],
+    "score_dominant": [
+      {
+        "pair": [
+          "A. Villa",
+          "N. Forest"
+        ],
+        "n": 6,
+        "score": "1-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Brentford",
+          "London Blues"
+        ],
+        "n": 5,
+        "score": "2-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brentford",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "score": "0-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brighton",
+          "A. Villa"
+        ],
+        "n": 5,
+        "score": "1-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Brighton",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "score": "3-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "London Blues",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "score": "0-3",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "London Reds",
+          "Brighton"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Manchester Blue",
+          "N. Forest"
+        ],
+        "n": 6,
+        "score": "2-1",
+        "rate": 0.3333333333333333
+      },
+      {
+        "pair": [
+          "Manchester Red",
+          "Wolverhampton"
+        ],
+        "n": 5,
+        "score": "2-1",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "Newcastle",
+          "Manchester Blue"
+        ],
+        "n": 5,
+        "score": "0-0",
+        "rate": 0.4
+      },
+      {
+        "pair": [
+          "West Ham",
+          "Leeds"
+        ],
+        "n": 5,
+        "score": "3-1",
+        "rate": 0.4
+      }
+    ]
+  },
+  "FS": {
+    "paire_or_home": [],
+    "paire_or_away": [],
+    "paire_trap_home": [],
+    "score_combo_gold": [],
+    "score_dominant": []
+  }
+}

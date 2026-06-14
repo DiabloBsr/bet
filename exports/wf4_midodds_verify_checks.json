@@ -1,0 +1,129 @@
+{
+ "lookahead": {
+  "minid_vs_mints_bad": 0,
+  "n_events": 32730,
+  "opening_after_start": 16672
+ },
+ "corrupted": {
+  "ids_in_file": 473,
+  "excluded_rows": 388
+ },
+ "seg_by_league": {
+  "InstantLeague-8035": {
+   "DS": 775,
+   "MS_early": 1833,
+   "MS_mid": 2814,
+   "late": 2379
+  },
+  "InstantLeague-8036": {
+   "DS": 160,
+   "MS_early": 340,
+   "MS_mid": 530,
+   "late": 360
+  },
+  "InstantLeague-8037": {
+   "DS": 160,
+   "MS_early": 350,
+   "MS_mid": 530,
+   "late": 370
+  },
+  "InstantLeague-8042": {
+   "DS": 99,
+   "MS_early": 279,
+   "MS_mid": 432,
+   "late": 378
+  },
+  "InstantLeague-8043": {
+   "DS": 99,
+   "MS_early": 288,
+   "MS_mid": 441,
+   "late": 369
+  },
+  "InstantLeague-8044": {
+   "DS": 99,
+   "MS_early": 279,
+   "MS_mid": 432,
+   "late": 378
+  },
+  "InstantLeague-8056": {
+   "DS": 234,
+   "MS_early": 594,
+   "MS_mid": 1062,
+   "late": 774
+  },
+  "InstantLeague-8060": {
+   "DS": 204,
+   "MS_early": 396,
+   "MS_mid": 672,
+   "late": 456
+  },
+  "InstantLeague-8065": {
+   "DS": 288,
+   "MS_early": 744,
+   "MS_mid": 1272,
+   "late": 1272
+  }
+ },
+ "rounds_over_max": {},
+ "odds_truncation": {
+  "msmid_away_ge15": 427,
+  "max_odds_away": 100.0
+ },
+ "p2_8035_pooled": {
+  "n": 813,
+  "wins": 122,
+  "roi_pct": 9.37,
+  "avg_odds": 7.95,
+  "pvalue": 0.31105
+ },
+ "p2_new_pooled": {
+  "n": 1330,
+  "wins": 175,
+  "roi_pct": -0.53,
+  "avg_odds": 8.08,
+  "pvalue": 0.94248
+ },
+ "p2_oos_combined": {
+  "n": 1575,
+  "wins": 214,
+  "roi_pct": 2.44,
+  "avg_odds": 8.08,
+  "pvalue": 0.7154
+ },
+ "p2_oos_quarters": [
+  {
+   "n": 393,
+   "wins": 66,
+   "roi_pct": 27.16,
+   "avg_odds": 8.24,
+   "pvalue": 0.04539
+  },
+  {
+   "n": 394,
+   "wins": 46,
+   "roi_pct": -14.09,
+   "avg_odds": 8.0,
+   "pvalue": 0.29047
+  },
+  {
+   "n": 391,
+   "wins": 50,
+   "roi_pct": -3.95,
+   "avg_odds": 8.02,
+   "pvalue": 0.76804
+  },
+  {
+   "n": 397,
+   "wins": 52,
+   "roi_pct": 0.69,
+   "avg_odds": 8.06,
+   "pvalue": 0.95857
+  }
+ ],
+ "p2_bootstrap": {
+  "median": 2.25,
+  "lo": -11.1,
+  "hi": 16.03,
+  "p_roi_le_0": 0.3681
+ }
+}

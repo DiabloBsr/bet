@@ -1,0 +1,18 @@
+2026-06-05T10:12:13Z INFO scraper.collector | navigating url=https://bet261.mg/virtual/category/instant-league/8035/matches
+2026-06-05T10:12:29Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/matches
+2026-06-05T10:12:31Z INFO scraper.collector | found 10 future round tabs
+2026-06-05T10:12:35Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/7?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:38Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/9?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:39Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/8?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:40Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/10?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:43Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/11?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:43Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/12?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:44Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/13?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:46Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/matches xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/14?eventCategoryId=149861&getNext=false
+2026-06-05T10:12:47Z INFO scraper.collector | navigating url=https://bet261.mg/virtual/category/instant-league/8035/results
+2026-06-05T10:12:48Z WARNING scraper.collector | could not decode XHR https://hg-event-api-prod.sporty-tech.net/api/instantleagues/round/15?eventCategoryId=149861&getNext=false: Response.json: Protocol error (Network.getResponseBody): No resource with given identifier found
+2026-06-05T10:12:52Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/results xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/results?skip=0&take=4
+2026-06-05T10:12:59Z INFO scraper.collector | navigating url=https://bet261.mg/virtual/category/instant-league/8035/ranking
+2026-06-05T10:13:03Z INFO scraper.collector | captured XHR visit=https://bet261.mg/virtual/category/instant-league/8035/ranking xhr=https://hg-event-api-prod.sporty-tech.net/api/instantleagues/8035/ranking
+2026-06-05T10:13:09Z INFO scraper.collector | extracted events=130 rankings=20 via XHR captures=11
+2026-06-05T10:13:10Z INFO scraper.collector | iteration ok run_id=878

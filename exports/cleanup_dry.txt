@@ -1,0 +1,41 @@
+BDD : D:\AGENTOVA\SAMY\virtual-sports-scraper\data\virtual_sports.db
+⚠️  DRY-RUN — aucune modification
+
+================================================================================
+AVANT NETTOYAGE
+================================================================================
+  events                 :     9451 lignes
+  odds_snapshots         :    16230 lignes
+  results                :     8545 lignes
+  rankings_snapshots     :    11743 lignes
+  scrape_runs            :      863 lignes
+
+================================================================================
+NETTOYAGE - 6 ÉTAPES
+================================================================================
+
+1️⃣  Events sans odds_snapshot      : 4137 à supprimer
+
+2️⃣  Results avec finished_at corrompu (>1j décalage) : 1795 à supprimer
+   → Cause : bug match_key dedup (vieux résultats attachés aux nouveaux events)
+
+3️⃣  Groupes d'events dupliqués : 283
+
+4️⃣  Events sans expected_start : 372
+
+5️⃣  Odds_snapshots orphelins : 0
+
+6️⃣  Scrape_runs zombies (status=running) : 3
+
+================================================================================
+RÉSUMÉ DES ACTIONS
+================================================================================
+  orphan_events             :   4137
+  corrupt_results           :   1795
+  dup_events                :    283
+  no_date                   :    372
+  orphan_odds               :      0
+  zombie_runs               :      3
+  TOTAL                     :   6590
+
+⚠️  DRY-RUN MODE. Pour exécuter vraiment, ajoutez --execute

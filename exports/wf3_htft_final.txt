@@ -1,0 +1,9 @@
+selections longshot 1X2-MT (p<0.08, G1+HT/FT dispos) : n=136 wins=15 obs_freq=0.1103
+  p_mkt(1X2MT)     n=136 moy=0.0651  E[w]=  8.9  P(W>=15|cette source)=0.0319
+  p_G1(CS)         n=136 moy=0.0739  E[w]= 10.1  P(W>=15|cette source)=0.0780
+  p_HT/FT          n=136 moy=0.0648  E[w]=  8.8  P(W>=15|cette source)=0.0307
+  p_DC(syst,floor) n=136 moy=0.0650  E[w]=  8.8  P(W>=15|cette source)=0.0314
+ROI cote brute = +59.79%
+
+=> si TOUTES les sources donnent P(W>=w) < ~0.05, l'anomalie est partagee (bruit du tirage improbable)
+   si seule 1X2-MT est en dessous, sa cote est structurellement trop haute (edge reel)

@@ -1,0 +1,99 @@
+=== AUDIT RANKINGS — n_matchs=4272, n_ranking_snaps=10587 ===
+
+=== TEST 1 : Performance par équipe en tant que favori HOME ===
+  Total matchs avec home favori : 3102, win rate global : 57.8%
+
+  Team                   n     win%     cote moy   expected%  diff
+---------------------------------------------------------------------------
+  Burnley                55     49.1%    2.41     39.5%     +9.6pp ⭐
+  Brighton               171    63.2%    1.74     55.3%     +7.8pp ⭐
+  C. Palace              163    57.1%    1.95     49.4%     +7.7pp ⭐
+  Brentford              158    60.8%    1.78     54.1%     +6.7pp ⭐
+  Liverpool              219    74.9%    1.37     71.1%     +3.8pp
+  N. Forest              183    52.5%    1.97     48.7%     +3.7pp
+  Manchester Red         187    56.7%    1.78     54.1%     +2.6pp
+  London Reds            208    69.7%    1.40     68.7%     +1.0pp
+  Fulham                 171    51.5%    1.91     50.5%     +0.9pp
+  London Blues           193    58.5%    1.67     57.8%     +0.7pp
+  Bournemouth            175    44.6%    2.12     45.6%     -1.0pp
+  A. Villa               190    60.5%    1.56     61.7%     -1.2pp
+  Manchester Blue        221    71.5%    1.33     72.8%     -1.3pp
+  Newcastle              203    65.5%    1.44     67.3%     -1.8pp
+  West Ham               140    45.0%    2.05     47.1%     -2.1pp
+  Spurs                  183    53.0%    1.73     55.6%     -2.6pp
+  Wolverhampton          138    42.8%    2.10     45.7%     -3.0pp
+  Everton                144    37.5%    2.16     44.6%     -7.1pp ❌
+
+=== TEST 2 : Influence du classement (rank_home - rank_away) ===
+  Hypothèse : si home est mieux classé (rank plus bas) que ce que la cote suggère, edge ?
+  Sample : n=3059
+
+  Rank diff                 n     home_won%    ROI parier home
+  diff ∈ [-20;-10]  n=454   69.8%  ROI=-6.43%
+  diff ∈ [-10;-5]  n=592   61.8%  ROI=-5.14%
+  diff ∈ [-5;-2]  n=515   58.3%  ROI=-3.25%
+  diff ∈ [-2;+2]  n=575   56.0%  ROI=-2.21%
+  diff ∈ [+2;+5]  n=399   50.6%  ROI=-6.56%
+  diff ∈ [+5;+10]  n=375   49.1%  ROI=-3.12%
+  diff ∈ [+10;+25]  n=149   51.7%  ROI=+8.55% ⭐
+
+=== TEST 3 : Forme récente W/L/D — prédit-elle le prochain match ? ===
+  Sample : n=3053
+
+  Home wins/5     n      home_won%    ROI
+  Home wins = 0/5      n=239    53.6%   ROI=-0.07%
+  Home wins = 1/5      n=673    52.6%   ROI=-6.28%
+  Home wins = 2/5      n=967    58.3%   ROI=-1.60%
+  Home wins = 3/5      n=745    59.1%   ROI=-5.75%
+  Home wins = 4/5      n=365    65.5%   ROI=-0.95%
+  Home wins = 5/5      n=64     59.4%   ROI=-18.64%
+
+  Croisement forme home vs away :
+  H=0/5 A=0/5  n=43    51.2%  ROI=-13.02%
+  H=0/5 A=1/5  n=73    52.1%  ROI=-8.18%
+  H=0/5 A=2/5  n=67    55.2%  ROI=+8.73%
+  H=0/5 A=3/5  n=39    56.4%  ROI=+11.56% ⭐
+  H=1/5 A=0/5  n=96    55.2%  ROI=-6.51%
+  H=1/5 A=1/5  n=197   55.8%  ROI=-3.00%
+  H=1/5 A=2/5  n=205   48.8%  ROI=-13.03%
+  H=1/5 A=3/5  n=127   50.4%  ROI=-5.91%
+  H=1/5 A=4/5  n=39    59.0%  ROI=+13.28% ⭐
+  H=2/5 A=0/5  n=162   60.5%  ROI=-4.27%
+  H=2/5 A=1/5  n=262   61.8%  ROI=+1.57%
+  H=2/5 A=2/5  n=297   57.9%  ROI=-1.71%
+  H=2/5 A=3/5  n=184   54.3%  ROI=-2.65%
+  H=2/5 A=4/5  n=52    50.0%  ROI=-9.56%
+  H=3/5 A=0/5  n=110   54.5%  ROI=-21.38%
+  H=3/5 A=1/5  n=208   61.1%  ROI=-5.08%
+  H=3/5 A=2/5  n=215   62.3%  ROI=+1.54%
+  H=3/5 A=3/5  n=141   61.0%  ROI=+0.14%
+  H=3/5 A=4/5  n=64    48.4%  ROI=-14.16%
+  H=4/5 A=0/5  n=35    65.7%  ROI=-15.34%
+  H=4/5 A=1/5  n=109   67.0%  ROI=-5.25%
+  H=4/5 A=2/5  n=108   65.7%  ROI=+1.68%
+  H=4/5 A=3/5  n=76    64.5%  ROI=+4.29%
+  H=4/5 A=4/5  n=32    65.6%  ROI=+12.19% ⭐
+
+=== TEST 4 : Performance spécifique Spurs et A. Villa en tant que home favori ===
+
+  Spurs as home favori :
+    cote ∈ [1.5;1.7]  n=56   win=57.1%  ROI=-8.2%
+    cote ∈ [1.7;1.9]  n=39   win=51.3%  ROI=-7.5%
+    cote ∈ [1.9;2.2]  n=45   win=40.0%  ROI=-20.9%
+
+  A. Villa as home favori :
+    cote ∈ [1.5;1.7]  n=57   win=63.2%  ROI=+2.6%
+    cote ∈ [1.7;1.9]  n=34   win=52.9%  ROI=-6.6%
+
+  Manchester Red as home favori :
+    cote ∈ [1.5;1.7]  n=61   win=67.2%  ROI=+6.7%
+    cote ∈ [1.7;1.9]  n=23   win=47.8%  ROI=-13.4%
+    cote ∈ [1.9;2.2]  n=70   win=51.4%  ROI=+2.1%
+
+  Manchester Blue as home favori :
+    cote ∈ [1.5;1.7]  n=11   win=63.6%  ROI=+0.5%
+
+  Brighton as home favori :
+    cote ∈ [1.5;1.7]  n=57   win=71.9%  ROI=+14.2%
+    cote ∈ [1.7;1.9]  n=40   win=55.0%  ROI=-0.6%
+    cote ∈ [1.9;2.2]  n=39   win=66.7%  ROI=+31.2%

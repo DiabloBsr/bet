@@ -1,0 +1,23 @@
+D:\AGENTOVA\SAMY\virtual-sports-scraper\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:3824: RuntimeWarning: Mean of empty slice
+  return _methods._mean(a, axis=axis, dtype=dtype,
+D:\AGENTOVA\SAMY\virtual-sports-scraper\.venv\Lib\site-packages\numpy\_core\_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+D:\AGENTOVA\SAMY\virtual-sports-scraper\scripts\_wf3_fixtures5.py:207: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+  mw = stats.mannwhitneyu(fp_adj, fp_far, alternative='two-sided')
+================ A. WALK-FORWARD k'=0 + regle H/A ================
+K=1: saisons resolues uniques=0, ambigues=15 | pairing OOS 0/0 (0.0000) | pairing+H/A exact 0/0 (0.0000)
+K=2: saisons resolues uniques=0, ambigues=20 | pairing OOS 0/0 (0.0000) | pairing+H/A exact 0/0 (0.0000)
+K=3: saisons resolues uniques=0, ambigues=25 | pairing OOS 0/0 (0.0000) | pairing+H/A exact 0/0 (0.0000)
+
+================ B. SAISONS AU MEME (pivot, c) : CALENDRIER IDENTIQUE ? ================
+fits exacts (toute la saison, H/A inclus): 0 saisons
+
+================ C. CARACTERE ALEATOIRE DES PERMUTATIONS ================
+points fixes (20 slots, pivot inclus): adjacentes n=0 mean=nan | eloignees n=0 mean=nan | attendu permutation uniforme = 1.0
+Mann-Whitney adj vs far: p=nan
+distribution points fixes: {}
+Traceback (most recent call last):
+  File "D:\AGENTOVA\SAMY\virtual-sports-scraper\scripts\_wf3_fixtures5.py", line 213, in <module>
+    ks = [k for k in range(max(cnt) + 1)]
+                           ^^^^^^^^
+ValueError: max() arg is an empty sequence

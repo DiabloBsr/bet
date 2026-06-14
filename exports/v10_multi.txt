@@ -1,0 +1,318 @@
+Loading V10 FINAL (n_train=3728)...
+Rounds : ['22:49', '22:51', '22:53', '22:55', '22:57', '22:59', '23:01']
+
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 22:49 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 22:49 #1  A. Villa vs Fulham  (1.67/4.19/4.50)
+        HT 1(1-0)  FT 1(55%) 2-1  buts 3.1
+        💎 PAIRE OR HOME : n=11, win=82%, ROI=+36%
+        💎💎 PAIRE OR PICK 1@1.67  EV=+3%  conf=10/10
+  ━━━ 22:49 #2  N. Forest vs London Blues  (2.12/3.56/3.25)
+        HT X(1-1)  FT 1(42%) 1-1  buts 2.8
+        🔥🔥 MULTI-SIG 2@3.25  EV=+35%  conf=4.7/10  (team_bias_+, BRACKET_GOLD_AWAY)
+        🎰 HT/FT 2/1@34  EV+132%
+  ━━━ 22:49 #3  Manchester Red vs C. Palace  (1.85/3.53/4.26)
+        HT X(1-0)  FT 1(48%) 1-1  buts 2.6
+        🎰 HT/FT 1/2@68  EV+204%
+  ━━━ 22:49 #4  Burnley vs Wolverhampton  (2.54/3.37/2.71)
+        HT X(1-1)  FT 1(38%) 1-1  buts 2.7
+        💎 PAIRE OR HOME : n=12, win=67%, ROI=+63%
+        💎💎 PAIRE OR PICK 1@2.54  EV=+8%  conf=9.8/10
+        🎰 HT/FT 1/2@45  EV+142%
+  ━━━ 22:49 #5  Manchester Blue vs London Reds  (2.24/3.70/2.90)
+        HT X(1-0)  FT 1(44%) 1-1  buts 2.5
+        ❌❌ PAIRE TRAP — REFUSER 1
+  ━━━ 22:49 #6  Everton vs Leeds  (1.64/3.53/5.94)
+        HT X(1-0)  FT 1(56%) 1-1  buts 2.4
+        🎰 HT/FT 1/2@100  EV+111%
+        🎰 HT/FT 2/1@44  EV+118%
+  ━━━ 22:49 #7  Newcastle vs Brentford  (1.52/4.37/5.73)
+        HT 1(1-0)  FT 1(61%) 2-1  buts 3.0
+  ━━━ 22:49 #8  Brighton vs Liverpool  (2.45/3.91/2.52)
+        HT X(1-1)  FT 1(41%) 1-1  buts 3.0
+  ━━━ 22:49 #9  West Ham vs Spurs  (2.65/4.04/2.30)
+        HT X(1-1)  FT 2(39%) 1-1  buts 3.0
+  ━━━ 22:49 #10  Bournemouth vs Sunderland  (1.80/3.78/4.16)
+        HT X(1-0)  FT 1(51%) 1-1  buts 2.8
+        🎰 HT/FT 1/2@66  EV+194%
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 22:51 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 22:51 #1  Liverpool vs N. Forest  (1.19/7.00/13.03)
+        HT 1(1-0)  FT 1(77%) 3-0  buts 3.2
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 22:51 #2  C. Palace vs Everton  (1.92/3.33/4.18)
+        HT X(1-0)  FT 1(51%) 1-1  buts 2.5
+        🎰 HT/FT 1/2@79  EV+251%
+  ━━━ 22:51 #3  London Reds vs Brentford  (1.47/4.61/6.07)
+        HT 1(1-0)  FT 1(63%) 2-1  buts 3.1
+        💎 PAIRE OR AWAY : n=12, win=42%, ROI=+156%
+        💎💎 PAIRE OR PICK 2@6.07  EV=-89%  conf=7.7/10
+  ━━━ 22:51 #4  Spurs vs Manchester Blue  (3.79/4.05/1.82)
+        HT X(0-1)  FT 2(51%) 1-1  buts 2.8
+  ━━━ 22:51 #5  London Blues vs Burnley  (1.36/5.33/7.28)
+        HT 1(1-0)  FT 1(65%) 2-1  buts 3.3
+        🎰 HT/FT 1/2@89  EV+100%
+  ━━━ 22:51 #6  A. Villa vs Manchester Red  (1.55/4.45/5.29)
+        HT 1(1-1)  FT 1(56%) 2-1  buts 3.0
+        💎 PAIRE OR HOME : n=10, win=80%, ROI=+25%
+        💎💎 PAIRE OR PICK 1@1.55  EV=-5%  conf=10/10
+  ━━━ 22:51 #7  Sunderland vs Brighton  (7.48/5.20/1.36)
+        HT 2(0-1)  FT 2(68%) 0-1  buts 3.0
+  ━━━ 22:51 #8  Fulham vs Bournemouth  (1.82/4.19/3.67)
+        HT 1(1-1)  FT 1(53%) 2-1  buts 3.5
+  ━━━ 22:51 #9  Leeds vs West Ham  (4.31/3.89/1.75)
+        HT X(0-1)  FT 2(50%) 1-1  buts 2.7
+  ━━━ 22:51 #10  Wolverhampton vs Newcastle  (3.11/3.77/2.11)
+        HT 2(1-1)  FT 2(46%) 1-1  buts 3.1
+        🎰 HT/FT 2/1@43  EV+211%
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 22:53 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 22:53 #1  Newcastle vs London Reds  (2.69/3.40/2.54)
+        HT X(1-1)  FT 1(37%) 1-1  buts 2.6
+        🎰 HT/FT 1/2@45  EV+144%
+  ━━━ 22:53 #2  Wolverhampton vs London Blues  (2.67/3.55/2.48)
+        HT X(1-1)  FT 2(40%) 1-1  buts 2.8
+        💎 PAIRE OR AWAY : n=10, win=90%, ROI=+131%
+        ❌❌ PAIRE TRAP — REFUSER 1
+        💎💎 PAIRE OR PICK 2@2.48  EV=-91%  conf=9.0/10
+  ━━━ 22:53 #3  Manchester Blue vs Leeds  (1.12/8.65/20.49)
+        HT 1(1-0)  FT 1(82%) 3-0  buts 3.6
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 22:53 #4  Everton vs A. Villa  (2.37/3.18/3.09)
+        HT X(1-1)  FT 1(38%) 1-1  buts 2.5
+        🔥🔥 MULTI-SIG 2@3.09  EV=+39%  conf=5.3/10  (team_bias_+, BRACKET_GOLD_AWAY)
+        🎰 HT/FT 1/2@60  EV+108%
+        🎰 HT/FT 2/1@46  EV+214%
+  ━━━ 22:53 #5  West Ham vs C. Palace  (2.33/3.42/2.96)
+        HT X(1-0)  FT 1(41%) 1-1  buts 2.4
+  ━━━ 22:53 #6  Burnley vs Liverpool  (5.49/4.35/1.54)
+        HT 2(0-1)  FT 2(58%) 1-1  buts 2.9
+  ━━━ 22:53 #7  Bournemouth vs Manchester Red  (2.25/3.26/3.24)
+        HT X(1-1)  FT 1(40%) 1-1  buts 2.7
+        🎰 HT/FT 1/2@60  EV+106%
+        🎰 HT/FT 2/1@43  EV+196%
+  ━━━ 22:53 #8  Brighton vs Fulham  (1.96/3.75/3.54)
+        HT 1(1-0)  FT 1(52%) 1-1  buts 3.0
+        🔥🔥 MULTI-SIG 1@1.96  EV=+62%  conf=7.8/10  (team_bias_+, team_bracket_+, BRACKET_GOLD_HOME)
+  ━━━ 22:53 #9  N. Forest vs Sunderland  (1.63/4.10/4.92)
+        HT 1(1-0)  FT 1(56%) 2-1  buts 2.9
+  ━━━ 22:53 #10  Brentford vs Spurs  (2.00/4.37/3.02)
+        HT 1(1-1)  FT 1(46%) 2-1  buts 3.4
+        💎 PAIRE OR HOME : n=9, win=78%, ROI=+62%
+        💎💎 PAIRE OR PICK 1@2.00  EV=-35%  conf=9.8/10
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 22:55 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 22:55 #1  C. Palace vs Manchester Blue  (4.42/3.74/1.77)
+        HT X(0-1)  FT 2(52%) 1-1  buts 2.6
+  ━━━ 22:55 #2  Sunderland vs Burnley  (3.93/4.01/1.80)
+        HT 2(0-1)  FT 2(55%) 1-1  buts 2.8
+  ━━━ 22:55 #3  Liverpool vs Wolverhampton  (1.19/6.88/13.41)
+        HT 1(1-0)  FT 1(77%) 3-0  buts 3.4
+        🔥🔥 MULTI-SIG 2@13.41  EV=+39%  conf=2.7/10  (team_bias_+, BRACKET_GOLD_AWAY)
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 22:55 #4  Bournemouth vs Everton  (2.08/3.05/3.96)
+        HT X(1-0)  FT 1(45%) 1-1  buts 2.4
+        🎰 HT/FT 1/2@84  EV+187%
+        🎰 HT/FT 2/1@49  EV+189%
+  ━━━ 22:55 #5  London Blues vs Newcastle  (1.91/3.94/3.53)
+        HT X(1-1)  FT 1(46%) 1-1  buts 3.2
+        💎 PAIRE OR HOME : n=12, win=75%, ROI=+47%
+        💎💎 PAIRE OR PICK 1@1.91  EV=+16%  conf=9.8/10
+  ━━━ 22:55 #6  Manchester Red vs Brighton  (2.00/3.97/3.23)
+        HT X(1-1)  FT 1(47%) 1-1  buts 3.2
+  ━━━ 22:55 #7  A. Villa vs West Ham  (1.46/4.81/5.94)
+        HT 1(1-0)  FT 1(64%) 2-1  buts 3.2
+        🎰 HT/FT 1/2@74  EV+173%
+        🎰 HT/FT 2/1@27  EV+101%
+  ━━━ 22:55 #8  Leeds vs Brentford  (6.04/4.23/1.52)
+        HT 2(0-1)  FT 2(60%) 1-2  buts 2.9
+  ━━━ 22:55 #9  Spurs vs London Reds  (4.61/4.24/1.65)
+        HT X(1-1)  FT 2(53%) 1-1  buts 2.9
+  ━━━ 22:55 #10  Fulham vs N. Forest  (1.66/4.26/4.49)
+        HT 1(1-0)  FT 1(56%) 2-1  buts 3.1
+        🔥🔥 MULTI-SIG 1@1.66  EV=+53%  conf=9.4/10  (calibration_v7, team_bracket_+, BRACKET_GOLD_HOME)
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 22:57 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 22:57 #1  Brentford vs C. Palace  (1.93/3.92/3.50)
+        HT X(1-0)  FT 1(48%) 1-1  buts 2.7
+  ━━━ 22:57 #2  Brighton vs Everton  (1.64/3.79/5.32)
+        HT 1(1-0)  FT 1(59%) 1-1  buts 2.8
+        🔥🔥 MULTI-SIG 1@1.64  EV=+64%  conf=10/10  (calibration_v7, team_bias_+, team_bracket_+)
+  ━━━ 22:57 #3  London Blues vs Liverpool  (2.30/3.80/2.76)
+        HT X(1-1)  FT 1(39%) 1-1  buts 3.0
+  ━━━ 22:57 #4  Newcastle vs Spurs  (1.50/4.90/5.34)
+        HT 1(1-0)  FT 1(61%) 2-1  buts 3.3
+        🔥🔥 MULTI-SIG 2@5.34  EV=+30%  conf=3.7/10  (team_bias_+, BRACKET_GOLD_AWAY)
+  ━━━ 22:57 #5  Wolverhampton vs Sunderland  (1.93/3.73/3.66)
+        HT X(1-1)  FT 1(46%) 1-1  buts 2.7
+  ━━━ 22:57 #6  Burnley vs Fulham  (3.46/3.34/2.12)
+        HT X(1-1)  FT 2(42%) 1-1  buts 2.6
+        🎰 HT/FT 2/1@64  EV+366%
+  ━━━ 22:57 #7  Manchester Blue vs A. Villa  (1.28/5.82/9.14)
+        HT 1(1-0)  FT 1(71%) 3-0  buts 3.1
+        🔥🔥 MULTI-SIG 2@9.14  EV=+74%  conf=4.3/10  (calibration_v7, team_bias_+, BRACKET_GOLD_AWAY)
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 22:57 #8  London Reds vs Leeds  (1.14/7.78/17.98)
+        HT 1(1-0)  FT 1(80%) 3-0  buts 3.6
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 22:57 #9  West Ham vs Bournemouth  (1.98/4.03/3.27)
+        HT 1(1-0)  FT 1(50%) 1-1  buts 3.0
+  ━━━ 22:57 #10  N. Forest vs Manchester Red  (2.00/3.46/3.67)
+        HT X(1-1)  FT 1(44%) 1-1  buts 2.7
+        🔥🔥 MULTI-SIG 1@2.00  EV=+45%  conf=6.8/10  (team_bracket_+, BRACKET_GOLD_HOME)
+        🎰 HT/FT 1/2@68  EV+132%
+        🎰 HT/FT 2/1@35  EV+108%
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 22:59 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 22:59 #1  A. Villa vs Brentford  (1.72/4.11/4.22)
+        HT 1(1-1)  FT 1(53%) 2-1  buts 3.0
+        💎 PAIRE OR AWAY : n=12, win=42%, ROI=+79%
+        💎💎 PAIRE OR PICK 2@4.22  EV=-30%  conf=7.1/10
+  ━━━ 22:59 #2  Everton vs N. Forest  (1.88/3.49/4.12)
+        HT X(1-0)  FT 1(48%) 1-1  buts 2.4
+        🎰 HT/FT 1/2@72  EV+222%
+  ━━━ 22:59 #3  C. Palace vs London Reds  (5.18/3.75/1.67)
+        HT X(0-1)  FT 2(52%) 1-1  buts 2.6
+  ━━━ 22:59 #4  Liverpool vs Newcastle  (1.45/4.91/6.05)
+        HT 1(1-0)  FT 1(64%) 2-1  buts 3.2
+  ━━━ 22:59 #5  Leeds vs Spurs  (6.32/5.07/1.42)
+        HT 2(0-1)  FT 2(66%) 1-2  buts 3.4
+        ❌❌ PAIRE TRAP — REFUSER 1
+  ━━━ 22:59 #6  Bournemouth vs Manchester Blue  (4.91/3.65/1.72)
+        HT 2(0-1)  FT 2(56%) 1-1  buts 2.6
+  ━━━ 22:59 #7  Manchester Red vs Burnley  (1.44/4.91/6.18)
+        HT 1(1-1)  FT 1(62%) 2-1  buts 3.4
+        💎 PAIRE OR AWAY : n=10, win=30%, ROI=+88%
+        💎💎 PAIRE OR PICK 2@6.18  EV=-52%  conf=6.7/10
+  ━━━ 22:59 #8  Brighton vs West Ham  (1.62/4.34/4.73)
+        HT 1(1-0)  FT 1(62%) 2-1  buts 3.1
+        🔥🔥 MULTI-SIG 1@1.62  EV=+62%  conf=10/10  (calibration_v7, team_bias_+, team_bracket_+)
+  ━━━ 22:59 #9  Fulham vs Wolverhampton  (1.70/4.12/4.34)
+        HT 1(1-1)  FT 1(54%) 2-1  buts 3.3
+        💎 PAIRE OR HOME : n=12, win=83%, ROI=+40%
+        💎💎 PAIRE OR PICK 1@1.70  EV=-18%  conf=10/10
+        🔥🔥 MULTI-SIG 2@4.34  EV=+34%  conf=4.1/10  (team_bias_+, BRACKET_GOLD_AWAY)
+  ━━━ 22:59 #10  Sunderland vs London Blues  (7.36/4.81/1.40)
+        HT 2(0-1)  FT 2(67%) 0-1  buts 2.9
+        ❌❌ PAIRE TRAP — REFUSER 1
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ROUND 23:01 Mada — 10 matchs
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ━━━ 23:01 #1  Burnley vs Everton  (2.81/2.93/2.76)
+        HT X(1-0)  FT 1(36%) 1-1  buts 2.2
+        🎰 HT/FT 1/2@67  EV+261%
+  ━━━ 23:01 #2  Spurs vs C. Palace  (1.86/3.96/3.72)
+        HT X(1-1)  FT 1(49%) 1-1  buts 2.8
+        🎰 HT/FT 2/1@34  EV+102%
+  ━━━ 23:01 #3  Manchester Blue vs Brighton  (1.34/5.88/6.91)
+        HT 1(1-0)  FT 1(69%) 2-1  buts 3.4
+  ━━━ 23:01 #4  Liverpool vs Sunderland  (1.19/6.91/12.83)
+        HT 1(1-0)  FT 1(77%) 3-0  buts 3.4
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 23:01 #5  London Blues vs Fulham  (1.74/3.87/4.42)
+        HT X(1-0)  FT 1(52%) 1-1  buts 2.9
+  ━━━ 23:01 #6  N. Forest vs West Ham  (1.76/3.89/4.28)
+        HT 1(1-0)  FT 1(54%) 1-1  buts 2.7
+        🔥🔥 MULTI-SIG 1@1.76  EV=+66%  conf=7.3/10  (team_bracket_+, BRACKET_GOLD_HOME)
+  ━━━ 23:01 #7  Newcastle vs Leeds  (1.18/6.81/15.34)
+        HT 1(1-0)  FT 1(78%) 3-0  buts 3.4
+        🎰 HT/FT 1/2@100  EV+108%
+  ━━━ 23:01 #8  London Reds vs A. Villa  (1.37/5.09/7.43)
+        HT 1(1-0)  FT 1(66%) 2-1  buts 3.1
+        🔥🔥 MULTI-SIG 2@7.43  EV=+38%  conf=3.3/10  (team_bias_+, BRACKET_GOLD_AWAY)
+        🎰 HT/FT 1/2@100  EV+124%
+  ━━━ 23:01 #9  Brentford vs Bournemouth  (1.70/4.59/3.96)
+        HT 1(1-0)  FT 1(58%) 2-0  buts 3.4
+        🔥🔥 MULTI-SIG 1@1.70  EV=+34%  conf=8.4/10  (calibration_v7, team_bias_+)
+  ━━━ 23:01 #10  Wolverhampton vs Manchester Red  (2.38/3.44/2.86)
+        HT X(1-1)  FT 2(36%) 1-1  buts 2.7
+
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+📋 SOMMAIRE FINAL — TOP PICKS pour tous les rounds
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+💎💎 PAIRES OR (priorité absolue) :
+   ✅ [22:49] A. Villa vs Fulham                       1 @1.67  EV=+3%  conf=10/10
+   ✅ [22:49] Burnley vs Wolverhampton                 1 @2.54  EV=+8%  conf=9.8/10
+   ✅ [22:51] London Reds vs Brentford                 2 @6.07  EV=-89%  conf=7.7/10
+   ✅ [22:51] A. Villa vs Manchester Red               1 @1.55  EV=-5%  conf=10/10
+   ✅ [22:53] Wolverhampton vs London Blues            2 @2.48  EV=-91%  conf=9.0/10
+   ✅ [22:53] Brentford vs Spurs                       1 @2.00  EV=-35%  conf=9.8/10
+   ✅ [22:55] London Blues vs Newcastle                1 @1.91  EV=+16%  conf=9.8/10
+   ✅ [22:59] A. Villa vs Brentford                    2 @4.22  EV=-30%  conf=7.1/10
+   ✅ [22:59] Manchester Red vs Burnley                2 @6.18  EV=-52%  conf=6.7/10
+   ✅ [22:59] Fulham vs Wolverhampton                  1 @1.70  EV=-18%  conf=10/10
+
+🔥🔥 MULTI-SIGNAL (2+ signaux convergents, cote < 3) :
+   ✅ [22:57] Brighton vs Everton                      1 @1.64  EV=+64%  conf=10/10
+   ✅ [22:59] Brighton vs West Ham                     1 @1.62  EV=+62%  conf=10/10
+   ✅ [22:55] Fulham vs N. Forest                      1 @1.66  EV=+53%  conf=9.4/10
+   ✅ [23:01] Brentford vs Bournemouth                 1 @1.70  EV=+34%  conf=8.4/10
+   ✅ [22:53] Brighton vs Fulham                       1 @1.96  EV=+62%  conf=7.8/10
+   ✅ [23:01] N. Forest vs West Ham                    1 @1.76  EV=+66%  conf=7.3/10
+   ✅ [22:57] N. Forest vs Manchester Red              1 @2.00  EV=+45%  conf=6.8/10
+
+🎰 SPÉCULATIFS (EV > 100%, mise minuscule 0.10u) :
+   🎰 [22:57] Burnley vs Fulham                        HT/FT 2/1              @64  EV+366%
+   🎰 [23:01] Burnley vs Everton                       HT/FT 1/2              @67  EV+261%
+   🎰 [22:51] C. Palace vs Everton                     HT/FT 1/2              @79  EV+251%
+   🎰 [22:59] Everton vs N. Forest                     HT/FT 1/2              @72  EV+222%
+   🎰 [22:53] Everton vs A. Villa                      HT/FT 2/1              @46  EV+214%
+   🎰 [22:51] Wolverhampton vs Newcastle               HT/FT 2/1              @43  EV+211%
+   🎰 [22:49] Manchester Red vs C. Palace              HT/FT 1/2              @68  EV+204%
+   🎰 [22:53] Bournemouth vs Manchester Red            HT/FT 2/1              @43  EV+196%
+   🎰 [22:49] Bournemouth vs Sunderland                HT/FT 1/2              @66  EV+194%
+   🎰 [22:55] Bournemouth vs Everton                   HT/FT 2/1              @49  EV+189%
+   🎰 [22:55] Bournemouth vs Everton                   HT/FT 1/2              @84  EV+187%
+   🎰 [22:55] A. Villa vs West Ham                     HT/FT 1/2              @74  EV+173%
+   🎰 [22:53] Newcastle vs London Reds                 HT/FT 1/2              @45  EV+144%
+   🎰 [22:49] Burnley vs Wolverhampton                 HT/FT 1/2              @45  EV+142%
+   🎰 [22:49] N. Forest vs London Blues                HT/FT 2/1              @34  EV+132%
+
+💰 PLAN DE MISE TOTAL (bankroll 100u, sur tous les rounds) :
+   💎 [22:49] 1@1.67 A. Villa vs Fulham              mise 2.50u  →+1.67u si OK
+   💎 [22:49] 1@2.54 Burnley vs Wolverhampton        mise 2.50u  →+3.85u si OK
+   💎 [22:51] 2@6.07 London Reds vs Brentford        mise 2.50u  →+12.68u si OK
+   💎 [22:51] 1@1.55 A. Villa vs Manchester Red      mise 2.50u  →+1.38u si OK
+   💎 [22:53] 2@2.48 Wolverhampton vs London Blues   mise 2.50u  →+3.70u si OK
+   💎 [22:53] 1@2.00 Brentford vs Spurs              mise 2.50u  →+2.50u si OK
+   💎 [22:55] 1@1.91 London Blues vs Newcastle       mise 2.50u  →+2.27u si OK
+   💎 [22:59] 2@4.22 A. Villa vs Brentford           mise 2.50u  →+8.05u si OK
+   💎 [22:59] 2@6.18 Manchester Red vs Burnley       mise 2.50u  →+12.95u si OK
+   💎 [22:59] 1@1.70 Fulham vs Wolverhampton         mise 2.50u  →+1.75u si OK
+   🔥 [22:57] 1@1.64 Brighton vs Everton             mise 1.00u  →+0.64u si OK
+   🔥 [22:59] 1@1.62 Brighton vs West Ham            mise 1.00u  →+0.62u si OK
+   🔥 [22:55] 1@1.66 Fulham vs N. Forest             mise 1.00u  →+0.66u si OK
+   🔥 [23:01] 1@1.70 Brentford vs Bournemouth        mise 1.00u  →+0.70u si OK
+   🔥 [22:53] 1@1.96 Brighton vs Fulham              mise 1.00u  →+0.96u si OK
+   🎰 [22:57] HT/FT 2/1       Burnley vs Fulham               mise 0.10u  →+6.30u si OK
+   🎰 [23:01] HT/FT 1/2       Burnley vs Everton              mise 0.10u  →+6.63u si OK
+   🎰 [22:51] HT/FT 1/2       C. Palace vs Everton            mise 0.10u  →+7.76u si OK
+   🎰 [22:59] HT/FT 1/2       Everton vs N. Forest            mise 0.10u  →+7.11u si OK
+   🎰 [22:53] HT/FT 2/1       Everton vs A. Villa             mise 0.10u  →+4.46u si OK
+   🎰 [22:51] HT/FT 2/1       Wolverhampton vs Newcastle      mise 0.10u  →+4.17u si OK
+   🎰 [22:49] HT/FT 1/2       Manchester Red vs C. Palace     mise 0.10u  →+6.71u si OK
+   🎰 [22:53] HT/FT 2/1       Bournemouth vs Manchester Red   mise 0.10u  →+4.20u si OK
+
+   TOTAL : misé 30.80u  EV gain -2.67u  (sur bankroll 100u)

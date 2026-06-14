@@ -1,0 +1,180 @@
+{
+  "results_duplicate_event_ids": 0,
+  "opening_snapshot_after_start_count": 330,
+  "n_unique_e2": 382,
+  "settlement_check": {
+    "checked": 360,
+    "goals_json_null": 22,
+    "score_vs_goals_mismatch": 0
+  },
+  "E2_pnl": {
+    "n": 382,
+    "wins": 325,
+    "wr": 0.8508,
+    "wr_ci95": [
+      0.8116,
+      0.883
+    ],
+    "avg_odds": 1.1645,
+    "breakeven_wr": 0.8587,
+    "roi_pct": -1.0
+  },
+  "E2_bounds_base": {
+    "n": 382,
+    "wins": 325,
+    "wr": 0.8508,
+    "wr_ci95": [
+      0.8116,
+      0.883
+    ],
+    "avg_odds": 1.1645,
+    "breakeven_wr": 0.8587,
+    "roi_pct": -1.0
+  },
+  "E2_bounds_wider": {
+    "n": 431,
+    "wins": 361,
+    "wr": 0.8376,
+    "wr_ci95": [
+      0.7998,
+      0.8694
+    ],
+    "avg_odds": 1.1697,
+    "breakeven_wr": 0.8549,
+    "roi_pct": -2.15
+  },
+  "E2_bounds_narrower": {
+    "n": 265,
+    "wins": 231,
+    "wr": 0.8717,
+    "wr_ci95": [
+      0.8261,
+      0.9067
+    ],
+    "avg_odds": 1.1567,
+    "breakeven_wr": 0.8645,
+    "roi_pct": 0.82
+  },
+  "E2_bounds_superset": {
+    "n": 638,
+    "wins": 519,
+    "wr": 0.8135,
+    "wr_ci95": [
+      0.7814,
+      0.8418
+    ],
+    "avg_odds": 1.1908,
+    "breakeven_wr": 0.8398,
+    "roi_pct": -3.32
+  },
+  "E2_other_leagues": {
+    "InstantLeague-8036": {
+      "n": 4,
+      "wins": 3,
+      "wr": 0.75,
+      "wr_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "avg_odds": 1.1875,
+      "breakeven_wr": 0.8421,
+      "roi_pct": -10.75
+    },
+    "InstantLeague-8037": {
+      "n": 43,
+      "wins": 33,
+      "wr": 0.7674,
+      "wr_ci95": [
+        0.6226,
+        0.8685
+      ],
+      "avg_odds": 1.1626,
+      "breakeven_wr": 0.8602,
+      "roi_pct": -10.93
+    },
+    "InstantLeague-8042": {
+      "n": 35,
+      "wins": 29,
+      "wr": 0.8286,
+      "wr_ci95": [
+        0.6732,
+        0.919
+      ],
+      "avg_odds": 1.1697,
+      "breakeven_wr": 0.8549,
+      "roi_pct": -2.97
+    },
+    "InstantLeague-8043": {
+      "n": 55,
+      "wins": 44,
+      "wr": 0.8,
+      "wr_ci95": [
+        0.6763,
+        0.8845
+      ],
+      "avg_odds": 1.1649,
+      "breakeven_wr": 0.8584,
+      "roi_pct": -6.76
+    },
+    "InstantLeague-8044": {
+      "n": 97,
+      "wins": 81,
+      "wr": 0.8351,
+      "wr_ci95": [
+        0.7487,
+        0.8958
+      ],
+      "avg_odds": 1.1481,
+      "breakeven_wr": 0.871,
+      "roi_pct": -3.99
+    },
+    "InstantLeague-8056": {
+      "n": 330,
+      "wins": 265,
+      "wr": 0.803,
+      "wr_ci95": [
+        0.7567,
+        0.8423
+      ],
+      "avg_odds": 1.1481,
+      "breakeven_wr": 0.871,
+      "roi_pct": -7.83
+    },
+    "InstantLeague-8060": {
+      "n": 83,
+      "wins": 66,
+      "wr": 0.7952,
+      "wr_ci95": [
+        0.6962,
+        0.868
+      ],
+      "avg_odds": 1.1464,
+      "breakeven_wr": 0.8723,
+      "roi_pct": -8.71
+    },
+    "InstantLeague-8065": {
+      "n": 13,
+      "wins": 10,
+      "wr": 0.7692,
+      "wr_ci95": [
+        0.4974,
+        0.9182
+      ],
+      "avg_odds": 1.1631,
+      "breakeven_wr": 0.8598,
+      "roi_pct": -10.85
+    },
+    "__ALL_OTHER__": {
+      "n": 660,
+      "wins": 531,
+      "wr": 0.8045,
+      "wr_ci95": [
+        0.7726,
+        0.833
+      ],
+      "avg_odds": 1.1519,
+      "breakeven_wr": 0.8681,
+      "roi_pct": -7.31
+    }
+  }
+}

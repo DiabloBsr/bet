@@ -1,0 +1,312 @@
+V5/V10 (n_train=3001)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 17:35 Mada — 10 matchs  (J0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─ Burnley vs Spurs  (3.68/4.02/1.86)
+│  HT: 2 (20/38/42)  score HT 0-1
+│  FT: 2 (52%) score 1-1  |  Top3: 1-1(11%), 1-2(9%), 2-2(8%)
+│  Buts 3.03  O2.5 58%  O3.5 36%  U3.5 64%  BTTS 57%
+│  🌍 DS : ❄️Burnley -9pp DS  ❄️Spurs away -14pp DS  (delta +5pp)
+
+┌─ Brentford vs Leeds  (1.4/4.84/7.15)
+│  HT: 1 (52/37/11)  score HT 1-0
+│  FT: 1 (67%) score 2-1  |  Top3: 2-1(11%), 2-0(10%), 3-0(10%)
+│  Buts 2.84  O2.5 54%  O3.5 32%  U3.5 68%  BTTS 43%
+│  🌍 DS : ❄️Brentford -28pp DS  (delta -28pp)
+│  💎 DS AWAY : 2 @7.15  (delta DS -28pp)
+
+┌─ C. Palace vs West Ham  (1.77/3.93/4.14)
+│  HT: 1 (48/36/17)  score HT 1-0
+│  FT: 1 (56%) score 2-1  |  Top3: 2-1(11%), 1-1(10%), 2-0(9%)
+│  Buts 3.17  O2.5 61%  O3.5 39%  U3.5 61%  BTTS 56%
+│  🌍 DS : ❄️C. Palace -10pp DS  (delta -10pp)
+│  💎 PAIRE OR HOME : 1 @1.77  (75% wins n=8)
+
+┌─ Manchester Blue vs Brighton  (1.32/6.0/7.23)
+│  HT: 1 (54/32/14)  score HT 1-0
+│  FT: 1 (69%) score 2-1  |  Top3: 2-1(10%), 3-0(10%), 3-1(9%)
+│  Buts 3.53  O2.5 68%  O3.5 47%  U3.5 53%  BTTS 57%
+│  🌍 DS : 🔥Manchester Blue +12pp DS  (delta +12pp)
+
+┌─ N. Forest vs Bournemouth  (1.8/3.98/3.94)
+│  HT: 1 (41/40/18)  score HT 1-0
+│  FT: 1 (53%) score 2-1  |  Top3: 2-1(11%), 1-1(11%), 1-0(10%)
+│  Buts 2.73  O2.5 51%  O3.5 29%  U3.5 71%  BTTS 51%
+│  💎 PAIRE OR HOME : 1 @1.8  (80% wins n=10)
+
+┌─ Sunderland vs Wolverhampton  (4.28/3.77/1.78)
+│  HT: X (20/42/38)  score HT 0-1
+│  FT: 2 (51%) score 1-1  |  Top3: 1-1(11%), 1-2(11%), 0-1(10%)
+│  Buts 2.55  O2.5 47%  O3.5 25%  U3.5 75%  BTTS 49%
+
+┌─ Newcastle vs A. Villa  (1.43/4.72/6.67)
+│  HT: 1 (50/35/15)  score HT 1-0
+│  FT: 1 (64%) score 2-1  |  Top3: 2-1(11%), 3-0(10%), 2-0(9%)
+│  Buts 3.18  O2.5 61%  O3.5 39%  U3.5 61%  BTTS 53%
+│  🌍 DS : ❄️Newcastle -15pp DS  (delta -15pp)
+
+┌─ Manchester Red vs Liverpool  (2.46/3.73/2.59)
+│  HT: X (30/38/32)  score HT 1-1
+│  FT: 2 (37%) score 1-1  |  Top3: 1-1(12%), 2-1(10%), 1-2(9%)
+│  Buts 3.16  O2.5 61%  O3.5 39%  U3.5 61%  BTTS 63%
+
+┌─ Everton vs London Blues  (2.52/3.23/2.83)
+│  HT: X (27/43/30)  score HT 1-1
+│  FT: 1 (36%) score 1-1  |  Top3: 1-1(14%), 2-1(9%), 1-2(9%)
+│  Buts 2.60  O2.5 48%  O3.5 26%  U3.5 74%  BTTS 53%
+│  🌍 DS : 🔥Everton +41pp DS  (delta +41pp)
+│  ℹ️  DS bonus home modéré (mise prudente)
+│  🔥 MULTI : 2 @2.83  EV+55% conf 5.5/10
+
+┌─ Fulham vs London Reds  (5.3/4.1/1.59)
+│  HT: 2 (23/38/40)  score HT 1-1
+│  FT: 2 (54%) score 1-2  |  Top3: 1-2(11%), 1-1(10%), 0-2(9%)
+│  Buts 3.11  O2.5 60%  O3.5 38%  U3.5 62%  BTTS 60%
+│  🌍 DS : ❄️Fulham -12pp DS  ❄️London Reds away -13pp DS  (delta +1pp)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 17:37 Mada — 10 matchs  (J0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─ Bournemouth vs A. Villa  (2.27/3.29/3.18)
+│  HT: X (32/42/26)  score HT 1-1
+│  FT: 1 (41%) score 1-1  |  Top3: 1-1(13%), 2-1(10%), 0-1(8%)
+│  Buts 2.64  O2.5 49%  O3.5 27%  U3.5 73%  BTTS 53%
+│  🛡️  DOUBLE CHANCE 1X : ~@1.37  (70%)
+│  💎 PAIRE OR AWAY : 2 @3.18  (50% wins n=8)
+
+┌─ London Blues vs Newcastle  (2.0/3.89/3.29)
+│  HT: X (32/40/28)  score HT 1-1
+│  FT: 1 (43%) score 1-1  |  Top3: 1-1(11%), 2-1(10%), 1-0(8%)
+│  Buts 2.93  O2.5 56%  O3.5 34%  U3.5 66%  BTTS 59%
+│  🌍 DS : 🔥London Blues +13pp DS  ❄️Newcastle away -15pp DS  (delta +27pp)
+│  ℹ️  DS bonus home modéré (mise prudente)
+
+┌─ Liverpool vs Manchester Blue  (2.08/3.58/3.34)
+│  HT: X (34/45/21)  score HT 1-0
+│  FT: 1 (45%) score 1-1  |  Top3: 1-1(12%), 1-0(10%), 2-1(10%)
+│  Buts 2.28  O2.5 40%  O3.5 20%  U3.5 80%  BTTS 45%
+│  🛡️  DOUBLE CHANCE 1X : ~@1.31  (73%)
+
+┌─ Brighton vs Fulham  (1.99/3.75/3.43)
+│  HT: 1 (43/38/19)  score HT 1-0
+│  FT: 1 (50%) score 1-1  |  Top3: 1-1(11%), 2-1(11%), 1-0(9%)
+│  Buts 2.96  O2.5 57%  O3.5 34%  U3.5 66%  BTTS 55%
+│  🌍 DS : ❄️Fulham away -12pp DS  (delta +12pp)
+│  🔥 MULTI : 1 @1.99  EV+60% conf 6.7/10
+
+┌─ Wolverhampton vs N. Forest  (1.92/3.72/3.68)
+│  HT: X (34/42/24)  score HT 1-1
+│  FT: 1 (46%) score 1-1  |  Top3: 1-1(12%), 2-1(11%), 1-0(10%)
+│  Buts 2.59  O2.5 48%  O3.5 26%  U3.5 74%  BTTS 52%
+
+┌─ Spurs vs Sunderland  (1.48/4.99/5.39)
+│  HT: 1 (50/34/16)  score HT 1-0
+│  FT: 1 (63%) score 2-1  |  Top3: 2-1(11%), 3-0(8%), 3-1(8%)
+│  Buts 3.44  O2.5 67%  O3.5 45%  U3.5 55%  BTTS 59%
+│  🌍 DS : ❄️Spurs -14pp DS  (delta -14pp)
+
+┌─ Leeds vs Burnley  (3.37/3.85/1.98)
+│  HT: 2 (22/36/42)  score HT 1-1
+│  FT: 2 (49%) score 1-1  |  Top3: 1-1(11%), 1-2(9%), 2-2(8%)
+│  Buts 3.32  O2.5 64%  O3.5 42%  U3.5 58%  BTTS 63%
+│  💎 BTTS OUI : 100%
+
+┌─ London Reds vs C. Palace  (1.39/4.92/7.27)
+│  HT: 1 (46/39/16)  score HT 1-0
+│  FT: 1 (63%) score 2-1  |  Top3: 2-1(11%), 2-0(10%), 3-0(10%)
+│  Buts 2.83  O2.5 54%  O3.5 31%  U3.5 69%  BTTS 50%
+│  🌍 DS : ❄️London Reds -13pp DS  (delta -13pp)
+
+┌─ Manchester Red vs Brentford  (2.03/3.49/3.56)
+│  HT: X (33/41/26)  score HT 1-1
+│  FT: 1 (44%) score 1-1  |  Top3: 1-1(12%), 2-1(10%), 1-0(9%)
+│  Buts 2.80  O2.5 53%  O3.5 31%  U3.5 69%  BTTS 56%
+│  🌍 DS : ❄️Brentford away -28pp DS  (delta +28pp)
+│  🛡️  DOUBLE CHANCE 1X : ~@1.33  (71%)
+│  ℹ️  DS bonus home modéré (mise prudente)
+
+┌─ West Ham vs Everton  (2.06/3.32/3.67)
+│  HT: X (36/44/20)  score HT 1-0
+│  FT: 1 (46%) score 1-1  |  Top3: 1-1(12%), 1-0(11%), 2-1(10%)
+│  Buts 2.38  O2.5 42%  O3.5 22%  U3.5 78%  BTTS 46%
+│  🌍 DS : 🔥West Ham +29pp DS  (delta +29pp)
+│  🛡️  DOUBLE CHANCE 1X : ~@1.27  (75%)
+│  ℹ️  DS bonus home modéré (mise prudente)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 17:39 Mada — 10 matchs  (J0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─ A. Villa vs Wolverhampton  (1.38/5.09/7.09)
+│  HT: 1 (52/34/14)  score HT 1-0
+│  FT: 1 (66%) score 2-1  |  Top3: 2-1(11%), 3-0(10%), 2-0(9%)
+│  Buts 3.32  O2.5 64%  O3.5 42%  U3.5 58%  BTTS 55%
+│  🌍 DS : 🔥A. Villa +12pp DS  (delta +12pp)
+
+┌─ London Blues vs West Ham  (1.49/4.48/5.98)
+│  HT: 1 (47/37/16)  score HT 1-0
+│  FT: 1 (61%) score 2-1  |  Top3: 2-1(12%), 1-1(9%), 3-0(8%)
+│  Buts 3.04  O2.5 59%  O3.5 36%  U3.5 64%  BTTS 53%
+│  🌍 DS : 🔥London Blues +13pp DS  (delta +13pp)
+
+┌─ Everton vs London Reds  (6.09/3.66/1.61)
+│  HT: 2 (17/41/42)  score HT 0-1
+│  FT: 2 (57%) score 1-2  |  Top3: 1-2(11%), 1-1(11%), 0-2(10%)
+│  Buts 2.67  O2.5 50%  O3.5 28%  U3.5 72%  BTTS 49%
+│  🌍 DS : 🔥Everton +41pp DS  ❄️London Reds away -13pp DS  (delta +54pp)
+│  ℹ️  DS bonus home modéré (mise prudente)
+
+┌─ Burnley vs Manchester Red  (3.22/3.26/2.26)
+│  HT: X (24/43/33)  score HT 0-1
+│  FT: 2 (42%) score 1-1  |  Top3: 1-1(12%), 1-2(11%), 0-1(10%)
+│  Buts 2.55  O2.5 47%  O3.5 25%  U3.5 75%  BTTS 51%
+│  🌍 DS : ❄️Burnley -9pp DS  (delta -9pp)
+│  🛡️  DOUBLE CHANCE X2 : ~@1.34  (71%)
+
+┌─ Sunderland vs Leeds  (3.35/3.2/2.23)
+│  HT: X (25/49/27)  score HT 0-0
+│  FT: 2 (39%) score 1-1  |  Top3: 1-1(12%), 0-0(11%), 0-1(11%)
+│  Buts 2.05  O2.5 34%  O3.5 15%  U3.5 85%  BTTS 41%
+│  🛡️  DOUBLE CHANCE X2 : ~@1.36  (70%)
+│  💎 BTTS NON : 75%
+
+┌─ Manchester Blue vs Brentford  (1.39/5.06/6.93)
+│  HT: 1 (51/35/14)  score HT 1-0
+│  FT: 1 (66%) score 2-1  |  Top3: 2-1(11%), 3-0(10%), 2-0(9%)
+│  Buts 3.10  O2.5 60%  O3.5 38%  U3.5 62%  BTTS 51%
+│  🌍 DS : 🔥Manchester Blue +12pp DS  ❄️Brentford away -28pp DS  (delta +40pp)
+│  💎 DS HOME (réduit) : 1 @1.39  (delta DS 40pp)
+
+┌─ Newcastle vs Bournemouth  (1.3/5.88/8.36)
+│  HT: 1 (58/31/11)  score HT 1-0
+│  FT: 1 (72%) score 3-0  |  Top3: 3-0(11%), 2-1(10%), 2-0(9%)
+│  Buts 3.41  O2.5 66%  O3.5 44%  U3.5 56%  BTTS 50%
+│  🌍 DS : ❄️Newcastle -15pp DS  (delta -15pp)
+
+┌─ Fulham vs Liverpool  (3.13/3.99/2.04)
+│  HT: X (30/37/34)  score HT 1-1
+│  FT: 2 (44%) score 1-1  |  Top3: 1-1(11%), 1-2(9%), 2-1(9%)
+│  Buts 3.37  O2.5 65%  O3.5 43%  U3.5 57%  BTTS 66%
+│  🌍 DS : ❄️Fulham -12pp DS  (delta -12pp)
+│  💎 OVER 2.5 GOLD : 90%  (modèle 3.37 buts)
+
+┌─ C. Palace vs Brighton  (2.26/3.94/2.75)
+│  HT: X (37/38/25)  score HT 1-1
+│  FT: 1 (43%) score 1-1  |  Top3: 1-1(11%), 2-1(10%), 1-2(8%)
+│  Buts 3.16  O2.5 61%  O3.5 39%  U3.5 61%  BTTS 62%
+│  🌍 DS : ❄️C. Palace -10pp DS  (delta -10pp)
+│  🔥 MULTI : 1 @2.26  EV+14% conf 5.8/10
+
+┌─ N. Forest vs Spurs  (2.22/3.84/2.87)
+│  HT: X (28/40/32)  score HT 1-1
+│  FT: 1 (39%) score 1-1  |  Top3: 1-1(12%), 2-1(10%), 1-2(9%)
+│  Buts 2.90  O2.5 55%  O3.5 33%  U3.5 67%  BTTS 59%
+│  🌍 DS : ❄️Spurs away -14pp DS  (delta +14pp)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 17:41 Mada — 10 matchs  (J0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─ Wolverhampton vs Bournemouth  (2.14/3.85/3.01)
+│  HT: X (35/41/24)  score HT 1-1
+│  FT: 1 (44%) score 1-1  |  Top3: 1-1(12%), 2-1(10%), 1-2(8%)
+│  Buts 2.79  O2.5 53%  O3.5 31%  U3.5 69%  BTTS 56%
+
+┌─ Manchester Blue vs Burnley  (1.16/8.26/13.44)
+│  HT: 1 (63/27/9)  score HT 1-0
+│  FT: 1 (79%) score 3-0  |  Top3: 3-0(12%), 2-0(10%), 3-1(9%)
+│  Buts 3.86  O2.5 74%  O3.5 54%  U3.5 46%  BTTS 52%
+│  🌍 DS : 🔥Manchester Blue +12pp DS  (delta +12pp)
+
+┌─ Leeds vs N. Forest  (3.61/3.75/1.94)
+│  HT: X (23/40/37)  score HT 1-1
+│  FT: 2 (48%) score 1-1  |  Top3: 1-1(12%), 1-2(9%), 2-1(8%)
+│  Buts 2.81  O2.5 53%  O3.5 31%  U3.5 69%  BTTS 55%
+
+┌─ West Ham vs Newcastle  (2.89/3.87/2.19)
+│  HT: X (26/39/35)  score HT 1-1
+│  FT: 2 (43%) score 1-2  |  Top3: 1-2(11%), 2-2(9%), 1-1(9%)
+│  Buts 2.94  O2.5 56%  O3.5 34%  U3.5 66%  BTTS 59%
+│  🌍 DS : 🔥West Ham +29pp DS  ❄️Newcastle away -15pp DS  (delta +43pp)
+│  ℹ️  DS bonus home modéré (mise prudente)
+
+┌─ Brentford vs Fulham  (2.0/3.97/3.24)
+│  HT: X (38/39/23)  score HT 1-1
+│  FT: 1 (47%) score 1-1  |  Top3: 1-1(11%), 2-1(11%), 1-0(8%)
+│  Buts 2.96  O2.5 57%  O3.5 34%  U3.5 66%  BTTS 58%
+│  🌍 DS : ❄️Brentford -28pp DS  ❄️Fulham away -12pp DS  (delta -16pp)
+
+┌─ Manchester Red vs Sunderland  (1.52/4.38/5.78)
+│  HT: 1 (46/36/18)  score HT 1-0
+│  FT: 1 (60%) score 2-1  |  Top3: 2-1(11%), 1-1(10%), 2-0(9%)
+│  Buts 3.15  O2.5 61%  O3.5 39%  U3.5 61%  BTTS 57%
+
+┌─ London Reds vs London Blues  (1.41/5.09/6.59)
+│  HT: 1 (49/35/16)  score HT 1-0
+│  FT: 1 (64%) score 2-1  |  Top3: 2-1(11%), 3-0(9%), 2-0(9%)
+│  Buts 3.20  O2.5 62%  O3.5 40%  U3.5 60%  BTTS 55%
+│  🌍 DS : ❄️London Reds -13pp DS  (delta -13pp)
+
+┌─ Liverpool vs C. Palace  (1.32/5.19/9.33)
+│  HT: 1 (50/39/12)  score HT 1-0
+│  FT: 1 (68%) score 2-0  |  Top3: 2-0(11%), 3-0(11%), 2-1(10%)
+│  Buts 2.68  O2.5 50%  O3.5 28%  U3.5 72%  BTTS 41%
+
+┌─ Brighton vs Everton  (1.65/3.75/5.35)
+│  HT: 1 (47/39/14)  score HT 1-0
+│  FT: 1 (58%) score 2-1  |  Top3: 2-1(11%), 1-1(11%), 1-0(10%)
+│  Buts 2.71  O2.5 51%  O3.5 29%  U3.5 71%  BTTS 46%
+│  🔥🔥 MULTI++ : 1 @1.65  EV+62% conf 10/10
+
+┌─ Spurs vs A. Villa  (1.82/4.15/3.7)
+│  HT: 1 (41/37/22)  score HT 1-1
+│  FT: 1 (51%) score 2-1  |  Top3: 2-1(11%), 1-1(10%), 1-0(8%)
+│  Buts 3.20  O2.5 62%  O3.5 40%  U3.5 60%  BTTS 61%
+│  🌍 DS : ❄️Spurs -14pp DS  (delta -14pp)
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+  📋 RÉCAP TOUS LES ROUNDS — TOP PICKS PAR CATÉGORIE
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  MULTI_HIGH (1):
+     17:41  Brighton           vs Everton             1            @1.65  (100%)
+
+  DOUBLE_CH (6):
+     17:37  West Ham           vs Everton             1X           @1.27  (75%)
+     17:37  Liverpool          vs Manchester Blue     1X           @1.31  (73%)
+     17:37  Manchester Red     vs Brentford           1X           @1.33  (71%)
+     17:39  Burnley            vs Manchester Red      X2           @1.34  (71%)
+     17:39  Sunderland         vs Leeds               X2           @1.36  (70%)
+     17:37  Bournemouth        vs A. Villa            1X           @1.37  (70%)
+
+  BTTS_NON (1):
+     17:39  Sunderland         vs Leeds               BTTS Non       (75%)
+
+  DS_HOME (1):
+     17:39  Manchester Blue    vs Brentford           1            @1.39  (40%)
+
+  DS_AWAY (1):
+     17:35  Brentford          vs Leeds               2            @7.15  (28%)
+
+  PAIRE_OR_H (2):
+     17:35  N. Forest          vs Bournemouth         1            @1.80  (80%)
+     17:35  C. Palace          vs West Ham            1            @1.77  (75%)
+
+  PAIRE_OR_A (1):
+     17:37  Bournemouth        vs A. Villa            2            @3.18  (50%)
+
+  OVER (1):
+     17:39  Fulham             vs Liverpool           Over 2.5       (90%)
+
+  BTTS_OUI (1):
+     17:37  Leeds              vs Burnley             BTTS Oui       (100%)
+
+  MULTI (3):
+     17:37  Brighton           vs Fulham              1            @1.99  (67%)
+     17:39  C. Palace          vs Brighton            1            @2.26  (58%)
+     17:35  Everton            vs London Blues        2            @2.83  (55%)
+

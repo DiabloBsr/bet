@@ -1,0 +1,1524 @@
+{
+ "n_events": 12632,
+ "cell_margins_by_league": {
+  "InstantLeague-8035": {
+   "2-1": {
+    "n": 6571,
+    "med": 0.3194,
+    "std": 0.0536
+   },
+   "1-2": {
+    "n": 6571,
+    "med": 0.3248,
+    "std": 0.0542
+   },
+   "1-1": {
+    "n": 6571,
+    "med": 0.1039,
+    "std": 0.0328
+   },
+   "2-0": {
+    "n": 6493,
+    "med": -0.0577,
+    "std": 0.0348
+   },
+   "1-0": {
+    "n": 6571,
+    "med": -0.232,
+    "std": 0.0356
+   },
+   "2-2": {
+    "n": 6571,
+    "med": 0.5017,
+    "std": 0.0997
+   }
+  },
+  "InstantLeague-8036": {
+   "2-1": {
+    "n": 550,
+    "med": 0.4483,
+    "std": 0.0861
+   },
+   "1-2": {
+    "n": 550,
+    "med": 0.4608,
+    "std": 0.0856
+   },
+   "1-1": {
+    "n": 550,
+    "med": 0.1985,
+    "std": 0.0619
+   },
+   "2-0": {
+    "n": 550,
+    "med": -0.0139,
+    "std": 0.0509
+   },
+   "1-0": {
+    "n": 550,
+    "med": -0.1948,
+    "std": 0.0365
+   },
+   "2-2": {
+    "n": 550,
+    "med": 0.6915,
+    "std": 0.1196
+   }
+  },
+  "InstantLeague-8037": {
+   "2-1": {
+    "n": 580,
+    "med": 0.458,
+    "std": 0.1022
+   },
+   "1-2": {
+    "n": 577,
+    "med": 0.4842,
+    "std": 0.1081
+   },
+   "1-1": {
+    "n": 580,
+    "med": 0.2138,
+    "std": 0.0755
+   },
+   "2-0": {
+    "n": 580,
+    "med": -0.0064,
+    "std": 0.0516
+   },
+   "1-0": {
+    "n": 580,
+    "med": -0.1887,
+    "std": 0.0386
+   },
+   "2-2": {
+    "n": 579,
+    "med": 0.7102,
+    "std": 0.1496
+   }
+  },
+  "InstantLeague-8042": {
+   "2-1": {
+    "n": 513,
+    "med": 0.3493,
+    "std": 0.0642
+   },
+   "1-2": {
+    "n": 513,
+    "med": 0.358,
+    "std": 0.0653
+   },
+   "1-1": {
+    "n": 513,
+    "med": 0.1258,
+    "std": 0.0434
+   },
+   "2-0": {
+    "n": 509,
+    "med": -0.0458,
+    "std": 0.0374
+   },
+   "1-0": {
+    "n": 513,
+    "med": -0.2229,
+    "std": 0.0349
+   },
+   "2-2": {
+    "n": 513,
+    "med": 0.5499,
+    "std": 0.105
+   }
+  },
+  "InstantLeague-8043": {
+   "2-1": {
+    "n": 522,
+    "med": 0.2931,
+    "std": 0.0716
+   },
+   "1-2": {
+    "n": 522,
+    "med": 0.2944,
+    "std": 0.0706
+   },
+   "1-1": {
+    "n": 522,
+    "med": 0.088,
+    "std": 0.0474
+   },
+   "2-0": {
+    "n": 522,
+    "med": -0.0576,
+    "std": 0.056
+   },
+   "1-0": {
+    "n": 522,
+    "med": -0.234,
+    "std": 0.0527
+   },
+   "2-2": {
+    "n": 522,
+    "med": 0.4556,
+    "std": 0.1286
+   }
+  },
+  "InstantLeague-8044": {
+   "2-1": {
+    "n": 531,
+    "med": 0.4327,
+    "std": 0.0989
+   },
+   "1-2": {
+    "n": 511,
+    "med": 0.4495,
+    "std": 0.1027
+   },
+   "1-1": {
+    "n": 531,
+    "med": 0.1899,
+    "std": 0.0702
+   },
+   "2-0": {
+    "n": 531,
+    "med": -0.01,
+    "std": 0.0502
+   },
+   "1-0": {
+    "n": 531,
+    "med": -0.1935,
+    "std": 0.0381
+   },
+   "2-2": {
+    "n": 522,
+    "med": 0.6725,
+    "std": 0.1512
+   }
+  },
+  "InstantLeague-8056": {
+   "2-1": {
+    "n": 1134,
+    "med": 0.3186,
+    "std": 0.153
+   },
+   "1-2": {
+    "n": 1057,
+    "med": 0.3215,
+    "std": 0.1568
+   },
+   "1-1": {
+    "n": 1134,
+    "med": 0.1203,
+    "std": 0.1337
+   },
+   "2-0": {
+    "n": 1121,
+    "med": -0.0268,
+    "std": 0.1852
+   },
+   "1-0": {
+    "n": 1134,
+    "med": -0.2041,
+    "std": 0.168
+   },
+   "2-2": {
+    "n": 1077,
+    "med": 0.4557,
+    "std": 0.2154
+   }
+  },
+  "InstantLeague-8060": {
+   "2-1": {
+    "n": 658,
+    "med": 0.7001,
+    "std": 0.2659
+   },
+   "1-2": {
+    "n": 554,
+    "med": 0.7177,
+    "std": 0.204
+   },
+   "1-1": {
+    "n": 693,
+    "med": 0.401,
+    "std": 0.1911
+   },
+   "2-0": {
+    "n": 642,
+    "med": 0.1147,
+    "std": 0.1216
+   },
+   "1-0": {
+    "n": 695,
+    "med": -0.0828,
+    "std": 0.0895
+   },
+   "2-2": {
+    "n": 361,
+    "med": 0.9138,
+    "std": 0.2273
+   }
+  },
+  "InstantLeague-8065": {
+   "2-1": {
+    "n": 1536,
+    "med": 0.3259,
+    "std": 0.0315
+   },
+   "1-2": {
+    "n": 1536,
+    "med": 0.3249,
+    "std": 0.032
+   },
+   "1-1": {
+    "n": 1536,
+    "med": 0.1015,
+    "std": 0.0212
+   },
+   "2-0": {
+    "n": 1533,
+    "med": -0.0509,
+    "std": 0.0339
+   },
+   "1-0": {
+    "n": 1536,
+    "med": -0.2276,
+    "std": 0.033
+   },
+   "2-2": {
+    "n": 1536,
+    "med": 0.5129,
+    "std": 0.055
+   }
+  }
+ },
+ "groups": {
+  "8035": {
+   "0-0": {
+    "n_offered": 6571,
+    "avg_odds": 19.38,
+    "wins": 251,
+    "exp_wins_grid": 421.9,
+    "real_over_grid": 0.595,
+    "z_dev": -8.32,
+    "cell_margin_med": -0.0924,
+    "roi_pct": -34.69,
+    "z_roi": -6.56
+   },
+   "0-1": {
+    "n_offered": 6571,
+    "avg_odds": 20.36,
+    "wins": 347,
+    "exp_wins_grid": 498.7,
+    "real_over_grid": 0.696,
+    "z_dev": -6.79,
+    "cell_margin_med": -0.1992,
+    "roi_pct": -10.63,
+    "z_roi": -1.96
+   },
+   "0-2": {
+    "n_offered": 6345,
+    "avg_odds": 30.95,
+    "wins": 247,
+    "exp_wins_grid": 323.3,
+    "real_over_grid": 0.764,
+    "z_dev": -4.24,
+    "cell_margin_med": -0.0206,
+    "roi_pct": -17.05,
+    "z_roi": -2.48
+   },
+   "0-3": {
+    "n_offered": 4879,
+    "avg_odds": 41.55,
+    "wins": 186,
+    "exp_wins_grid": 148.4,
+    "real_over_grid": 1.253,
+    "z_dev": 3.08,
+    "cell_margin_med": 0.3038,
+    "roi_pct": -1.15,
+    "z_roi": -0.13
+   },
+   "0-4": {
+    "n_offered": 2187,
+    "avg_odds": 46.52,
+    "wins": 70,
+    "exp_wins_grid": 49.5,
+    "real_over_grid": 1.415,
+    "z_dev": 2.92,
+    "cell_margin_med": 0.4192,
+    "roi_pct": 26.68,
+    "z_roi": 1.85
+   },
+   "0-5": {
+    "n_offered": 971,
+    "avg_odds": 58.27,
+    "wins": 19,
+    "exp_wins_grid": 14.3,
+    "real_over_grid": 1.329,
+    "z_dev": 1.24,
+    "cell_margin_med": 0.5647,
+    "roi_pct": -25.5,
+    "z_roi": -1.05
+   },
+   "0-6": {
+    "n_offered": 183,
+    "avg_odds": 60.79,
+    "wins": 2,
+    "exp_wins_grid": 2.5,
+    "real_over_grid": 0.801,
+    "z_dev": -0.31,
+    "cell_margin_med": 0.3536,
+    "roi_pct": -56.26,
+    "z_roi": -0.98
+   },
+   "1-0": {
+    "n_offered": 6571,
+    "avg_odds": 15.07,
+    "wins": 460,
+    "exp_wins_grid": 624.6,
+    "real_over_grid": 0.736,
+    "z_dev": -6.59,
+    "cell_margin_med": -0.232,
+    "roi_pct": -2.24,
+    "z_roi": -0.48
+   },
+   "1-1": {
+    "n_offered": 6571,
+    "avg_odds": 9.06,
+    "wins": 657,
+    "exp_wins_grid": 686.5,
+    "real_over_grid": 0.957,
+    "z_dev": -1.13,
+    "cell_margin_med": 0.1039,
+    "roi_pct": -14.77,
+    "z_roi": -4.22
+   },
+   "1-2": {
+    "n_offered": 6571,
+    "avg_odds": 14.46,
+    "wins": 534,
+    "exp_wins_grid": 412.5,
+    "real_over_grid": 1.295,
+    "z_dev": 5.98,
+    "cell_margin_med": 0.3248,
+    "roi_pct": -3.39,
+    "z_roi": -0.75
+   },
+   "1-3": {
+    "n_offered": 6017,
+    "avg_odds": 32.29,
+    "wins": 236,
+    "exp_wins_grid": 177.9,
+    "real_over_grid": 1.327,
+    "z_dev": 4.36,
+    "cell_margin_med": 0.4725,
+    "roi_pct": -13.21,
+    "z_roi": -1.83
+   },
+   "1-4": {
+    "n_offered": 3284,
+    "avg_odds": 50.9,
+    "wins": 70,
+    "exp_wins_grid": 54.3,
+    "real_over_grid": 1.288,
+    "z_dev": 2.12,
+    "cell_margin_med": 0.5707,
+    "roi_pct": -24.66,
+    "z_roi": -2.0
+   },
+   "1-5": {
+    "n_offered": 431,
+    "avg_odds": 67.27,
+    "wins": 5,
+    "exp_wins_grid": 6.8,
+    "real_over_grid": 0.734,
+    "z_dev": -0.69,
+    "cell_margin_med": 0.0473,
+    "roi_pct": -22.25,
+    "z_roi": -0.57
+   },
+   "2-0": {
+    "n_offered": 6493,
+    "avg_odds": 17.23,
+    "wins": 442,
+    "exp_wins_grid": 516.7,
+    "real_over_grid": 0.855,
+    "z_dev": -3.29,
+    "cell_margin_med": -0.0577,
+    "roi_pct": -6.95,
+    "z_roi": -1.39
+   },
+   "2-1": {
+    "n_offered": 6571,
+    "avg_odds": 10.37,
+    "wins": 646,
+    "exp_wins_grid": 536.0,
+    "real_over_grid": 1.205,
+    "z_dev": 4.75,
+    "cell_margin_med": 0.3194,
+    "roi_pct": -7.87,
+    "z_roi": -2.08
+   },
+   "2-2": {
+    "n_offered": 6571,
+    "avg_odds": 15.7,
+    "wins": 404,
+    "exp_wins_grid": 301.2,
+    "real_over_grid": 1.341,
+    "z_dev": 5.92,
+    "cell_margin_med": 0.5017,
+    "roi_pct": -12.85,
+    "z_roi": -2.72
+   },
+   "2-3": {
+    "n_offered": 6182,
+    "avg_odds": 40.56,
+    "wins": 175,
+    "exp_wins_grid": 120.3,
+    "real_over_grid": 1.454,
+    "z_dev": 4.98,
+    "cell_margin_med": 0.5102,
+    "roi_pct": -6.72,
+    "z_roi": -0.84
+   },
+   "2-4": {
+    "n_offered": 835,
+    "avg_odds": 78.72,
+    "wins": 11,
+    "exp_wins_grid": 12.2,
+    "real_over_grid": 0.901,
+    "z_dev": -0.34,
+    "cell_margin_med": -0.1055,
+    "roi_pct": 8.95,
+    "z_roi": 0.29
+   },
+   "3-0": {
+    "n_offered": 6019,
+    "avg_odds": 22.98,
+    "wins": 358,
+    "exp_wins_grid": 311.1,
+    "real_over_grid": 1.151,
+    "z_dev": 2.66,
+    "cell_margin_med": 0.2811,
+    "roi_pct": -8.49,
+    "z_roi": -1.41
+   },
+   "3-1": {
+    "n_offered": 6450,
+    "avg_odds": 19.87,
+    "wins": 421,
+    "exp_wins_grid": 309.7,
+    "real_over_grid": 1.36,
+    "z_dev": 6.33,
+    "cell_margin_med": 0.465,
+    "roi_pct": -6.15,
+    "z_roi": -1.14
+   },
+   "3-2": {
+    "n_offered": 6428,
+    "avg_odds": 30.84,
+    "wins": 225,
+    "exp_wins_grid": 164.6,
+    "real_over_grid": 1.367,
+    "z_dev": 4.71,
+    "cell_margin_med": 0.5162,
+    "roi_pct": -6.57,
+    "z_roi": -0.96
+   },
+   "3-3": {
+    "n_offered": 1763,
+    "avg_odds": 78.31,
+    "wins": 17,
+    "exp_wins_grid": 27.8,
+    "real_over_grid": 0.612,
+    "z_dev": -2.05,
+    "cell_margin_med": -0.1528,
+    "roi_pct": -25.53,
+    "z_roi": -1.22
+   },
+   "4-0": {
+    "n_offered": 5037,
+    "avg_odds": 35.35,
+    "wins": 206,
+    "exp_wins_grid": 150.1,
+    "real_over_grid": 1.373,
+    "z_dev": 4.57,
+    "cell_margin_med": 0.4178,
+    "roi_pct": -10.08,
+    "z_roi": -1.22
+   },
+   "4-1": {
+    "n_offered": 5352,
+    "avg_odds": 32.52,
+    "wins": 188,
+    "exp_wins_grid": 142.9,
+    "real_over_grid": 1.315,
+    "z_dev": 3.77,
+    "cell_margin_med": 0.5696,
+    "roi_pct": -16.54,
+    "z_roi": -2.16
+   },
+   "4-2": {
+    "n_offered": 3099,
+    "avg_odds": 67.99,
+    "wins": 56,
+    "exp_wins_grid": 54.9,
+    "real_over_grid": 1.02,
+    "z_dev": 0.15,
+    "cell_margin_med": -0.108,
+    "roi_pct": 17.89,
+    "z_roi": 1.22
+   },
+   "5-0": {
+    "n_offered": 3122,
+    "avg_odds": 46.84,
+    "wins": 86,
+    "exp_wins_grid": 56.7,
+    "real_over_grid": 1.517,
+    "z_dev": 3.89,
+    "cell_margin_med": 0.5994,
+    "roi_pct": -19.77,
+    "z_roi": -1.63
+   },
+   "5-1": {
+    "n_offered": 2366,
+    "avg_odds": 57.85,
+    "wins": 52,
+    "exp_wins_grid": 44.1,
+    "real_over_grid": 1.18,
+    "z_dev": 1.2,
+    "cell_margin_med": 0.0537,
+    "roi_pct": 12.56,
+    "z_roi": 0.81
+   },
+   "6-0": {
+    "n_offered": 1050,
+    "avg_odds": 61.22,
+    "wins": 13,
+    "exp_wins_grid": 13.9,
+    "real_over_grid": 0.936,
+    "z_dev": -0.24,
+    "cell_margin_med": 0.413,
+    "roi_pct": -40.47,
+    "z_roi": -1.69
+   }
+  },
+  "champs5": {
+   "0-0": {
+    "n_offered": 2696,
+    "avg_odds": 13.95,
+    "wins": 236,
+    "exp_wins_grid": 283.8,
+    "real_over_grid": 0.832,
+    "z_dev": -2.84,
+    "cell_margin_med": -0.0815,
+    "roi_pct": -16.52,
+    "z_roi": -2.38
+   },
+   "0-1": {
+    "n_offered": 2696,
+    "avg_odds": 17.07,
+    "wins": 192,
+    "exp_wins_grid": 251.9,
+    "real_over_grid": 0.762,
+    "z_dev": -3.77,
+    "cell_margin_med": -0.1723,
+    "roi_pct": -8.84,
+    "z_roi": -1.15
+   },
+   "0-2": {
+    "n_offered": 2550,
+    "avg_odds": 29.39,
+    "wins": 123,
+    "exp_wins_grid": 129.4,
+    "real_over_grid": 0.951,
+    "z_dev": -0.56,
+    "cell_margin_med": 0.0127,
+    "roi_pct": -1.54,
+    "z_roi": -0.15
+   },
+   "0-3": {
+    "n_offered": 1816,
+    "avg_odds": 42.47,
+    "wins": 61,
+    "exp_wins_grid": 48.3,
+    "real_over_grid": 1.263,
+    "z_dev": 1.83,
+    "cell_margin_med": 0.3337,
+    "roi_pct": -4.66,
+    "z_roi": -0.31
+   },
+   "0-4": {
+    "n_offered": 752,
+    "avg_odds": 53.05,
+    "wins": 15,
+    "exp_wins_grid": 13.1,
+    "real_over_grid": 1.143,
+    "z_dev": 0.52,
+    "cell_margin_med": 0.4406,
+    "roi_pct": -21.74,
+    "z_roi": -0.83
+   },
+   "0-5": {
+    "n_offered": 212,
+    "avg_odds": 60.97,
+    "wins": 3,
+    "exp_wins_grid": 2.7,
+    "real_over_grid": 1.122,
+    "z_dev": 0.2,
+    "cell_margin_med": 0.5707,
+    "roi_pct": -46.57,
+    "z_roi": -0.88
+   },
+   "1-0": {
+    "n_offered": 2696,
+    "avg_odds": 11.6,
+    "wins": 236,
+    "exp_wins_grid": 347.8,
+    "real_over_grid": 0.679,
+    "z_dev": -6.0,
+    "cell_margin_med": -0.2062,
+    "roi_pct": -16.91,
+    "z_roi": -2.7
+   },
+   "1-1": {
+    "n_offered": 2696,
+    "avg_odds": 8.29,
+    "wins": 334,
+    "exp_wins_grid": 296.0,
+    "real_over_grid": 1.128,
+    "z_dev": 2.21,
+    "cell_margin_med": 0.1627,
+    "roi_pct": -3.39,
+    "z_roi": -0.65
+   },
+   "1-2": {
+    "n_offered": 2673,
+    "avg_odds": 16.58,
+    "wins": 178,
+    "exp_wins_grid": 147.1,
+    "real_over_grid": 1.21,
+    "z_dev": 2.55,
+    "cell_margin_med": 0.4104,
+    "roi_pct": -14.81,
+    "z_roi": -1.94
+   },
+   "1-3": {
+    "n_offered": 2217,
+    "avg_odds": 37.2,
+    "wins": 77,
+    "exp_wins_grid": 54.5,
+    "real_over_grid": 1.412,
+    "z_dev": 3.04,
+    "cell_margin_med": 0.5556,
+    "roi_pct": -8.26,
+    "z_roi": -0.65
+   },
+   "1-4": {
+    "n_offered": 968,
+    "avg_odds": 55.01,
+    "wins": 22,
+    "exp_wins_grid": 14.3,
+    "real_over_grid": 1.541,
+    "z_dev": 2.04,
+    "cell_margin_med": 0.6009,
+    "roi_pct": -8.04,
+    "z_roi": -0.34
+   },
+   "1-5": {
+    "n_offered": 111,
+    "avg_odds": 67.73,
+    "wins": 0,
+    "exp_wins_grid": 1.7,
+    "real_over_grid": 0.0,
+    "z_dev": -1.31,
+    "cell_margin_med": 0.0515,
+    "roi_pct": -100.0,
+    "z_roi": -1.29
+   },
+   "2-0": {
+    "n_offered": 2692,
+    "avg_odds": 15.26,
+    "wins": 208,
+    "exp_wins_grid": 242.0,
+    "real_over_grid": 0.859,
+    "z_dev": -2.19,
+    "cell_margin_med": -0.0279,
+    "roi_pct": -17.31,
+    "z_roi": -2.38
+   },
+   "2-1": {
+    "n_offered": 2696,
+    "avg_odds": 10.5,
+    "wins": 234,
+    "exp_wins_grid": 198.5,
+    "real_over_grid": 1.179,
+    "z_dev": 2.52,
+    "cell_margin_med": 0.3994,
+    "roi_pct": -15.28,
+    "z_roi": -2.57
+   },
+   "2-2": {
+    "n_offered": 2686,
+    "avg_odds": 21.26,
+    "wins": 138,
+    "exp_wins_grid": 95.4,
+    "real_over_grid": 1.447,
+    "z_dev": 4.37,
+    "cell_margin_med": 0.6245,
+    "roi_pct": -15.24,
+    "z_roi": -1.75
+   },
+   "2-3": {
+    "n_offered": 2011,
+    "avg_odds": 49.03,
+    "wins": 46,
+    "exp_wins_grid": 32.9,
+    "real_over_grid": 1.396,
+    "z_dev": 2.27,
+    "cell_margin_med": 0.5952,
+    "roi_pct": 6.16,
+    "z_roi": 0.4
+   },
+   "2-4": {
+    "n_offered": 217,
+    "avg_odds": 71.9,
+    "wins": 6,
+    "exp_wins_grid": 3.7,
+    "real_over_grid": 1.626,
+    "z_dev": 1.2,
+    "cell_margin_med": -0.1058,
+    "roi_pct": 112.97,
+    "z_roi": 1.98
+   },
+   "3-0": {
+    "n_offered": 2546,
+    "avg_odds": 24.91,
+    "wins": 138,
+    "exp_wins_grid": 125.8,
+    "real_over_grid": 1.097,
+    "z_dev": 1.09,
+    "cell_margin_med": 0.3079,
+    "roi_pct": -16.29,
+    "z_roi": -1.68
+   },
+   "3-1": {
+    "n_offered": 2640,
+    "avg_odds": 23.4,
+    "wins": 117,
+    "exp_wins_grid": 100.1,
+    "real_over_grid": 1.169,
+    "z_dev": 1.69,
+    "cell_margin_med": 0.5471,
+    "roi_pct": -23.11,
+    "z_roi": -2.51
+   },
+   "3-2": {
+    "n_offered": 2434,
+    "avg_odds": 43.47,
+    "wins": 67,
+    "exp_wins_grid": 45.8,
+    "real_over_grid": 1.462,
+    "z_dev": 3.13,
+    "cell_margin_med": 0.6103,
+    "roi_pct": -13.32,
+    "z_roi": -1.01
+   },
+   "3-3": {
+    "n_offered": 400,
+    "avg_odds": 74.18,
+    "wins": 5,
+    "exp_wins_grid": 6.8,
+    "real_over_grid": 0.731,
+    "z_dev": -0.7,
+    "cell_margin_med": -0.1551,
+    "roi_pct": -18.37,
+    "z_roi": -0.43
+   },
+   "4-0": {
+    "n_offered": 1904,
+    "avg_odds": 39.7,
+    "wins": 72,
+    "exp_wins_grid": 52.6,
+    "real_over_grid": 1.368,
+    "z_dev": 2.67,
+    "cell_margin_med": 0.4326,
+    "roi_pct": -13.3,
+    "z_roi": -0.93
+   },
+   "4-1": {
+    "n_offered": 1962,
+    "avg_odds": 42.17,
+    "wins": 63,
+    "exp_wins_grid": 40.3,
+    "real_over_grid": 1.564,
+    "z_dev": 3.58,
+    "cell_margin_med": 0.6091,
+    "roi_pct": -10.1,
+    "z_roi": -0.7
+   },
+   "4-2": {
+    "n_offered": 563,
+    "avg_odds": 68.12,
+    "wins": 6,
+    "exp_wins_grid": 10.1,
+    "real_over_grid": 0.592,
+    "z_dev": -1.3,
+    "cell_margin_med": -0.107,
+    "roi_pct": -35.85,
+    "z_roi": -1.04
+   },
+   "5-0": {
+    "n_offered": 930,
+    "avg_odds": 46.58,
+    "wins": 29,
+    "exp_wins_grid": 17.3,
+    "real_over_grid": 1.672,
+    "z_dev": 2.8,
+    "cell_margin_med": 0.576,
+    "roi_pct": 3.12,
+    "z_roi": 0.14
+   },
+   "5-1": {
+    "n_offered": 559,
+    "avg_odds": 62.14,
+    "wins": 6,
+    "exp_wins_grid": 9.7,
+    "real_over_grid": 0.617,
+    "z_dev": -1.2,
+    "cell_margin_med": 0.0557,
+    "roi_pct": -38.03,
+    "z_roi": -1.15
+   },
+   "6-0": {
+    "n_offered": 261,
+    "avg_odds": 57.75,
+    "wins": 4,
+    "exp_wins_grid": 3.8,
+    "real_over_grid": 1.041,
+    "z_dev": 0.08,
+    "cell_margin_med": 0.3681,
+    "roi_pct": -35.42,
+    "z_roi": -0.76
+   }
+  },
+  "cups3": {
+   "0-0": {
+    "n_offered": 3348,
+    "avg_odds": 18.73,
+    "wins": 310,
+    "exp_wins_grid": 364.7,
+    "real_over_grid": 0.85,
+    "z_dev": -2.86,
+    "cell_margin_med": -0.0645,
+    "roi_pct": -17.51,
+    "z_roi": -2.41
+   },
+   "0-1": {
+    "n_offered": 3333,
+    "avg_odds": 20.83,
+    "wins": 226,
+    "exp_wins_grid": 286.3,
+    "real_over_grid": 0.79,
+    "z_dev": -3.56,
+    "cell_margin_med": -0.1867,
+    "roi_pct": -6.04,
+    "z_roi": -0.78
+   },
+   "0-2": {
+    "n_offered": 2938,
+    "avg_odds": 27.34,
+    "wins": 145,
+    "exp_wins_grid": 164.9,
+    "real_over_grid": 0.879,
+    "z_dev": -1.55,
+    "cell_margin_med": -0.0224,
+    "roi_pct": -2.78,
+    "z_roi": -0.29
+   },
+   "0-3": {
+    "n_offered": 2303,
+    "avg_odds": 34.77,
+    "wins": 94,
+    "exp_wins_grid": 77.6,
+    "real_over_grid": 1.211,
+    "z_dev": 1.86,
+    "cell_margin_med": 0.2975,
+    "roi_pct": -15.01,
+    "z_roi": -1.24
+   },
+   "0-4": {
+    "n_offered": 1402,
+    "avg_odds": 47.53,
+    "wins": 38,
+    "exp_wins_grid": 29.2,
+    "real_over_grid": 1.301,
+    "z_dev": 1.63,
+    "cell_margin_med": 0.4231,
+    "roi_pct": 5.78,
+    "z_roi": 0.32
+   },
+   "0-5": {
+    "n_offered": 617,
+    "avg_odds": 56.46,
+    "wins": 14,
+    "exp_wins_grid": 8.6,
+    "real_over_grid": 1.636,
+    "z_dev": 1.86,
+    "cell_margin_med": 0.5919,
+    "roi_pct": -20.67,
+    "z_roi": -0.69
+   },
+   "0-6": {
+    "n_offered": 116,
+    "avg_odds": 64.19,
+    "wins": 2,
+    "exp_wins_grid": 1.4,
+    "real_over_grid": 1.439,
+    "z_dev": 0.52,
+    "cell_margin_med": 0.3678,
+    "roi_pct": 4.3,
+    "z_roi": 0.06
+   },
+   "1-0": {
+    "n_offered": 3365,
+    "avg_odds": 15.76,
+    "wins": 295,
+    "exp_wins_grid": 368.3,
+    "real_over_grid": 0.801,
+    "z_dev": -3.82,
+    "cell_margin_med": -0.2099,
+    "roi_pct": 0.24,
+    "z_roi": 0.04
+   },
+   "1-1": {
+    "n_offered": 3363,
+    "avg_odds": 10.81,
+    "wins": 320,
+    "exp_wins_grid": 312.8,
+    "real_over_grid": 1.023,
+    "z_dev": 0.41,
+    "cell_margin_med": 0.1136,
+    "roi_pct": -11.6,
+    "z_roi": -2.15
+   },
+   "1-2": {
+    "n_offered": 3147,
+    "avg_odds": 18.76,
+    "wins": 212,
+    "exp_wins_grid": 186.8,
+    "real_over_grid": 1.135,
+    "z_dev": 1.84,
+    "cell_margin_med": 0.3357,
+    "roi_pct": -13.36,
+    "z_roi": -1.78
+   },
+   "1-3": {
+    "n_offered": 2541,
+    "avg_odds": 28.3,
+    "wins": 112,
+    "exp_wins_grid": 88.2,
+    "real_over_grid": 1.27,
+    "z_dev": 2.54,
+    "cell_margin_med": 0.4754,
+    "roi_pct": -8.74,
+    "z_roi": -0.84
+   },
+   "1-4": {
+    "n_offered": 1700,
+    "avg_odds": 43.39,
+    "wins": 52,
+    "exp_wins_grid": 33.2,
+    "real_over_grid": 1.567,
+    "z_dev": 3.27,
+    "cell_margin_med": 0.5701,
+    "roi_pct": -13.19,
+    "z_roi": -0.83
+   },
+   "1-5": {
+    "n_offered": 423,
+    "avg_odds": 64.7,
+    "wins": 5,
+    "exp_wins_grid": 6.8,
+    "real_over_grid": 0.734,
+    "z_dev": -0.69,
+    "cell_margin_med": 0.0504,
+    "roi_pct": -24.68,
+    "z_roi": -0.64
+   },
+   "2-0": {
+    "n_offered": 3296,
+    "avg_odds": 19.89,
+    "wins": 218,
+    "exp_wins_grid": 258.4,
+    "real_over_grid": 0.844,
+    "z_dev": -2.51,
+    "cell_margin_med": -0.0327,
+    "roi_pct": -14.57,
+    "z_roi": -1.92
+   },
+   "2-1": {
+    "n_offered": 3328,
+    "avg_odds": 14.74,
+    "wins": 271,
+    "exp_wins_grid": 219.8,
+    "real_over_grid": 1.233,
+    "z_dev": 3.45,
+    "cell_margin_med": 0.3353,
+    "roi_pct": -9.26,
+    "z_roi": -1.44
+   },
+   "2-2": {
+    "n_offered": 2974,
+    "avg_odds": 21.47,
+    "wins": 151,
+    "exp_wins_grid": 128.1,
+    "real_over_grid": 1.179,
+    "z_dev": 2.02,
+    "cell_margin_med": 0.5128,
+    "roi_pct": -21.48,
+    "z_roi": -2.59
+   },
+   "2-3": {
+    "n_offered": 2383,
+    "avg_odds": 34.0,
+    "wins": 89,
+    "exp_wins_grid": 58.4,
+    "real_over_grid": 1.523,
+    "z_dev": 4.0,
+    "cell_margin_med": 0.5122,
+    "roi_pct": 3.97,
+    "z_roi": 0.34
+   },
+   "2-4": {
+    "n_offered": 766,
+    "avg_odds": 68.94,
+    "wins": 17,
+    "exp_wins_grid": 13.9,
+    "real_over_grid": 1.221,
+    "z_dev": 0.83,
+    "cell_margin_med": -0.1043,
+    "roi_pct": 50.49,
+    "z_roi": 1.7
+   },
+   "3-0": {
+    "n_offered": 2933,
+    "avg_odds": 27.53,
+    "wins": 188,
+    "exp_wins_grid": 146.7,
+    "real_over_grid": 1.281,
+    "z_dev": 3.41,
+    "cell_margin_med": 0.2983,
+    "roi_pct": 4.79,
+    "z_roi": 0.5
+   },
+   "3-1": {
+    "n_offered": 3007,
+    "avg_odds": 23.89,
+    "wins": 152,
+    "exp_wins_grid": 120.7,
+    "real_over_grid": 1.259,
+    "z_dev": 2.85,
+    "cell_margin_med": 0.4758,
+    "roi_pct": -18.16,
+    "z_roi": -2.08
+   },
+   "3-2": {
+    "n_offered": 2621,
+    "avg_odds": 33.05,
+    "wins": 84,
+    "exp_wins_grid": 67.3,
+    "real_over_grid": 1.248,
+    "z_dev": 2.03,
+    "cell_margin_med": 0.5127,
+    "roi_pct": -19.48,
+    "z_roi": -1.76
+   },
+   "3-3": {
+    "n_offered": 945,
+    "avg_odds": 71.33,
+    "wins": 15,
+    "exp_wins_grid": 18.4,
+    "real_over_grid": 0.814,
+    "z_dev": -0.8,
+    "cell_margin_med": -0.149,
+    "roi_pct": 6.44,
+    "z_roi": 0.24
+   },
+   "4-0": {
+    "n_offered": 2094,
+    "avg_odds": 36.57,
+    "wins": 91,
+    "exp_wins_grid": 69.9,
+    "real_over_grid": 1.301,
+    "z_dev": 2.52,
+    "cell_margin_med": 0.4225,
+    "roi_pct": -6.18,
+    "z_roi": -0.47
+   },
+   "4-1": {
+    "n_offered": 2287,
+    "avg_odds": 38.28,
+    "wins": 81,
+    "exp_wins_grid": 54.8,
+    "real_over_grid": 1.479,
+    "z_dev": 3.54,
+    "cell_margin_med": 0.5722,
+    "roi_pct": 1.51,
+    "z_roi": 0.12
+   },
+   "4-2": {
+    "n_offered": 998,
+    "avg_odds": 64.01,
+    "wins": 9,
+    "exp_wins_grid": 20.8,
+    "real_over_grid": 0.433,
+    "z_dev": -2.59,
+    "cell_margin_med": -0.1053,
+    "roi_pct": -48.43,
+    "z_roi": -1.93
+   },
+   "5-0": {
+    "n_offered": 1220,
+    "avg_odds": 42.11,
+    "wins": 47,
+    "exp_wins_grid": 28.5,
+    "real_over_grid": 1.649,
+    "z_dev": 3.47,
+    "cell_margin_med": 0.6103,
+    "roi_pct": 7.49,
+    "z_roi": 0.41
+   },
+   "5-1": {
+    "n_offered": 834,
+    "avg_odds": 53.18,
+    "wins": 20,
+    "exp_wins_grid": 17.2,
+    "real_over_grid": 1.161,
+    "z_dev": 0.67,
+    "cell_margin_med": 0.0794,
+    "roi_pct": -0.36,
+    "z_roi": -0.01
+   },
+   "6-0": {
+    "n_offered": 505,
+    "avg_odds": 45.95,
+    "wins": 10,
+    "exp_wins_grid": 9.3,
+    "real_over_grid": 1.072,
+    "z_dev": 0.22,
+    "cell_margin_med": 0.4953,
+    "roi_pct": -40.51,
+    "z_roi": -1.36
+   }
+  },
+  "pooled9": {
+   "0-0": {
+    "n_offered": 12615,
+    "avg_odds": 18.05,
+    "wins": 797,
+    "exp_wins_grid": 1070.3,
+    "real_over_grid": 0.745,
+    "z_dev": -8.35,
+    "cell_margin_med": -0.0858,
+    "roi_pct": -26.25,
+    "z_roi": -7.14
+   },
+   "0-1": {
+    "n_offered": 12600,
+    "avg_odds": 19.78,
+    "wins": 765,
+    "exp_wins_grid": 1036.8,
+    "real_over_grid": 0.738,
+    "z_dev": -8.44,
+    "cell_margin_med": -0.1912,
+    "roi_pct": -9.03,
+    "z_roi": -2.34
+   },
+   "0-2": {
+    "n_offered": 11833,
+    "avg_odds": 29.72,
+    "wins": 515,
+    "exp_wins_grid": 617.6,
+    "real_over_grid": 0.834,
+    "z_dev": -4.13,
+    "cell_margin_med": -0.0138,
+    "roi_pct": -10.16,
+    "z_roi": -2.06
+   },
+   "0-3": {
+    "n_offered": 8998,
+    "avg_odds": 40.0,
+    "wins": 341,
+    "exp_wins_grid": 274.3,
+    "real_over_grid": 1.243,
+    "z_dev": 4.02,
+    "cell_margin_med": 0.3074,
+    "roi_pct": -5.4,
+    "z_roi": -0.82
+   },
+   "0-4": {
+    "n_offered": 4341,
+    "avg_odds": 47.97,
+    "wins": 123,
+    "exp_wins_grid": 91.8,
+    "real_over_grid": 1.34,
+    "z_dev": 3.26,
+    "cell_margin_med": 0.4234,
+    "roi_pct": 11.55,
+    "z_roi": 1.11
+   },
+   "0-5": {
+    "n_offered": 1800,
+    "avg_odds": 57.97,
+    "wins": 36,
+    "exp_wins_grid": 25.5,
+    "real_over_grid": 1.41,
+    "z_dev": 2.07,
+    "cell_margin_med": 0.5712,
+    "roi_pct": -26.33,
+    "z_roi": -1.48
+   },
+   "0-6": {
+    "n_offered": 324,
+    "avg_odds": 62.46,
+    "wins": 4,
+    "exp_wins_grid": 4.2,
+    "real_over_grid": 0.958,
+    "z_dev": -0.09,
+    "cell_margin_med": 0.3599,
+    "roi_pct": -37.95,
+    "z_roi": -0.87
+   },
+   "1-0": {
+    "n_offered": 12632,
+    "avg_odds": 14.51,
+    "wins": 991,
+    "exp_wins_grid": 1340.7,
+    "real_over_grid": 0.739,
+    "z_dev": -9.55,
+    "cell_margin_med": -0.2234,
+    "roi_pct": -4.71,
+    "z_roi": -1.44
+   },
+   "1-1": {
+    "n_offered": 12630,
+    "avg_odds": 9.36,
+    "wins": 1311,
+    "exp_wins_grid": 1295.3,
+    "real_over_grid": 1.012,
+    "z_dev": 0.43,
+    "cell_margin_med": 0.1127,
+    "roi_pct": -11.5,
+    "z_roi": -4.47
+   },
+   "1-2": {
+    "n_offered": 12391,
+    "avg_odds": 16.01,
+    "wins": 924,
+    "exp_wins_grid": 746.4,
+    "real_over_grid": 1.238,
+    "z_dev": 6.5,
+    "cell_margin_med": 0.3379,
+    "roi_pct": -8.39,
+    "z_roi": -2.41
+   },
+   "1-3": {
+    "n_offered": 10775,
+    "avg_odds": 32.36,
+    "wins": 425,
+    "exp_wins_grid": 320.6,
+    "real_over_grid": 1.326,
+    "z_dev": 5.83,
+    "cell_margin_med": 0.4816,
+    "roi_pct": -11.14,
+    "z_roi": -2.06
+   },
+   "1-4": {
+    "n_offered": 5952,
+    "avg_odds": 49.43,
+    "wins": 144,
+    "exp_wins_grid": 101.8,
+    "real_over_grid": 1.415,
+    "z_dev": 4.18,
+    "cell_margin_med": 0.5733,
+    "roi_pct": -18.68,
+    "z_roi": -2.07
+   },
+   "1-5": {
+    "n_offered": 965,
+    "avg_odds": 66.2,
+    "wins": 10,
+    "exp_wins_grid": 15.3,
+    "real_over_grid": 0.652,
+    "z_dev": -1.36,
+    "cell_margin_med": 0.0491,
+    "roi_pct": -32.26,
+    "z_roi": -1.24
+   },
+   "2-0": {
+    "n_offered": 12481,
+    "avg_odds": 17.51,
+    "wins": 868,
+    "exp_wins_grid": 1017.1,
+    "real_over_grid": 0.853,
+    "z_dev": -4.67,
+    "cell_margin_med": -0.0479,
+    "roi_pct": -11.2,
+    "z_roi": -3.08
+   },
+   "2-1": {
+    "n_offered": 12595,
+    "avg_odds": 11.55,
+    "wins": 1151,
+    "exp_wins_grid": 954.3,
+    "real_over_grid": 1.206,
+    "z_dev": 6.37,
+    "cell_margin_med": 0.3337,
+    "roi_pct": -9.82,
+    "z_roi": -3.39
+   },
+   "2-2": {
+    "n_offered": 12231,
+    "avg_odds": 18.32,
+    "wins": 693,
+    "exp_wins_grid": 524.7,
+    "real_over_grid": 1.321,
+    "z_dev": 7.35,
+    "cell_margin_med": 0.52,
+    "roi_pct": -15.47,
+    "z_roi": -4.11
+   },
+   "2-3": {
+    "n_offered": 10576,
+    "avg_odds": 40.69,
+    "wins": 310,
+    "exp_wins_grid": 211.7,
+    "real_over_grid": 1.464,
+    "z_dev": 6.75,
+    "cell_margin_med": 0.5202,
+    "roi_pct": -1.86,
+    "z_roi": -0.3
+   },
+   "2-4": {
+    "n_offered": 1818,
+    "avg_odds": 73.79,
+    "wins": 34,
+    "exp_wins_grid": 29.8,
+    "real_over_grid": 1.14,
+    "z_dev": 0.77,
+    "cell_margin_med": -0.1051,
+    "roi_pct": 38.87,
+    "z_roi": 1.94
+   },
+   "3-0": {
+    "n_offered": 11498,
+    "avg_odds": 24.57,
+    "wins": 684,
+    "exp_wins_grid": 583.6,
+    "real_over_grid": 1.172,
+    "z_dev": 4.16,
+    "cell_margin_med": 0.2889,
+    "roi_pct": -6.83,
+    "z_roi": -1.51
+   },
+   "3-1": {
+    "n_offered": 12097,
+    "avg_odds": 21.64,
+    "wins": 690,
+    "exp_wins_grid": 530.5,
+    "real_over_grid": 1.301,
+    "z_dev": 6.93,
+    "cell_margin_med": 0.4778,
+    "roi_pct": -12.84,
+    "z_roi": -3.11
+   },
+   "3-2": {
+    "n_offered": 11483,
+    "avg_odds": 34.02,
+    "wins": 376,
+    "exp_wins_grid": 277.7,
+    "real_over_grid": 1.354,
+    "z_dev": 5.9,
+    "cell_margin_med": 0.5253,
+    "roi_pct": -10.95,
+    "z_roi": -2.04
+   },
+   "3-3": {
+    "n_offered": 3108,
+    "avg_odds": 75.65,
+    "wins": 37,
+    "exp_wins_grid": 53.0,
+    "real_over_grid": 0.697,
+    "z_dev": -2.2,
+    "cell_margin_med": -0.1522,
+    "roi_pct": -14.89,
+    "z_roi": -0.96
+   },
+   "4-0": {
+    "n_offered": 9035,
+    "avg_odds": 36.55,
+    "wins": 369,
+    "exp_wins_grid": 272.6,
+    "real_over_grid": 1.353,
+    "z_dev": 5.84,
+    "cell_margin_med": 0.421,
+    "roi_pct": -9.86,
+    "z_roi": -1.57
+   },
+   "4-1": {
+    "n_offered": 9601,
+    "avg_odds": 35.86,
+    "wins": 332,
+    "exp_wins_grid": 238.0,
+    "real_over_grid": 1.395,
+    "z_dev": 6.09,
+    "cell_margin_med": 0.5735,
+    "roi_pct": -10.92,
+    "z_roi": -1.81
+   },
+   "4-2": {
+    "n_offered": 4660,
+    "avg_odds": 67.15,
+    "wins": 71,
+    "exp_wins_grid": 85.9,
+    "real_over_grid": 0.827,
+    "z_dev": -1.6,
+    "cell_margin_med": -0.1073,
+    "roi_pct": -2.81,
+    "z_roi": -0.24
+   },
+   "5-0": {
+    "n_offered": 5272,
+    "avg_odds": 45.7,
+    "wins": 162,
+    "exp_wins_grid": 102.5,
+    "real_over_grid": 1.58,
+    "z_dev": 5.87,
+    "cell_margin_med": 0.5963,
+    "roi_pct": -9.42,
+    "z_roi": -1.02
+   },
+   "5-1": {
+    "n_offered": 3759,
+    "avg_odds": 57.45,
+    "wins": 78,
+    "exp_wins_grid": 71.0,
+    "real_over_grid": 1.098,
+    "z_dev": 0.83,
+    "cell_margin_med": 0.0568,
+    "roi_pct": 2.17,
+    "z_roi": 0.18
+   },
+   "6-0": {
+    "n_offered": 1816,
+    "avg_odds": 56.48,
+    "wins": 27,
+    "exp_wins_grid": 27.1,
+    "real_over_grid": 0.998,
+    "z_dev": -0.01,
+    "cell_margin_med": 0.4178,
+    "roi_pct": -39.76,
+    "z_roi": -2.27
+   }
+  }
+ }
+}

@@ -1,0 +1,1700 @@
+{
+ "InstantLeague-8065": {
+  "n_finished": 9600,
+  "n_teams_total": 48,
+  "rounds": [
+   {
+    "round": 1,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 17,
+    "draw_rate": 0.177,
+    "avg_goals": 2.56
+   },
+   {
+    "round": 2,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 18,
+    "draw_rate": 0.188,
+    "avg_goals": 2.99
+   },
+   {
+    "round": 3,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 16,
+    "draw_rate": 0.167,
+    "avg_goals": 2.98
+   },
+   {
+    "round": 4,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 21,
+    "draw_rate": 0.219,
+    "avg_goals": 3.03
+   },
+   {
+    "round": 5,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.208,
+    "avg_goals": 3.01
+   },
+   {
+    "round": 6,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 22,
+    "draw_rate": 0.229,
+    "avg_goals": 2.96
+   },
+   {
+    "round": 7,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 26,
+    "draw_rate": 0.271,
+    "avg_goals": 2.88
+   },
+   {
+    "round": 8,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 25,
+    "draw_rate": 0.208,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 9,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 33,
+    "draw_rate": 0.275,
+    "avg_goals": 2.77
+   },
+   {
+    "round": 10,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 32,
+    "draw_rate": 0.267,
+    "avg_goals": 2.8
+   },
+   {
+    "round": 11,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 33,
+    "draw_rate": 0.275,
+    "avg_goals": 2.9
+   },
+   {
+    "round": 12,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 39,
+    "draw_rate": 0.325,
+    "avg_goals": 3.11
+   },
+   {
+    "round": 13,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 37,
+    "draw_rate": 0.308,
+    "avg_goals": 2.99
+   },
+   {
+    "round": 14,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.233,
+    "avg_goals": 2.83
+   },
+   {
+    "round": 15,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 14,
+    "draw_rate": 0.194,
+    "avg_goals": 3.04
+   },
+   {
+    "round": 16,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 17,
+    "draw_rate": 0.236,
+    "avg_goals": 3.07
+   },
+   {
+    "round": 17,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 16,
+    "draw_rate": 0.222,
+    "avg_goals": 3.29
+   },
+   {
+    "round": 18,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 22,
+    "draw_rate": 0.306,
+    "avg_goals": 2.85
+   },
+   {
+    "round": 19,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 19,
+    "draw_rate": 0.264,
+    "avg_goals": 3.07
+   },
+   {
+    "round": 20,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.233,
+    "avg_goals": 2.99
+   },
+   {
+    "round": 21,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.233,
+    "avg_goals": 2.88
+   },
+   {
+    "round": 22,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 34,
+    "draw_rate": 0.283,
+    "avg_goals": 2.97
+   },
+   {
+    "round": 23,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 34,
+    "draw_rate": 0.283,
+    "avg_goals": 2.88
+   },
+   {
+    "round": 24,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 25,
+    "draw_rate": 0.26,
+    "avg_goals": 2.82
+   },
+   {
+    "round": 25,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.292,
+    "avg_goals": 2.97
+   },
+   {
+    "round": 26,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 25,
+    "draw_rate": 0.26,
+    "avg_goals": 2.45
+   },
+   {
+    "round": 27,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.208,
+    "avg_goals": 2.71
+   },
+   {
+    "round": 28,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 17,
+    "draw_rate": 0.177,
+    "avg_goals": 2.85
+   },
+   {
+    "round": 29,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 21,
+    "draw_rate": 0.219,
+    "avg_goals": 2.96
+   },
+   {
+    "round": 30,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 25,
+    "draw_rate": 0.26,
+    "avg_goals": 2.89
+   },
+   {
+    "round": 31,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 25,
+    "draw_rate": 0.26,
+    "avg_goals": 3.03
+   },
+   {
+    "round": 32,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 25,
+    "draw_rate": 0.26,
+    "avg_goals": 2.81
+   },
+   {
+    "round": 33,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.208,
+    "avg_goals": 3.19
+   },
+   {
+    "round": 34,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 23,
+    "draw_rate": 0.24,
+    "avg_goals": 3.02
+   },
+   {
+    "round": 35,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 31,
+    "draw_rate": 0.323,
+    "avg_goals": 2.96
+   },
+   {
+    "round": 36,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 18,
+    "draw_rate": 0.188,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 37,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 18,
+    "draw_rate": 0.188,
+    "avg_goals": 2.95
+   },
+   {
+    "round": 38,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.208,
+    "avg_goals": 2.81
+   },
+   {
+    "round": 39,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 17,
+    "draw_rate": 0.177,
+    "avg_goals": 3.04
+   },
+   {
+    "round": 40,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 23,
+    "draw_rate": 0.24,
+    "avg_goals": 2.83
+   },
+   {
+    "round": 41,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.292,
+    "avg_goals": 2.67
+   },
+   {
+    "round": 42,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 16,
+    "draw_rate": 0.167,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 43,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 17,
+    "draw_rate": 0.177,
+    "avg_goals": 2.95
+   },
+   {
+    "round": 44,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.292,
+    "avg_goals": 2.81
+   },
+   {
+    "round": 45,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 34,
+    "draw_rate": 0.283,
+    "avg_goals": 3.07
+   },
+   {
+    "round": 46,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 27,
+    "draw_rate": 0.225,
+    "avg_goals": 3.1
+   },
+   {
+    "round": 47,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 26,
+    "draw_rate": 0.217,
+    "avg_goals": 3.12
+   },
+   {
+    "round": 48,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 29,
+    "draw_rate": 0.242,
+    "avg_goals": 2.88
+   },
+   {
+    "round": 49,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 31,
+    "draw_rate": 0.258,
+    "avg_goals": 3.08
+   },
+   {
+    "round": 50,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 29,
+    "draw_rate": 0.242,
+    "avg_goals": 3.22
+   },
+   {
+    "round": 51,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.167,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 52,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 34,
+    "draw_rate": 0.283,
+    "avg_goals": 3.12
+   },
+   {
+    "round": 53,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 27,
+    "draw_rate": 0.225,
+    "avg_goals": 2.92
+   },
+   {
+    "round": 54,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 30,
+    "draw_rate": 0.25,
+    "avg_goals": 2.82
+   },
+   {
+    "round": 55,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 24,
+    "draw_rate": 0.2,
+    "avg_goals": 2.91
+   },
+   {
+    "round": 56,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 36,
+    "draw_rate": 0.3,
+    "avg_goals": 2.82
+   },
+   {
+    "round": 57,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 31,
+    "draw_rate": 0.258,
+    "avg_goals": 3.02
+   },
+   {
+    "round": 58,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 28,
+    "draw_rate": 0.233,
+    "avg_goals": 3.05
+   },
+   {
+    "round": 59,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 33,
+    "draw_rate": 0.275,
+    "avg_goals": 2.91
+   },
+   {
+    "round": 60,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 27,
+    "draw_rate": 0.225,
+    "avg_goals": 2.81
+   },
+   {
+    "round": 61,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.167,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 62,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 31,
+    "draw_rate": 0.258,
+    "avg_goals": 2.87
+   },
+   {
+    "round": 63,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 27,
+    "draw_rate": 0.225,
+    "avg_goals": 3.13
+   },
+   {
+    "round": 64,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 22,
+    "draw_rate": 0.183,
+    "avg_goals": 3.17
+   },
+   {
+    "round": 65,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 29,
+    "draw_rate": 0.242,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 66,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 32,
+    "draw_rate": 0.267,
+    "avg_goals": 2.86
+   },
+   {
+    "round": 67,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 22,
+    "draw_rate": 0.183,
+    "avg_goals": 3.01
+   },
+   {
+    "round": 68,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 30,
+    "draw_rate": 0.25,
+    "avg_goals": 2.91
+   },
+   {
+    "round": 69,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 31,
+    "draw_rate": 0.258,
+    "avg_goals": 2.9
+   },
+   {
+    "round": 70,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 32,
+    "draw_rate": 0.267,
+    "avg_goals": 3.19
+   },
+   {
+    "round": 71,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 27,
+    "draw_rate": 0.225,
+    "avg_goals": 2.86
+   },
+   {
+    "round": 72,
+    "n_matches": 120,
+    "n_teams": 48,
+    "draws": 33,
+    "draw_rate": 0.275,
+    "avg_goals": 2.88
+   },
+   {
+    "round": 73,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 24,
+    "draw_rate": 0.25,
+    "avg_goals": 2.99
+   },
+   {
+    "round": 74,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 30,
+    "draw_rate": 0.312,
+    "avg_goals": 2.98
+   },
+   {
+    "round": 75,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 19,
+    "draw_rate": 0.198,
+    "avg_goals": 3.17
+   },
+   {
+    "round": 76,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 21,
+    "draw_rate": 0.219,
+    "avg_goals": 3.01
+   },
+   {
+    "round": 77,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 22,
+    "draw_rate": 0.229,
+    "avg_goals": 2.96
+   },
+   {
+    "round": 78,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 19,
+    "draw_rate": 0.198,
+    "avg_goals": 2.8
+   },
+   {
+    "round": 79,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 14,
+    "draw_rate": 0.146,
+    "avg_goals": 2.98
+   },
+   {
+    "round": 80,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 18,
+    "draw_rate": 0.188,
+    "avg_goals": 3.22
+   },
+   {
+    "round": 81,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 26,
+    "draw_rate": 0.271,
+    "avg_goals": 2.68
+   },
+   {
+    "round": 82,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 23,
+    "draw_rate": 0.24,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 83,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 20,
+    "draw_rate": 0.208,
+    "avg_goals": 2.84
+   },
+   {
+    "round": 84,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 16,
+    "draw_rate": 0.167,
+    "avg_goals": 2.98
+   },
+   {
+    "round": 85,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 21,
+    "draw_rate": 0.219,
+    "avg_goals": 2.92
+   },
+   {
+    "round": 86,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 24,
+    "draw_rate": 0.25,
+    "avg_goals": 2.72
+   },
+   {
+    "round": 87,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 16,
+    "draw_rate": 0.167,
+    "avg_goals": 2.75
+   },
+   {
+    "round": 88,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 27,
+    "draw_rate": 0.281,
+    "avg_goals": 2.84
+   },
+   {
+    "round": 89,
+    "n_matches": 96,
+    "n_teams": 48,
+    "draws": 19,
+    "draw_rate": 0.198,
+    "avg_goals": 3.18
+   },
+   {
+    "round": 90,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 17,
+    "draw_rate": 0.236,
+    "avg_goals": 2.94
+   },
+   {
+    "round": 91,
+    "n_matches": 72,
+    "n_teams": 48,
+    "draws": 11,
+    "draw_rate": 0.153,
+    "avg_goals": 3.01
+   },
+   {
+    "round": 92,
+    "n_matches": 48,
+    "n_teams": 48,
+    "draws": 8,
+    "draw_rate": 0.167,
+    "avg_goals": 3.0
+   },
+   {
+    "round": 93,
+    "n_matches": 48,
+    "n_teams": 48,
+    "draws": 14,
+    "draw_rate": 0.292,
+    "avg_goals": 2.65
+   }
+  ],
+  "minutes_gt90": 0,
+  "max_minute": 90,
+  "n_goals_json_parsed": 9124,
+  "n_goals_json_mismatch": 0,
+  "n_goals_json_null": 0,
+  "first_start": "2026-06-12 01:23:40.000000",
+  "last_start": "2026-06-12 19:26:40.000000",
+  "team_round_duplicates": 4464
+ },
+ "InstantLeague-8056": {
+  "n_finished": 7182,
+  "n_teams_total": 36,
+  "rounds": [
+   {
+    "round": 1,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.222,
+    "avg_goals": 3.02
+   },
+   {
+    "round": 2,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.189,
+    "avg_goals": 3.24
+   },
+   {
+    "round": 3,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 18,
+    "draw_rate": 0.2,
+    "avg_goals": 3.12
+   },
+   {
+    "round": 4,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 18,
+    "draw_rate": 0.2,
+    "avg_goals": 3.18
+   },
+   {
+    "round": 5,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.189,
+    "avg_goals": 3.04
+   },
+   {
+    "round": 6,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.222,
+    "avg_goals": 3.17
+   },
+   {
+    "round": 7,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.189,
+    "avg_goals": 3.04
+   },
+   {
+    "round": 8,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.222,
+    "avg_goals": 3.14
+   },
+   {
+    "round": 9,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.189,
+    "avg_goals": 2.69
+   },
+   {
+    "round": 10,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 13,
+    "draw_rate": 0.144,
+    "avg_goals": 3.29
+   },
+   {
+    "round": 11,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 23,
+    "draw_rate": 0.213,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 12,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 23,
+    "draw_rate": 0.213,
+    "avg_goals": 3.1
+   },
+   {
+    "round": 13,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 19,
+    "draw_rate": 0.176,
+    "avg_goals": 3.19
+   },
+   {
+    "round": 14,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 21,
+    "draw_rate": 0.194,
+    "avg_goals": 2.87
+   },
+   {
+    "round": 15,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 19,
+    "draw_rate": 0.176,
+    "avg_goals": 3.17
+   },
+   {
+    "round": 16,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.204,
+    "avg_goals": 3.04
+   },
+   {
+    "round": 17,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 23,
+    "draw_rate": 0.213,
+    "avg_goals": 2.96
+   },
+   {
+    "round": 18,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.185,
+    "avg_goals": 2.91
+   },
+   {
+    "round": 19,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 15,
+    "draw_rate": 0.139,
+    "avg_goals": 3.35
+   },
+   {
+    "round": 20,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 19,
+    "draw_rate": 0.176,
+    "avg_goals": 3.29
+   },
+   {
+    "round": 21,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 26,
+    "draw_rate": 0.241,
+    "avg_goals": 3.15
+   },
+   {
+    "round": 22,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 26,
+    "draw_rate": 0.206,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 23,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 24,
+    "draw_rate": 0.19,
+    "avg_goals": 3.31
+   },
+   {
+    "round": 24,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 35,
+    "draw_rate": 0.278,
+    "avg_goals": 2.99
+   },
+   {
+    "round": 25,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.175,
+    "avg_goals": 2.97
+   },
+   {
+    "round": 26,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 34,
+    "draw_rate": 0.27,
+    "avg_goals": 2.92
+   },
+   {
+    "round": 27,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 32,
+    "draw_rate": 0.254,
+    "avg_goals": 3.14
+   },
+   {
+    "round": 28,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 21,
+    "draw_rate": 0.194,
+    "avg_goals": 3.14
+   },
+   {
+    "round": 29,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 13,
+    "draw_rate": 0.12,
+    "avg_goals": 3.03
+   },
+   {
+    "round": 30,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.185,
+    "avg_goals": 2.81
+   },
+   {
+    "round": 31,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 28,
+    "draw_rate": 0.259,
+    "avg_goals": 3.21
+   },
+   {
+    "round": 32,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 25,
+    "draw_rate": 0.231,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 33,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 31,
+    "draw_rate": 0.246,
+    "avg_goals": 3.27
+   },
+   {
+    "round": 34,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 26,
+    "draw_rate": 0.206,
+    "avg_goals": 3.13
+   },
+   {
+    "round": 35,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 23,
+    "draw_rate": 0.183,
+    "avg_goals": 3.16
+   },
+   {
+    "round": 36,
+    "n_matches": 126,
+    "n_teams": 36,
+    "draws": 25,
+    "draw_rate": 0.198,
+    "avg_goals": 3.15
+   },
+   {
+    "round": 37,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 19,
+    "draw_rate": 0.176,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 38,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.204,
+    "avg_goals": 3.12
+   },
+   {
+    "round": 39,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.204,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 40,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.204,
+    "avg_goals": 3.2
+   },
+   {
+    "round": 41,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 27,
+    "draw_rate": 0.25,
+    "avg_goals": 3.05
+   },
+   {
+    "round": 42,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 13,
+    "draw_rate": 0.12,
+    "avg_goals": 3.26
+   },
+   {
+    "round": 43,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 21,
+    "draw_rate": 0.194,
+    "avg_goals": 3.09
+   },
+   {
+    "round": 44,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 18,
+    "draw_rate": 0.167,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 45,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 25,
+    "draw_rate": 0.231,
+    "avg_goals": 2.99
+   },
+   {
+    "round": 46,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 19,
+    "draw_rate": 0.176,
+    "avg_goals": 3.34
+   },
+   {
+    "round": 47,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 14,
+    "draw_rate": 0.13,
+    "avg_goals": 3.15
+   },
+   {
+    "round": 48,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 23,
+    "draw_rate": 0.213,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 49,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 26,
+    "draw_rate": 0.241,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 50,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.204,
+    "avg_goals": 3.06
+   },
+   {
+    "round": 51,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 22,
+    "draw_rate": 0.204,
+    "avg_goals": 3.21
+   },
+   {
+    "round": 52,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 15,
+    "draw_rate": 0.139,
+    "avg_goals": 2.93
+   },
+   {
+    "round": 53,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 21,
+    "draw_rate": 0.233,
+    "avg_goals": 2.86
+   },
+   {
+    "round": 54,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 21,
+    "draw_rate": 0.233,
+    "avg_goals": 3.1
+   },
+   {
+    "round": 55,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.189,
+    "avg_goals": 3.18
+   },
+   {
+    "round": 56,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.189,
+    "avg_goals": 3.26
+   },
+   {
+    "round": 57,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 16,
+    "draw_rate": 0.178,
+    "avg_goals": 2.87
+   },
+   {
+    "round": 58,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 15,
+    "draw_rate": 0.139,
+    "avg_goals": 2.94
+   },
+   {
+    "round": 59,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 18,
+    "draw_rate": 0.167,
+    "avg_goals": 3.24
+   },
+   {
+    "round": 60,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.185,
+    "avg_goals": 2.8
+   },
+   {
+    "round": 61,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 19,
+    "draw_rate": 0.176,
+    "avg_goals": 3.13
+   },
+   {
+    "round": 62,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 21,
+    "draw_rate": 0.194,
+    "avg_goals": 3.03
+   },
+   {
+    "round": 63,
+    "n_matches": 108,
+    "n_teams": 36,
+    "draws": 20,
+    "draw_rate": 0.185,
+    "avg_goals": 3.23
+   },
+   {
+    "round": 64,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 23,
+    "draw_rate": 0.256,
+    "avg_goals": 2.87
+   },
+   {
+    "round": 65,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 14,
+    "draw_rate": 0.156,
+    "avg_goals": 3.02
+   },
+   {
+    "round": 66,
+    "n_matches": 90,
+    "n_teams": 36,
+    "draws": 24,
+    "draw_rate": 0.267,
+    "avg_goals": 3.13
+   },
+   {
+    "round": 67,
+    "n_matches": 72,
+    "n_teams": 36,
+    "draws": 17,
+    "draw_rate": 0.236,
+    "avg_goals": 2.94
+   },
+   {
+    "round": 68,
+    "n_matches": 72,
+    "n_teams": 36,
+    "draws": 7,
+    "draw_rate": 0.097,
+    "avg_goals": 3.01
+   },
+   {
+    "round": 69,
+    "n_matches": 54,
+    "n_teams": 36,
+    "draws": 14,
+    "draw_rate": 0.259,
+    "avg_goals": 3.2
+   }
+  ],
+  "minutes_gt90": 0,
+  "max_minute": 90,
+  "n_goals_json_parsed": 6741,
+  "n_goals_json_mismatch": 0,
+  "n_goals_json_null": 0,
+  "first_start": "2026-06-12 01:24:34.000000",
+  "last_start": "2026-06-12 19:27:34.000000",
+  "team_round_duplicates": 2484
+ },
+ "InstantLeague-8060": {
+  "n_finished": 4548,
+  "n_teams_total": 24,
+  "rounds": [
+   {
+    "round": 1,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 37,
+    "draw_rate": 0.308,
+    "avg_goals": 1.65
+   },
+   {
+    "round": 2,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 46,
+    "draw_rate": 0.383,
+    "avg_goals": 1.74
+   },
+   {
+    "round": 3,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 30,
+    "draw_rate": 0.278,
+    "avg_goals": 1.69
+   },
+   {
+    "round": 4,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 29,
+    "draw_rate": 0.269,
+    "avg_goals": 1.58
+   },
+   {
+    "round": 5,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 45,
+    "draw_rate": 0.417,
+    "avg_goals": 1.71
+   },
+   {
+    "round": 6,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 47,
+    "draw_rate": 0.435,
+    "avg_goals": 1.59
+   },
+   {
+    "round": 7,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 31,
+    "draw_rate": 0.323,
+    "avg_goals": 1.67
+   },
+   {
+    "round": 8,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 35,
+    "draw_rate": 0.365,
+    "avg_goals": 1.66
+   },
+   {
+    "round": 9,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 27,
+    "draw_rate": 0.281,
+    "avg_goals": 1.7
+   },
+   {
+    "round": 10,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 35,
+    "draw_rate": 0.365,
+    "avg_goals": 1.75
+   },
+   {
+    "round": 11,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 40,
+    "draw_rate": 0.417,
+    "avg_goals": 1.64
+   },
+   {
+    "round": 12,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 31,
+    "draw_rate": 0.323,
+    "avg_goals": 1.55
+   },
+   {
+    "round": 13,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 39,
+    "draw_rate": 0.406,
+    "avg_goals": 1.38
+   },
+   {
+    "round": 14,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 24,
+    "draw_rate": 0.25,
+    "avg_goals": 1.8
+   },
+   {
+    "round": 15,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 35,
+    "draw_rate": 0.365,
+    "avg_goals": 1.91
+   },
+   {
+    "round": 16,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 35,
+    "draw_rate": 0.365,
+    "avg_goals": 1.69
+   },
+   {
+    "round": 17,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 32,
+    "draw_rate": 0.333,
+    "avg_goals": 1.67
+   },
+   {
+    "round": 18,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 31,
+    "draw_rate": 0.323,
+    "avg_goals": 1.81
+   },
+   {
+    "round": 19,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 36,
+    "draw_rate": 0.375,
+    "avg_goals": 1.61
+   },
+   {
+    "round": 20,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 30,
+    "draw_rate": 0.312,
+    "avg_goals": 1.66
+   },
+   {
+    "round": 21,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 27,
+    "draw_rate": 0.281,
+    "avg_goals": 1.79
+   },
+   {
+    "round": 22,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 36,
+    "draw_rate": 0.375,
+    "avg_goals": 1.61
+   },
+   {
+    "round": 23,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 37,
+    "draw_rate": 0.385,
+    "avg_goals": 1.53
+   },
+   {
+    "round": 24,
+    "n_matches": 96,
+    "n_teams": 24,
+    "draws": 36,
+    "draw_rate": 0.375,
+    "avg_goals": 1.74
+   },
+   {
+    "round": 25,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 46,
+    "draw_rate": 0.426,
+    "avg_goals": 1.44
+   },
+   {
+    "round": 26,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 36,
+    "draw_rate": 0.333,
+    "avg_goals": 1.69
+   },
+   {
+    "round": 27,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 39,
+    "draw_rate": 0.361,
+    "avg_goals": 1.72
+   },
+   {
+    "round": 28,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 49,
+    "draw_rate": 0.454,
+    "avg_goals": 1.56
+   },
+   {
+    "round": 29,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 40,
+    "draw_rate": 0.37,
+    "avg_goals": 1.71
+   },
+   {
+    "round": 30,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 38,
+    "draw_rate": 0.352,
+    "avg_goals": 1.7
+   },
+   {
+    "round": 31,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 47,
+    "draw_rate": 0.435,
+    "avg_goals": 1.6
+   },
+   {
+    "round": 32,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 31,
+    "draw_rate": 0.287,
+    "avg_goals": 1.75
+   },
+   {
+    "round": 33,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 33,
+    "draw_rate": 0.306,
+    "avg_goals": 1.74
+   },
+   {
+    "round": 34,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 40,
+    "draw_rate": 0.333,
+    "avg_goals": 1.64
+   },
+   {
+    "round": 35,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 39,
+    "draw_rate": 0.325,
+    "avg_goals": 1.55
+   },
+   {
+    "round": 36,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 50,
+    "draw_rate": 0.417,
+    "avg_goals": 1.85
+   },
+   {
+    "round": 37,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 43,
+    "draw_rate": 0.358,
+    "avg_goals": 1.71
+   },
+   {
+    "round": 38,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 38,
+    "draw_rate": 0.317,
+    "avg_goals": 1.77
+   },
+   {
+    "round": 39,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 52,
+    "draw_rate": 0.433,
+    "avg_goals": 1.54
+   },
+   {
+    "round": 40,
+    "n_matches": 120,
+    "n_teams": 24,
+    "draws": 32,
+    "draw_rate": 0.267,
+    "avg_goals": 1.85
+   },
+   {
+    "round": 41,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 37,
+    "draw_rate": 0.343,
+    "avg_goals": 1.72
+   },
+   {
+    "round": 42,
+    "n_matches": 108,
+    "n_teams": 24,
+    "draws": 42,
+    "draw_rate": 0.389,
+    "avg_goals": 1.53
+   },
+   {
+    "round": 43,
+    "n_matches": 60,
+    "n_teams": 24,
+    "draws": 20,
+    "draw_rate": 0.333,
+    "avg_goals": 1.63
+   },
+   {
+    "round": 44,
+    "n_matches": 36,
+    "n_teams": 24,
+    "draws": 17,
+    "draw_rate": 0.472,
+    "avg_goals": 1.69
+   },
+   {
+    "round": 45,
+    "n_matches": 24,
+    "n_teams": 24,
+    "draws": 11,
+    "draw_rate": 0.458,
+    "avg_goals": 1.67
+   }
+  ],
+  "minutes_gt90": 0,
+  "max_minute": 90,
+  "n_goals_json_parsed": 3389,
+  "n_goals_json_mismatch": 0,
+  "n_goals_json_null": 0,
+  "first_start": "2026-06-12 01:23:53.000000",
+  "last_start": "2026-06-12 19:27:53.000000",
+  "team_round_duplicates": 1080
+ }
+}

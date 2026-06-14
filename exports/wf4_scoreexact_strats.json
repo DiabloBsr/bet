@@ -1,0 +1,379 @@
+{
+ "S01_always_2-1": {
+  "8035_TRAIN": {
+   "n": 4599,
+   "wins": 476,
+   "wr": 0.1035,
+   "avg_odds": 10.42,
+   "roi_pct": -3.2,
+   "z": -0.71,
+   "p_one_sided": 0.76045
+  },
+  "8035_TEST": {
+   "n": 1972,
+   "wins": 170,
+   "wr": 0.0862,
+   "avg_odds": 10.23,
+   "roi_pct": -18.75,
+   "z": -2.74,
+   "p_one_sided": 0.99693
+  },
+  "NEWLEAGUES": {
+   "n": 6024,
+   "wins": 505,
+   "wr": 0.0838,
+   "avg_odds": 12.85,
+   "roi_pct": -11.95,
+   "z": -2.7,
+   "p_one_sided": 0.99648
+  }
+ },
+ "S02_always_1-2": {
+  "8035_TRAIN": {
+   "n": 4599,
+   "wins": 375,
+   "wr": 0.0815,
+   "avg_odds": 14.47,
+   "roi_pct": -3.38,
+   "z": -0.62,
+   "p_one_sided": 0.73364
+  },
+  "8035_TEST": {
+   "n": 1972,
+   "wins": 159,
+   "wr": 0.0806,
+   "avg_odds": 14.43,
+   "roi_pct": -3.43,
+   "z": -0.42,
+   "p_one_sided": 0.66096
+  },
+  "NEWLEAGUES": {
+   "n": 5820,
+   "wins": 390,
+   "wr": 0.067,
+   "avg_odds": 17.76,
+   "roi_pct": -14.03,
+   "z": -2.61,
+   "p_one_sided": 0.99553
+  }
+ },
+ "S03_combo_21_12": {
+  "8035_TRAIN": {
+   "n": 9198,
+   "wins": 851,
+   "wr": 0.0925,
+   "avg_odds": 12.45,
+   "roi_pct": -3.29,
+   "z": -0.93,
+   "p_one_sided": 0.82449
+  },
+  "8035_TEST": {
+   "n": 3944,
+   "wins": 329,
+   "wr": 0.0834,
+   "avg_odds": 12.33,
+   "roi_pct": -11.09,
+   "z": -2.07,
+   "p_one_sided": 0.9807
+  },
+  "NEWLEAGUES": {
+   "n": 11844,
+   "wins": 895,
+   "wr": 0.0756,
+   "avg_odds": 15.26,
+   "roi_pct": -12.97,
+   "z": -3.74,
+   "p_one_sided": 0.99991
+  }
+ },
+ "S04_21_homefav_1.5-2.2": {
+  "8035_TRAIN": {
+   "n": 1722,
+   "wins": 211,
+   "wr": 0.1225,
+   "avg_odds": 8.03,
+   "roi_pct": -1.93,
+   "z": -0.3,
+   "p_one_sided": 0.61841
+  },
+  "8035_TEST": {
+   "n": 744,
+   "wins": 66,
+   "wr": 0.0887,
+   "avg_odds": 8.03,
+   "roi_pct": -28.99,
+   "z": -2.98,
+   "p_one_sided": 0.99857
+  },
+  "NEWLEAGUES": {
+   "n": 1935,
+   "wins": 179,
+   "wr": 0.0925,
+   "avg_odds": 9.03,
+   "roi_pct": -19.9,
+   "z": -3.09,
+   "p_one_sided": 0.99899
+  }
+ },
+ "S05_12_awayfav_1.5-2.2": {
+  "8035_TRAIN": {
+   "n": 711,
+   "wins": 80,
+   "wr": 0.1125,
+   "avg_odds": 7.96,
+   "roi_pct": -10.62,
+   "z": -1.07,
+   "p_one_sided": 0.85842
+  },
+  "8035_TEST": {
+   "n": 342,
+   "wins": 42,
+   "wr": 0.1228,
+   "avg_odds": 7.97,
+   "roi_pct": -2.13,
+   "z": -0.15,
+   "p_one_sided": 0.55917
+  },
+  "NEWLEAGUES": {
+   "n": 1102,
+   "wins": 119,
+   "wr": 0.108,
+   "avg_odds": 8.91,
+   "roi_pct": -9.79,
+   "z": -1.16,
+   "p_one_sided": 0.87607
+  }
+ },
+ "S06_modal_grid": {
+  "8035_TRAIN": {
+   "n": 4599,
+   "wins": 455,
+   "wr": 0.0989,
+   "avg_odds": 8.69,
+   "roi_pct": -15.29,
+   "z": -3.74,
+   "p_one_sided": 0.99991
+  },
+  "8035_TEST": {
+   "n": 1972,
+   "wins": 186,
+   "wr": 0.0943,
+   "avg_odds": 8.65,
+   "roi_pct": -21.01,
+   "z": -3.37,
+   "p_one_sided": 0.99963
+  },
+  "NEWLEAGUES": {
+   "n": 6061,
+   "wins": 830,
+   "wr": 0.1369,
+   "avg_odds": 7.51,
+   "roi_pct": -9.72,
+   "z": -2.97,
+   "p_one_sided": 0.9985
+  }
+ },
+ "S07_modal_v2_trainmult": {
+  "8035_TRAIN": {
+   "n": 4599,
+   "wins": 553,
+   "wr": 0.1202,
+   "avg_odds": 7.7,
+   "roi_pct": -8.23,
+   "z": -2.16,
+   "p_one_sided": 0.98445
+  },
+  "8035_TEST": {
+   "n": 1972,
+   "wins": 239,
+   "wr": 0.1212,
+   "avg_odds": 7.69,
+   "roi_pct": -7.79,
+   "z": -1.34,
+   "p_one_sided": 0.90944
+  },
+  "NEWLEAGUES": {
+   "n": 6061,
+   "wins": 846,
+   "wr": 0.1396,
+   "avg_odds": 6.95,
+   "roi_pct": -12.42,
+   "z": -3.96,
+   "p_one_sided": 0.99996
+  }
+ },
+ "S08_21_awayfav_spread": {
+  "8035_TRAIN": {
+   "n": 764,
+   "wins": 43,
+   "wr": 0.0563,
+   "avg_odds": 19.58,
+   "roi_pct": 2.05,
+   "z": 0.13,
+   "p_one_sided": 0.44778
+  },
+  "8035_TEST": {
+   "n": 318,
+   "wins": 20,
+   "wr": 0.0629,
+   "avg_odds": 18.55,
+   "roi_pct": -1.62,
+   "z": -0.07,
+   "p_one_sided": 0.52743
+  },
+  "NEWLEAGUES": {
+   "n": 919,
+   "wins": 49,
+   "wr": 0.0533,
+   "avg_odds": 20.32,
+   "roi_pct": -17.26,
+   "z": -1.19,
+   "p_one_sided": 0.88302
+  }
+ },
+ "S09_12_mu_le_2.4": {
+  "8035_TRAIN": {
+   "n": 737,
+   "wins": 80,
+   "wr": 0.1085,
+   "avg_odds": 11.14,
+   "roi_pct": 12.3,
+   "z": 1.05,
+   "p_one_sided": 0.14723
+  },
+  "8035_TEST": {
+   "n": 316,
+   "wins": 30,
+   "wr": 0.0949,
+   "avg_odds": 11.18,
+   "roi_pct": 0.1,
+   "z": 0.01,
+   "p_one_sided": 0.49775
+  },
+  "NEWLEAGUES": {
+   "n": 2338,
+   "wins": 139,
+   "wr": 0.0595,
+   "avg_odds": 20.45,
+   "roi_pct": -9.82,
+   "z": -1.08,
+   "p_one_sided": 0.85926
+  }
+ },
+ "S10_21_mu_2.4_2.8": {
+  "8035_TRAIN": {
+   "n": 1495,
+   "wins": 168,
+   "wr": 0.1124,
+   "avg_odds": 10.39,
+   "roi_pct": 6.45,
+   "z": 0.81,
+   "p_one_sided": 0.20798
+  },
+  "8035_TEST": {
+   "n": 668,
+   "wins": 59,
+   "wr": 0.0883,
+   "avg_odds": 10.24,
+   "roi_pct": -15.91,
+   "z": -1.35,
+   "p_one_sided": 0.91197
+  },
+  "NEWLEAGUES": {
+   "n": 1456,
+   "wins": 152,
+   "wr": 0.1044,
+   "avg_odds": 10.25,
+   "roi_pct": -3.73,
+   "z": -0.47,
+   "p_one_sided": 0.68012
+  }
+ },
+ "S11_bestev_thr1.0": {
+  "8035_TRAIN": {
+   "n": 3839,
+   "wins": 101,
+   "wr": 0.0263,
+   "avg_odds": 52.81,
+   "roi_pct": 3.21,
+   "z": 0.28,
+   "p_one_sided": 0.39106
+  },
+  "8035_TEST": {
+   "n": 1645,
+   "wins": 38,
+   "wr": 0.0231,
+   "avg_odds": 52.63,
+   "roi_pct": -12.99,
+   "z": -0.73,
+   "p_one_sided": 0.76825
+  },
+  "NEWLEAGUES": {
+   "n": 3911,
+   "wins": 127,
+   "wr": 0.0325,
+   "avg_odds": 49.89,
+   "roi_pct": 11.87,
+   "z": 1.06,
+   "p_one_sided": 0.1442
+  }
+ },
+ "S12_combo_lowmu": {
+  "8035_TRAIN": {
+   "n": 1474,
+   "wins": 137,
+   "wr": 0.0929,
+   "avg_odds": 10.77,
+   "roi_pct": -6.5,
+   "z": -0.8,
+   "p_one_sided": 0.78775
+  },
+  "8035_TEST": {
+   "n": 632,
+   "wins": 54,
+   "wr": 0.0854,
+   "avg_odds": 10.69,
+   "roi_pct": -13.48,
+   "z": -1.09,
+   "p_one_sided": 0.86173
+  },
+  "NEWLEAGUES": {
+   "n": 4767,
+   "wins": 324,
+   "wr": 0.068,
+   "avg_odds": 17.92,
+   "roi_pct": -11.22,
+   "z": -1.88,
+   "p_one_sided": 0.97013
+  }
+ },
+ "S13_12_lowmu_cheap": {
+  "8035_TRAIN": {
+   "n": 369,
+   "wins": 45,
+   "wr": 0.122,
+   "avg_odds": 9.86,
+   "roi_pct": 17.96,
+   "z": 1.16,
+   "p_one_sided": 0.12321
+  },
+  "8035_TEST": {
+   "n": 157,
+   "wins": 17,
+   "wr": 0.1083,
+   "avg_odds": 9.95,
+   "roi_pct": -0.22,
+   "z": -0.01,
+   "p_one_sided": 0.50362
+  },
+  "NEWLEAGUES": {
+   "n": 296,
+   "wins": 24,
+   "wr": 0.0811,
+   "avg_odds": 9.95,
+   "roi_pct": -17.35,
+   "z": -1.0,
+   "p_one_sided": 0.84079
+  }
+ }
+}

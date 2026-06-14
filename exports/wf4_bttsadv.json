@@ -1,0 +1,233 @@
+{
+ "A_unique_ids": {
+  "n": 21201,
+  "n_unique": 21201
+ },
+ "A_corrupted_in_dataset": 0,
+ "A_db_crosscheck": {
+  "sampled": 400,
+  "missing_in_db": 0,
+  "mismatch": [],
+  "n_mismatch": 0
+ },
+ "B_opening_timing": {
+  "n": 21201,
+  "no_parse": 0,
+  "fetched_after_start": 14095,
+  "fetched_after_finish": 402,
+  "median_lead_min": -0.5,
+  "p95_lead_min": -3.4
+ },
+ "C_duplicates": {
+  "pairs_within_30min": 497,
+  "dropped": 497
+ },
+ "D_zone": {
+  "pooled9": {
+   "label": "pooled9",
+   "n": 7331,
+   "roi_no_pct": -9.15,
+   "p_vs_0": 0.0,
+   "roi_margin_only_pct": -5.66,
+   "excess_pct": -3.48,
+   "real_yes": 0.5501,
+   "implied_yes": 0.5342,
+   "z_deviation": 2.74,
+   "avg_o_no": 2.134,
+   "wr_no": 0.4499
+  },
+  "pooled9_dedup": {
+   "label": "pooled9_dedup",
+   "n": 7138,
+   "roi_no_pct": -9.09,
+   "p_vs_0": 0.0,
+   "roi_margin_only_pct": -5.66,
+   "excess_pct": -3.43,
+   "real_yes": 0.5492,
+   "implied_yes": 0.5334,
+   "z_deviation": 2.67,
+   "avg_o_no": 2.131,
+   "wr_no": 0.4508
+  },
+  "8035_train70": {
+   "label": "8035_train70",
+   "n": 2095,
+   "roi_no_pct": -11.36,
+   "p_vs_0": 2e-06,
+   "roi_margin_only_pct": -5.66,
+   "excess_pct": -5.69,
+   "real_yes": 0.601,
+   "implied_yes": 0.5737,
+   "z_deviation": 2.55,
+   "avg_o_no": 2.25,
+   "wr_no": 0.399
+  },
+  "8035_test30": {
+   "label": "8035_test30",
+   "n": 891,
+   "roi_no_pct": -10.24,
+   "p_vs_0": 0.005717,
+   "roi_margin_only_pct": -5.66,
+   "excess_pct": -4.58,
+   "real_yes": 0.596,
+   "implied_yes": 0.5754,
+   "z_deviation": 1.25,
+   "avg_o_no": 2.259,
+   "wr_no": 0.404
+  },
+  "newleagues": {
+   "label": "newleagues",
+   "n": 4345,
+   "roi_no_pct": -7.86,
+   "p_vs_0": 0.0,
+   "roi_margin_only_pct": -5.66,
+   "excess_pct": -2.19,
+   "real_yes": 0.5162,
+   "implied_yes": 0.5067,
+   "z_deviation": 1.25,
+   "avg_o_no": 2.052,
+   "wr_no": 0.4838
+  }
+ },
+ "D_baseline_all": {
+  "n": 21201,
+  "roi_no_pct": -6.11,
+  "roi_margin_only_pct": -5.66
+ },
+ "D_baseline_outzone": {
+  "n": 13870,
+  "roi_no_pct": -4.51
+ },
+ "E_zone_vs_complement": {
+  "diff_pct": -4.64,
+  "z": -3.05,
+  "p": 0.00227
+ },
+ "E_stouffer_oos_deviation": {
+  "z_8035_test": 1.25,
+  "z_newleagues": 1.25,
+  "z_combined": 1.77,
+  "p_two_sided": 0.0764
+ },
+ "F_subperiods": {
+  "Q1": {
+   "n": 2062,
+   "roi_no_pct": -11.33,
+   "p": 0.0,
+   "start_range": [
+    "2026-05-28 22:15",
+    "2026-06-10 20:59"
+   ]
+  },
+  "Q2": {
+   "n": 1807,
+   "roi_no_pct": -6.54,
+   "p": 0.0079,
+   "start_range": [
+    "2026-06-10 21:01",
+    "2026-06-12 09:53"
+   ]
+  },
+  "Q3": {
+   "n": 1720,
+   "roi_no_pct": -8.39,
+   "p": 0.0007,
+   "start_range": [
+    "2026-06-12 09:53",
+    "2026-06-12 13:54"
+   ]
+  },
+  "Q4": {
+   "n": 1742,
+   "roi_no_pct": -10.02,
+   "p": 0.0,
+   "start_range": [
+    "2026-06-12 13:54",
+    "2026-06-12 18:56"
+   ]
+  }
+ },
+ "G_bootstrap_pooled_zone": [
+  -11.56,
+  -9.14,
+  -6.76
+ ],
+ "G_bootstrap_oos_zone": [
+  -11.05,
+  -8.25,
+  -5.48
+ ],
+ "G_oos_zone_roi": {
+  "n": 5236,
+  "roi_no_pct": -8.26
+ },
+ "H_8035_test50": {
+  "label": "8035_test50",
+  "n": 1490,
+  "roi_no_pct": -11.66,
+  "p_vs_0": 4.4e-05,
+  "roi_margin_only_pct": -5.66,
+  "excess_pct": -6.0,
+  "real_yes": 0.602,
+  "implied_yes": 0.575,
+  "z_deviation": 2.13,
+  "avg_o_no": 2.257,
+  "wr_no": 0.398
+ },
+ "I_zone_per_league": {
+  "InstantLeague-8035": {
+   "n": 2986,
+   "roi_no_pct": -11.02,
+   "p": 0.0,
+   "dev": 0.0253
+  },
+  "InstantLeague-8036": {
+   "n": 516,
+   "roi_no_pct": -7.24,
+   "p": 0.0608,
+   "dev": 0.0137
+  },
+  "InstantLeague-8037": {
+   "n": 400,
+   "roi_no_pct": -3.08,
+   "p": 0.4723,
+   "dev": -0.0148
+  },
+  "InstantLeague-8042": {
+   "n": 423,
+   "roi_no_pct": -9.84,
+   "p": 0.0539,
+   "dev": 0.0156
+  },
+  "InstantLeague-8043": {
+   "n": 333,
+   "roi_no_pct": -14.08,
+   "p": 0.0306,
+   "dev": 0.0297
+  },
+  "InstantLeague-8044": {
+   "n": 346,
+   "roi_no_pct": 1.14,
+   "p": 0.8052,
+   "dev": -0.0387
+  },
+  "InstantLeague-8056": {
+   "n": 743,
+   "roi_no_pct": -9.46,
+   "p": 0.0264,
+   "dev": 0.0207
+  },
+  "InstantLeague-8060": {
+   "n": 427,
+   "roi_no_pct": -6.65,
+   "p": 0.0164,
+   "dev": 0.0077
+  },
+  "InstantLeague-8065": {
+   "n": 1157,
+   "roi_no_pct": -9.38,
+   "p": 0.0046,
+   "dev": 0.0159
+  }
+ }
+}

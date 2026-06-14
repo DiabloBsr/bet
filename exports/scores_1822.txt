@@ -1,0 +1,65 @@
+Modèle V5 (n_train=3080)
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  ⏰ ROUND 18:22 — SCORES EXACTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MATCH                                      TOP1       TOP2       TOP3       COMBO      SIGNAUX
+  ------------------------------------------------------------------------------------------------------------
+  C. Palace vs Everton                       1-0(12%)  2-1(11%)  1-1(11%)  T3:34%  
+  Fulham vs Liverpool                        1-2(11%)  2-2(10%)  1-1(8%)  T3:29%  
+  West Ham vs London Reds                    1-2(11%)  1-1(10%)  0-2(9%)  T3:31%  
+  Spurs vs N. Forest                         2-1(11%)  1-1(10%)  2-0(9%)  T3:29%  
+  Leeds vs Manchester Red                    1-2(11%)  1-1(10%)  0-2(9%)  T3:30%  
+  Brighton vs Brentford                      1-1(11%)  2-1(11%)  1-0(9%)  T3:31%  
+  Burnley vs Newcastle                       1-2(11%)  1-1(10%)  0-2(9%)  T3:30%  
+  Sunderland vs London Blues                 1-2(12%)  0-2(11%)  0-1(10%)  T3:32%  
+  Bournemouth vs Manchester Blue             1-1(11%)  1-2(11%)  0-1(10%)  T3:32%  💎 GOLD 1-1+0-3=55%(n=11)
+  Wolverhampton vs A. Villa                  1-1(13%)  2-1(10%)  1-2(9%)  T3:31%  
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  🎯 TOP PICKS SCORE EXACT — par stratégie
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  📊 TOP 1 SINGLE (mise simple, ~10-15% accuracy attendu) :
+     18:22  Wolverhampton vs A. Villa                   → 1-1  (13%)
+     18:22  C. Palace vs Everton                        → 1-0  (12%)
+     18:22  Sunderland vs London Blues                  → 1-2  (12%)
+     18:22  Brighton vs Brentford                       → 1-1  (11%)
+     18:22  Spurs vs N. Forest                          → 2-1  (11%)
+     18:22  Burnley vs Newcastle                        → 1-2  (11%)
+     18:22  Leeds vs Manchester Red                     → 1-2  (11%)
+     18:22  West Ham vs London Reds                     → 1-2  (11%)
+     18:22  Bournemouth vs Manchester Blue              → 1-1  (11%) 💎
+     18:22  Fulham vs Liverpool                         → 1-2  (11%)
+
+  📊 COMBO TOP 2 (parier 2 scores, ~20-25% accuracy attendu) :
+     18:22  C. Palace vs Everton                        → 1-0 + 2-1  (23%)
+     18:22  Sunderland vs London Blues                  → 1-2 + 0-2  (22%)
+     18:22  Wolverhampton vs A. Villa                   → 1-1 + 2-1  (22%)
+     18:22  Brighton vs Brentford                       → 1-1 + 2-1  (22%)
+     18:22  Bournemouth vs Manchester Blue              → 1-1 + 1-2  (21%) 💎
+     18:22  Burnley vs Newcastle                        → 1-2 + 1-1  (21%)
+     18:22  West Ham vs London Reds                     → 1-2 + 1-1  (21%)
+     18:22  Leeds vs Manchester Red                     → 1-2 + 1-1  (21%)
+     18:22  Spurs vs N. Forest                          → 2-1 + 1-1  (21%)
+     18:22  Fulham vs Liverpool                         → 1-2 + 2-2  (20%)
+
+  📊 COMBO TOP 3 (parier 3 scores, ~30-35% accuracy attendu) :
+     18:22  C. Palace vs Everton                        → 1-0 + 2-1 + 1-1  (34%)
+     18:22  Sunderland vs London Blues                  → 1-2 + 0-2 + 0-1  (32%)
+     18:22  Bournemouth vs Manchester Blue              → 1-1 + 1-2 + 0-1  (32%) 💎
+     18:22  Brighton vs Brentford                       → 1-1 + 2-1 + 1-0  (31%)
+     18:22  Wolverhampton vs A. Villa                   → 1-1 + 2-1 + 1-2  (31%)
+     18:22  West Ham vs London Reds                     → 1-2 + 1-1 + 0-2  (31%)
+     18:22  Leeds vs Manchester Red                     → 1-2 + 1-1 + 0-2  (30%)
+     18:22  Burnley vs Newcastle                        → 1-2 + 1-1 + 0-2  (30%)
+     18:22  Spurs vs N. Forest                          → 2-1 + 1-1 + 2-0  (29%)
+     18:22  Fulham vs Liverpool                         → 1-2 + 2-2 + 1-1  (29%)
+
+  💎 SCORE_COMBO_GOLD (paires historiques validées) :
+     18:22  Bournemouth vs Manchester Blue              → voir signal GOLD ci-dessus
+
+  💎 SCORE DOMINANT (rate 30-44%, sweet spot) :
+     18:22  Bournemouth vs Manchester Blue

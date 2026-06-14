@@ -1,0 +1,971 @@
+Loading V10 FINAL (n_train=3739)...
+
+Rounds détectés : ['22:59', '23:01', '23:03', '23:05', '23:07', '23:09', '23:11', '23:13']
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 22:59  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  A. Villa vs Brentford
+│  Cotes 1X2 : 1.72 / 4.11 / 4.22    Rang : 3-5
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (53%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(11%) · 2-0(8%)
+│  Buts attendus : 2.99    +2.5 : 57%   BTTS : 57%
+│  HT/FT : 1/1 (32%)
+│  💎 PAIRE OR AWAY (validé n=12) : Win 42%, ROI +79%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Everton vs N. Forest
+│  Cotes 1X2 : 1.88 / 3.49 / 4.12    Rang : 13-15
+│  HT  : X (prédit 1-0)
+│  FT  : 1 (48%)  Score modal : 1-1
+│  Top 3 scores : 1-1(12%) · 2-1(11%) · 1-0(10%)
+│  Buts attendus : 2.43    +2.5 : 44%   BTTS : 48%
+│  HT/FT : 1/1 (27%)
+│  🎰 HT/FT 1/2 @72  EV+216%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  C. Palace vs London Reds
+│  Cotes 1X2 : 5.18 / 3.75 / 1.67    Rang : 16-1
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (52%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-1(10%) · 0-2(10%)
+│  Buts attendus : 2.66    +2.5 : 50%   BTTS : 52%
+│  HT/FT : 2/2 (24%)
+│  🔥🔥 MULTI-SIGNAL 1 @5.18  EV=+15%  conf=3.7/10
+│       Signaux : team_bias_+, rank_diff_+
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  Liverpool vs Newcastle
+│  Cotes 1X2 : 1.45 / 4.91 / 6.05    Rang : 8-7
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (64%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 3-0(9%) · 2-0(9%)
+│  Buts attendus : 3.17    +2.5 : 61%   BTTS : 53%
+│  HT/FT : 1/1 (39%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  Leeds vs Spurs
+│  Cotes 1X2 : 6.32 / 5.07 / 1.42    Rang : 14-4
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (66%)  Score modal : 1-2
+│  Top 3 scores : 1-2(10%) · 0-1(10%) · 0-2(10%)
+│  Buts attendus : 3.43    +2.5 : 66%   BTTS : 57%
+│  HT/FT : 2/2 (33%)
+│  ❌❌ PAIRE TRAP DÉTECTÉE — ne PAS parier 1 (historique 0-15% wins)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  Bournemouth vs Manchester Blue
+│  Cotes 1X2 : 4.91 / 3.65 / 1.72    Rang : 18-9
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (56%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-1(11%) · 0-2(11%)
+│  Buts attendus : 2.61    +2.5 : 48%   BTTS : 46%
+│  HT/FT : 2/2 (28%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Manchester Red vs Burnley
+│  Cotes 1X2 : 1.44 / 4.91 / 6.18    Rang : 6-20
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (62%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 3-1(9%) · 3-0(8%)
+│  Buts attendus : 3.41    +2.5 : 66%   BTTS : 62%
+│  HT/FT : 1/1 (36%)
+│  💎 PAIRE OR AWAY (validé n=10) : Win 30%, ROI +88%
+│  🎰 HT/FT 1/2 @77  EV+72%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Brighton vs West Ham
+│  Cotes 1X2 : 1.62 / 4.34 / 4.73    Rang : 2-12
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (62%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 2-0(9%)
+│  Buts attendus : 3.15    +2.5 : 61%   BTTS : 51%
+│  HT/FT : 1/1 (41%)
+│  🔥🔥 MULTI-SIGNAL 1 @1.62  EV=+62%  conf=10/10
+│       Signaux : calibration_v7, team_bias_+, team_bracket_+, BRACKET_GOLD_HOME
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Fulham vs Wolverhampton
+│  Cotes 1X2 : 1.70 / 4.12 / 4.34    Rang : 16-9
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (54%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  Buts attendus : 3.32    +2.5 : 64%   BTTS : 62%
+│  HT/FT : 1/1 (33%)
+│  💎 PAIRE OR HOME (validé n=12) : Win 83%, ROI +40%
+│  🔥🔥 MULTI-SIGNAL 2 @4.34  EV=+33%  conf=4.1/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  Sunderland vs London Blues
+│  Cotes 1X2 : 7.36 / 4.81 / 1.40    Rang : 19-11
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (67%)  Score modal : 0-1
+│  Top 3 scores : 0-1(12%) · 0-2(11%) · 1-2(10%)
+│  Buts attendus : 2.91    +2.5 : 55%   BTTS : 44%
+│  HT/FT : 2/2 (34%)
+│  ❌❌ PAIRE TRAP DÉTECTÉE — ne PAS parier 1 (historique 0-15% wins)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 22:59
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   💎 Paires OR à parier (3):
+      • A. Villa vs Brentford                    2 @4.22  (hist 42% wins, ROI+79% sur 12 matchs)
+      • Manchester Red vs Burnley                2 @6.18  (hist 30% wins, ROI+88% sur 10 matchs)
+      • Fulham vs Wolverhampton                  1 @1.70  (hist 83% wins, ROI+40% sur 12 matchs)
+   🔥 Multi-signal (1):
+      • Brighton vs West Ham                     1 @1.62  EV+62% conf 10/10
+   🎰 Spéculatifs EV>100% (1):
+      • Everton vs N. Forest                     HT/FT 1/2            @72  EV+216%
+   ❌ Traps évités : Leeds vs Spurs, Sunderland vs London Blues
+
+   💰 SUGGESTION MISE ROUND 22:59 (sur 100u) :
+      💎 2@4.22 pour A. Villa vs Brentford          → mise 2.00u (gain probable +1.52u)
+      💎 2@6.18 pour Manchester Red vs Burnley      → mise 2.00u (gain probable +1.71u)
+      💎 1@1.70 pour Fulham vs Wolverhampton        → mise 2.00u (gain probable +0.83u)
+      🔥 1@1.62 pour Brighton vs West Ham           → mise 1.00u (gain probable +0.04u)
+      🎰 HT/FT 1/2       pour Everton vs N. Forest           → mise 0.10u (lottery +7.1u si OK)
+
+      → Total round : misé 7.10u  gain attendu +4.32u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:01  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  Burnley vs Everton
+│  Cotes 1X2 : 2.81 / 2.93 / 2.76    Rang : 20-13
+│  HT  : X (prédit 1-0)
+│  FT  : 1 (35%)  Score modal : 1-1
+│  Top 3 scores : 1-1(14%) · 0-0(10%) · 1-2(10%)
+│  Buts attendus : 2.25    +2.5 : 39%   BTTS : 46%
+│  HT/FT : 1/1 (23%)
+│  🎰 HT/FT 1/2 @67  EV+259%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Spurs vs C. Palace
+│  Cotes 1X2 : 1.86 / 3.96 / 3.72    Rang : 4-16
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (49%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 1-0(8%)
+│  Buts attendus : 2.76    +2.5 : 52%   BTTS : 54%
+│  HT/FT : 1/1 (28%)
+│  🎰 HT/FT 2/1 @34  EV+102%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  Manchester Blue vs Brighton
+│  Cotes 1X2 : 1.34 / 5.88 / 6.91    Rang : 9-2
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (69%)  Score modal : 2-1
+│  Top 3 scores : 2-1(10%) · 3-0(9%) · 3-1(9%)
+│  Buts attendus : 3.42    +2.5 : 66%   BTTS : 54%
+│  HT/FT : 1/1 (42%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  Liverpool vs Sunderland
+│  Cotes 1X2 : 1.19 / 6.91 / 12.83    Rang : 8-19
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (78%)  Score modal : 3-0
+│  Top 3 scores : 3-0(13%) · 2-0(12%) · 4-0(9%)
+│  Buts attendus : 3.40    +2.5 : 66%   BTTS : 41%
+│  HT/FT : 1/1 (49%)
+│  🎰 HT/FT 1/2 @100  EV+107%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  London Blues vs Fulham
+│  Cotes 1X2 : 1.74 / 3.87 / 4.42    Rang : 11-16
+│  HT  : X (prédit 1-0)
+│  FT  : 1 (52%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 2-0(8%)
+│  Buts attendus : 2.88    +2.5 : 55%   BTTS : 56%
+│  HT/FT : 1/1 (31%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  N. Forest vs West Ham
+│  Cotes 1X2 : 1.76 / 3.89 / 4.28    Rang : 15-12
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (54%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 2-0(9%)
+│  Buts attendus : 2.75    +2.5 : 52%   BTTS : 51%
+│  HT/FT : 1/1 (33%)
+│  🔥🔥 MULTI-SIGNAL 1 @1.76  EV=+66%  conf=7.4/10
+│       Signaux : team_bracket_+, BRACKET_GOLD_HOME
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Newcastle vs Leeds
+│  Cotes 1X2 : 1.18 / 6.81 / 15.34    Rang : 7-14
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (78%)  Score modal : 3-0
+│  Top 3 scores : 3-0(14%) · 2-0(12%) · 4-0(9%)
+│  Buts attendus : 3.39    +2.5 : 66%   BTTS : 41%
+│  HT/FT : 1/1 (49%)
+│  🎰 HT/FT 1/2 @100  EV+107%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  London Reds vs A. Villa
+│  Cotes 1X2 : 1.37 / 5.09 / 7.43    Rang : 1-3
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (66%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 2-0(9%) · 3-0(9%)
+│  Buts attendus : 3.12    +2.5 : 60%   BTTS : 52%
+│  HT/FT : 1/1 (39%)
+│  🔥🔥 MULTI-SIGNAL 2 @7.43  EV=+38%  conf=3.3/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 1/2 @100  EV+123%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Brentford vs Bournemouth
+│  Cotes 1X2 : 1.70 / 4.59 / 3.96    Rang : 5-18
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (58%)  Score modal : 2-0
+│  Top 3 scores : 2-0(9%) · 2-1(9%) · 1-1(9%)
+│  Buts attendus : 3.43    +2.5 : 66%   BTTS : 60%
+│  HT/FT : 1/1 (38%)
+│  🔥🔥 MULTI-SIGNAL 1 @1.70  EV=+35%  conf=8.4/10
+│       Signaux : calibration_v7, team_bias_+
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  Wolverhampton vs Manchester Red
+│  Cotes 1X2 : 2.38 / 3.44 / 2.86    Rang : 9-6
+│  HT  : X (prédit 1-1)
+│  FT  : 2 (36%)  Score modal : 1-1
+│  Top 3 scores : 1-1(13%) · 2-1(10%) · 1-2(9%)
+│  Buts attendus : 2.67    +2.5 : 50%   BTTS : 54%
+│  HT/FT : 2/2 (20%)
+│  🎰 HT/FT 1/2 @48  EV+77%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:01
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   🔥 Multi-signal (2):
+      • Brentford vs Bournemouth                 1 @1.70  EV+35% conf 8.4/10
+      • N. Forest vs West Ham                    1 @1.76  EV+66% conf 7.4/10
+   🎰 Spéculatifs EV>100% (5):
+      • Burnley vs Everton                       HT/FT 1/2            @67  EV+259%
+      • London Reds vs A. Villa                  HT/FT 1/2            @100  EV+123%
+      • Liverpool vs Sunderland                  HT/FT 1/2            @100  EV+107%
+
+   💰 SUGGESTION MISE ROUND 23:01 (sur 100u) :
+      🔥 1@1.76 pour N. Forest vs West Ham          → mise 1.00u (gain probable +-0.06u)
+      🔥 1@1.70 pour Brentford vs Bournemouth       → mise 1.00u (gain probable +0.09u)
+      🎰 HT/FT 1/2       pour Burnley vs Everton             → mise 0.10u (lottery +6.6u si OK)
+      🎰 HT/FT 1/2       pour London Reds vs A. Villa        → mise 0.10u (lottery +9.9u si OK)
+
+      → Total round : misé 2.20u  gain attendu +0.42u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:03  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  C. Palace vs Leeds
+│  Cotes 1X2 : 1.48 / 4.14 / 6.90    Rang : 16-14
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (64%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 2-0(10%) · 1-0(10%)
+│  Buts attendus : 2.90    +2.5 : 55%   BTTS : 47%
+│  HT/FT : 1/1 (39%)
+│  🎰 HT/FT 1/2 @100  EV+123%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  West Ham vs Burnley
+│  Cotes 1X2 : 1.74 / 4.26 / 3.98    Rang : 12-20
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (53%)  Score modal : 1-1
+│  Top 3 scores : 1-1(10%) · 2-0(10%) · 2-1(9%)
+│  Buts attendus : 3.11    +2.5 : 60%   BTTS : 59%
+│  HT/FT : 1/1 (32%)
+│  🎰 HT/FT 2/1 @27  EV+72%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  Everton vs Wolverhampton
+│  Cotes 1X2 : 1.90 / 3.47 / 4.09    Rang : 13-9
+│  HT  : X (prédit 1-0)
+│  FT  : 1 (47%)  Score modal : 1-1
+│  Top 3 scores : 1-1(12%) · 2-1(11%) · 1-0(10%)
+│  Buts attendus : 2.61    +2.5 : 48%   BTTS : 52%
+│  HT/FT : 1/1 (27%)
+│  💎 PAIRE OR AWAY (validé n=10) : Win 50%, ROI +104%
+│  🎰 HT/FT 1/2 @74  EV+222%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  A. Villa vs Spurs
+│  Cotes 1X2 : 1.65 / 4.62 / 4.23    Rang : 3-4
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (53%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  Buts attendus : 3.38    +2.5 : 65%   BTTS : 65%
+│  HT/FT : 1/1 (31%)
+│  🔥🔥 MULTI-SIGNAL 2 @4.23  EV=+28%  conf=4.1/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  Fulham vs Liverpool
+│  Cotes 1X2 : 3.15 / 4.08 / 2.01    Rang : 16-8
+│  HT  : X (prédit 1-1)
+│  FT  : 2 (46%)  Score modal : 1-1
+│  Top 3 scores : 1-1(10%) · 1-2(9%) · 2-1(8%)
+│  Buts attendus : 3.36    +2.5 : 65%   BTTS : 66%
+│  HT/FT : 2/2 (23%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  N. Forest vs Manchester Blue
+│  Cotes 1X2 : 4.31 / 3.65 / 1.80    Rang : 15-9
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (53%)  Score modal : 0-1
+│  Top 3 scores : 0-1(12%) · 1-1(11%) · 1-2(10%)
+│  Buts attendus : 2.56    +2.5 : 47%   BTTS : 47%
+│  HT/FT : 2/2 (26%)
+│  🎰 HT/FT 1/2 @35  EV+154%
+│  🎰 HT/FT 2/1 @72  EV+76%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Manchester Red vs London Blues
+│  Cotes 1X2 : 1.88 / 3.78 / 3.81    Rang : 6-11
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (47%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(10%) · 1-0(8%)
+│  Buts attendus : 3.05    +2.5 : 59%   BTTS : 61%
+│  HT/FT : 1/1 (27%)
+│  🔥🔥 MULTI-SIGNAL 2 @3.81  EV=+27%  conf=4.1/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 1/2 @54  EV+83%
+│  🎰 HT/FT 2/1 @35  EV+108%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Sunderland vs Newcastle
+│  Cotes 1X2 : 9.04 / 5.61 / 1.30    Rang : 19-7
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (72%)  Score modal : 0-2
+│  Top 3 scores : 0-2(11%) · 0-1(11%) · 0-3(10%)
+│  Buts attendus : 3.27    +2.5 : 63%   BTTS : 46%
+│  HT/FT : 2/2 (37%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Bournemouth vs London Reds
+│  Cotes 1X2 : 5.89 / 3.82 / 1.59    Rang : 18-1
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (56%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-2(11%) · 0-1(11%)
+│  Buts attendus : 2.65    +2.5 : 49%   BTTS : 49%
+│  HT/FT : 2/2 (26%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  Brighton vs Brentford
+│  Cotes 1X2 : 2.04 / 3.70 / 3.33    Rang : 2-5
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (50%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 1-0(8%)
+│  Buts attendus : 2.96    +2.5 : 57%   BTTS : 55%
+│  HT/FT : 1/1 (33%)
+│  🔥🔥 MULTI-SIGNAL 1 @2.04  EV=+66%  conf=7.8/10
+│       Signaux : team_bias_+, team_bracket_+, BRACKET_GOLD_HOME
+│  🎰 HT/FT 1/2 @51  EV+73%
+│  🎰 HT/FT 2/1 @33  EV+98%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:03
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   💎 Paires OR à parier (1):
+      • Everton vs Wolverhampton                 2 @4.09  (hist 50% wins, ROI+104% sur 10 matchs)
+   🔥 Multi-signal (1):
+      • Brighton vs Brentford                    1 @2.04  EV+66% conf 7.8/10
+   🎰 Spéculatifs EV>100% (4):
+      • Everton vs Wolverhampton                 HT/FT 1/2            @74  EV+222%
+      • N. Forest vs Manchester Blue             HT/FT 1/2            @35  EV+154%
+      • C. Palace vs Leeds                       HT/FT 1/2            @100  EV+123%
+
+   💰 SUGGESTION MISE ROUND 23:03 (sur 100u) :
+      💎 2@4.09 pour Everton vs Wolverhampton       → mise 2.00u (gain probable +2.09u)
+      🔥 1@2.04 pour Brighton vs Brentford          → mise 1.00u (gain probable +-0.03u)
+      🎰 HT/FT 1/2       pour Everton vs Wolverhampton       → mise 0.10u (lottery +7.2u si OK)
+      🎰 HT/FT 1/2       pour N. Forest vs Manchester Blue   → mise 0.10u (lottery +3.4u si OK)
+
+      → Total round : misé 3.20u  gain attendu +2.44u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:05  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  London Blues vs Everton
+│  Cotes 1X2 : 1.58 / 3.77 / 6.19    Rang : 11-13
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (58%)  Score modal : 1-0
+│  Top 3 scores : 1-0(13%) · 2-0(11%) · 2-1(9%)
+│  Buts attendus : 2.59    +2.5 : 48%   BTTS : 46%
+│  HT/FT : 1/1 (33%)
+│  💎 PAIRE OR AWAY (validé n=14) : Win 43%, ROI +166%
+│  🎰 HT/FT 1/2 @100  EV+178%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Sunderland vs Fulham
+│  Cotes 1X2 : 6.79 / 4.38 / 1.46    Rang : 19-16
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (63%)  Score modal : 0-1
+│  Top 3 scores : 0-1(12%) · 0-2(11%) · 1-2(10%)
+│  Buts attendus : 2.68    +2.5 : 50%   BTTS : 44%
+│  HT/FT : 2/2 (31%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  Brentford vs N. Forest
+│  Cotes 1X2 : 1.56 / 4.63 / 4.88    Rang : 5-15
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (60%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 2-0(9%)
+│  Buts attendus : 3.05    +2.5 : 59%   BTTS : 54%
+│  HT/FT : 1/1 (37%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  Newcastle vs C. Palace
+│  Cotes 1X2 : 1.42 / 4.65 / 7.14    Rang : 7-16
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (63%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 2-0(10%) · 3-0(9%)
+│  Buts attendus : 2.73    +2.5 : 51%   BTTS : 47%
+│  HT/FT : 1/1 (36%)
+│  🎰 HT/FT 1/2 @100  EV+123%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  Leeds vs A. Villa
+│  Cotes 1X2 : 4.84 / 3.83 / 1.69    Rang : 14-3
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (57%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-2(10%) · 0-1(10%)
+│  Buts attendus : 2.90    +2.5 : 55%   BTTS : 52%
+│  HT/FT : 2/2 (29%)
+│  ❌❌ PAIRE TRAP DÉTECTÉE — ne PAS parier 1 (historique 0-15% wins)
+│  🔥🔥 MULTI-SIGNAL 2 @1.69  EV=+42%  conf=7.7/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  Liverpool vs Manchester Red
+│  Cotes 1X2 : 1.28 / 5.64 / 9.77    Rang : 8-6
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (70%)  Score modal : 3-0
+│  Top 3 scores : 3-0(12%) · 2-0(12%) · 2-1(9%)
+│  Buts attendus : 2.95    +2.5 : 57%   BTTS : 45%
+│  HT/FT : 1/1 (41%)
+│  🎰 HT/FT 1/2 @100  EV+107%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Burnley vs Manchester Blue
+│  Cotes 1X2 : 8.60 / 4.61 / 1.38    Rang : 20-9
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (66%)  Score modal : 0-1
+│  Top 3 scores : 0-1(13%) · 0-2(12%) · 1-2(10%)
+│  Buts attendus : 2.68    +2.5 : 50%   BTTS : 42%
+│  HT/FT : 2/2 (31%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Spurs vs Bournemouth
+│  Cotes 1X2 : 1.62 / 4.80 / 4.26    Rang : 4-18
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (59%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(9%) · 3-1(9%)
+│  Buts attendus : 3.46    +2.5 : 67%   BTTS : 61%
+│  HT/FT : 1/1 (37%)
+│  🔥🔥 MULTI-SIGNAL 1 @1.62  EV=+39%  conf=8.4/10
+│       Signaux : calibration_v7, pair_+
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Wolverhampton vs West Ham
+│  Cotes 1X2 : 1.98 / 3.67 / 3.52    Rang : 9-12
+│  HT  : X (prédit 1-0)
+│  FT  : 1 (46%)  Score modal : 1-1
+│  Top 3 scores : 1-1(12%) · 2-1(10%) · 1-0(9%)
+│  Buts attendus : 2.59    +2.5 : 48%   BTTS : 52%
+│  HT/FT : 1/1 (27%)
+│  🎰 HT/FT 1/2 @54  EV+82%
+│  🎰 HT/FT 2/1 @34  EV+105%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  London Reds vs Brighton
+│  Cotes 1X2 : 1.42 / 5.32 / 6.02    Rang : 1-2
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (65%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 3-1(9%) · 3-0(9%)
+│  Buts attendus : 3.44    +2.5 : 67%   BTTS : 58%
+│  HT/FT : 1/1 (40%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:05
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   💎 Paires OR à parier (1):
+      • London Blues vs Everton                  2 @6.19  (hist 43% wins, ROI+166% sur 14 matchs)
+   🔥 Multi-signal (2):
+      • Spurs vs Bournemouth                     1 @1.62  EV+39% conf 8.4/10
+      • Leeds vs A. Villa                        2 @1.69  EV+42% conf 7.7/10
+   🎰 Spéculatifs EV>100% (4):
+      • London Blues vs Everton                  HT/FT 1/2            @100  EV+178%
+      • Newcastle vs C. Palace                   HT/FT 1/2            @100  EV+123%
+      • Liverpool vs Manchester Red              HT/FT 1/2            @100  EV+107%
+   ❌ Traps évités : Leeds vs A. Villa
+
+   💰 SUGGESTION MISE ROUND 23:05 (sur 100u) :
+      💎 2@6.19 pour London Blues vs Everton        → mise 2.00u (gain probable +3.31u)
+      🔥 2@1.69 pour Leeds vs A. Villa              → mise 1.00u (gain probable +-0.04u)
+      🔥 1@1.62 pour Spurs vs Bournemouth           → mise 1.00u (gain probable +0.04u)
+      🎰 HT/FT 1/2       pour London Blues vs Everton        → mise 0.10u (lottery +9.9u si OK)
+      🎰 HT/FT 1/2       pour Newcastle vs C. Palace         → mise 0.10u (lottery +9.9u si OK)
+
+      → Total round : misé 4.20u  gain attendu +3.61u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:07  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  N. Forest vs London Reds
+│  Cotes 1X2 : 4.77 / 3.62 / 1.74    Rang : 15-1
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (52%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-1(10%) · 0-2(10%)
+│  Buts attendus : 2.60    +2.5 : 48%   BTTS : 50%
+│  HT/FT : 2/2 (25%)
+│  🔥🔥 MULTI-SIGNAL 1 @4.77  EV=+36%  conf=3.7/10
+│       Signaux : BRACKET_GOLD_HOME, rank_diff_+
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Manchester Red vs Sunderland
+│  Cotes 1X2 : 1.52 / 4.36 / 5.75    Rang : 6-19
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (60%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 2-0(9%)
+│  Buts attendus : 3.13    +2.5 : 60%   BTTS : 56%
+│  HT/FT : 1/1 (36%)
+│  🎰 HT/FT 1/2 @84  EV+76%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  West Ham vs London Blues
+│  Cotes 1X2 : 2.37 / 3.67 / 2.73    Rang : 12-11
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (39%)  Score modal : 1-1
+│  Top 3 scores : 1-1(13%) · 2-1(10%) · 1-2(9%)
+│  Buts attendus : 2.82    +2.5 : 53%   BTTS : 57%
+│  HT/FT : 1/1 (24%)
+│  🔥🔥 MULTI-SIGNAL 2 @2.73  EV=+50%  conf=5.3/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  Bournemouth vs Leeds
+│  Cotes 1X2 : 1.59 / 3.75 / 6.11    Rang : 18-14
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (58%)  Score modal : 1-0
+│  Top 3 scores : 1-0(12%) · 2-0(11%) · 2-1(9%)
+│  Buts attendus : 2.68    +2.5 : 50%   BTTS : 47%
+│  HT/FT : 1/1 (35%)
+│  🎰 HT/FT 1/2 @100  EV+178%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  A. Villa vs C. Palace
+│  Cotes 1X2 : 1.60 / 4.17 / 5.16    Rang : 3-16
+│  HT  : X (prédit 1-0)
+│  FT  : 1 (55%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 2-0(9%)
+│  Buts attendus : 2.73    +2.5 : 51%   BTTS : 52%
+│  HT/FT : 1/1 (31%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  Brighton vs Spurs
+│  Cotes 1X2 : 1.96 / 4.22 / 3.19    Rang : 2-4
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (50%)  Score modal : 2-1
+│  Top 3 scores : 2-1(10%) · 1-1(10%) · 1-2(8%)
+│  Buts attendus : 3.33    +2.5 : 64%   BTTS : 63%
+│  HT/FT : 1/1 (32%)
+│  💎 PAIRE OR HOME (validé n=11) : Win 73%, ROI +42%
+│  🎰 HT/FT 2/1 @30  EV+76%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Burnley vs Brentford
+│  Cotes 1X2 : 3.83 / 3.45 / 1.96    Rang : 20-5
+│  HT  : X (prédit 1-1)
+│  FT  : 2 (45%)  Score modal : 1-1
+│  Top 3 scores : 1-1(12%) · 0-1(10%) · 1-2(8%)
+│  Buts attendus : 2.58    +2.5 : 48%   BTTS : 52%
+│  HT/FT : 2/2 (21%)
+│  💎 PAIRE OR HOME (validé n=13) : Win 54%, ROI +101%
+│  🎰 HT/FT 1/2 @40  EV+131%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Fulham vs Newcastle
+│  Cotes 1X2 : 2.60 / 3.94 / 2.37    Rang : 16-7
+│  HT  : X (prédit 1-1)
+│  FT  : 2 (40%)  Score modal : 1-2
+│  Top 3 scores : 1-2(10%) · 1-1(9%) · 2-1(9%)
+│  Buts attendus : 3.54    +2.5 : 68%   BTTS : 69%
+│  HT/FT : 1/1 (24%)
+│  💎 PAIRE OR AWAY (validé n=13) : Win 69%, ROI +68%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Everton vs Liverpool
+│  Cotes 1X2 : 3.49 / 3.53 / 2.04    Rang : 13-8
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (47%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-1(9%) · 1-2(9%)
+│  Buts attendus : 2.74    +2.5 : 51%   BTTS : 53%
+│  HT/FT : 2/2 (24%)
+│  🎰 HT/FT 1/2 @35  EV+103%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  Manchester Blue vs Wolverhampton
+│  Cotes 1X2 : 1.18 / 7.50 / 12.88    Rang : 9-9
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (78%)  Score modal : 3-0
+│  Top 3 scores : 3-0(13%) · 2-0(11%) · 4-0(9%)
+│  Buts attendus : 3.53    +2.5 : 68%   BTTS : 46%
+│  HT/FT : 1/1 (48%)
+│  🔥🔥 MULTI-SIGNAL 2 @12.88  EV=+35%  conf=2.7/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 1/2 @100  EV+107%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:07
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   💎 Paires OR à parier (3):
+      • Brighton vs Spurs                        1 @1.96  (hist 73% wins, ROI+42% sur 11 matchs)
+      • Burnley vs Brentford                     1 @3.83  (hist 54% wins, ROI+101% sur 13 matchs)
+      • Fulham vs Newcastle                      2 @2.37  (hist 69% wins, ROI+68% sur 13 matchs)
+   🔥 Multi-signal (1):
+      • West Ham vs London Blues                 2 @2.73  EV+50% conf 5.3/10
+   🎰 Spéculatifs EV>100% (4):
+      • Bournemouth vs Leeds                     HT/FT 1/2            @100  EV+178%
+      • Burnley vs Brentford                     HT/FT 1/2            @40  EV+131%
+      • Manchester Blue vs Wolverhampton         HT/FT 1/2            @100  EV+107%
+
+   💰 SUGGESTION MISE ROUND 23:07 (sur 100u) :
+      💎 1@1.96 pour Brighton vs Spurs              → mise 2.00u (gain probable +0.85u)
+      💎 1@3.83 pour Burnley vs Brentford           → mise 2.00u (gain probable +2.12u)
+      💎 2@2.37 pour Fulham vs Newcastle            → mise 2.00u (gain probable +1.28u)
+      🔥 2@2.73 pour West Ham vs London Blues       → mise 1.00u (gain probable +-0.09u)
+      🎰 HT/FT 1/2       pour Bournemouth vs Leeds           → mise 0.10u (lottery +9.9u si OK)
+      🎰 HT/FT 1/2       pour Burnley vs Brentford           → mise 0.10u (lottery +3.9u si OK)
+
+      → Total round : misé 7.20u  gain attendu +4.47u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:09  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  Leeds vs Brighton
+│  Cotes 1X2 : 6.56 / 5.12 / 1.40    Rang : 14-2
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (65%)  Score modal : 1-2
+│  Top 3 scores : 1-2(10%) · 0-1(10%) · 0-2(10%)
+│  Buts attendus : 3.29    +2.5 : 64%   BTTS : 57%
+│  HT/FT : 2/2 (32%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Liverpool vs West Ham
+│  Cotes 1X2 : 1.22 / 6.55 / 11.68    Rang : 8-12
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (77%)  Score modal : 3-0
+│  Top 3 scores : 3-0(13%) · 2-0(12%) · 4-0(9%)
+│  Buts attendus : 3.28    +2.5 : 64%   BTTS : 39%
+│  HT/FT : 1/1 (49%)
+│  🎰 HT/FT 1/2 @100  EV+107%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  Newcastle vs A. Villa
+│  Cotes 1X2 : 1.40 / 4.81 / 7.34    Rang : 7-3
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (64%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 2-0(10%) · 3-0(9%)
+│  Buts attendus : 3.00    +2.5 : 58%   BTTS : 52%
+│  HT/FT : 1/1 (37%)
+│  🔥🔥 MULTI-SIGNAL 2 @7.34  EV=+37%  conf=3.3/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 1/2 @100  EV+123%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  London Blues vs Manchester Blue
+│  Cotes 1X2 : 3.04 / 3.42 / 2.28    Rang : 11-9
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (44%)  Score modal : 1-1
+│  Top 3 scores : 1-1(13%) · 1-2(10%) · 0-1(9%)
+│  Buts attendus : 2.55    +2.5 : 47%   BTTS : 50%
+│  HT/FT : 2/2 (24%)
+│  🎰 HT/FT 2/1 @48  EV+245%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  London Reds vs Burnley
+│  Cotes 1X2 : 1.19 / 7.46 / 11.63    Rang : 1-20
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (76%)  Score modal : 3-0
+│  Top 3 scores : 3-0(12%) · 2-0(10%) · 4-0(9%)
+│  Buts attendus : 3.81    +2.5 : 73%   BTTS : 55%
+│  HT/FT : 1/1 (47%)
+│  🎰 HT/FT 1/2 @100  EV+107%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  Fulham vs Manchester Red
+│  Cotes 1X2 : 2.00 / 3.76 / 3.41    Rang : 16-6
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (45%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(10%) · 1-2(8%)
+│  Buts attendus : 3.14    +2.5 : 61%   BTTS : 62%
+│  HT/FT : 1/1 (27%)
+│  🔥🔥 MULTI-SIGNAL 1 @2.00  EV=+30%  conf=6.8/10
+│       Signaux : BRACKET_GOLD_HOME, rank_diff_+
+│  🎰 HT/FT 1/2 @53  EV+80%
+│  🎰 HT/FT 2/1 @31  EV+86%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  C. Palace vs Bournemouth
+│  Cotes 1X2 : 1.85 / 3.96 / 3.73    Rang : 16-18
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (53%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 1-0(8%)
+│  Buts attendus : 3.17    +2.5 : 61%   BTTS : 58%
+│  HT/FT : 1/1 (35%)
+│  💎 PAIRE OR HOME (validé n=11) : Win 82%, ROI +53%
+│  🎰 HT/FT 1/2 @50  EV+71%
+│  🎰 HT/FT 2/1 @31  EV+85%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Sunderland vs Everton
+│  Cotes 1X2 : 4.80 / 3.34 / 1.81    Rang : 19-13
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (52%)  Score modal : 0-1
+│  Top 3 scores : 0-1(14%) · 1-1(11%) · 0-2(10%)
+│  Buts attendus : 2.16    +2.5 : 37%   BTTS : 39%
+│  HT/FT : 2/2 (24%)
+│  ❌❌ PAIRE TRAP DÉTECTÉE — ne PAS parier 1 (historique 0-15% wins)
+│  🔥🔥 MULTI-SIGNAL 2 @1.81  EV=+42%  conf=7.5/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 1/2 @50  EV+262%
+│  🎰 HT/FT 2/1 @83  EV+103%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Wolverhampton vs Brentford
+│  Cotes 1X2 : 2.81 / 3.43 / 2.43    Rang : 9-5
+│  HT  : X (prédit 1-1)
+│  FT  : 2 (39%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 1-2(10%) · 2-1(9%)
+│  Buts attendus : 2.62    +2.5 : 49%   BTTS : 53%
+│  HT/FT : 1/1 (21%)
+│  🎰 HT/FT 1/2 @41  EV+80%
+│  🎰 HT/FT 2/1 @48  EV+79%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  Spurs vs N. Forest
+│  Cotes 1X2 : 1.53 / 4.85 / 4.99    Rang : 4-15
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (60%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  Buts attendus : 3.08    +2.5 : 59%   BTTS : 55%
+│  HT/FT : 1/1 (36%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:09
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   💎 Paires OR à parier (1):
+      • C. Palace vs Bournemouth                 1 @1.85  (hist 82% wins, ROI+53% sur 11 matchs)
+   🔥 Multi-signal (2):
+      • Sunderland vs Everton                    2 @1.81  EV+42% conf 7.5/10
+      • Fulham vs Manchester Red                 1 @2.00  EV+30% conf 6.8/10
+   🎰 Spéculatifs EV>100% (6):
+      • Sunderland vs Everton                    HT/FT 1/2            @50  EV+262%
+      • London Blues vs Manchester Blue          HT/FT 2/1            @48  EV+245%
+      • Newcastle vs A. Villa                    HT/FT 1/2            @100  EV+123%
+   ❌ Traps évités : Sunderland vs Everton
+
+   💰 SUGGESTION MISE ROUND 23:09 (sur 100u) :
+      💎 1@1.85 pour C. Palace vs Bournemouth       → mise 2.00u (gain probable +1.03u)
+      🔥 1@2.00 pour Fulham vs Manchester Red       → mise 1.00u (gain probable +-0.05u)
+      🔥 2@1.81 pour Sunderland vs Everton          → mise 1.00u (gain probable +0.00u)
+      🎰 HT/FT 1/2       pour Sunderland vs Everton          → mise 0.10u (lottery +4.9u si OK)
+      🎰 HT/FT 2/1       pour London Blues vs Manchester Blu → mise 0.10u (lottery +4.7u si OK)
+
+      → Total round : misé 4.20u  gain attendu +1.49u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:11  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  Burnley vs Spurs
+│  Cotes 1X2 : 3.71 / 4.00 / 1.85    Rang : 20-4
+│  HT  : X (prédit 1-1)
+│  FT  : 2 (49%)  Score modal : 1-1
+│  Top 3 scores : 1-1(10%) · 1-2(9%) · 0-1(8%)
+│  Buts attendus : 3.00    +2.5 : 58%   BTTS : 59%
+│  HT/FT : 2/2 (24%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Wolverhampton vs London Reds
+│  Cotes 1X2 : 6.40 / 4.12 / 1.51    Rang : 9-1
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (60%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 1-2(11%) · 0-2(11%)
+│  Buts attendus : 2.70    +2.5 : 51%   BTTS : 47%
+│  HT/FT : 2/2 (29%)
+│  🎰 HT/FT 2/1 @100  EV+104%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  N. Forest vs Leeds
+│  Cotes 1X2 : 1.44 / 4.32 / 7.54    Rang : 15-14
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (63%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 2-0(10%) · 1-0(10%)
+│  Buts attendus : 2.75    +2.5 : 52%   BTTS : 46%
+│  HT/FT : 1/1 (37%)
+│  🎰 HT/FT 1/2 @100  EV+123%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  Manchester Red vs Newcastle
+│  Cotes 1X2 : 2.20 / 3.70 / 2.97    Rang : 6-7
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (41%)  Score modal : 1-1
+│  Top 3 scores : 1-1(12%) · 2-1(11%) · 1-2(8%)
+│  Buts attendus : 3.28    +2.5 : 63%   BTTS : 65%
+│  HT/FT : 1/1 (26%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  Brentford vs London Blues
+│  Cotes 1X2 : 2.03 / 4.05 / 3.13    Rang : 5-11
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (46%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(10%) · 1-2(8%)
+│  Buts attendus : 3.15    +2.5 : 61%   BTTS : 62%
+│  HT/FT : 1/1 (29%)
+│  🔥🔥 MULTI-SIGNAL 2 @3.13  EV=+56%  conf=6.3/10
+│       Signaux : calibration_v7, team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 2/1 @31  EV+85%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  Manchester Blue vs Liverpool
+│  Cotes 1X2 : 1.55 / 4.86 / 4.78    Rang : 9-8
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (59%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  Buts attendus : 3.06    +2.5 : 59%   BTTS : 56%
+│  HT/FT : 1/1 (35%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Brighton vs C. Palace
+│  Cotes 1X2 : 1.89 / 3.67 / 3.87    Rang : 2-16
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (51%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 1-0(9%)
+│  Buts attendus : 2.70    +2.5 : 51%   BTTS : 50%
+│  HT/FT : 1/1 (32%)
+│  🎰 HT/FT 1/2 @56  EV+90%
+│  🎰 HT/FT 2/1 @37  EV+120%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Everton vs Fulham
+│  Cotes 1X2 : 2.64 / 3.15 / 2.76    Rang : 13-16
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (36%)  Score modal : 1-1
+│  Top 3 scores : 1-1(14%) · 1-2(10%) · 2-1(9%)
+│  Buts attendus : 2.52    +2.5 : 46%   BTTS : 51%
+│  HT/FT : 1/1 (23%)
+│  🎰 HT/FT 1/2 @52  EV+179%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  Bournemouth vs A. Villa
+│  Cotes 1X2 : 2.29 / 3.27 / 3.15    Rang : 18-3
+│  HT  : X (prédit 1-1)
+│  FT  : 1 (40%)  Score modal : 1-1
+│  Top 3 scores : 1-1(12%) · 2-1(9%) · 1-2(8%)
+│  Buts attendus : 2.68    +2.5 : 50%   BTTS : 54%
+│  HT/FT : 1/1 (24%)
+│  🔥🔥 MULTI-SIGNAL 2 @3.15  EV=+22%  conf=4.7/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+│  🎰 HT/FT 1/2 @58  EV+98%
+│  🎰 HT/FT 2/1 @44  EV+200%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  West Ham vs Sunderland
+│  Cotes 1X2 : 1.83 / 3.98 / 3.83    Rang : 12-19
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (52%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 1-0(8%)
+│  Buts attendus : 2.84    +2.5 : 54%   BTTS : 53%
+│  HT/FT : 1/1 (32%)
+│  🎰 HT/FT 1/2 @54  EV+84%
+│  🎰 HT/FT 2/1 @30  EV+80%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:11
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   🎰 Spéculatifs EV>100% (5):
+      • Bournemouth vs A. Villa                  HT/FT 2/1            @44  EV+200%
+      • Everton vs Fulham                        HT/FT 1/2            @52  EV+179%
+      • N. Forest vs Leeds                       HT/FT 1/2            @100  EV+123%
+
+   💰 SUGGESTION MISE ROUND 23:11 (sur 100u) :
+      🎰 HT/FT 2/1       pour Bournemouth vs A. Villa        → mise 0.10u (lottery +4.3u si OK)
+      🎰 HT/FT 1/2       pour Everton vs Fulham              → mise 0.10u (lottery +5.1u si OK)
+
+      → Total round : misé 0.20u  gain attendu +0.38u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ⏰ ROUND 23:13  —  10 matchs  ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ MATCH 1  Fulham vs West Ham
+│  Cotes 1X2 : 1.78 / 4.04 / 3.99    Rang : 16-12
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (54%)  Score modal : 1-1
+│  Top 3 scores : 1-1(10%) · 2-0(10%) · 2-1(9%)
+│  Buts attendus : 3.17    +2.5 : 61%   BTTS : 58%
+│  HT/FT : 1/1 (35%)
+│  🎰 HT/FT 1/2 @55  EV+76%
+│  🎰 HT/FT 2/1 @29  EV+84%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 2  Newcastle vs Bournemouth
+│  Cotes 1X2 : 1.30 / 5.86 / 8.29    Rang : 7-18
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (72%)  Score modal : 2-1
+│  Top 3 scores : 2-1(10%) · 3-0(10%) · 2-0(9%)
+│  Buts attendus : 3.56    +2.5 : 69%   BTTS : 52%
+│  HT/FT : 1/1 (46%)
+│  🎰 HT/FT 1/2 @91  EV+104%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 3  Liverpool vs Brentford
+│  Cotes 1X2 : 1.38 / 4.92 / 7.54    Rang : 8-5
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (68%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 2-0(10%) · 3-0(10%)
+│  Buts attendus : 2.93    +2.5 : 56%   BTTS : 44%
+│  HT/FT : 1/1 (41%)
+│  🎰 HT/FT 1/2 @99  EV+122%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 4  Sunderland vs Manchester Blue
+│  Cotes 1X2 : 18.83 / 7.49 / 1.14    Rang : 19-9
+│  HT  : 2 (prédit 0-1)
+│  FT  : 2 (80%)  Score modal : 0-3
+│  Top 3 scores : 0-3(16%) · 0-4(11%) · 0-2(11%)
+│  Buts attendus : 3.18    +2.5 : 61%   BTTS : 31%
+│  HT/FT : 2/2 (41%)
+│  ❌❌ PAIRE TRAP DÉTECTÉE — ne PAS parier 1 (historique 0-15% wins)
+│  🎰 HT/FT 1/2 @39  EV+149%
+│  🎰 HT/FT 2/1 @100  EV+264%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 5  London Blues vs London Reds
+│  Cotes 1X2 : 3.80 / 3.52 / 1.95    Rang : 11-1
+│  HT  : X (prédit 0-1)
+│  FT  : 2 (46%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 0-1(10%) · 1-2(9%)
+│  Buts attendus : 2.62    +2.5 : 49%   BTTS : 52%
+│  HT/FT : 2/2 (22%)
+│  🎰 HT/FT 1/2 @36  EV+106%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 6  Leeds vs Burnley
+│  Cotes 1X2 : 3.43 / 3.97 / 1.94    Rang : 14-20
+│  HT  : 2 (prédit 1-1)
+│  FT  : 2 (50%)  Score modal : 1-1
+│  Top 3 scores : 1-1(10%) · 1-2(9%) · 0-1(8%)
+│  Buts attendus : 3.15    +2.5 : 61%   BTTS : 60%
+│  HT/FT : 2/2 (26%)
+│  🎰 HT/FT 1/2 @32  EV+83%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 7  Manchester Red vs Everton
+│  Cotes 1X2 : 1.63 / 3.67 / 5.72    Rang : 6-13
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (56%)  Score modal : 1-1
+│  Top 3 scores : 1-1(11%) · 2-1(11%) · 1-0(10%)
+│  Buts attendus : 2.65    +2.5 : 49%   BTTS : 49%
+│  HT/FT : 1/1 (33%)
+│  🎰 HT/FT 1/2 @100  EV+111%
+│  🎰 HT/FT 2/1 @40  EV+99%
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 8  Spurs vs Wolverhampton
+│  Cotes 1X2 : 1.50 / 4.84 / 5.32    Rang : 4-9
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (60%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(10%) · 3-1(8%)
+│  Buts attendus : 3.29    +2.5 : 64%   BTTS : 60%
+│  HT/FT : 1/1 (36%)
+│  🔥🔥 MULTI-SIGNAL 2 @5.32  EV=+32%  conf=3.7/10
+│       Signaux : team_bias_+, BRACKET_GOLD_AWAY
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 9  C. Palace vs N. Forest
+│  Cotes 1X2 : 1.70 / 4.01 / 4.46    Rang : 16-15
+│  HT  : 1 (prédit 1-0)
+│  FT  : 1 (55%)  Score modal : 2-1
+│  Top 3 scores : 2-1(11%) · 1-1(11%) · 2-0(9%)
+│  Buts attendus : 2.82    +2.5 : 53%   BTTS : 51%
+│  HT/FT : 1/1 (34%)
+│  🔥🔥 MULTI-SIGNAL 1 @1.70  EV=+76%  conf=10/10
+│       Signaux : calibration_v7, team_bias_+, team_bracket_+, BRACKET_GOLD_HOME
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─ MATCH 10  A. Villa vs Brighton
+│  Cotes 1X2 : 1.71 / 4.56 / 3.91    Rang : 3-2
+│  HT  : 1 (prédit 1-1)
+│  FT  : 1 (53%)  Score modal : 1-1
+│  Top 3 scores : 1-1(9%) · 2-1(9%) · 2-0(9%)
+│  Buts attendus : 3.33    +2.5 : 64%   BTTS : 63%
+│  HT/FT : 1/1 (32%)
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📋 RÉCAP ROUND 23:13
+   ────────────────────────────────────────────────────────────────────────────────────────────────────
+   🔥 Multi-signal (1):
+      • C. Palace vs N. Forest                   1 @1.70  EV+76% conf 10/10
+   🎰 Spéculatifs EV>100% (6):
+      • Sunderland vs Manchester Blue            HT/FT 2/1            @100  EV+264%
+      • Sunderland vs Manchester Blue            HT/FT 1/2            @39  EV+149%
+      • Liverpool vs Brentford                   HT/FT 1/2            @99  EV+122%
+   ❌ Traps évités : Sunderland vs Manchester Blue
+
+   💰 SUGGESTION MISE ROUND 23:13 (sur 100u) :
+      🔥 1@1.70 pour C. Palace vs N. Forest         → mise 1.00u (gain probable +0.09u)
+      🎰 HT/FT 2/1       pour Sunderland vs Manchester Blue  → mise 0.10u (lottery +9.9u si OK)
+      🎰 HT/FT 1/2       pour Sunderland vs Manchester Blue  → mise 0.10u (lottery +3.8u si OK)
+
+      → Total round : misé 1.20u  gain attendu +0.51u
+
+
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  📋 SOMMAIRE TOUS ROUNDS — Total 54 picks recommandés sur 8 rounds
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+💎💎 9 PAIRES OR :  TIER 1 priority absolue
+🔥🔥 10 MULTI-SIG : TIER 2 multi-signal validation
+🎰 35 SPÉCULATIFS : TIER 3 lottery EV>100%

@@ -1,0 +1,56 @@
+BDD CLEAN : 3324 matchs au total
+Période : 2026-05-28 22:15:50.000000 → 2026-06-05 10:02:56.000000
+
+Train : 2493 matchs
+Test  : 831 matchs (OUT-OF-SAMPLE)
+
+=========================================================================================================
+1️⃣  RECALCUL BRACKETS CALIBRATION (par équipe + cote)
+=========================================================================================================
+
+  💎 BRACKET GOLD HOME (n≥15, ROI≥+10%) :
+  ('London Blues', (2.1, 2.5)) n=10  ROI+60.6%
+  ('Burnley', (2.5, 3.0)) n=17  ROI+51.2%
+  ('Brighton', (1.9, 2.1)) n=17  ROI+48.9%
+  ('N. Forest', (1.9, 2.1)) n=14  ROI+46.1%
+  ('N. Forest', (1.7, 1.9)) n=22  ROI+31.8%
+  ('Bournemouth', (1.5, 1.7)) n=11  ROI+30.7%
+  ('Manchester Red', (2.1, 2.5)) n=10  ROI+30.1%
+  ('Fulham', (1.9, 2.1)) n=22  ROI+29.2%
+  ('Wolverhampton', (2.5, 3.0)) n=8   ROI+27.3%
+  ('C. Palace', (1.7, 1.9)) n=23  ROI+24.3%
+  ('Brentford', (1.3, 1.5)) n=11  ROI+16.6%
+  ('A. Villa', (1.5, 1.7)) n=35  ROI+16.2%
+  ('Brighton', (1.5, 1.7)) n=37  ROI+15.3%
+  ('Manchester Red', (1.5, 1.7)) n=36  ROI+14.2%
+  ('C. Palace', (1.5, 1.7)) n=23  ROI+13.0%
+  ('West Ham', (1.5, 1.7)) n=10  ROI+10.9%
+  ('London Blues', (1.7, 1.9)) n=29  ROI+10.6%
+  ('Wolverhampton', (1.7, 1.9)) n=15  ROI+10.1%
+
+=========================================================================================================
+2️⃣  VALIDATION OUT-OF-SAMPLE DES SIGNAUX GOLD (test sur 25%)
+=========================================================================================================
+
+  Signal                 n test   Accuracy     ROI        Verdict
+  --------------------------------------------------------------------------------
+  PAIR_HOME_GOLD         60        76.7%       +38.68%    🟢 EXCELLENT
+  PAIR_AWAY_GOLD         34        47.1%       +38.50%    🟢 EXCELLENT
+  PAIR_TRAP_HOME         12        33.3%       -47.67%    ❌ NÉGATIF
+  OVER_GOLD              44        93.2%       +39.77%    🟢 EXCELLENT
+  UNDER_GOLD             33        63.6%       +59.09%    🟢 EXCELLENT
+  BTTS_OUI_GOLD          51        86.3%       +55.29%    🟢 EXCELLENT
+  BTTS_NON_GOLD          30        70.0%       +54.00%    🟢 EXCELLENT
+  SCORE_TOP1             37        45.9%       +221.62%    🟢 EXCELLENT
+  SCORE_COMBO_TOP2       37        54.1%       +224.32%    🟢 EXCELLENT
+  SCORE_SWEET_SPOT       22        31.8%       +122.73%    🟢 EXCELLENT
+
+=========================================================================================================
+3️⃣  STATS GLOBALES BDD CLEAN (référence)
+=========================================================================================================
+  Home win  : 48.07%
+  Draw      : 22.29%
+  Away win  : 29.63%
+  Over 2.5  : 61.82%
+  BTTS      : 56.83%
+  Total team-pairs uniques : 379

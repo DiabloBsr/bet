@@ -1,0 +1,156 @@
+{
+ "lag_new": [
+  [
+   -3,
+   44
+  ],
+  [
+   -2,
+   96
+  ],
+  [
+   -1,
+   803
+  ],
+  [
+   0,
+   4137
+  ],
+  [
+   1,
+   4459
+  ],
+  [
+   2,
+   973
+  ],
+  [
+   3,
+   271
+  ],
+  [
+   4,
+   147
+  ],
+  [
+   5,
+   96
+  ],
+  [
+   6,
+   123
+  ],
+  [
+   7,
+   56
+  ],
+  [
+   8,
+   84
+  ],
+  [
+   9,
+   18
+  ],
+  [
+   10,
+   42
+  ],
+  [
+   11,
+   18
+  ],
+  [
+   12,
+   18
+  ],
+  [
+   14,
+   18
+  ]
+ ],
+ "pre_finished": "11401/11403",
+ "n_tests_scanned": 8,
+ "results": {
+  "dom_home_le1.4_ftts1_strictpre": {
+   "n": 233,
+   "wins": 192,
+   "wr": 0.824,
+   "roi_pct": 8.79,
+   "avg_odds": 1.325,
+   "z": 2.353,
+   "p_one_sided": 0.009307,
+   "calib_ratio": 1.087
+  },
+  "dom_home_le1.5_ftts1_strictpre": {
+   "n": 341,
+   "wins": 269,
+   "wr": 0.7889,
+   "roi_pct": 7.01,
+   "avg_odds": 1.364,
+   "z": 2.146,
+   "p_one_sided": 0.015919,
+   "calib_ratio": 1.071
+  },
+  "dom_home_le1.4_ftts1_pre2min": {
+   "n": 676,
+   "wins": 549,
+   "wr": 0.8121,
+   "roi_pct": 6.89,
+   "avg_odds": 1.321,
+   "z": 3.165,
+   "p_one_sided": 0.000775,
+   "calib_ratio": 1.068
+  },
+  "dom_home_le1.5_ftts1_pre2min": {
+   "n": 984,
+   "wins": 766,
+   "wr": 0.7785,
+   "roi_pct": 5.42,
+   "avg_odds": 1.362,
+   "z": 2.825,
+   "p_one_sided": 0.002364,
+   "calib_ratio": 1.055
+  },
+  "dom_home_le1.4_ftts1_late": {
+   "n": 41,
+   "wins": 33,
+   "wr": 0.8049,
+   "roi_pct": 4.41,
+   "avg_odds": 1.311,
+   "z": 0.507,
+   "p_one_sided": 0.306182,
+   "calib_ratio": 1.049
+  },
+  "dom_home_le1.5_ftts1_late": {
+   "n": 57,
+   "wins": 47,
+   "wr": 0.8246,
+   "roi_pct": 10.81,
+   "avg_odds": 1.352,
+   "z": 1.375,
+   "p_one_sided": 0.084564,
+   "calib_ratio": 1.107
+  },
+  "all_home_le1.5_ftts1_strictpre": {
+   "n": 622,
+   "wins": 476,
+   "wr": 0.7653,
+   "roi_pct": 1.85,
+   "avg_odds": 1.339,
+   "z": 0.793,
+   "p_one_sided": 0.213781,
+   "calib_ratio": 1.017
+  },
+  "all_home_le1.5_ftts1_late": {
+   "n": 1808,
+   "wins": 1403,
+   "wr": 0.776,
+   "roi_pct": 2.22,
+   "avg_odds": 1.326,
+   "z": 1.656,
+   "p_one_sided": 0.048864,
+   "calib_ratio": 1.02
+  }
+ }
+}

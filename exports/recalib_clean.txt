@@ -1,0 +1,207 @@
+Avant dédup : 3225 matchs
+Après dédup : 3225 matchs
+
+==============================================================================================================
+📊 STATS GLOBALES (BDD CLEAN)
+==============================================================================================================
+  Home win : 48.1%
+  Draw     : 22.3%
+  Away win : 29.6%
+  Over 1.5 : 82.4%
+  Over 2.5 : 61.7%
+  Under 3.5: 64.1%
+  BTTS     : 56.8%
+
+==============================================================================================================
+🔧 PAIRES OR HOME (parier 1, n>=12, ROI hist >=+30%)
+==============================================================================================================
+
+  22 paires HOME confirmées (n>=12, ROI>=30%):
+  ('C. Palace'           , 'Spurs'               ) n=8   win= 87.5% ROI+ 94.0% cote~2.22
+  ('N. Forest'           , 'Everton'             ) n=8   win=100.0% ROI+ 82.5% cote~1.83
+  ('N. Forest'           , 'Newcastle'           ) n=9   win= 66.7% ROI+ 67.1% cote~2.50
+  ('C. Palace'           , 'Bournemouth'         ) n=9   win= 88.9% ROI+ 66.6% cote~1.87
+  ('Brighton'            , 'Manchester Red'      ) n=9   win= 88.9% ROI+ 59.6% cote~1.80
+  ('Fulham'              , 'London Blues'        ) n=10  win= 70.0% ROI+ 53.0% cote~2.19
+  ('London Blues'        , 'Liverpool'           ) n=12  win= 66.7% ROI+ 52.6% cote~2.27
+  ('Manchester Red'      , 'Bournemouth'         ) n=11  win= 90.9% ROI+ 49.5% cote~1.64
+  ('A. Villa'            , 'Fulham'              ) n=8   win= 87.5% ROI+ 46.5% cote~1.67
+  ('Spurs'               , 'West Ham'            ) n=10  win= 90.0% ROI+ 46.1% cote~1.62
+  ('Fulham'              , 'C. Palace'           ) n=10  win= 70.0% ROI+ 45.3% cote~2.08
+  ('N. Forest'           , 'Bournemouth'         ) n=10  win= 80.0% ROI+ 45.0% cote~1.81
+  ('Brighton'            , 'Bournemouth'         ) n=8   win= 87.5% ROI+ 44.0% cote~1.65
+  ('Liverpool'           , 'London Reds'         ) n=10  win= 60.0% ROI+ 38.9% cote~2.31
+  ('N. Forest'           , 'C. Palace'           ) n=12  win= 66.7% ROI+ 38.0% cote~2.07
+  ('Fulham'              , 'Wolverhampton'       ) n=11  win= 81.8% ROI+ 37.2% cote~1.67
+  ('C. Palace'           , 'West Ham'            ) n=8   win= 75.0% ROI+ 35.0% cote~1.79
+  ('London Blues'        , 'A. Villa'            ) n=10  win= 80.0% ROI+ 33.6% cote~1.67
+  ('C. Palace'           , 'Wolverhampton'       ) n=9   win= 77.8% ROI+ 32.2% cote~1.70
+  ('Bournemouth'         , 'West Ham'            ) n=9   win= 66.7% ROI+ 31.0% cote~1.97
+  ('Brighton'            , 'West Ham'            ) n=11  win= 81.8% ROI+ 30.6% cote~1.61
+  ('Newcastle'           , 'Brighton'            ) n=9   win= 88.9% ROI+ 30.4% cote~1.47
+
+==============================================================================================================
+🔧 PAIRES OR AWAY (parier 2, n>=12, ROI hist >=+50%, win >=40%)
+==============================================================================================================
+
+  16 paires AWAY confirmées:
+  ('N. Forest'           , 'Wolverhampton'       ) n=9   win= 44.4% ROI+120.6% cote~4.93
+  ('Fulham'              , 'Brighton'            ) n=8   win= 75.0% ROI+103.5% cote~2.71
+  ('London Blues'        , 'Manchester Red'      ) n=12  win= 41.7% ROI+102.3% cote~4.88
+  ('London Blues'        , 'Spurs'               ) n=8   win= 50.0% ROI+ 95.9% cote~3.88
+  ('Fulham'              , 'Newcastle'           ) n=10  win= 80.0% ROI+ 93.6% cote~2.42
+  ('N. Forest'           , 'Fulham'              ) n=9   win= 55.6% ROI+ 82.9% cote~3.25
+  ('Everton'             , 'A. Villa'            ) n=12  win= 58.3% ROI+ 80.6% cote~3.12
+  ('C. Palace'           , 'London Blues'        ) n=10  win= 60.0% ROI+ 80.4% cote~3.02
+  ('Brentford'           , 'C. Palace'           ) n=10  win= 50.0% ROI+ 80.0% cote~3.63
+  ('C. Palace'           , 'Manchester Red'      ) n=8   win= 50.0% ROI+ 71.8% cote~3.41
+  ('Spurs'               , 'C. Palace'           ) n=12  win= 41.7% ROI+ 59.2% cote~3.81
+  ('Wolverhampton'       , 'Brentford'           ) n=11  win= 63.6% ROI+ 58.3% cote~2.50
+  ('Bournemouth'         , 'A. Villa'            ) n=8   win= 50.0% ROI+ 56.4% cote~3.16
+  ('C. Palace'           , 'Newcastle'           ) n=8   win= 62.5% ROI+ 54.2% cote~2.47
+  ('Fulham'              , 'Manchester Blue'     ) n=8   win= 87.5% ROI+ 51.0% cote~1.73
+
+==============================================================================================================
+❌ PAIRES TRAP HOME (parier 1 perd, n>=12, ROI <= -50%)
+==============================================================================================================
+
+  4 paires TRAP HOME:
+  ('Everton'             , 'London Blues'        ) n=8   win= 12.5% ROI -68.1%
+  ('London Blues'        , 'Manchester Red'      ) n=12  win= 25.0% ROI -58.4%
+  ('Spurs'               , 'N. Forest'           ) n=10  win= 30.0% ROI -54.5%
+  ('Spurs'               , 'Burnley'             ) n=9   win= 33.3% ROI -52.9%
+
+==============================================================================================================
+🔧 OVER 2.5 GOLD (paires avec ≥80% Over historique, n>=12)
+==============================================================================================================
+
+  37 paires OVER 2.5 GOLD:
+  ('A. Villa'            , 'Fulham'              ) n=8   rate=100.0%
+  ('London Reds'         , 'Brighton'            ) n=9   rate=100.0%
+  ('Manchester Red'      , 'London Reds'         ) n=12  rate=91.7%
+  ('Sunderland'          , 'Manchester Blue'     ) n=11  rate=90.9%
+  ('Fulham'              , 'West Ham'            ) n=11  rate=90.9%
+  ('Newcastle'           , 'West Ham'            ) n=10  rate=90.0%
+  ('Fulham'              , 'Liverpool'           ) n=10  rate=90.0%
+  ('Fulham'              , 'Manchester Red'      ) n=10  rate=90.0%
+  ('Manchester Blue'     , 'Leeds'               ) n=10  rate=90.0%
+  ('Fulham'              , 'Spurs'               ) n=9   rate=88.9%
+  ('Leeds'               , 'Brighton'            ) n=9   rate=88.9%
+  ('Liverpool'           , 'London Blues'        ) n=9   rate=88.9%
+  ('West Ham'            , 'Bournemouth'         ) n=9   rate=88.9%
+  ('Spurs'               , 'London Reds'         ) n=9   rate=88.9%
+  ('C. Palace'           , 'Newcastle'           ) n=8   rate=87.5%
+  ('A. Villa'            , 'Newcastle'           ) n=8   rate=87.5%
+  ('Fulham'              , 'Manchester Blue'     ) n=8   rate=87.5%
+  ('Leeds'               , 'Newcastle'           ) n=8   rate=87.5%
+  ('Liverpool'           , 'A. Villa'            ) n=8   rate=87.5%
+  ('Manchester Blue'     , 'Bournemouth'         ) n=8   rate=87.5%
+
+==============================================================================================================
+🔧 UNDER 2.5 GOLD (paires avec ≤30% Over historique, n>=12)
+==============================================================================================================
+
+  14 paires UNDER 2.5 GOLD:
+  ('Bournemouth'         , 'Everton'             ) n=8   over_rate=12.5%
+  ('Sunderland'          , 'Leeds'               ) n=8   over_rate=12.5%
+  ('Burnley'             , 'Everton'             ) n=11  over_rate=18.2%
+  ('Everton'             , 'West Ham'            ) n=11  over_rate=18.2%
+  ('Manchester Blue'     , 'C. Palace'           ) n=14  over_rate=21.4%
+  ('A. Villa'            , 'C. Palace'           ) n=9   over_rate=22.2%
+  ('C. Palace'           , 'N. Forest'           ) n=12  over_rate=25.0%
+  ('London Blues'        , 'Manchester Red'      ) n=12  over_rate=25.0%
+  ('Burnley'             , 'Wolverhampton'       ) n=8   over_rate=25.0%
+  ('Everton'             , 'Brentford'           ) n=8   over_rate=25.0%
+  ('Sunderland'          , 'London Blues'        ) n=8   over_rate=25.0%
+  ('Brighton'            , 'Manchester Blue'     ) n=8   over_rate=25.0%
+  ('Bournemouth'         , 'Manchester Blue'     ) n=11  over_rate=27.3%
+  ('Sunderland'          , 'Brentford'           ) n=11  over_rate=27.3%
+
+==============================================================================================================
+🔧 BTTS OUI GOLD (paires avec ≥80% BTTS, n>=12)
+==============================================================================================================
+
+  21 paires BTTS OUI GOLD:
+  ('C. Palace'           , 'Newcastle'           ) n=8   rate=100.0%
+  ('A. Villa'            , 'Fulham'              ) n=8   rate=100.0%
+  ('Fulham'              , 'Spurs'               ) n=9   rate=100.0%
+  ('Leeds'               , 'Burnley'             ) n=9   rate=100.0%
+  ('A. Villa'            , 'West Ham'            ) n=11  rate=90.9%
+  ('West Ham'            , 'Bournemouth'         ) n=9   rate=88.9%
+  ('Manchester Blue'     , 'Liverpool'           ) n=9   rate=88.9%
+  ('Manchester Blue'     , 'Newcastle'           ) n=9   rate=88.9%
+  ('Spurs'               , 'Burnley'             ) n=9   rate=88.9%
+  ('Everton'             , 'Fulham'              ) n=8   rate=87.5%
+  ('Fulham'              , 'Manchester Blue'     ) n=8   rate=87.5%
+  ('Manchester Red'      , 'N. Forest'           ) n=12  rate=83.3%
+  ('N. Forest'           , 'West Ham'            ) n=11  rate=81.8%
+  ('A. Villa'            , 'Manchester Blue'     ) n=11  rate=81.8%
+  ('Bournemouth'         , 'Brentford'           ) n=10  rate=80.0%
+  ('N. Forest'           , 'London Blues'        ) n=10  rate=80.0%
+  ('London Reds'         , 'West Ham'            ) n=10  rate=80.0%
+  ('Fulham'              , 'Manchester Red'      ) n=10  rate=80.0%
+  ('Leeds'               , 'A. Villa'            ) n=10  rate=80.0%
+  ('Leeds'               , 'Spurs'               ) n=10  rate=80.0%
+
+==============================================================================================================
+🔧 BTTS NON GOLD (paires avec ≤25% BTTS, n>=12)
+==============================================================================================================
+
+  14 paires BTTS NON GOLD:
+  ('Liverpool'           , 'Everton'             ) n=11  bts_rate=9.1%
+  ('Brighton'            , 'Bournemouth'         ) n=8   bts_rate=12.5%
+  ('London Blues'        , 'Manchester Red'      ) n=12  bts_rate=16.7%
+  ('N. Forest'           , 'C. Palace'           ) n=12  bts_rate=16.7%
+  ('London Reds'         , 'Leeds'               ) n=12  bts_rate=16.7%
+  ('Manchester Blue'     , 'Leeds'               ) n=10  bts_rate=20.0%
+  ('Bournemouth'         , 'N. Forest'           ) n=9   bts_rate=22.2%
+  ('Newcastle'           , 'London Blues'        ) n=9   bts_rate=22.2%
+  ('Everton'             , 'Brentford'           ) n=8   bts_rate=25.0%
+  ('N. Forest'           , 'Everton'             ) n=8   bts_rate=25.0%
+  ('A. Villa'            , 'Leeds'               ) n=8   bts_rate=25.0%
+  ('Sunderland'          , 'London Blues'        ) n=8   bts_rate=25.0%
+  ('Sunderland'          , 'Leeds'               ) n=8   bts_rate=25.0%
+  ('Manchester Blue'     , 'A. Villa'            ) n=8   bts_rate=25.0%
+
+==============================================================================================================
+🔧 SCORE EXACT DOMINANT GOLD (paires avec score ≥30% récurrent, n>=12)
+==============================================================================================================
+
+  65 paires SCORE EXACT GOLD:
+  ('Fulham'              , 'Manchester Blue'     ) n=8   score='1-2'  rate=62.5%
+  ('C. Palace'           , 'Spurs'               ) n=8   score='2-1'  rate=50.0%
+  ('Burnley'             , 'Manchester Blue'     ) n=12  score='1-2'  rate=50.0%
+  ('Newcastle'           , 'West Ham'            ) n=10  score='3-0'  rate=50.0%
+  ('Wolverhampton'       , 'Fulham'              ) n=10  score='2-1'  rate=50.0%
+  ('Bournemouth'         , 'Manchester Blue'     ) n=11  score='1-1'  rate=45.5%
+  ('Manchester Red'      , 'Bournemouth'         ) n=11  score='1-0'  rate=45.5%
+  ('Burnley'             , 'Liverpool'           ) n=9   score='0-2'  rate=44.4%
+  ('A. Villa'            , 'C. Palace'           ) n=9   score='2-0'  rate=44.4%
+  ('Leeds'               , 'Brentford'           ) n=9   score='1-2'  rate=44.4%
+  ('Brighton'            , 'Manchester Red'      ) n=9   score='2-1'  rate=44.4%
+  ('Manchester Red'      , 'Wolverhampton'       ) n=9   score='1-0'  rate=44.4%
+  ('West Ham'            , 'A. Villa'            ) n=9   score='1-1'  rate=44.4%
+  ('Bournemouth'         , 'Brentford'           ) n=10  score='1-1'  rate=40.0%
+  ('Liverpool'           , 'London Reds'         ) n=10  score='2-0'  rate=40.0%
+  ('Manchester Blue'     , 'Everton'             ) n=10  score='3-0'  rate=40.0%
+  ('C. Palace'           , 'Burnley'             ) n=8   score='4-0'  rate=37.5%
+  ('C. Palace'           , 'Manchester Red'      ) n=8   score='1-2'  rate=37.5%
+  ('Burnley'             , 'Wolverhampton'       ) n=8   score='1-0'  rate=37.5%
+  ('Everton'             , 'Bournemouth'         ) n=8   score='1-1'  rate=37.5%
+  ('Bournemouth'         , 'Everton'             ) n=8   score='1-1'  rate=37.5%
+  ('N. Forest'           , 'Everton'             ) n=8   score='3-0'  rate=37.5%
+  ('A. Villa'            , 'Liverpool'           ) n=8   score='1-2'  rate=37.5%
+  ('A. Villa'            , 'Fulham'              ) n=8   score='3-1'  rate=37.5%
+  ('Newcastle'           , 'Manchester Blue'     ) n=8   score='0-0'  rate=37.5%
+
+==============================================================================================================
+📊 BILAN RECALIBRATION:
+==============================================================================================================
+  Paires OR HOME    : 22
+  Paires OR AWAY    : 16
+  Paires TRAP HOME  : 4
+  Paires OVER 2.5   : 37
+  Paires UNDER 2.5  : 14
+  Paires BTTS Oui   : 21
+  Paires BTTS Non   : 14
+  Paires Score      : 65

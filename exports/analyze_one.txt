@@ -1,0 +1,30 @@
+
+=== V6 ANALYSE PROFESSIONNELLE — modèle entraîné sur n=3426 matchs ===
+    Probabilités empiriques globales : HT/FT 1/2 = 3.42%   HT/FT 2/1 = 3.85%   Score 1-0 (away fav) = 5.49%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Burnley  vs  Fulham
+  Cotes : 1=3.36   X=3.41   2=2.13   (overround 6.0%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  FAVORI THÉORIQUE
+     Favori   : 2  @2.13  (p_implicite vig-free = 44.3%)
+     Outsider : X  @3.41  (p_implicite vig-free = 27.7%)
+     Probabilités vig-free : 1=28.1%  X=27.7%  2=44.3%
+
+2️⃣  ANALYSE CONTEXTUELLE (virtuel — signaux exploitables)
+     Bucket cote home : <4.0    Bucket cote away : <2.5
+     H2H paire (n=5) : 1=20%  X=20%  2=60%
+       ⚠️  H2H n'a PAS d'edge prédictif validé en virtuel (ROI -27% sur 65 paris)
+
+3️⃣  INDICATEURS DE RUPTURE (pricing anomalies)
+     Aucune anomalie de pricing détectée.
+
+4️⃣  CALCUL VALUE (proba empirique × cote − 1)
+     Aucun marché extra disponible.
+
+5️⃣  DÉCISION FINALE
+     ❌  AUCUNE OPPORTUNITÉ INTÉRESSANTE.
+         Tous les marchés sont fair-pricés ou en perte attendue.
+         RECOMMANDATION : PASSER ce match.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

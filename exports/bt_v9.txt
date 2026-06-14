@@ -1,0 +1,44 @@
+=== BACKTEST V8 vs V9 — n=3645 ===
+
+Train n=2551, Test n=1094
+
+=== Biais équipe (train only) ===
+  Brighton               bias = +13.8pp ⭐
+  Brentford              bias =  +8.6pp ⭐
+  Manchester Red         bias =  +5.3pp ⭐
+  C. Palace              bias =  +5.2pp ⭐
+  West Ham               bias =  +4.1pp
+  N. Forest              bias =  +3.3pp
+  Newcastle              bias =  +3.1pp
+  Liverpool              bias =  +2.2pp
+  Wolverhampton          bias =  +1.9pp
+  Burnley                bias =  +1.7pp
+  Bournemouth            bias =  +0.8pp
+  Spurs                  bias =  +0.7pp
+  Manchester Blue        bias =  +0.4pp
+  London Reds            bias =  -0.1pp
+  Everton                bias =  -1.7pp
+  Fulham                 bias =  -1.8pp
+  A. Villa               bias =  -2.0pp
+  London Blues           bias =  -3.0pp
+
+=== Application sur test (n=1094) ===
+
+Liste noire (bias < -2pp) : {'London Blues', 'A. Villa'}
+
+====================================================================================================
+RÉSULTATS
+====================================================================================================
+
+V8: n=557, accuracy=33.57%, ROI=-18.43%
+V9: n=482, accuracy=32.37%, ROI=-19.54%
+
+Par catégorie :
+Cat            V8 n    V8 acc     V8 ROI     V9 n    V9 acc     V9 ROI     Δ ROI
+SÉCURISÉ       129      53.5%   -11.59%   101      56.4%   -6.40%   +5.19pp
+MODÉRÉ         190      43.2%   -13.24%   165      41.2%   -16.29%   -3.05pp
+SPÉCULATIF     238      15.1%   -26.29%   216      14.4%   -28.16%   -1.87pp
+
+Drawdown sur trajectoire (mise constante 1u) :
+  V8 : bankroll final -2.67u (sur 100u + 557 paris), drawdown max -111.2%
+  V9 : bankroll final 5.84u (sur 100u + 482 paris), drawdown max -103.2%

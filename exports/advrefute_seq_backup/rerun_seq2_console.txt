@@ -1,0 +1,33 @@
+loaded 22908 clean matches (dedup near-dups: 569 dropped), guard-excluded HT>FT: 0
+
+=== tests tries par p ===
+early_J1-5_vs_late_last5     pooled-6champs    res_fav   nA= 2112 nB=  1053 mA=+0.0334 mB=-0.0372 p=9.779e-05
+early_J1-5_vs_late_last5     pooled-6champs    res_draw  nA= 2112 nB=  1053 mA=-0.0318 mB=+0.0199 p=0.001223
+early_J1-5_vs_late_last5     pooled-newchamps  res_fav   nA= 1083 nB=   407 mA=+0.0239 mB=-0.0592 p=0.002964
+early_J1-5_vs_late_last5     8035              res_draw  nA= 1029 nB=   646 mA=-0.0430 mB=+0.0168 p=0.003781
+early_J1-5_vs_late_last5     8035              res_fav   nA= 1029 nB=   646 mA=+0.0434 mB=-0.0233 p=0.005527
+early_J1-5_vs_late_last5     pooled-newchamps  res_total nA= 1083 nB=   407 mA=+0.2521 mB=+0.0616 p=0.01909
+round1_vs_rest               pooled-6champs    res_draw  nA=  706 nB= 13697 mA=-0.0358 mB=-0.0047 p=0.04594
+early_J1-5_vs_late_last5     pooled-newchamps  res_draw  nA= 1083 nB=   407 mA=-0.0211 mB=+0.0249 p=0.07087
+round1_vs_rest               pooled-newchamps  res_draw  nA=  421 nB=  6350 mA=-0.0285 mB=+0.0079 p=0.08328
+round1_vs_rest               pooled-6champs    res_fav   nA=  706 nB= 13697 mA=+0.0328 mB=+0.0025 p=0.1001
+early_J1-5_vs_late_last5     pooled-6champs    res_home  nA= 2112 nB=  1053 mA=+0.0208 mB=-0.0070 p=0.1134
+early_J1-5_vs_late_last5     8035              res_home  nA= 1029 nB=   646 mA=+0.0358 mB=+0.0011 p=0.1349
+round1_vs_rest               8035              res_draw  nA=  285 nB=  7347 mA=-0.0466 mB=-0.0156 p=0.1815
+round1_vs_rest               8035              res_fav   nA=  285 nB=  7347 mA=+0.0479 mB=+0.0110 p=0.2046
+round1_vs_rest               pooled-newchamps  res_fav   nA=  421 nB=  6350 mA=+0.0226 mB=-0.0074 p=0.2108
+early_J1-5_vs_late_last5     pooled-6champs    res_total nA= 2112 nB=  1053 mA=+0.2093 mB=+0.1503 p=0.2741
+round1_vs_rest               pooled-newchamps  res_home  nA=  421 nB=  6350 mA=+0.0214 mB=-0.0028 p=0.2942
+early_J1-5_vs_late_last5     pooled-newchamps  res_home  nA= 1083 nB=   407 mA=+0.0064 mB=-0.0198 p=0.334
+cups_earlythird_vs_latethird pooled-cups       res_total nA= 2784 nB=  2783 mA=+0.0557 mB=+0.0917 p=0.35
+round1_vs_rest               pooled-newchamps  res_total nA=  421 nB=  6350 mA=+0.2432 mB=+0.1838 p=0.3975
+round1_vs_rest               pooled-6champs    res_home  nA=  706 nB= 13697 mA=+0.0175 mB=+0.0070 p=0.5551
+early_J1-5_vs_late_last5     8035              res_total nA= 1029 nB=   646 mA=+0.1643 mB=+0.2062 p=0.5658
+cups_earlythird_vs_latethird pooled-cups       res_draw  nA= 2784 nB=  2783 mA=-0.0066 mB=-0.0129 p=0.576
+round1_vs_rest               8035              res_total nA=  285 nB=  7347 mA=+0.1280 mB=+0.1652 p=0.6625
+round1_vs_rest               pooled-6champs    res_total nA=  706 nB= 13697 mA=+0.1967 mB=+0.1738 p=0.6725
+cups_earlythird_vs_latethird pooled-cups       res_home  nA= 2784 nB=  2783 mA=-0.0046 mB=-0.0004 p=0.7283
+round1_vs_rest               8035              res_home  nA=  285 nB=  7347 mA=+0.0117 mB=+0.0155 p=0.8904
+cups_earlythird_vs_latethird pooled-cups       res_fav   nA= 2784 nB=  2783 mA=+0.0024 mB=+0.0014 p=0.9367
+
+n_tests_scanned = 28

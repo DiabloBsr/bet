@@ -1,0 +1,84 @@
+=== AUDIT V10 — n_total=4329 ===
+
+====================================================================================================
+TEST 1 : Per-team per-bracket bias HOME — détail fin
+====================================================================================================
+
+Équipe                 cote         n      acc        ROI
+----------------------------------------------------------------------
+TOP 10 combinaisons (ROI > +10%) :
+  N. Forest              [1.7;1.9]   n=42    71.4%   ROI= +28.6% ⭐
+  Brighton               [1.9;2.1]   n=37    64.9%   ROI= +26.8% ⭐
+  N. Forest              [1.9;2.1]   n=30    60.0%   ROI= +22.7% ⭐
+  Fulham                 [1.9;2.1]   n=30    60.0%   ROI= +22.1% ⭐
+  C. Palace              [2.1;2.5]   n=61    54.1%   ROI= +21.6% ⭐
+  C. Palace              [1.7;1.9]   n=39    66.7%   ROI= +19.8% ⭐
+  Burnley                [2.1;2.5]   n=25    48.0%   ROI= +16.8% ⭐
+  Brighton               [1.5;1.7]   n=57    71.9%   ROI= +14.2% ⭐
+  Fulham                 [1.5;1.7]   n=37    67.6%   ROI= +10.7% ⭐
+
+BOTTOM 10 (à éviter, ROI < -15%) :
+  West Ham               [1.9;2.1]   n=24    33.3%   ROI= -33.2% ❌
+  Wolverhampton          [1.9;2.1]   n=34    35.3%   ROI= -29.5% ❌
+  Everton                [2.1;2.5]   n=44    31.8%   ROI= -25.8% ❌
+  N. Forest              [1.5;1.7]   n=30    46.7%   ROI= -23.5% ❌
+  Spurs                  [1.9;2.1]   n=43    39.5%   ROI= -22.3% ❌
+  Bournemouth            [1.7;1.9]   n=44    43.2%   ROI= -22.0% ❌
+  C. Palace              [1.9;2.1]   n=24    41.7%   ROI= -16.2% ❌
+  Wolverhampton          [1.7;1.9]   n=26    46.2%   ROI= -16.1% ❌
+
+====================================================================================================
+TEST 2 : Pair-specific bias (paire team_a + team_b avec n >= 10)
+====================================================================================================
+
+Paire                                    n     acc        cote moy   ROI
+TOP 8 paires WHITE :
+  C. Palace vs Spurs                       10    80.0%    2.22    ROI= +78.0% ⭐
+  Burnley vs Wolverhampton                 12    66.7%    2.46    ROI= +63.4% ⭐
+  C. Palace vs Bournemouth                 11    81.8%    1.87    ROI= +53.0% ⭐
+  N. Forest vs Everton                     12    83.3%    1.83    ROI= +52.1% ⭐
+  Manchester Red vs Bournemouth            12    91.7%    1.64    ROI= +50.4% ⭐
+  Spurs vs West Ham                        13    92.3%    1.62    ROI= +49.6% ⭐
+  London Blues vs Newcastle                12    75.0%    1.96    ROI= +47.0% ⭐
+  Brighton vs Spurs                        11    72.7%    1.96    ROI= +41.9% ⭐
+  Fulham vs Wolverhampton                  12    83.3%    1.68    ROI= +39.8% ⭐
+  N. Forest vs Bournemouth                 13    76.9%    1.82    ROI= +39.5% ⭐
+
+BOTTOM 8 paires BLACK :
+  Liverpool vs Manchester Blue             10    10.0%    2.06    ROI= -79.7% ❌
+  Manchester Blue vs London Reds           12    16.7%    2.25    ROI= -62.3% ❌
+  Bournemouth vs Spurs                     11    18.2%    2.46    ROI= -55.5% ❌
+  Spurs vs N. Forest                       10    30.0%    1.53    ROI= -54.6% ❌
+  Newcastle vs Manchester Blue             10    20.0%    2.35    ROI= -54.3% ❌
+  Newcastle vs Manchester Red              12    33.3%    1.40    ROI= -52.8% ❌
+  Everton vs London Blues                  11    18.2%    2.57    ROI= -52.7% ❌
+  Everton vs Sunderland                    12    25.0%    1.92    ROI= -52.2% ❌
+  Everton vs C. Palace                     10    20.0%    2.44    ROI= -52.0% ❌
+  A. Villa vs Sunderland                   13    38.5%    1.36    ROI= -47.9% ❌
+
+====================================================================================================
+TEST 3 : Multi-signal co-occurrence — quand 2+ signaux convergent
+====================================================================================================
+
+Combo signaux                  n      acc        ROI
+  0 signal(s)                  n=2122   59.0%   ROI= -6.55%
+  1 signal(s)                  n=906    53.6%   ROI= -0.30%
+  2 signal(s)                  n=115    66.1%   ROI=+17.67%
+
+  Détail : WL team + bracket 1.7-1.85 :
+    Brentford              n=22    54.5%   ROI=  -4.5%
+    C. Palace              n=24    70.8%   ROI= +24.4%
+    N. Forest              n=37    73.0%   ROI= +30.9%
+    Brighton               n=32    62.5%   ROI= +12.6%
+
+====================================================================================================
+TEST 4 : Rank position diff (déjà testé, on revérifie avec n)
+====================================================================================================
+
+Rank diff (h-a)           n      acc        ROI
+  diff ∈ [-25;-10]         n=466    69.5%   ROI= -6.75%
+  diff ∈ [-10;-5]         n=591    61.6%   ROI= -5.68%
+  diff ∈ [-5;+0]         n=921    59.2%   ROI= +0.27%
+  diff ∈ [+0;+5]         n=587    49.7%   ROI= -9.45%
+  diff ∈ [+5;+10]         n=387    48.6%   ROI= -3.99%
+  diff ∈ [+10;+25]         n=149    51.0%   ROI= +7.34% ⭐

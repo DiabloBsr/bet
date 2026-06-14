@@ -1,0 +1,30 @@
+# Environnements / caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Données (NE PAS versionner — 635 Mo de DB)
+data/
+*.db
+*.db-journal
+*.sqlite
+
+# Secrets / logs
+.env
+logs/
+*.log
+
+# Gros artefacts d'analyse (données, pas du code)
+*.pkl
+*.parquet
+exports/*_features*.csv
+exports/*_all.csv
+exports/_wf*.json
+exports/*_events.json
+exports/*_extra.json
+
+# OS
+.DS_Store
+Thumbs.db

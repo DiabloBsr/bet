@@ -1,0 +1,92 @@
+=== A. Sur-cotees naives (ratio_n>=1.10, odds<=20) : implication des cellules cappees ===
+n=16467  avec >=1 cellule cappee: 100.0%  part mediane de proba issue de cellules cappees: 40.4%
+(reference toutes selections odds<=20: cap-involved 71.4%, capshare med 5.34%)
+sur-cotees naives avec capshare<5%: n=0
+
+=== B. Sweep de seuil (variante calib), selection sur train, eval OOS ===
+thr=1.00: train n=2018 ROI=-5.0% | OOS n=850 ROI=-15.4% | marches train-pos ['1X2 & Total'] -> OOS n=137 ROI=-51.2%
+thr=1.02: train n=1158 ROI=-2.0% | OOS n=462 ROI=-10.2% | marches train-pos [] -> OOS n=0 ROI=+nan%
+thr=1.04: train n=745 ROI=-3.8% | OOS n=308 ROI=+6.3% | marches train-pos ['1X2 & G/NG'] -> OOS n=90 ROI=-12.3%
+thr=1.06: train n=450 ROI=-6.7% | OOS n=197 ROI=-12.5% | marches train-pos [] -> OOS n=0 ROI=+nan%
+thr=1.08: train n=301 ROI=+10.6% | OOS n=141 ROI=-19.2% | marches train-pos [] -> OOS n=0 ROI=+nan%
+thr=1.10: train n=215 ROI=-0.0% | OOS n=101 ROI=-34.4% | marches train-pos [] -> OOS n=0 ROI=+nan%
+
+=== C. VIG LADDER : ratio_c median par (marche, cle), train vs OOS (stabilite) ===
+                                                                    n  med_train  med_oos    iqr   delta
+market                 key                                                                              
+G/NG                   Oui                                  5859.0000     0.9540   0.9540 0.0073  0.0000
+Total equipe extérieur < 3.5                                1148.0000     0.9511   0.9515 0.0064  0.0004
+1X2 & Total            X / > 3.5                            5859.0000     0.9510   0.9512 0.0246  0.0003
+G/NG equipe domicile   Oui                                  5738.0000     0.9482   0.9482 0.0070  0.0000
+1X2                    1                                    5859.0000     0.9477   0.9479 0.0135  0.0001
+                       X                                    5859.0000     0.9476   0.9478 0.0098  0.0002
++/-                    > 3.5                                5859.0000     0.9478   0.9476 0.0207 -0.0002
+Total equipe domicile  < 3.5                                3354.0000     0.9473   0.9473 0.0057  0.0000
+G/NG equipe extérieur  Oui                                  5859.0000     0.9443   0.9443 0.0063 -0.0000
+                       Non                                  5859.0000     0.9417   0.9416 0.0133 -0.0000
++/-                    < 3.5                                5859.0000     0.9408   0.9408 0.0121 -0.0000
+Total de buts          6                                    5842.0000     0.9379   0.9382 0.1350  0.0004
+1X2                    2                                    5859.0000     0.9330   0.9338 0.0251  0.0008
+Pair/Impair            Pair                                 5859.0000     0.9317   0.9316 0.0128 -0.0001
+Double Chance          1X                                   5631.0000     0.9306   0.9306 0.0106  0.0000
+G/NG                   Non                                  5859.0000     0.9288   0.9287 0.0085 -0.0001
+Total equipe domicile  > 3.5                                5299.0000     0.9270   0.9269 0.0565 -0.0001
+Total de buts          3                                    5859.0000     0.9257   0.9259 0.0153  0.0002
+G/NG equipe domicile   Non                                  5859.0000     0.9248   0.9251 0.0153  0.0003
+Double Chance          12                                   5859.0000     0.9249   0.9251 0.0043  0.0002
+1X2 & G/NG             X et aucun but                       5859.0000     0.9243   0.9244 0.0115  0.0001
+Total de buts          0                                    5859.0000     0.9243   0.9244 0.0115  0.0001
+                       4                                    5859.0000     0.9245   0.9240 0.0144 -0.0005
+Double Chance          X2                                   5784.0000     0.9222   0.9224 0.0115  0.0003
+Multi-Buts             Le total de buts est de 2, 3 ou 4    5859.0000     0.9211   0.9210 0.0082 -0.0001
+1X2 & Total            1 / < 3.5                            5859.0000     0.9204   0.9206 0.0150  0.0002
+Pair/Impair            Impair                               5859.0000     0.9198   0.9200 0.0133  0.0002
+1X2 & G/NG             2 gagne et les deux équipes marquent 5859.0000     0.9098   0.9121 0.0424  0.0023
+                       1 gagne et les deux équipes marquent 5859.0000     0.9080   0.9077 0.0239 -0.0003
+Multi-Buts             Le total de buts est de 1, 2 ou 3    5859.0000     0.9035   0.9035 0.0120  0.0000
+1X2 & Total            1 / > 3.5                            5808.0000     0.9002   0.9000 0.0226 -0.0002
+                       2 / < 3.5                            5859.0000     0.8994   0.8995 0.0142  0.0001
+                       2 / > 3.5                            5815.0000     0.8931   0.8952 0.1224  0.0021
+                       X / < 3.5                            5859.0000     0.8934   0.8938 0.0116  0.0004
+1X2 & G/NG             X et les deux équipes marquent       5859.0000     0.8878   0.8878 0.0093  0.0000
+Multi-Buts             Le total de buts est supérieur à 4   5859.0000     0.8846   0.8849 0.0424  0.0003
+                       Le total de buts est de 0, 1 ou 2    5859.0000     0.8840   0.8842 0.0089  0.0002
+1X2 & G/NG             1 gagne et seulement  1  marque      5859.0000     0.8832   0.8829 0.0106 -0.0003
+Total de buts          2                                    5859.0000     0.8667   0.8668 0.0079  0.0001
+Total equipe extérieur > 3.5                                4468.0000     0.8522   0.8580 0.1178  0.0058
+1X2 & G/NG             2 gagne et seulement 2 marque        5859.0000     0.8544   0.8543 0.0268 -0.0001
+Total de buts          1                                    5859.0000     0.8494   0.8494 0.0102  0.0001
+                       5                                    5859.0000     0.8418   0.8416 0.0213 -0.0002
+
+=== D. ROI 'tout parier' par marche, OOS, odds<=20 (= -vig effectif realise) ===
+                            n     roi   cote
+market                                      
+Total equipe extérieur    785 -0.0248 6.7805
+G/NG                     3516 -0.0545 1.9615
+G/NG equipe domicile     3484 -0.0552 3.8649
+G/NG equipe extérieur    3516 -0.0590 2.6396
++/-                      3516 -0.0635 2.1339
+Pair/Impair              3516 -0.0738 1.8520
+1X2                      5262 -0.0750 3.8163
+Double Chance            5186 -0.0841 1.5803
+Total de buts           10381 -0.0926 7.0621
+Total equipe domicile    2171 -0.0990 5.3568
+1X2 & G/NG               9566 -0.1008 6.9301
+Multi-Buts               7032 -0.1048 2.9519
+1X2 & Total              9756 -0.1114 7.3244
+
+--- top (marche,cle) par ROI OOS (n>=300) ---
+                                          n     roi     wr    cote
+market                 key                                        
+Total de buts          1               1758  0.0352 0.1365  7.9441
+Pair/Impair            Impair          1758 -0.0025 0.5341  1.8683
+Total equipe extérieur > 3.5            442 -0.0030 0.1063 11.2085
+Total de buts          0               1067 -0.0169 0.0712 14.4639
+1X2 & G/NG             X et aucun but  1067 -0.0169 0.0712 14.4639
+1X2                    1               1753 -0.0208 0.4883  2.6094
+Total de buts          3               1758 -0.0414 0.2719  3.5280
+1X2 & Total            1 / < 3.5       1744 -0.0429 0.2976  3.6929
++/-                    < 3.5           1758 -0.0441 0.6502  1.4949
+1X2 & Total            2 / < 3.5       1748 -0.0483 0.2111  6.0299
+1X2                    2               1751 -0.0489 0.3090  4.4709
+Double Chance          12              1758 -0.0498 0.7947  1.2000

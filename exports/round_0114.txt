@@ -1,0 +1,7 @@
+V5/V10 (n_train=5402)
+
+🌍 Saison récente (20 dernières) depuis 2026-06-06 11:03:56
+   🔥 EN FORME : Leeds(29%/52), Sunderland(24%/49)
+   ❄️  EN PERTE : Manchester Red(34%/58), Brentford(38%/50), Liverpool(64%/55), Fulham(42%/55), Bournemouth(33%/55)
+
+Round 01:14 introuvable. Dispo : ['01:16', '01:18', '01:20', '01:22', '01:24', '01:26']

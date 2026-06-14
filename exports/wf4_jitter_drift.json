@@ -1,0 +1,584 @@
+{
+ "n_multi_events": 2531,
+ "logloss_8035": {
+  "n_events": 1203,
+  "ll_open": 0.9534,
+  "ll_close": 0.95238,
+  "diff_mean": 0.00102,
+  "t": 1.275,
+  "p": 0.20252963015377876
+ },
+ "logloss_newleagues": {
+  "n_events": 0,
+  "ll_open": NaN,
+  "ll_close": NaN,
+  "diff_mean": NaN,
+  "t": NaN,
+  "p": NaN
+ },
+ "calib_by_drift": [
+  {
+   "bucket": "<-5%",
+   "n": "198",
+   "actual": "0.23232323232323232",
+   "implied": "0.24745549788102103",
+   "avg_open": "5.125959595959596",
+   "edge": "-0.01513226555778871"
+  },
+  {
+   "bucket": "-5..-1%",
+   "n": "1020",
+   "actual": "0.31470588235294117",
+   "implied": "0.32719254087213334",
+   "avg_open": "3.7836764705882353",
+   "edge": "-0.012486658519192173"
+  },
+  {
+   "bucket": "-1..0%",
+   "n": "463",
+   "actual": "0.326133909287257",
+   "implied": "0.3310165018780969",
+   "avg_open": "3.7854427645788338",
+   "edge": "-0.004882592590839896"
+  },
+  {
+   "bucket": "0..1%",
+   "n": "460",
+   "actual": "0.3391304347826087",
+   "implied": "0.34571355263178444",
+   "avg_open": "3.6601521739130436",
+   "edge": "-0.006583117849175757"
+  },
+  {
+   "bucket": "1..5%",
+   "n": "1031",
+   "actual": "0.33462657613967023",
+   "implied": "0.3299740414641891",
+   "avg_open": "3.792560620756547",
+   "edge": "0.0046525346754811014"
+  },
+  {
+   "bucket": ">5%",
+   "n": "179",
+   "actual": "0.2905027932960894",
+   "implied": "0.227003768238665",
+   "avg_open": "5.389888268156424",
+   "edge": "0.06349902505742441"
+  }
+ ],
+ "scan_train_8035": [
+  {
+   "thr": 0.0001,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 1157,
+    "roi_pct": -5.7,
+    "wr": 0.3319,
+    "avg_odds": 3.879,
+    "p": 0.23092695131926597
+   }
+  },
+  {
+   "thr": 0.0001,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 1157,
+    "roi_pct": -8.12,
+    "wr": 0.3319,
+    "avg_odds": 3.774,
+    "p": 0.07863670702921836
+   }
+  },
+  {
+   "thr": 0.0001,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 1023,
+    "roi_pct": -3.9,
+    "wr": 0.2991,
+    "avg_odds": 4.202,
+    "p": 0.4635791130301003
+   }
+  },
+  {
+   "thr": 0.0001,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 1014,
+    "roi_pct": -6.73,
+    "wr": 0.2949,
+    "avg_odds": 4.109,
+    "p": 0.19601186475875804
+   }
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 847,
+    "roi_pct": -1.89,
+    "wr": 0.3353,
+    "avg_odds": 3.976,
+    "p": 0.7424003554391931
+   }
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 847,
+    "roi_pct": -5.04,
+    "wr": 0.3353,
+    "avg_odds": 3.84,
+    "p": 0.36531383127238565
+   }
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 764,
+    "roi_pct": -0.13,
+    "wr": 0.3089,
+    "avg_odds": 4.252,
+    "p": 0.9841708772852503
+   }
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 756,
+    "roi_pct": -3.65,
+    "wr": 0.3042,
+    "avg_odds": 4.131,
+    "p": 0.554259179643258
+   }
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 557,
+    "roi_pct": 5.06,
+    "wr": 0.3411,
+    "avg_odds": 4.244,
+    "p": 0.496753281825681
+   }
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 557,
+    "roi_pct": 0.95,
+    "wr": 0.3411,
+    "avg_odds": 4.064,
+    "p": 0.8940353825544146
+   }
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 515,
+    "roi_pct": 7.25,
+    "wr": 0.3243,
+    "avg_odds": 4.472,
+    "p": 0.36443428575436937
+   }
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 509,
+    "roi_pct": 2.96,
+    "wr": 0.3202,
+    "avg_odds": 4.312,
+    "p": 0.7018293171458375
+   }
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 336,
+    "roi_pct": 9.92,
+    "wr": 0.3125,
+    "avg_odds": 4.647,
+    "p": 0.3480642744362911
+   }
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 336,
+    "roi_pct": 4.65,
+    "wr": 0.3125,
+    "avg_odds": 4.406,
+    "p": 0.6431430468603732
+   }
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 325,
+    "roi_pct": 11.03,
+    "wr": 0.3046,
+    "avg_odds": 4.755,
+    "p": 0.3114856605904447
+   }
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 324,
+    "roi_pct": 5.53,
+    "wr": 0.3025,
+    "avg_odds": 4.517,
+    "p": 0.5945306467214365
+   }
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 129,
+    "roi_pct": 12.08,
+    "wr": 0.2868,
+    "avg_odds": 5.451,
+    "p": 0.5054244672457444
+   }
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 129,
+    "roi_pct": 5.12,
+    "wr": 0.2868,
+    "avg_odds": 5.074,
+    "p": 0.7635213498220426
+   }
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "train": {
+    "n": 129,
+    "roi_pct": 12.08,
+    "wr": 0.2868,
+    "avg_odds": 5.451,
+    "p": 0.5054244672457444
+   }
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "train": {
+    "n": 129,
+    "roi_pct": 5.12,
+    "wr": 0.2868,
+    "avg_odds": 5.074,
+    "p": 0.7635213498220426
+   }
+  }
+ ],
+ "n_tests_scanned_strategyC": 20,
+ "test_eval": [
+  {
+   "thr": 0.0001,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 513,
+    "roi_pct": -1.14,
+    "wr": 0.3294,
+    "avg_odds": 4.037,
+    "p": 0.8818034598120941
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.0001,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 513,
+    "roi_pct": -3.58,
+    "wr": 0.3294,
+    "avg_odds": 3.938,
+    "p": 0.6319536918243696
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.0001,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 462,
+    "roi_pct": -0.73,
+    "wr": 0.29,
+    "avg_odds": 4.328,
+    "p": 0.930978477437885
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.0001,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 460,
+    "roi_pct": -2.87,
+    "wr": 0.2913,
+    "avg_odds": 4.231,
+    "p": 0.728793041377984
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 363,
+    "roi_pct": 1.87,
+    "wr": 0.3113,
+    "avg_odds": 4.152,
+    "p": 0.8480498930015865
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 363,
+    "roi_pct": -1.34,
+    "wr": 0.3113,
+    "avg_odds": 4.02,
+    "p": 0.8863628289251521
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 337,
+    "roi_pct": 3.33,
+    "wr": 0.2908,
+    "avg_odds": 4.361,
+    "p": 0.7496955258243452
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.01,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 335,
+    "roi_pct": 0.61,
+    "wr": 0.2925,
+    "avg_odds": 4.237,
+    "p": 0.9515791631665101
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 224,
+    "roi_pct": 9.09,
+    "wr": 0.3259,
+    "avg_odds": 4.325,
+    "p": 0.4866750701888345
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 224,
+    "roi_pct": 4.72,
+    "wr": 0.3259,
+    "avg_odds": 4.147,
+    "p": 0.7060664473532036
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 209,
+    "roi_pct": 10.56,
+    "wr": 0.3062,
+    "avg_odds": 4.529,
+    "p": 0.44873244609394153
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.02,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 208,
+    "roi_pct": 6.57,
+    "wr": 0.3077,
+    "avg_odds": 4.355,
+    "p": 0.624152374059294
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 136,
+    "roi_pct": 34.21,
+    "wr": 0.3676,
+    "avg_odds": 4.693,
+    "p": 0.07487924477274727
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 136,
+    "roi_pct": 28.07,
+    "wr": 0.3676,
+    "avg_odds": 4.457,
+    "p": 0.12512598068006223
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 132,
+    "roi_pct": 34.85,
+    "wr": 0.3561,
+    "avg_odds": 4.789,
+    "p": 0.07782872455582882
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.03,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 131,
+    "roi_pct": 29.65,
+    "wr": 0.3588,
+    "avg_odds": 4.571,
+    "p": 0.11789981074707215
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.0,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 50,
+    "roi_pct": 9.72,
+    "wr": 0.3,
+    "avg_odds": 5.233,
+    "p": 0.7090158040449722
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.0,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 50,
+    "roi_pct": 2.8,
+    "wr": 0.3,
+    "avg_odds": 4.881,
+    "p": 0.9084153377812729
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.6,
+   "odds_col": "open_odds",
+   "test_8035": {
+    "n": 49,
+    "roi_pct": 8.73,
+    "wr": 0.2857,
+    "avg_odds": 5.308,
+    "p": 0.7422871175841727
+   },
+   "pooled_new": null
+  },
+  {
+   "thr": 0.05,
+   "odds_min": 1.6,
+   "odds_col": "close_odds",
+   "test_8035": {
+    "n": 49,
+    "roi_pct": 1.84,
+    "wr": 0.2857,
+    "avg_odds": 4.95,
+    "p": 0.9410175897631545
+   },
+   "pooled_new": null
+  }
+ ],
+ "clv_8035_test": {
+  "n": 363,
+  "mean_clv_pct": 3.04,
+  "median_clv_pct": 2.33
+ },
+ "clv_newleagues": {
+  "n": 0,
+  "mean_clv_pct": NaN,
+  "median_clv_pct": NaN
+ }
+}

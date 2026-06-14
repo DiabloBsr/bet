@@ -1,0 +1,2535 @@
+{
+ "day_start_utc": "2026-06-12 06:00:00",
+ "competition": "InstantLeague-8035",
+ "n_matches_today": 1780,
+ "families": {
+  "TIER1_approx": {
+   "n": 194,
+   "wins": 155,
+   "wr": 0.799,
+   "staked": 194,
+   "returned": 188.74,
+   "pnl": -5.26,
+   "roi": -0.0271,
+   "z": -0.77,
+   "am": {
+    "n": 116,
+    "wins": 95,
+    "wr": 0.819,
+    "staked": 116,
+    "returned": 115.74,
+    "pnl": -0.26,
+    "roi": -0.0022,
+    "z": -0.05
+   },
+   "pm": {
+    "n": 78,
+    "wins": 60,
+    "wr": 0.7692,
+    "staked": 78,
+    "returned": 73.0,
+    "pnl": -5.0,
+    "roi": -0.0641,
+    "z": -1.09
+   }
+  },
+  "E2": {
+   "n": 82,
+   "wins": 66,
+   "wr": 0.8049,
+   "staked": 82,
+   "returned": 76.81,
+   "pnl": -5.19,
+   "roi": -0.0633,
+   "z": -1.23,
+   "am": {
+    "n": 47,
+    "wins": 38,
+    "wr": 0.8085,
+    "staked": 47,
+    "returned": 44.15,
+    "pnl": -2.85,
+    "roi": -0.0606,
+    "z": -0.9
+   },
+   "pm": {
+    "n": 35,
+    "wins": 28,
+    "wr": 0.8,
+    "staked": 35,
+    "returned": 32.66,
+    "pnl": -2.34,
+    "roi": -0.0669,
+    "z": -0.83
+   }
+  },
+  "E1": {
+   "n": 414,
+   "wins": 325,
+   "wr": 0.785,
+   "staked": 414,
+   "returned": 450.11,
+   "pnl": 36.11,
+   "roi": 0.0872,
+   "z": 3.09,
+   "no_cote_market_absent": 0,
+   "unsettled_goals_json": 18,
+   "am": {
+    "n": 238,
+    "wins": 189,
+    "wr": 0.7941,
+    "staked": 238,
+    "returned": 260.65,
+    "pnl": 22.65,
+    "roi": 0.0952,
+    "z": 2.61
+   },
+   "pm": {
+    "n": 176,
+    "wins": 136,
+    "wr": 0.7727,
+    "staked": 176,
+    "returned": 189.46,
+    "pnl": 13.46,
+    "roi": 0.0765,
+    "z": 1.72
+   }
+  },
+  "BTTS_NON": {
+   "n": 169,
+   "wins": 81,
+   "wr": 0.4793,
+   "staked": 169,
+   "returned": 148.84,
+   "pnl": -20.16,
+   "roi": -0.1193,
+   "z": -1.67,
+   "no_cote_market_absent": 0,
+   "am": {
+    "n": 101,
+    "wins": 46,
+    "wr": 0.4554,
+    "staked": 101,
+    "returned": 84.33,
+    "pnl": -16.67,
+    "roi": -0.165,
+    "z": -1.79
+   },
+   "pm": {
+    "n": 68,
+    "wins": 35,
+    "wr": 0.5147,
+    "staked": 68,
+    "returned": 64.51,
+    "pnl": -3.49,
+    "roi": -0.0513,
+    "z": -0.45
+   }
+  },
+  "COMBO": {
+   "n": 146,
+   "wins": 15,
+   "wr": 0.1027,
+   "staked": 146,
+   "returned": 146.88,
+   "pnl": 0.88,
+   "roi": 0.006,
+   "z": 0.02,
+   "n_matches": 73,
+   "lines_skipped_cote100": 0,
+   "lines_market_absent": 0
+  },
+  "SWEET": {
+   "n": 117,
+   "wins": 18,
+   "wr": 0.1538,
+   "staked": 117,
+   "returned": 185.3,
+   "pnl": 68.3,
+   "roi": 0.5838,
+   "z": 1.53,
+   "n_matches": 117,
+   "lines_skipped_cote100": 0,
+   "lines_market_absent": 0
+  }
+ },
+ "expected_refs": {
+  "TIER1_approx": "WR attendu ~77-80% (implied 1/1.30=76.9% + edge favori), ROI attendu ~0 a +2%",
+  "E1": "WR attendu ~75%, ROI +6.8% full / +2.4-4.3% OOS",
+  "E2": "WR attendu ~87-90%, ROI +5.45% OOS",
+  "BTTS_NON": "proxy home_crush, pas de ref calibree directe",
+  "COMBO": "combo historique >=55% (n=8-12, risque overfit)",
+  "SWEET": "rate historique 37-62% (n=8-12, risque overfit)"
+ },
+ "combo_matches": [
+  {
+   "eid": 24010,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "35",
+   "final": "0-0",
+   "lines": [
+    [
+     "1-0",
+     13.29,
+     false
+    ],
+    [
+     "3-1",
+     10.65,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 24016,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "35",
+   "final": "0-1",
+   "lines": [
+    [
+     "1-2",
+     7.72,
+     false
+    ],
+    [
+     "0-1",
+     11.82,
+     true
+    ]
+   ]
+  },
+  {
+   "eid": 25550,
+   "pair": "Liverpool v London Reds",
+   "rnd": "11",
+   "final": "2-2",
+   "lines": [
+    [
+     "2-0",
+     14.29,
+     false
+    ],
+    [
+     "1-1",
+     6.85,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 26230,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "15",
+   "final": "2-3",
+   "lines": [
+    [
+     "1-0",
+     13.95,
+     false
+    ],
+    [
+     "3-1",
+     10.95,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 26546,
+   "pair": "Bournemouth v Brentford",
+   "rnd": "16",
+   "final": "0-0",
+   "lines": [
+    [
+     "1-1",
+     6.4,
+     false
+    ],
+    [
+     "3-1",
+     23.23,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 26988,
+   "pair": "West Ham v A. Villa",
+   "rnd": "21",
+   "final": "1-3",
+   "lines": [
+    [
+     "1-1",
+     7.27,
+     false
+    ],
+    [
+     "2-0",
+     15.28,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 27279,
+   "pair": "West Ham v A. Villa",
+   "rnd": "21",
+   "final": "1-3",
+   "lines": [
+    [
+     "1-1",
+     7.27,
+     false
+    ],
+    [
+     "2-0",
+     15.28,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 27929,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "27",
+   "final": "3-0",
+   "lines": [
+    [
+     "2-1",
+     7.76,
+     false
+    ],
+    [
+     "3-1",
+     12.08,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 29333,
+   "pair": "West Ham v A. Villa",
+   "rnd": "1",
+   "final": "3-2",
+   "lines": [
+    [
+     "1-1",
+     7.11,
+     false
+    ],
+    [
+     "2-0",
+     14.77,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 29529,
+   "pair": "West Ham v A. Villa",
+   "rnd": "1",
+   "final": "3-2",
+   "lines": [
+    [
+     "1-1",
+     7.11,
+     false
+    ],
+    [
+     "2-0",
+     14.77,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 29677,
+   "pair": "Newcastle v West Ham",
+   "rnd": "2",
+   "final": "5-0",
+   "lines": [
+    [
+     "3-0",
+     8.39,
+     false
+    ],
+    [
+     "2-0",
+     8.98,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 30032,
+   "pair": "A. Villa v C. Palace",
+   "rnd": "5",
+   "final": "3-1",
+   "lines": [
+    [
+     "2-0",
+     9.82,
+     false
+    ],
+    [
+     "1-1",
+     8.08,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 31546,
+   "pair": "Bournemouth v Brentford",
+   "rnd": "18",
+   "final": "1-1",
+   "lines": [
+    [
+     "1-1",
+     6.43,
+     true
+    ],
+    [
+     "3-1",
+     22.4,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 31866,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "20",
+   "final": "1-0",
+   "lines": [
+    [
+     "1-2",
+     7.79,
+     false
+    ],
+    [
+     "0-1",
+     11.52,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 31930,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "21",
+   "final": "1-1",
+   "lines": [
+    [
+     "2-1",
+     9.48,
+     false
+    ],
+    [
+     "1-1",
+     6.84,
+     true
+    ]
+   ]
+  },
+  {
+   "eid": 32232,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "24",
+   "final": "0-1",
+   "lines": [
+    [
+     "1-0",
+     10.64,
+     false
+    ],
+    [
+     "1-2",
+     17.05,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 32239,
+   "pair": "Burnley v Manchester Blue",
+   "rnd": "24",
+   "final": "1-2",
+   "lines": [
+    [
+     "1-2",
+     8.08,
+     true
+    ],
+    [
+     "0-1",
+     8.46,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 32625,
+   "pair": "Leeds v Brentford",
+   "rnd": "27",
+   "final": "0-1",
+   "lines": [
+    [
+     "1-2",
+     7.74,
+     false
+    ],
+    [
+     "0-3",
+     10.8,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 33399,
+   "pair": "Liverpool v London Reds",
+   "rnd": "33",
+   "final": "1-1",
+   "lines": [
+    [
+     "2-0",
+     13.51,
+     false
+    ],
+    [
+     "1-1",
+     6.68,
+     true
+    ]
+   ]
+  },
+  {
+   "eid": 34337,
+   "pair": "Burnley v Liverpool",
+   "rnd": "3",
+   "final": "2-3",
+   "lines": [
+    [
+     "0-2",
+     9.69,
+     false
+    ],
+    [
+     "0-1",
+     11.12,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 34345,
+   "pair": "C. Palace v Spurs",
+   "rnd": "3",
+   "final": "3-1",
+   "lines": [
+    [
+     "2-1",
+     8.7,
+     false
+    ],
+    [
+     "3-1",
+     14.42,
+     true
+    ]
+   ]
+  },
+  {
+   "eid": 34859,
+   "pair": "Liverpool v London Reds",
+   "rnd": "6",
+   "final": "3-0",
+   "lines": [
+    [
+     "2-0",
+     13.74,
+     false
+    ],
+    [
+     "1-1",
+     6.83,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 35571,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "10",
+   "final": "0-4",
+   "lines": [
+    [
+     "1-2",
+     7.77,
+     false
+    ],
+    [
+     "0-1",
+     11.83,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 35929,
+   "pair": "Leeds v Brentford",
+   "rnd": "12",
+   "final": "1-3",
+   "lines": [
+    [
+     "1-2",
+     7.74,
+     false
+    ],
+    [
+     "0-3",
+     10.82,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 36560,
+   "pair": "Bournemouth v Brentford",
+   "rnd": "18",
+   "final": "2-1",
+   "lines": [
+    [
+     "1-1",
+     6.37,
+     false
+    ],
+    [
+     "3-1",
+     23.53,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 36614,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "20",
+   "final": "0-0",
+   "lines": [
+    [
+     "2-1",
+     9.29,
+     false
+    ],
+    [
+     "1-1",
+     6.88,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 37705,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "28",
+   "final": "0-2",
+   "lines": [
+    [
+     "1-0",
+     13.63,
+     false
+    ],
+    [
+     "3-1",
+     10.85,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 38361,
+   "pair": "Bournemouth v Manchester Blue",
+   "rnd": "33",
+   "final": "2-2",
+   "lines": [
+    [
+     "1-1",
+     7.16,
+     false
+    ],
+    [
+     "0-3",
+     13.43,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 39720,
+   "pair": "Burnley v Liverpool",
+   "rnd": "5",
+   "final": "0-3",
+   "lines": [
+    [
+     "0-2",
+     10.03,
+     false
+    ],
+    [
+     "0-1",
+     11.8,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41141,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "17",
+   "final": "2-1",
+   "lines": [
+    [
+     "2-1",
+     8.99,
+     true
+    ],
+    [
+     "1-1",
+     6.75,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41142,
+   "pair": "C. Palace v Spurs",
+   "rnd": "17",
+   "final": "0-3",
+   "lines": [
+    [
+     "2-1",
+     8.72,
+     false
+    ],
+    [
+     "3-1",
+     14.69,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41149,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "17",
+   "final": "4-0",
+   "lines": [
+    [
+     "2-1",
+     7.85,
+     false
+    ],
+    [
+     "3-1",
+     12.79,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41201,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "17",
+   "final": "2-1",
+   "lines": [
+    [
+     "2-1",
+     8.99,
+     true
+    ],
+    [
+     "1-1",
+     6.75,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41202,
+   "pair": "C. Palace v Spurs",
+   "rnd": "17",
+   "final": "0-3",
+   "lines": [
+    [
+     "2-1",
+     8.72,
+     false
+    ],
+    [
+     "3-1",
+     14.69,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41209,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "17",
+   "final": "4-0",
+   "lines": [
+    [
+     "2-1",
+     7.85,
+     false
+    ],
+    [
+     "3-1",
+     12.79,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41509,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "20",
+   "final": "1-0",
+   "lines": [
+    [
+     "1-2",
+     7.75,
+     false
+    ],
+    [
+     "0-1",
+     11.72,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 41830,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "20",
+   "final": "1-0",
+   "lines": [
+    [
+     "1-2",
+     7.75,
+     false
+    ],
+    [
+     "0-1",
+     11.72,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 42612,
+   "pair": "West Ham v A. Villa",
+   "rnd": "26",
+   "final": "1-2",
+   "lines": [
+    [
+     "1-1",
+     7.16,
+     false
+    ],
+    [
+     "2-0",
+     13.89,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 42706,
+   "pair": "Liverpool v London Reds",
+   "rnd": "28",
+   "final": "1-0",
+   "lines": [
+    [
+     "2-0",
+     14.04,
+     false
+    ],
+    [
+     "1-1",
+     6.81,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 42713,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "29",
+   "final": "3-0",
+   "lines": [
+    [
+     "1-0",
+     13.2,
+     false
+    ],
+    [
+     "3-1",
+     10.98,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 42959,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "29",
+   "final": "3-0",
+   "lines": [
+    [
+     "1-0",
+     13.2,
+     false
+    ],
+    [
+     "3-1",
+     10.98,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 44385,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "2",
+   "final": "1-0",
+   "lines": [
+    [
+     "1-0",
+     13.33,
+     true
+    ],
+    [
+     "3-1",
+     11.22,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 44650,
+   "pair": "Newcastle v West Ham",
+   "rnd": "5",
+   "final": "5-0",
+   "lines": [
+    [
+     "3-0",
+     8.34,
+     false
+    ],
+    [
+     "2-0",
+     9.06,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 46016,
+   "pair": "Burnley v Liverpool",
+   "rnd": "16",
+   "final": "1-2",
+   "lines": [
+    [
+     "0-2",
+     10.08,
+     false
+    ],
+    [
+     "0-1",
+     11.61,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 46021,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "16",
+   "final": "1-2",
+   "lines": [
+    [
+     "1-2",
+     7.73,
+     true
+    ],
+    [
+     "0-1",
+     11.45,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 46362,
+   "pair": "A. Villa v C. Palace",
+   "rnd": "20",
+   "final": "2-0",
+   "lines": [
+    [
+     "2-0",
+     9.98,
+     true
+    ],
+    [
+     "1-1",
+     8.25,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 47630,
+   "pair": "West Ham v A. Villa",
+   "rnd": "28",
+   "final": "1-2",
+   "lines": [
+    [
+     "1-1",
+     7.04,
+     false
+    ],
+    [
+     "2-0",
+     14.05,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 48026,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "31",
+   "final": "2-1",
+   "lines": [
+    [
+     "1-0",
+     10.26,
+     false
+    ],
+    [
+     "1-2",
+     16.47,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 48985,
+   "pair": "Burnley v Manchester Blue",
+   "rnd": "1",
+   "final": "1-3",
+   "lines": [
+    [
+     "1-2",
+     8.01,
+     false
+    ],
+    [
+     "0-1",
+     8.59,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 49132,
+   "pair": "Burnley v Manchester Blue",
+   "rnd": "1",
+   "final": "1-3",
+   "lines": [
+    [
+     "1-2",
+     8.01,
+     false
+    ],
+    [
+     "0-1",
+     8.59,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 49164,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "2",
+   "final": "3-2",
+   "lines": [
+    [
+     "2-1",
+     9.23,
+     false
+    ],
+    [
+     "1-1",
+     6.89,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 51241,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "19",
+   "final": "5-1",
+   "lines": [
+    [
+     "2-1",
+     7.8,
+     false
+    ],
+    [
+     "3-1",
+     12.82,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 51622,
+   "pair": "Liverpool v London Reds",
+   "rnd": "22",
+   "final": "0-2",
+   "lines": [
+    [
+     "2-0",
+     13.95,
+     false
+    ],
+    [
+     "1-1",
+     6.8,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 51873,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "23",
+   "final": "1-1",
+   "lines": [
+    [
+     "1-2",
+     7.73,
+     false
+    ],
+    [
+     "0-1",
+     11.48,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 52322,
+   "pair": "Manchester Blue v Everton",
+   "rnd": "27",
+   "final": "3-2",
+   "lines": [
+    [
+     "3-0",
+     7.04,
+     false
+    ],
+    [
+     "2-1",
+     8.87,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 52691,
+   "pair": "Newcastle v West Ham",
+   "rnd": "30",
+   "final": "5-0",
+   "lines": [
+    [
+     "3-0",
+     8.2,
+     false
+    ],
+    [
+     "2-0",
+     9.25,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 52697,
+   "pair": "Burnley v Liverpool",
+   "rnd": "30",
+   "final": "0-5",
+   "lines": [
+    [
+     "0-2",
+     9.81,
+     false
+    ],
+    [
+     "0-1",
+     11.69,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 53063,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "33",
+   "final": "3-1",
+   "lines": [
+    [
+     "1-0",
+     11.05,
+     false
+    ],
+    [
+     "1-2",
+     17.18,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 55620,
+   "pair": "C. Palace v Spurs",
+   "rnd": "18",
+   "final": "1-0",
+   "lines": [
+    [
+     "2-1",
+     8.62,
+     false
+    ],
+    [
+     "3-1",
+     14.4,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 56058,
+   "pair": "Burnley v Liverpool",
+   "rnd": "22",
+   "final": "0-2",
+   "lines": [
+    [
+     "0-2",
+     10.03,
+     true
+    ],
+    [
+     "0-1",
+     11.33,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 56388,
+   "pair": "Manchester Blue v Everton",
+   "rnd": "24",
+   "final": "4-0",
+   "lines": [
+    [
+     "3-0",
+     7.27,
+     false
+    ],
+    [
+     "2-1",
+     8.73,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 56494,
+   "pair": "Newcastle v West Ham",
+   "rnd": "25",
+   "final": "2-1",
+   "lines": [
+    [
+     "3-0",
+     8.39,
+     false
+    ],
+    [
+     "2-0",
+     9.1,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 56500,
+   "pair": "Bournemouth v Manchester Blue",
+   "rnd": "25",
+   "final": "1-5",
+   "lines": [
+    [
+     "1-1",
+     7.21,
+     false
+    ],
+    [
+     "0-3",
+     13.12,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 56848,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "28",
+   "final": "3-0",
+   "lines": [
+    [
+     "2-1",
+     7.79,
+     false
+    ],
+    [
+     "3-1",
+     12.41,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 56856,
+   "pair": "Leeds v Brentford",
+   "rnd": "28",
+   "final": "1-1",
+   "lines": [
+    [
+     "1-2",
+     7.76,
+     false
+    ],
+    [
+     "0-3",
+     10.66,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 57251,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "31",
+   "final": "1-2",
+   "lines": [
+    [
+     "1-0",
+     11.0,
+     false
+    ],
+    [
+     "1-2",
+     18.02,
+     true
+    ]
+   ]
+  },
+  {
+   "eid": 57587,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "33",
+   "final": "2-1",
+   "lines": [
+    [
+     "1-0",
+     13.3,
+     false
+    ],
+    [
+     "3-1",
+     10.92,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 58323,
+   "pair": "Burnley v Liverpool",
+   "rnd": "1",
+   "final": "1-2",
+   "lines": [
+    [
+     "0-2",
+     9.7,
+     false
+    ],
+    [
+     "0-1",
+     11.67,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 58489,
+   "pair": "Burnley v Liverpool",
+   "rnd": "1",
+   "final": "1-2",
+   "lines": [
+    [
+     "0-2",
+     9.7,
+     false
+    ],
+    [
+     "0-1",
+     11.67,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 58605,
+   "pair": "Liverpool v London Reds",
+   "rnd": "2",
+   "final": "1-1",
+   "lines": [
+    [
+     "2-0",
+     13.65,
+     false
+    ],
+    [
+     "1-1",
+     6.9,
+     true
+    ]
+   ]
+  },
+  {
+   "eid": 58978,
+   "pair": "C. Palace v Spurs",
+   "rnd": "7",
+   "final": "2-1",
+   "lines": [
+    [
+     "2-1",
+     8.64,
+     true
+    ],
+    [
+     "3-1",
+     14.13,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 59457,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "11",
+   "final": "2-0",
+   "lines": [
+    [
+     "1-0",
+     13.02,
+     false
+    ],
+    [
+     "3-1",
+     10.86,
+     false
+    ]
+   ]
+  },
+  {
+   "eid": 59833,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "14",
+   "final": "2-0",
+   "lines": [
+    [
+     "1-2",
+     7.73,
+     false
+    ],
+    [
+     "0-1",
+     11.43,
+     false
+    ]
+   ]
+  }
+ ],
+ "sweet_matches": [
+  {
+   "eid": 22715,
+   "pair": "Newcastle v Manchester Blue",
+   "rnd": "26",
+   "bet": "0-0",
+   "cote": 14.61,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 22719,
+   "pair": "Bournemouth v Everton",
+   "rnd": "26",
+   "bet": "1-1",
+   "cote": 6.27,
+   "final": "0-1",
+   "win": false
+  },
+  {
+   "eid": 22721,
+   "pair": "Burnley v Wolverhampton",
+   "rnd": "26",
+   "bet": "1-0",
+   "cote": 10.77,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 22859,
+   "pair": "A. Villa v Liverpool",
+   "rnd": "29",
+   "bet": "1-2",
+   "cote": 10.19,
+   "final": "0-5",
+   "win": false
+  },
+  {
+   "eid": 24010,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "35",
+   "bet": "1-0",
+   "cote": 13.29,
+   "final": "0-0",
+   "win": false
+  },
+  {
+   "eid": 24016,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "35",
+   "bet": "1-2",
+   "cote": 7.72,
+   "final": "0-1",
+   "win": false
+  },
+  {
+   "eid": 25550,
+   "pair": "Liverpool v London Reds",
+   "rnd": "11",
+   "bet": "2-0",
+   "cote": 14.29,
+   "final": "2-2",
+   "win": false
+  },
+  {
+   "eid": 25969,
+   "pair": "C. Palace v Burnley",
+   "rnd": "12",
+   "bet": "4-0",
+   "cote": 21.8,
+   "final": "4-0",
+   "win": true
+  },
+  {
+   "eid": 26085,
+   "pair": "Everton v Bournemouth",
+   "rnd": "13",
+   "bet": "1-1",
+   "cote": 6.96,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 26230,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "15",
+   "bet": "1-0",
+   "cote": 13.95,
+   "final": "2-3",
+   "win": false
+  },
+  {
+   "eid": 26546,
+   "pair": "Bournemouth v Brentford",
+   "rnd": "16",
+   "bet": "1-1",
+   "cote": 6.4,
+   "final": "0-0",
+   "win": false
+  },
+  {
+   "eid": 26549,
+   "pair": "N. Forest v Everton",
+   "rnd": "16",
+   "bet": "3-0",
+   "cote": 15.29,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 26988,
+   "pair": "West Ham v A. Villa",
+   "rnd": "21",
+   "bet": "1-1",
+   "cote": 7.27,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 27279,
+   "pair": "West Ham v A. Villa",
+   "rnd": "21",
+   "bet": "1-1",
+   "cote": 7.27,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 27929,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "27",
+   "bet": "2-1",
+   "cote": 7.76,
+   "final": "3-0",
+   "win": false
+  },
+  {
+   "eid": 27980,
+   "pair": "A. Villa v Fulham",
+   "rnd": "29",
+   "bet": "3-1",
+   "cote": 11.34,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 28319,
+   "pair": "Bournemouth v Everton",
+   "rnd": "32",
+   "bet": "1-1",
+   "cote": 6.33,
+   "final": "0-1",
+   "win": false
+  },
+  {
+   "eid": 29333,
+   "pair": "West Ham v A. Villa",
+   "rnd": "1",
+   "bet": "1-1",
+   "cote": 7.11,
+   "final": "3-2",
+   "win": false
+  },
+  {
+   "eid": 29529,
+   "pair": "West Ham v A. Villa",
+   "rnd": "1",
+   "bet": "1-1",
+   "cote": 7.11,
+   "final": "3-2",
+   "win": false
+  },
+  {
+   "eid": 29677,
+   "pair": "Newcastle v West Ham",
+   "rnd": "2",
+   "bet": "3-0",
+   "cote": 8.39,
+   "final": "5-0",
+   "win": false
+  },
+  {
+   "eid": 30032,
+   "pair": "A. Villa v C. Palace",
+   "rnd": "5",
+   "bet": "2-0",
+   "cote": 9.82,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 30036,
+   "pair": "N. Forest v Everton",
+   "rnd": "5",
+   "bet": "3-0",
+   "cote": 15.36,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 30733,
+   "pair": "Newcastle v Manchester Blue",
+   "rnd": "11",
+   "bet": "0-0",
+   "cote": 14.68,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 31487,
+   "pair": "Everton v Bournemouth",
+   "rnd": "17",
+   "bet": "1-1",
+   "cote": 7.01,
+   "final": "1-1",
+   "win": true
+  },
+  {
+   "eid": 31544,
+   "pair": "C. Palace v Manchester Red",
+   "rnd": "18",
+   "bet": "1-2",
+   "cote": 10.97,
+   "final": "3-0",
+   "win": false
+  },
+  {
+   "eid": 31546,
+   "pair": "Bournemouth v Brentford",
+   "rnd": "18",
+   "bet": "1-1",
+   "cote": 6.43,
+   "final": "1-1",
+   "win": true
+  },
+  {
+   "eid": 31866,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "20",
+   "bet": "1-2",
+   "cote": 7.79,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 31930,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "21",
+   "bet": "2-1",
+   "cote": 9.48,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 32232,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "24",
+   "bet": "1-0",
+   "cote": 10.64,
+   "final": "0-1",
+   "win": false
+  },
+  {
+   "eid": 32239,
+   "pair": "Burnley v Manchester Blue",
+   "rnd": "24",
+   "bet": "1-2",
+   "cote": 8.08,
+   "final": "1-2",
+   "win": true
+  },
+  {
+   "eid": 32625,
+   "pair": "Leeds v Brentford",
+   "rnd": "27",
+   "bet": "1-2",
+   "cote": 7.74,
+   "final": "0-1",
+   "win": false
+  },
+  {
+   "eid": 33336,
+   "pair": "A. Villa v Fulham",
+   "rnd": "32",
+   "bet": "3-1",
+   "cote": 11.56,
+   "final": "4-2",
+   "win": false
+  },
+  {
+   "eid": 33399,
+   "pair": "Liverpool v London Reds",
+   "rnd": "33",
+   "bet": "2-0",
+   "cote": 13.51,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 34249,
+   "pair": "N. Forest v Everton",
+   "rnd": "1",
+   "bet": "3-0",
+   "cote": 15.13,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 34337,
+   "pair": "Burnley v Liverpool",
+   "rnd": "3",
+   "bet": "0-2",
+   "cote": 9.69,
+   "final": "2-3",
+   "win": false
+  },
+  {
+   "eid": 34345,
+   "pair": "C. Palace v Spurs",
+   "rnd": "3",
+   "bet": "2-1",
+   "cote": 8.7,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 34859,
+   "pair": "Liverpool v London Reds",
+   "rnd": "6",
+   "bet": "2-0",
+   "cote": 13.74,
+   "final": "3-0",
+   "win": false
+  },
+  {
+   "eid": 34861,
+   "pair": "Bournemouth v Everton",
+   "rnd": "6",
+   "bet": "1-1",
+   "cote": 6.33,
+   "final": "0-0",
+   "win": false
+  },
+  {
+   "eid": 35571,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "10",
+   "bet": "1-2",
+   "cote": 7.77,
+   "final": "0-4",
+   "win": false
+  },
+  {
+   "eid": 35575,
+   "pair": "Burnley v Wolverhampton",
+   "rnd": "10",
+   "bet": "1-0",
+   "cote": 11.11,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 35929,
+   "pair": "Leeds v Brentford",
+   "rnd": "12",
+   "bet": "1-2",
+   "cote": 7.74,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 35932,
+   "pair": "C. Palace v Manchester Red",
+   "rnd": "12",
+   "bet": "1-2",
+   "cote": 11.26,
+   "final": "2-3",
+   "win": false
+  },
+  {
+   "eid": 36242,
+   "pair": "C. Palace v Burnley",
+   "rnd": "15",
+   "bet": "4-0",
+   "cote": 22.81,
+   "final": "2-0",
+   "win": false
+  },
+  {
+   "eid": 36560,
+   "pair": "Bournemouth v Brentford",
+   "rnd": "18",
+   "bet": "1-1",
+   "cote": 6.37,
+   "final": "2-1",
+   "win": false
+  },
+  {
+   "eid": 36614,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "20",
+   "bet": "2-1",
+   "cote": 9.29,
+   "final": "0-0",
+   "win": false
+  },
+  {
+   "eid": 37376,
+   "pair": "Everton v Bournemouth",
+   "rnd": "25",
+   "bet": "1-1",
+   "cote": 6.97,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 37641,
+   "pair": "A. Villa v Liverpool",
+   "rnd": "27",
+   "bet": "1-2",
+   "cote": 9.87,
+   "final": "1-2",
+   "win": true
+  },
+  {
+   "eid": 37705,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "28",
+   "bet": "1-0",
+   "cote": 13.63,
+   "final": "0-2",
+   "win": false
+  },
+  {
+   "eid": 37986,
+   "pair": "Newcastle v Manchester Blue",
+   "rnd": "30",
+   "bet": "0-0",
+   "cote": 14.66,
+   "final": "2-2",
+   "win": false
+  },
+  {
+   "eid": 38361,
+   "pair": "Bournemouth v Manchester Blue",
+   "rnd": "33",
+   "bet": "1-1",
+   "cote": 7.16,
+   "final": "2-2",
+   "win": false
+  },
+  {
+   "eid": 39400,
+   "pair": "Newcastle v Manchester Blue",
+   "rnd": "2",
+   "bet": "0-0",
+   "cote": 14.86,
+   "final": "3-2",
+   "win": false
+  },
+  {
+   "eid": 39423,
+   "pair": "A. Villa v Fulham",
+   "rnd": "3",
+   "bet": "3-1",
+   "cote": 11.61,
+   "final": "3-1",
+   "win": true
+  },
+  {
+   "eid": 39720,
+   "pair": "Burnley v Liverpool",
+   "rnd": "5",
+   "bet": "0-2",
+   "cote": 10.03,
+   "final": "0-3",
+   "win": false
+  },
+  {
+   "eid": 39727,
+   "pair": "Everton v Bournemouth",
+   "rnd": "5",
+   "bet": "1-1",
+   "cote": 7.03,
+   "final": "0-3",
+   "win": false
+  },
+  {
+   "eid": 40068,
+   "pair": "C. Palace v Burnley",
+   "rnd": "8",
+   "bet": "4-0",
+   "cote": 22.92,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 40128,
+   "pair": "C. Palace v Burnley",
+   "rnd": "8",
+   "bet": "4-0",
+   "cote": 22.92,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 41141,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "17",
+   "bet": "2-1",
+   "cote": 8.99,
+   "final": "2-1",
+   "win": true
+  },
+  {
+   "eid": 41142,
+   "pair": "C. Palace v Spurs",
+   "rnd": "17",
+   "bet": "2-1",
+   "cote": 8.72,
+   "final": "0-3",
+   "win": false
+  },
+  {
+   "eid": 41149,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "17",
+   "bet": "2-1",
+   "cote": 7.85,
+   "final": "4-0",
+   "win": false
+  },
+  {
+   "eid": 41201,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "17",
+   "bet": "2-1",
+   "cote": 8.99,
+   "final": "2-1",
+   "win": true
+  },
+  {
+   "eid": 41202,
+   "pair": "C. Palace v Spurs",
+   "rnd": "17",
+   "bet": "2-1",
+   "cote": 8.72,
+   "final": "0-3",
+   "win": false
+  },
+  {
+   "eid": 41209,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "17",
+   "bet": "2-1",
+   "cote": 7.85,
+   "final": "4-0",
+   "win": false
+  },
+  {
+   "eid": 41509,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "20",
+   "bet": "1-2",
+   "cote": 7.75,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 41830,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "20",
+   "bet": "1-2",
+   "cote": 7.75,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 42287,
+   "pair": "Burnley v Wolverhampton",
+   "rnd": "25",
+   "bet": "1-0",
+   "cote": 11.17,
+   "final": "1-0",
+   "win": true
+  },
+  {
+   "eid": 42612,
+   "pair": "West Ham v A. Villa",
+   "rnd": "26",
+   "bet": "1-1",
+   "cote": 7.16,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 42706,
+   "pair": "Liverpool v London Reds",
+   "rnd": "28",
+   "bet": "2-0",
+   "cote": 14.04,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 42713,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "29",
+   "bet": "1-0",
+   "cote": 13.2,
+   "final": "3-0",
+   "win": false
+  },
+  {
+   "eid": 42959,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "29",
+   "bet": "1-0",
+   "cote": 13.2,
+   "final": "3-0",
+   "win": false
+  },
+  {
+   "eid": 44385,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "2",
+   "bet": "1-0",
+   "cote": 13.33,
+   "final": "1-0",
+   "win": true
+  },
+  {
+   "eid": 44426,
+   "pair": "C. Palace v Manchester Red",
+   "rnd": "3",
+   "bet": "1-2",
+   "cote": 11.21,
+   "final": "0-1",
+   "win": false
+  },
+  {
+   "eid": 44650,
+   "pair": "Newcastle v West Ham",
+   "rnd": "5",
+   "bet": "3-0",
+   "cote": 8.34,
+   "final": "5-0",
+   "win": false
+  },
+  {
+   "eid": 46016,
+   "pair": "Burnley v Liverpool",
+   "rnd": "16",
+   "bet": "0-2",
+   "cote": 10.08,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 46019,
+   "pair": "Everton v Bournemouth",
+   "rnd": "16",
+   "bet": "1-1",
+   "cote": 7.08,
+   "final": "2-0",
+   "win": false
+  },
+  {
+   "eid": 46021,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "16",
+   "bet": "1-2",
+   "cote": 7.73,
+   "final": "1-2",
+   "win": true
+  },
+  {
+   "eid": 46362,
+   "pair": "A. Villa v C. Palace",
+   "rnd": "20",
+   "bet": "2-0",
+   "cote": 9.98,
+   "final": "2-0",
+   "win": true
+  },
+  {
+   "eid": 47624,
+   "pair": "N. Forest v Everton",
+   "rnd": "28",
+   "bet": "3-0",
+   "cote": 15.52,
+   "final": "0-0",
+   "win": false
+  },
+  {
+   "eid": 47630,
+   "pair": "West Ham v A. Villa",
+   "rnd": "28",
+   "bet": "1-1",
+   "cote": 7.04,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 48026,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "31",
+   "bet": "1-0",
+   "cote": 10.26,
+   "final": "2-1",
+   "win": false
+  },
+  {
+   "eid": 48985,
+   "pair": "Burnley v Manchester Blue",
+   "rnd": "1",
+   "bet": "1-2",
+   "cote": 8.01,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 49132,
+   "pair": "Burnley v Manchester Blue",
+   "rnd": "1",
+   "bet": "1-2",
+   "cote": 8.01,
+   "final": "1-3",
+   "win": false
+  },
+  {
+   "eid": 49164,
+   "pair": "Wolverhampton v Fulham",
+   "rnd": "2",
+   "bet": "2-1",
+   "cote": 9.23,
+   "final": "3-2",
+   "win": false
+  },
+  {
+   "eid": 50864,
+   "pair": "Everton v Bournemouth",
+   "rnd": "15",
+   "bet": "1-1",
+   "cote": 7.07,
+   "final": "2-2",
+   "win": false
+  },
+  {
+   "eid": 50928,
+   "pair": "N. Forest v Everton",
+   "rnd": "16",
+   "bet": "3-0",
+   "cote": 15.71,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 51241,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "19",
+   "bet": "2-1",
+   "cote": 7.8,
+   "final": "5-1",
+   "win": false
+  },
+  {
+   "eid": 51244,
+   "pair": "A. Villa v Fulham",
+   "rnd": "19",
+   "bet": "3-1",
+   "cote": 11.03,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 51622,
+   "pair": "Liverpool v London Reds",
+   "rnd": "22",
+   "bet": "2-0",
+   "cote": 13.95,
+   "final": "0-2",
+   "win": false
+  },
+  {
+   "eid": 51873,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "23",
+   "bet": "1-2",
+   "cote": 7.73,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 52322,
+   "pair": "Manchester Blue v Everton",
+   "rnd": "27",
+   "bet": "3-0",
+   "cote": 7.04,
+   "final": "3-2",
+   "win": false
+  },
+  {
+   "eid": 52691,
+   "pair": "Newcastle v West Ham",
+   "rnd": "30",
+   "bet": "3-0",
+   "cote": 8.2,
+   "final": "5-0",
+   "win": false
+  },
+  {
+   "eid": 52697,
+   "pair": "Burnley v Liverpool",
+   "rnd": "30",
+   "bet": "0-2",
+   "cote": 9.81,
+   "final": "0-5",
+   "win": false
+  },
+  {
+   "eid": 52998,
+   "pair": "A. Villa v Liverpool",
+   "rnd": "32",
+   "bet": "1-2",
+   "cote": 10.19,
+   "final": "2-1",
+   "win": false
+  },
+  {
+   "eid": 53063,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "33",
+   "bet": "1-0",
+   "cote": 11.05,
+   "final": "3-1",
+   "win": false
+  },
+  {
+   "eid": 55299,
+   "pair": "A. Villa v Fulham",
+   "rnd": "16",
+   "bet": "3-1",
+   "cote": 11.26,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 55620,
+   "pair": "C. Palace v Spurs",
+   "rnd": "18",
+   "bet": "2-1",
+   "cote": 8.62,
+   "final": "1-0",
+   "win": false
+  },
+  {
+   "eid": 55624,
+   "pair": "A. Villa v Liverpool",
+   "rnd": "18",
+   "bet": "1-2",
+   "cote": 10.12,
+   "final": "2-1",
+   "win": false
+  },
+  {
+   "eid": 55844,
+   "pair": "Everton v Bournemouth",
+   "rnd": "19",
+   "bet": "1-1",
+   "cote": 6.94,
+   "final": "1-1",
+   "win": true
+  },
+  {
+   "eid": 56058,
+   "pair": "Burnley v Liverpool",
+   "rnd": "22",
+   "bet": "0-2",
+   "cote": 10.03,
+   "final": "0-2",
+   "win": true
+  },
+  {
+   "eid": 56388,
+   "pair": "Manchester Blue v Everton",
+   "rnd": "24",
+   "bet": "3-0",
+   "cote": 7.27,
+   "final": "4-0",
+   "win": false
+  },
+  {
+   "eid": 56494,
+   "pair": "Newcastle v West Ham",
+   "rnd": "25",
+   "bet": "3-0",
+   "cote": 8.39,
+   "final": "2-1",
+   "win": false
+  },
+  {
+   "eid": 56499,
+   "pair": "C. Palace v Burnley",
+   "rnd": "25",
+   "bet": "4-0",
+   "cote": 21.57,
+   "final": "4-0",
+   "win": true
+  },
+  {
+   "eid": 56500,
+   "pair": "Bournemouth v Manchester Blue",
+   "rnd": "25",
+   "bet": "1-1",
+   "cote": 7.21,
+   "final": "1-5",
+   "win": false
+  },
+  {
+   "eid": 56848,
+   "pair": "Brighton v Manchester Red",
+   "rnd": "28",
+   "bet": "2-1",
+   "cote": 7.79,
+   "final": "3-0",
+   "win": false
+  },
+  {
+   "eid": 56856,
+   "pair": "Leeds v Brentford",
+   "rnd": "28",
+   "bet": "1-2",
+   "cote": 7.76,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 57251,
+   "pair": "Manchester Red v Wolverhampton",
+   "rnd": "31",
+   "bet": "1-0",
+   "cote": 11.0,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 57253,
+   "pair": "N. Forest v Everton",
+   "rnd": "31",
+   "bet": "3-0",
+   "cote": 15.83,
+   "final": "0-0",
+   "win": false
+  },
+  {
+   "eid": 57587,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "33",
+   "bet": "1-0",
+   "cote": 13.3,
+   "final": "2-1",
+   "win": false
+  },
+  {
+   "eid": 57588,
+   "pair": "Burnley v Wolverhampton",
+   "rnd": "33",
+   "bet": "1-0",
+   "cote": 11.28,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 58323,
+   "pair": "Burnley v Liverpool",
+   "rnd": "1",
+   "bet": "0-2",
+   "cote": 9.7,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 58489,
+   "pair": "Burnley v Liverpool",
+   "rnd": "1",
+   "bet": "0-2",
+   "cote": 9.7,
+   "final": "1-2",
+   "win": false
+  },
+  {
+   "eid": 58605,
+   "pair": "Liverpool v London Reds",
+   "rnd": "2",
+   "bet": "2-0",
+   "cote": 13.65,
+   "final": "1-1",
+   "win": false
+  },
+  {
+   "eid": 58608,
+   "pair": "Everton v Bournemouth",
+   "rnd": "2",
+   "bet": "1-1",
+   "cote": 6.87,
+   "final": "1-1",
+   "win": true
+  },
+  {
+   "eid": 58978,
+   "pair": "C. Palace v Spurs",
+   "rnd": "7",
+   "bet": "2-1",
+   "cote": 8.64,
+   "final": "2-1",
+   "win": true
+  },
+  {
+   "eid": 59457,
+   "pair": "Manchester Red v Bournemouth",
+   "rnd": "11",
+   "bet": "1-0",
+   "cote": 13.02,
+   "final": "2-0",
+   "win": false
+  },
+  {
+   "eid": 59833,
+   "pair": "Fulham v Manchester Blue",
+   "rnd": "14",
+   "bet": "1-2",
+   "cote": 7.73,
+   "final": "2-0",
+   "win": false
+  },
+  {
+   "eid": 60664,
+   "pair": "Bournemouth v Everton",
+   "rnd": "21",
+   "bet": "1-1",
+   "cote": 6.26,
+   "final": "1-1",
+   "win": true
+  },
+  {
+   "eid": 61032,
+   "pair": "Burnley v Wolverhampton",
+   "rnd": "23",
+   "bet": "1-0",
+   "cote": 10.77,
+   "final": "0-2",
+   "win": false
+  }
+ ]
+}

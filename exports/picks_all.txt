@@ -1,0 +1,67 @@
+﻿=== V4 — n=2673 | H2H min=5 X>=30% | p_V3>=70% ===
+
+=== CATEGORIE A — ULTRA SAFE (V3 p >= 70%) ===
+Backtest : ~87% accuracy, ROI +5-6%
+
+  04:29:56  Manchester Blue    vs N. Forest          | pick=1 cote=1.17 p=77%  score=3-0  [dans 51s]
+  04:31:56  Liverpool          vs Burnley            | pick=1 cote=1.15 p=78%  score=3-0  [dans 171s]
+  04:33:56  Manchester Blue    vs West Ham           | pick=1 cote=1.21 p=76%  score=3-0  [dans 291s]
+  04:33:56  Liverpool          vs N. Forest          | pick=1 cote=1.19 p=77%  score=3-0  [dans 291s]
+  04:37:56  Liverpool          vs West Ham           | pick=1 cote=1.22 p=75%  score=2-0  [dans 531s]
+  04:39:56  Newcastle          vs Bournemouth        | pick=1 cote=1.34 p=70%  score=2-1  [dans 651s]
+  04:39:56  London Reds        vs Burnley            | pick=1 cote=1.19 p=76%  score=3-0  [dans 651s]
+  04:41:56  London Reds        vs West Ham           | pick=1 cote=1.26 p=73%  score=2-0  [dans 771s]
+  04:41:56  Manchester Blue    vs Bournemouth        | pick=1 cote=1.22 p=76%  score=3-0  [dans 771s]
+  04:43:56  Newcastle          vs Sunderland         | pick=1 cote=1.24 p=74%  score=3-0  [dans 891s]
+  04:43:56  Manchester Blue    vs Leeds              | pick=1 cote=1.11 p=82%  score=3-0  [dans 891s]
+  04:45:56  Sunderland         vs Manchester Blue    | pick=2 cote=1.15 p=79%  score=0-3  [dans 1011s]
+  04:45:56  Liverpool          vs Bournemouth        | pick=1 cote=1.23 p=76%  score=3-0  [dans 1011s]
+
+=== CATEGORIE B — X VALUE (H2H n>=5, X_rate >= 30%) ===
+Backtest : ~32% accuracy, ROI +7.5% (parier X seulement)
+
+  04:29:56  Manchester Blue    vs N. Forest          | parier X cote=7.61 | H2H n=6 X=33%  [dans 51s]
+           cotes 1X2 : 1.17/7.61/13.10  V3 dit : 1 (77%)
+  04:29:56  Burnley            vs Sunderland         | parier X cote=3.46 | H2H n=8 X=38%  [dans 51s]
+           cotes 1X2 : 2.39/3.46/2.84  V3 dit : 1 (40%)
+  04:29:56  Wolverhampton      vs Liverpool          | parier X cote=3.96 | H2H n=6 X=50%  [dans 51s]
+           cotes 1X2 : 3.85/3.96/1.82  V3 dit : 2 (53%)
+  04:31:56  West Ham           vs Newcastle          | parier X cote=3.90 | H2H n=7 X=43%  [dans 171s]
+           cotes 1X2 : 2.92/3.90/2.17  V3 dit : 2 (41%)
+  04:31:56  Everton            vs Bournemouth        | parier X cote=3.45 | H2H n=6 X=33%  [dans 171s]
+           cotes 1X2 : 2.17/3.45/3.22  V3 dit : 1 (44%)
+  04:33:56  Sunderland         vs Spurs              | parier X cote=5.49 | H2H n=7 X=43%  [dans 291s]
+           cotes 1X2 : 7.65/5.49/1.34  V3 dit : 2 (69%)
+  04:33:56  Fulham             vs Brentford          | parier X cote=3.61 | H2H n=7 X=43%  [dans 291s]
+           cotes 1X2 : 2.37/3.61/2.77  V3 dit : 1 (43%)
+  04:35:56  London Reds        vs Liverpool          | parier X cote=4.42 | H2H n=6 X=33%  [dans 411s]
+           cotes 1X2 : 1.70/4.42/4.08  V3 dit : 1 (54%)
+  04:35:56  N. Forest          vs Burnley            | parier X cote=4.44 | H2H n=7 X=43%  [dans 411s]
+           cotes 1X2 : 1.54/4.44/5.40  V3 dit : 1 (58%)
+  04:37:56  Wolverhampton      vs A. Villa           | parier X cote=3.40 | H2H n=9 X=56%  [dans 531s]
+           cotes 1X2 : 2.44/3.40/2.80  V3 dit : 2 (39%)
+  04:37:56  Burnley            vs Spurs              | parier X cote=3.90 | H2H n=5 X=40%  [dans 531s]
+           cotes 1X2 : 3.55/3.90/1.92  V3 dit : 2 (47%)
+  04:41:56  Sunderland         vs Fulham             | parier X cote=4.40 | H2H n=6 X=50%  [dans 771s]
+           cotes 1X2 : 6.77/4.40/1.46  V3 dit : 2 (63%)
+  04:43:56  A. Villa           vs London Reds        | parier X cote=3.64 | H2H n=8 X=38%  [dans 891s]
+           cotes 1X2 : 3.38/3.64/2.04  V3 dit : 2 (47%)
+  04:43:56  Brentford          vs N. Forest          | parier X cote=4.70 | H2H n=7 X=43%  [dans 891s]
+           cotes 1X2 : 1.55/4.70/4.91  V3 dit : 1 (59%)
+  04:43:56  Bournemouth        vs Wolverhampton      | parier X cote=3.61 | H2H n=7 X=57%  [dans 891s]
+           cotes 1X2 : 1.85/3.61/4.13  V3 dit : 1 (49%)
+  04:43:56  C. Palace          vs Everton            | parier X cote=3.38 | H2H n=7 X=43%  [dans 891s]
+           cotes 1X2 : 1.87/3.38/4.34  V3 dit : 1 (50%)
+  04:43:56  Manchester Red     vs Spurs              | parier X cote=3.99 | H2H n=6 X=33%  [dans 891s]
+           cotes 1X2 : 2.00/3.99/3.24  V3 dit : 1 (47%)
+  04:45:56  West Ham           vs A. Villa           | parier X cote=3.61 | H2H n=9 X=44%  [dans 1011s]
+           cotes 1X2 : 2.22/3.61/3.01  V3 dit : 1 (40%)
+  04:45:56  N. Forest          vs London Blues       | parier X cote=3.60 | H2H n=9 X=33%  [dans 1011s]
+           cotes 1X2 : 2.18/3.60/3.09  V3 dit : 1 (42%)
+  04:45:56  Spurs              vs Fulham             | parier X cote=4.03 | H2H n=6 X=50%  [dans 1011s]
+           cotes 1X2 : 1.93/4.03/3.40  V3 dit : 1 (49%)
+  04:45:56  Everton            vs Manchester Red     | parier X cote=3.13 | H2H n=6 X=33%  [dans 1011s]
+           cotes 1X2 : 2.31/3.13/3.26  V3 dit : 1 (39%)
+
+=== MATCHS NON-RECOMMANDES (skip) : 57 ===
+  Trop incertains, ne pas parier (ROI moyen negatif)

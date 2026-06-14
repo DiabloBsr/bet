@@ -1,0 +1,111 @@
+================ FIT EXACT PAR SAISON (pivot, c, k') ================
+S33: pivot=Spurs            c=4  k'=0 validation=93/93 (1.000) n_matchs=129
+S37: pivot=Newcastle        c=2  k'=0 validation=106/106 (1.000) n_matchs=135
+S42: pivot=Newcastle        c=18 k'=0 validation=149/149 (1.000) n_matchs=231
+S43: pivot=A. Villa         c=15 k'=0 validation=163/163 (1.000) n_matchs=297
+S45: pivot=Newcastle        c=2  k'=0 validation=184/184 (1.000) n_matchs=308
+S46: pivot=Bournemouth      c=18 k'=0 validation=170/170 (1.000) n_matchs=311
+S47: pivot=Bournemouth      c=7  k'=0 validation=179/179 (1.000) n_matchs=322
+S48: pivot=Leeds            c=0  k'=0 validation=139/139 (1.000) n_matchs=238
+S49: pivot=Brighton         c=15 k'=0 validation=153/153 (1.000) n_matchs=289
+S50: pivot=Brighton         c=12 k'=0 validation=163/163 (1.000) n_matchs=296
+S51: pivot=Manchester Red   c=8  k'=0 validation=170/170 (1.000) n_matchs=327
+S52: pivot=A. Villa         c=17 k'=0 validation=165/165 (1.000) n_matchs=301
+S53: pivot=C. Palace        c=16 k'=0 validation=163/163 (1.000) n_matchs=271
+S54: pivot=Fulham           c=11 k'=0 validation=177/177 (1.000) n_matchs=345
+S55: pivot=Bournemouth      c=2  k'=0 validation=171/171 (1.000) n_matchs=323
+S56: pivot=Manchester Red   c=12 k'=0 validation=185/185 (1.000) n_matchs=338
+S57: pivot=Wolverhampton    c=11 k'=0 validation=181/181 (1.000) n_matchs=255
+S58: pivot=Newcastle        c=10 k'=0 validation=176/176 (1.000) n_matchs=186
+S60: pivot=C. Palace        c=13 k'=0 validation=190/190 (1.000) n_matchs=290
+S63: pivot=London Blues     c=15 k'=0 validation=120/120 (1.000) n_matchs=130
+S64: pivot=Brighton         c=1  k'=0 validation=140/140 (1.000) n_matchs=140
+S65: pivot=Sunderland       c=12 k'=0 validation=190/190 (1.000) n_matchs=330
+S66: pivot=Leeds            c=7  k'=0 validation=100/100 (1.000) n_matchs=130
+S67: pas de fit exact (donnees bruitees ou saison mal segmentee)
+S68: pivot=Sunderland       c=13 k'=0 validation=170/170 (1.000) n_matchs=170
+S69: pivot=Liverpool        c=3  k'=0 validation=190/190 (1.000) n_matchs=320
+S70: pivot=Brentford        c=5  k'=0 validation=120/120 (1.000) n_matchs=120
+S72: pivot=Manchester Blue  c=6  k'=0 validation=190/190 (1.000) n_matchs=250
+S73: pivot=Manchester Blue  c=18 k'=0 validation=110/110 (1.000) n_matchs=130
+S74: pivot=A. Villa         c=11 k'=0 validation=140/140 (1.000) n_matchs=160
+
+fits exacts: 29/30 saisons testees, ambigus: 0
+k' (offset pivot au-dela de c*INV2): [(0, 29)]
+
+================ WALK-FORWARD : K premiers rounds observes ================
+K=1: saisons predites=0 (ambigues=15, sans pivot vu=0) accuracy pairings OOS=0/0 (0.0000)
+K=2: saisons predites=0 (ambigues=20, sans pivot vu=0) accuracy pairings OOS=0/0 (0.0000)
+K=3: saisons predites=2 (ambigues=23, sans pivot vu=0) accuracy pairings OOS=101/373 (0.2708)
+K=4: saisons predites=26 (ambigues=1, sans pivot vu=0) accuracy pairings OOS=5465/5515 (0.9909)
+
+================ REGLE HOME/AWAY (leg1, fits valides) ================
+match du pivot (parite round): {('pivot_HOME', 1): 201, ('pivot_away', 0): 169}
+ i  r%2  home=+i  home=-i
+ 1    0      173        0
+ 1    1        0      196
+ 2    0      172        0
+ 2    1        0      194
+ 3    0      168        0
+ 3    1        0      191
+ 4    0      171        0
+ 4    1        0      193
+ 5    0      164        0
+ 5    1        0      198
+ 6    0      179        0
+ 6    1        0      191
+ 7    0      179        0
+ 7    1        0      194
+ 8    0      172        0
+ 8    1        0      201
+ 9    0      169        0
+ 9    1        0      196
+
+================ CROSS-SAISON ================
+pivots (29 saisons): [('Newcastle', 4), ('A. Villa', 3), ('Bournemouth', 3), ('Brighton', 3), ('Leeds', 2), ('Manchester Red', 2), ('C. Palace', 2), ('Sunderland', 2), ('Manchester Blue', 2), ('Spurs', 1), ('Fulham', 1), ('Wolverhampton', 1), ('London Blues', 1), ('Liverpool', 1), ('Brentford', 1)]
+c: [(2, 3), (18, 3), (15, 3), (12, 3), (11, 3), (7, 2), (13, 2), (4, 1), (0, 1), (8, 1), (17, 1), (16, 1), (10, 1), (1, 1), (3, 1), (5, 1), (6, 1)]
+S33->S37: pos identiques 1/18, meilleur affine 5/18, pivot Spurs -> Newcastle
+S37->S42: pos identiques 2/19, meilleur affine 6/19, pivot Newcastle -> Newcastle
+S42->S43: pos identiques 0/18, meilleur affine 4/18, pivot Newcastle -> A. Villa
+S43->S45: pos identiques 1/18, meilleur affine 6/18, pivot A. Villa -> Newcastle
+S45->S46: pos identiques 2/18, meilleur affine 5/18, pivot Newcastle -> Bournemouth
+S46->S47: pos identiques 2/19, meilleur affine 7/19, pivot Bournemouth -> Bournemouth
+S47->S48: pos identiques 2/18, meilleur affine 4/18, pivot Bournemouth -> Leeds
+S48->S49: pos identiques 2/18, meilleur affine 4/18, pivot Leeds -> Brighton
+S49->S50: pos identiques 3/19, meilleur affine 5/19, pivot Brighton -> Brighton
+S50->S51: pos identiques 1/18, meilleur affine 4/18, pivot Brighton -> Manchester Red
+S51->S52: pos identiques 1/18, meilleur affine 5/18, pivot Manchester Red -> A. Villa
+S52->S53: pos identiques 0/18, meilleur affine 5/18, pivot A. Villa -> C. Palace
+S53->S54: pos identiques 1/18, meilleur affine 4/18, pivot C. Palace -> Fulham
+S54->S55: pos identiques 1/18, meilleur affine 4/18, pivot Fulham -> Bournemouth
+S55->S56: pos identiques 1/18, meilleur affine 5/18, pivot Bournemouth -> Manchester Red
+S56->S57: pos identiques 1/18, meilleur affine 5/18, pivot Manchester Red -> Wolverhampton
+S57->S58: pos identiques 2/18, meilleur affine 5/18, pivot Wolverhampton -> Newcastle
+S58->S60: pos identiques 1/18, meilleur affine 4/18, pivot Newcastle -> C. Palace
+S60->S63: pos identiques 3/18, meilleur affine 4/18, pivot C. Palace -> London Blues
+S63->S64: pos identiques 3/18, meilleur affine 4/18, pivot London Blues -> Brighton
+S64->S65: pos identiques 2/18, meilleur affine 4/18, pivot Brighton -> Sunderland
+S65->S66: pos identiques 1/18, meilleur affine 5/18, pivot Sunderland -> Leeds
+S66->S68: pos identiques 2/18, meilleur affine 4/18, pivot Leeds -> Sunderland
+S68->S69: pos identiques 3/18, meilleur affine 6/18, pivot Sunderland -> Liverpool
+S69->S70: pos identiques 2/18, meilleur affine 5/18, pivot Liverpool -> Brentford
+S70->S72: pos identiques 1/18, meilleur affine 5/18, pivot Brentford -> Manchester Blue
+S72->S73: pos identiques 4/19, meilleur affine 5/19, pivot Manchester Blue -> Manchester Blue
+S73->S74: pos identiques 1/18, meilleur affine 5/18, pivot Manchester Blue -> A. Villa
+
+total pos identiques: 46/508 (attendu hasard ~26.7)
+binomial p (uniforme 1/19) = 0.0004
+
+-- ordre du feed (1-10) vs indice i du cercle --
+feed#1: {1: 10, 2: 7, 3: 10, 4: 6, 5: 7, 6: 7, 7: 5, 8: 9, 9: 7, 'P': 9}
+feed#2: {1: 10, 2: 12, 3: 12, 4: 7, 5: 6, 6: 8, 7: 7, 8: 5, 9: 6, 'P': 4}
+feed#3: {1: 3, 2: 12, 3: 4, 4: 10, 5: 2, 6: 7, 7: 8, 8: 8, 9: 13, 'P': 10}
+feed#4: {1: 9, 2: 3, 3: 7, 4: 6, 5: 10, 6: 7, 7: 12, 8: 10, 9: 6, 'P': 7}
+feed#5: {1: 16, 2: 3, 3: 9, 4: 13, 5: 7, 7: 10, 8: 4, 9: 7, 'P': 8}
+feed#6: {1: 4, 2: 4, 3: 8, 4: 7, 5: 10, 6: 12, 7: 4, 8: 9, 9: 13, 'P': 6}
+feed#7: {1: 5, 2: 9, 3: 9, 4: 3, 5: 12, 6: 10, 7: 4, 8: 7, 9: 7, 'P': 11}
+feed#8: {1: 8, 2: 7, 3: 7, 4: 6, 5: 9, 6: 10, 7: 10, 8: 8, 9: 6, 'P': 6}
+feed#9: {1: 7, 2: 12, 3: 5, 4: 8, 5: 8, 6: 9, 7: 8, 8: 9, 9: 1, 'P': 10}
+feed#10: {1: 5, 2: 8, 3: 6, 4: 11, 5: 6, 6: 7, 7: 9, 8: 8, 9: 11, 'P': 6}
+
+OK part4 done

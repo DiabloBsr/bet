@@ -1,0 +1,77 @@
+=== n=3400 ===
+
+=== TEST A : Stabilité HT/FT 1/2 et 2/1 sur 3 segments temporels ===
+
+  HT/FT 1/2  (n_total=3400)
+    S1 (oldest)  n=1133  acc=  2.1%  ROI=  +9.87%  cote_med=53.0
+    S2 (mid)     n=1133  acc=  3.3%  ROI= +63.02%  cote_med=52.6
+    S3 (recent)  n=1134  acc=  4.9%  ROI=+170.21%  cote_med=52.5
+
+  HT/FT 2/1  (n_total=3400)
+    S1 (oldest)  n=1133  acc=  4.8%  ROI= +73.15%  cote_med=34.3
+    S2 (mid)     n=1133  acc=  4.0%  ROI= +34.54%  cote_med=34.4
+    S3 (recent)  n=1134  acc=  2.9%  ROI= +10.78%  cote_med=34.4
+
+=== TEST B : HT/FT 1/2 — filtre cote FT home ===
+  Total: n=3400  acc=3.41%  ROI=+81.06%
+  cote_home ∈ [1.0;1.3]  n= 310  acc= 1.94%  ROI=+90.21%  htft_cote_med=100
+  cote_home ∈ [1.3;1.5]  n= 516  acc= 2.52%  ROI=+120.95%  htft_cote_med=87
+  cote_home ∈ [1.5;1.8]  n= 598  acc= 2.17%  ROI=+53.80%  htft_cote_med=63
+  cote_home ∈ [1.8;2.1]  n= 549  acc= 3.64%  ROI=+89.30%  htft_cote_med=53
+  cote_home ∈ [2.1;2.5]  n= 433  acc= 3.93%  ROI=+81.15%  htft_cote_med=46
+  cote_home ∈ [2.5;3.0]  n= 278  acc= 5.04%  ROI=+101.47%  htft_cote_med=39
+  cote_home ∈ [3.0;10.0]  n= 666  acc= 4.50%  ROI=+50.45%  htft_cote_med=34
+
+=== TEST C : HT/FT 2/1 — filtre cote FT away ===
+  Total: n=3400  acc=3.88%  ROI=+39.48%
+  cote_away ∈ [1.0;1.3]  n=  57  acc= 0.00%  ROI=-100.00%  htft_cote_med=100
+  cote_away ∈ [1.3;1.5]  n= 104  acc= 0.96%  ROI= -3.85%  htft_cote_med=98
+  cote_away ∈ [1.5;1.8]  n= 280  acc= 1.79%  ROI=+36.44%  htft_cote_med=78
+  cote_away ∈ [1.8;2.1]  n= 225  acc= 2.22%  ROI=+23.42%  htft_cote_med=54
+  cote_away ∈ [2.1;2.5]  n= 194  acc= 5.15%  ROI=+139.76%  htft_cote_med=42
+  cote_away ∈ [2.5;3.0]  n= 422  acc= 2.37%  ROI= -9.44%  htft_cote_med=39
+  cote_away ∈ [3.0;10.0]  n=1873  acc= 5.07%  ROI=+58.14%  htft_cote_med=31
+
+=== TEST D : Parier les 2 comebacks (1/2 + 2/1) sur chaque match ===
+  Total: n=3400  gain par match (2 paris)=+1.205u → ROI sur 2u misés = +60.27%
+  Acc 12 ou 21 : 7.3%
+
+=== TEST E : HT/FT 1/2 — filtre cote du marché HT/FT 1/2 lui-même ===
+  HT/FT_1/2_cote ∈ [ 20; 30]  n= 155  acc= 5.81%  ROI=+66.21%
+  HT/FT_1/2_cote ∈ [ 30; 40]  n= 747  acc= 4.28%  ROI=+47.66%
+  HT/FT_1/2_cote ∈ [ 40; 50]  n= 664  acc= 4.22%  ROI=+85.80%
+  HT/FT_1/2_cote ∈ [ 50; 70]  n= 850  acc= 2.59%  ROI=+49.55%
+  HT/FT_1/2_cote ∈ [ 70;100]  n= 501  acc= 2.99%  ROI=+157.57%
+  HT/FT_1/2_cote ∈ [100;999]  n= 483  acc= 2.07%  ROI=+107.04%
+
+=== TEST E2 : HT/FT 2/1 — filtre cote du marché HT/FT 2/1 lui-même ===
+  HT/FT_2/1_cote ∈ [ 20; 30]  n=1008  acc= 4.66%  ROI=+22.66%
+  HT/FT_2/1_cote ∈ [ 30; 40]  n=1240  acc= 4.44%  ROI=+49.50%
+  HT/FT_2/1_cote ∈ [ 40; 50]  n= 447  acc= 3.58%  ROI=+59.21%
+  HT/FT_2/1_cote ∈ [ 50; 70]  n= 324  acc= 3.09%  ROI=+79.24%
+  HT/FT_2/1_cote ∈ [ 70;100]  n= 237  acc= 0.84%  ROI=-32.60%
+  HT/FT_2/1_cote ∈ [100;999]  n= 144  acc= 1.39%  ROI=+38.89%
+
+=== TEST F : HT/FT 1/2 quand le marché HT-X a cote PARTICULIÈRE ===
+  ht_cx ∈ [1.8;2.0]  n= 639  acc= 3.60%  ROI=+98.32%
+  ht_cx ∈ [2.0;2.3]  n=1546  acc= 4.01%  ROI=+87.81%
+  ht_cx ∈ [2.3;2.7]  n= 897  acc= 2.68%  ROI=+65.08%
+  ht_cx ∈ [2.7;3.5]  n= 278  acc= 2.52%  ROI=+81.43%
+
+=== TEST G : HT/FT 1/2 — proximité des cotes 1 et 2 (match équilibré) ===
+  ratio_home/away ∈ [0.0;0.5]  n=1609  acc= 2.42%  ROI=+91.23%
+  ratio_home/away ∈ [0.5;0.7]  n= 429  acc= 3.73%  ROI=+90.44%
+  ratio_home/away ∈ [0.7;0.9]  n= 333  acc= 3.90%  ROI=+64.16%
+  ratio_home/away ∈ [0.9;1.1]  n= 209  acc= 4.31%  ROI=+83.33%
+  ratio_home/away ∈ [1.1;1.4]  n= 126  acc= 4.76%  ROI=+66.29%
+  ratio_home/away ∈ [1.4;2.0]  n= 185  acc= 5.95%  ROI=+103.23%
+  ratio_home/away ∈ [2.0;99.0]  n= 509  acc= 4.32%  ROI=+46.72%
+
+=== TEST G2 : HT/FT 2/1 — proximité des cotes 1 et 2 ===
+  ratio_home/away ∈ [0.0;0.5]  n=1609  acc= 4.29%  ROI=+23.39%
+  ratio_home/away ∈ [0.5;0.7]  n= 429  acc= 5.83%  ROI=+96.40%
+  ratio_home/away ∈ [0.7;0.9]  n= 333  acc= 4.50%  ROI=+84.62%
+  ratio_home/away ∈ [0.9;1.1]  n= 209  acc= 1.91%  ROI=-32.54%
+  ratio_home/away ∈ [1.1;1.4]  n= 126  acc= 4.76%  ROI=+123.78%
+  ratio_home/away ∈ [1.4;2.0]  n= 185  acc= 3.24%  ROI=+75.91%
+  ratio_home/away ∈ [2.0;99.0]  n= 509  acc= 1.38%  ROI= +8.28%

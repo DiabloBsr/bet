@@ -1,0 +1,36 @@
+=== VALIDATION 5-FOLD CALIBRATION 1X2 — n=4122 ===
+
+--- HOME 1.7-1.8 (p_market 0.55-0.60) ---
+  Fold 1: n=  77  acc=62.34%  ROI= +2.86%
+  Fold 2: n=  81  acc=66.67%  ROI=+10.38%
+  Fold 3: n=  69  acc=69.57%  ROI=+14.72%
+  Fold 4: n=  70  acc=67.14%  ROI=+10.70%
+  Fold 5: n=  81  acc=56.79%  ROI= -6.51%
+  TOTAL : n=378  acc=64.29%  ROI=+6.08%
+
+--- HOME cote 3.3-4.0 (p_market 0.25-0.30) ---
+  Fold 1: n=  36  acc=38.89%  ROI=+37.69%
+  Fold 2: n=  49  acc=22.45%  ROI=-20.96%
+  Fold 3: n=  33  acc=27.27%  ROI= -4.82%
+  Fold 4: n=  46  acc=30.43%  ROI= +3.65%
+  Fold 5: n=  42  acc=28.57%  ROI= +1.36%
+  TOTAL : n=206  acc=29.13%  ROI=+1.92%
+
+--- HOME cote 4.0-5.0 (p_market 0.20-0.25) ---
+  Fold 1: n=  33  acc=24.24%  ROI= +3.94%
+  Fold 2: n=  39  acc=28.21%  ROI=+17.33%
+  Fold 4: n=  33  acc=21.21%  ROI=-14.88%
+  Fold 5: n=  36  acc=27.78%  ROI=+16.50%
+  TOTAL : n=141  acc=25.53%  ROI=+6.45%
+
+--- AWAY cote 2.5-2.9 (p_market 0.35-0.40) ---
+  Fold 1: n=  58  acc=43.10%  ROI= +8.48%
+  Fold 2: n=  49  acc=36.73%  ROI= -8.41%
+  Fold 3: n=  53  acc=47.17%  ROI=+20.13%
+  Fold 4: n=  45  acc=40.00%  ROI= +2.42%
+  Fold 5: n=  52  acc=36.54%  ROI= -7.71%
+  TOTAL : n=257  acc=40.86%  ROI=+3.33%
+
+=== PORTFOLIO 1X2 calibration (tous signaux combinés) ===
+  Portfolio total : n=1009  acc=44.50%  ROI=+3.88%
+  Cote moyenne : 2.69

@@ -1,0 +1,57 @@
+=== AUDIT V5 — n=3381 matchs complets (avec HT) ===
+
+=== TEST 1 : Baseline cote favori (toujours la cote la plus basse) ===
+  Accuracy : 56.64%
+  ROI      : -4.43%
+  Total    : 3381 paris, gain net = -149.72u
+
+  Par bucket cote favori :
+    <1.3        n=389.0  acc= 78.4%  ROI= -4.98%
+    1.3-1.5     n=623.0  acc= 68.2%  ROI= -4.60%
+    1.5-1.8     n=871.0  acc= 58.1%  ROI= -4.26%
+    1.8-2.0     n=531.0  acc= 52.2%  ROI= -1.27%
+    2.0-2.3     n=574.0  acc= 42.9%  ROI= -8.14%
+    2.3-2.7     n=386.0  acc= 40.2%  ROI= -1.79%
+    2.7+        n= 7.0  acc= 14.3%  ROI=-60.57%
+
+=== TEST 2 : Parier toujours X (le nul) ===
+  Accuracy : 22.03%
+  ROI X    : -7.64%
+
+=== TEST 3 : Parier toujours HT-X ===
+  Matchs avec cote HT : 3381
+  Accuracy HT-X    : 43.06%
+  ROI HT-X         : -5.45%
+
+=== TEST 4 : Signal pur H2H_HT_X (override de la cote) ===
+  H2H_HT_X >= 50%  n=  65  acc= 33.8%  ROI=-27.65%
+  H2H_HT_X >= 55%  n=  36  acc= 38.9%  ROI=-20.00%
+  H2H_HT_X >= 60%  n=  34  acc= 41.2%  ROI=-15.29%
+  H2H_HT_X >= 65%  n=  13  acc= 38.5%  ROI=-23.31%
+  H2H_HT_X >= 70%  n=  10  acc= 40.0%  ROI=-21.20%
+
+=== TEST 5 : ROI exact scores via empirique conditionnelle ===
+  Test n=1640 matchs avec marché score exact
+  edge_empirique >= 5%  n=1640  acc=  2.0%  ROI=-27.15%
+  edge_empirique >= 10%  n=1640  acc=  2.0%  ROI=-27.15%
+  edge_empirique >= 15%  n=1638  acc=  2.0%  ROI=-27.06%
+  edge_empirique >= 20%  n=1618  acc=  2.0%  ROI=-28.60%
+  edge_empirique >= 30%  n=1571  acc=  2.0%  ROI=-26.46%
+  edge_empirique >= 50%  n=1325  acc=  1.7%  ROI=-29.71%
+
+=== TEST 6 : V5 FT vs cote favori — quand divergent ? ===
+  V5 = favori cote : 1635 (96.7%)
+  V5 ≠ favori cote : 56 (3.3%)
+  Quand V5 diverge : ROI = -4.45%, acc = 35.7%
+    p >= 35%  n=  52  acc= 38.5%  ROI= +2.90%
+    p >= 40%  n=   9  acc= 44.4%  ROI=+14.89%
+
+=== TEST 7 : Cote réelle = vraie proba ? (test calibration) ===
+  p_mkt ∈ [0.1;0.2]  n= 2035  predicted=0.15  actual=0.158  diff=+0.82pp
+  p_mkt ∈ [0.2;0.3]  n= 3632  predicted=0.25  actual=0.239  diff=-1.13pp
+  p_mkt ∈ [0.3;0.4]  n= 1061  predicted=0.35  actual=0.354  diff=+0.44pp
+  p_mkt ∈ [0.4;0.5]  n=  948  predicted=0.45  actual=0.443  diff=-0.70pp
+  p_mkt ∈ [0.5;0.6]  n=  895  predicted=0.55  actual=0.579  diff=+2.88pp
+  p_mkt ∈ [0.6;0.7]  n=  689  predicted=0.65  actual=0.642  diff=-0.85pp
+  p_mkt ∈ [0.7;0.8]  n=  426  predicted=0.75  actual=0.744  diff=-0.59pp
+  p_mkt ∈ [0.8;1.0]  n=  106  predicted=0.90  actual=0.877  diff=-2.26pp

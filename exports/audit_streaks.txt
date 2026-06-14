@@ -1,0 +1,58 @@
+=== AUDIT 'LOI DES SÉRIES' — n=3426 ===
+
+=== TEST 1 : Quand favori vient de gagner N fois d'affilée (par équipe) ===
+        Hypothèse régression : la cassure devient plus probable
+
+  Sample total : n=3426, accuracy globale favori = 56.68%
+
+  Streak ∈ [0;1)  n=1494  fav_acc=56.02%  ROI_si_parie_fav= -4.63%
+  Streak ∈ [1;2)  n= 832  fav_acc=57.33%  ROI_si_parie_fav= -2.47%
+  Streak ∈ [2;3)  n= 475  fav_acc=54.74%  ROI_si_parie_fav= -8.29%
+  Streak ∈ [3;4)  n= 259  fav_acc=58.69%  ROI_si_parie_fav= -0.85%
+  Streak ∈ [4;5)  n= 152  fav_acc=61.18%  ROI_si_parie_fav= -1.51%
+  Streak ∈ [5;8)  n= 182  fav_acc=57.69%  ROI_si_parie_fav= -8.27%
+
+  → Si gambler's fallacy était vraie : fav_acc devrait CHUTER avec streak haute.
+    Observation empirique : voir tendance ci-dessus.
+
+=== TEST 2 : Outsider qui a marqué dans ses N derniers matchs → wins plus ? ===
+
+  Sample : n=3326
+
+  Outsider marque dans 0-40% des 5 derniers  n= 171  dog_wins=19.88%  ROI= -4.80%
+  Outsider marque dans 40-60% des 5 derniers  n= 616  dog_wins=19.32%  ROI=-24.41%
+  Outsider marque dans 60-80% des 5 derniers  n=1070  dog_wins=21.21%  ROI= -4.12%
+  Outsider marque dans 80-101% des 5 derniers  n=1469  dog_wins=22.26%  ROI= -5.09%
+
+=== TEST 3 : Équipe à défense solide → X (nul) plus fréquent ? ===
+
+  Sample : n=3377
+
+  Home clean_sheet_rate ∈ [0.0;0.2]  n=1003  X_acc=22.73%  ROI_X= -8.75%
+  Home clean_sheet_rate ∈ [0.2;0.4]  n=1564  X_acc=22.95%  ROI_X= -5.51%
+  Home clean_sheet_rate ∈ [0.4;0.6]  n= 706  X_acc=19.83%  ROI_X= -9.22%
+  Home clean_sheet_rate ∈ [0.6;0.8]  n= 103  X_acc=17.48%  ROI_X=-15.50%
+
+=== TEST 4 : Favori cote < 1.40 — avec/sans domination 10 derniers ===
+
+  Sample favori<1.40 : n=589
+
+  Domination 10_derniers ∈ [0.6;0.8]  n= 221  fav_acc=73.76%  ROI_si_parie_fav= -7.18%
+  Domination 10_derniers ∈ [0.8;1.0]  n= 324  fav_acc=78.40%  ROI_si_parie_fav= -1.41%
+
+=== TEST 5 : 'Bête noire' (outsider qui historiquement gagne contre favori) ===
+
+  Sample : n=1529
+
+  H2H_dog_win_rate ∈ [0.0;0.2]  n= 771  dog_won=18.03%  ROI_si_parie_dog= -7.82%
+  H2H_dog_win_rate ∈ [0.2;0.4]  n= 511  dog_won=25.05%  ROI_si_parie_dog= +2.14%
+  H2H_dog_win_rate ∈ [0.4;0.6]  n= 185  dog_won=30.27%  ROI_si_parie_dog= +2.05%
+  H2H_dog_win_rate ∈ [0.6;1.0]  n=  62  dog_won=25.81%  ROI_si_parie_dog=-21.56%
+
+=== TEST 6 : Si favori sur streak ≥ 5 → parier outsider 1X2 ROI ? ===
+
+  Quand favori sur streak ≥ 5 wins, parier outsider :
+    n=214  dog_acc=20.56%  ROI=-16.25%
+    streak ≥ 5 : n= 214  ROI=-16.25%
+    streak ≥ 6 : n= 121  ROI=-10.99%
+    streak ≥ 7 : n=  58  ROI=-11.10%

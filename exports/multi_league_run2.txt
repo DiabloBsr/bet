@@ -1,0 +1,13 @@
+2026-06-12T01:31:37Z INFO scraper.collector | league 8035: 100 events, 20 rankings (api)
+2026-06-12T01:31:41Z INFO scraper.collector | league 8056: 180 events, 36 rankings (api)
+2026-06-12T01:31:43Z INFO scraper.collector | league 8065: 240 events, 48 rankings (api)
+2026-06-12T01:31:49Z INFO scraper.collector | league 8060: 120 events, 24 rankings (api)
+2026-06-12T01:31:52Z INFO scraper.collector | league 8036: 100 events, 20 rankings (api)
+2026-06-12T01:31:54Z INFO scraper.collector | league 8037: 100 events, 20 rankings (api)
+2026-06-12T01:32:25Z WARNING scraper.collector | league 8043 ranking fetch failed: HTTP Error 400: Bad Request
+2026-06-12T01:32:25Z INFO scraper.collector | league 8043: 54 events, 0 rankings (api)
+2026-06-12T01:32:26Z WARNING scraper.collector | league 8042 ranking fetch failed: HTTP Error 400: Bad Request
+2026-06-12T01:32:26Z INFO scraper.collector | league 8042: 54 events, 0 rankings (api)
+2026-06-12T01:32:32Z WARNING scraper.collector | league 8044 ranking fetch failed: HTTP Error 400: Bad Request
+2026-06-12T01:32:32Z INFO scraper.collector | league 8044: 54 events, 0 rankings (api)
+2026-06-12T01:32:35Z INFO scraper.collector | iteration ok run_id=1485

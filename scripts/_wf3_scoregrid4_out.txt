@@ -1,0 +1,45 @@
+[0] N=5859
+
+[V1] IDENTITE  sum_row(1/CS) / (1/odds_Total) — rows 100% non cappées
+  t=0: n=5859 mean=1.00000 sd=0.00000 max|1-r|=0.00000
+  t=1: n=5859 mean=0.99999 sd=0.00044 max|1-r|=0.00142
+  t=2: n=5588 mean=0.99999 sd=0.00074 max|1-r|=0.00201
+  t=3: n=3855 mean=1.00001 sd=0.00085 max|1-r|=0.00178
+  t=4: n=632 mean=0.99999 sd=0.00067 max|1-r|=0.00142
+  t=5: trop peu de rows non cappées
+  t=6: trop peu de rows non cappées
+  overround Total: mean=1.12000 sd=0.00034
+  overround 1X2:   mean=1.05999 sd=0.00119
+
+[V2] LE 1X2 ET +/- DERIVENT-ILS DE LA MEME GRILLE LATENTE ?
+  matchs peu cappés (ncap<=p10=7): n=1249 | ncap mean=9.0
+  H: MAE all=0.01957 | MAE peu-cappé=0.01326 max|d| peu-cappé=0.03494
+  D: MAE all=0.00355 | MAE peu-cappé=0.00484 max|d| peu-cappé=0.00591
+  A: MAE all=0.02115 | MAE peu-cappé=0.01644 max|d| peu-cappé=0.03838
+  +/-3.5: MAE(P_over grilleTotal vs marché +/-)=0.00043 max=0.00142 | overround +/- mean=1.05999
+
+[V3] CELLULES CAPPEES : fair odds via split REEL des rows 5/6
+  t=5 (n=698): split réel = 0-5:0.034 1-4:0.107 2-3:0.219 3-2:0.284 4-1:0.241 5-0:0.115
+        q_T moy=0.1223 -> fair odds moyennes: 0-5:238 1-4:76 2-3:37 3-2:29 4-1:34 5-0:71
+  t=6 (n=228): split réel = 0-6:0.009 1-5:0.070 2-4:0.140 3-3:0.184 4-2:0.281 5-1:0.228 6-0:0.088
+        q_T moy=0.0381 -> fair odds moyennes: 0-6:2993 1-5:374 2-4:187 3-3:143 4-2:94 5-1:115 6-0:299
+  cellules cappées: obs=155/52974 -> freq=0.00293 ; cote 100 -> ROI=-0.707
+
+[V4] FAMILLE DE LA LOI DU TOTAL (fit par matching de moyenne, KL moyen vs Total devig)
+  truncPoisson: KL moyen=0.01117 | résidu max |mean| par t = t0:+0.0050 t1:-0.0242 t2:-0.0074 t3:+0.0248 t4:+0.0198 t5:+0.0067 t6:-0.0247
+  truncBinom N=8: KL moyen=0.01539 | résidu max |mean| par t = t0:+0.0257 t1:+0.0003 t2:-0.0240 t3:-0.0227 t4:-0.0063 t5:+0.0209 t6:+0.0061
+  truncBinom N=10: KL moyen=0.00919 | résidu max |mean| par t = t0:+0.0214 t1:-0.0065 t2:-0.0212 t3:-0.0101 t4:+0.0011 t5:+0.0168 t6:-0.0016
+  truncBinom N=12: KL moyen=0.00736 | résidu max |mean| par t = t0:+0.0186 t1:-0.0104 t2:-0.0190 t3:-0.0028 t4:+0.0052 t5:+0.0146 t6:-0.0062
+  truncBinom N=14: KL moyen=0.00682 | résidu max |mean| par t = t0:+0.0166 t1:-0.0129 t2:-0.0174 t3:+0.0020 t4:+0.0079 t5:+0.0132 t6:-0.0093
+  truncBinom N=16: KL moyen=0.00675 | résidu max |mean| par t = t0:+0.0151 t1:-0.0146 t2:-0.0162 t3:+0.0053 t4:+0.0097 t5:+0.0122 t6:-0.0115
+  truncBinom N=20: KL moyen=0.00703 | résidu max |mean| par t = t0:+0.0130 t1:-0.0169 t2:-0.0144 t3:+0.0098 t4:+0.0120 t5:+0.0109 t6:-0.0144
+  >>> meilleur N binomial = 16 (KL=0.00675)
+  CMP tronquée: scan nu...
+  >>> meilleure CMP: nu=1.15 (KL=0.00911)
+
+[V5] G/NG derive-t-il de la grille ?
+  n=5859 overround G/NG=1.05998
+  MAE(grille vs marché)=0.01529 (matchs sans cap: 0.01667)
+  réel P(GG)=0.5750 marché=0.5699 grille=0.5546
+
+DONE

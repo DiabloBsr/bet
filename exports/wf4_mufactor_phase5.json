@@ -1,0 +1,72 @@
+{
+ "V2_factor_all": {
+  "n": 2587,
+  "roi_pct": 1.83,
+  "wr": 0.2671,
+  "avg_odds": 5.081,
+  "z": 0.15,
+  "p_mc": 0.320685
+ },
+ "V2_factor_exSund": {
+  "n": 2155,
+  "roi_pct": 1.71,
+  "wr": 0.2418,
+  "avg_odds": 5.099,
+  "z": -0.34,
+  "p_mc": 0.345575
+ },
+ "V3_blend_all": {
+  "n": 435,
+  "roi_pct": 21.63,
+  "wr": 0.1908,
+  "avg_odds": 7.742,
+  "z": 1.59,
+  "p_mc": 0.04496
+ },
+ "V3_blend_exSund": {
+  "n": 255,
+  "roi_pct": 45.0,
+  "wr": 0.2078,
+  "avg_odds": 7.666,
+  "z": 2.37,
+  "p_mc": 0.00462
+ },
+ "V4_recal_pub_all": {
+  "n": 859,
+  "roi_pct": 4.83,
+  "wr": 0.1769,
+  "avg_odds": 7.733,
+  "z": 0.39,
+  "p_mc": 0.289535
+ },
+ "V4_recal_pub_exSund": {
+  "n": 660,
+  "roi_pct": 8.52,
+  "wr": 0.1894,
+  "avg_odds": 7.303,
+  "z": 0.51,
+  "p_mc": 0.19051
+ },
+ "V5_recal_blend_all": {
+  "n": 813,
+  "roi_pct": 18.69,
+  "wr": 0.2079,
+  "avg_odds": 7.031,
+  "z": 2.1,
+  "p_mc": 0.017905
+ },
+ "V5_recal_blend_exSund": {
+  "n": 560,
+  "roi_pct": 27.17,
+  "wr": 0.2143,
+  "avg_odds": 6.882,
+  "z": 2.33,
+  "p_mc": 0.005575
+ },
+ "overlap_V3_V1": {
+  "v3": 104,
+  "v1": 2,
+  "common": 2
+ },
+ "n_tests_scanned_phase5": 10
+}

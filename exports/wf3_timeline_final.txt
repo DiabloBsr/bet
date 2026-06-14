@@ -1,0 +1,34 @@
+total n=5528 train=3869 OOS=1659
+période train: 2026-05-28 22:19:50.000000 -> 2026-06-06 02:04:56.000000
+période OOS  : 2026-06-06 02:04:56.000000 -> 2026-06-11 19:44:56.000000
+
+--- REGLE PRIMAIRE: bet FTTS '1' si c1 <= 1.46 ---
+train all rows  : n= 783 WR=0.7765 (break-even=0.7347) cote=1.364 ROI=+5.69% p(WR>BE)=0.0040
+train clean-only: n= 744 WR=0.7769 (break-even=0.7346) cote=1.365 ROI=+5.74% p(WR>BE)=0.0045
+OOS   all rows  : n= 335 WR=0.7522 (break-even=0.7332) cote=1.367 ROI=+2.58% p(WR>BE)=0.2358
+OOS   clean-only: n= 325 WR=0.7477 (break-even=0.7333) cote=1.367 ROI=+1.94% p(WR>BE)=0.3029
+
+--- robustesse seuils (info, pas la règle primaire) ---
+  c1<=1.35: train n= 327 ROI= +5.38% | OOS n= 133 ROI= +1.37%
+  c1<=1.4: train n= 509 ROI= +5.08% | OOS n= 217 ROI= +4.14%
+  c1<=1.45: train n= 733 ROI= +6.12% | OOS n= 313 ROI= +3.26%
+  c1<=1.5: train n= 986 ROI= +5.13% | OOS n= 430 ROI= +3.42%
+  c1<=1.55: train n=1219 ROI= +3.77% | OOS n= 529 ROI= +3.18%
+  c1<=1.6: train n=1499 ROI= +1.66% | OOS n= 640 ROI= +4.27%
+
+--- stabilité temporelle du biais favorite-first ---
+  bin 0: n= 602 P(hfirst)=0.5664 attendu_random=0.5384 z=+1.46
+  bin 1: n= 602 P(hfirst)=0.5648 attendu_random=0.5317 z=+1.73
+  bin 2: n= 602 P(hfirst)=0.5631 attendu_random=0.5289 z=+1.79
+  bin 3: n= 602 P(hfirst)=0.5648 attendu_random=0.5349 z=+1.56
+  bin 4: n= 602 P(hfirst)=0.5814 attendu_random=0.5302 z=+2.68
+
+CUSUM WR (c1<=1.46, n=1118): max|dev|=9.5
+  seuil ~1.36*sd*sqrt(n)=19.2 -> stable
+
+--- modèle: quel boost le moteur applique-t-il au 1er buteur ? ---
+logit(P hfirst) = +0.057 + 0.755*logit(h/(h+a)) + +0.271*log(oddsA/oddsH)
+(coef 2 > 0 => boost du favori au 1er but, au-delà de la composition du score final)
+LRT beta2: stat=46.00 p=1.181e-11
+
+DONE

@@ -1,0 +1,30 @@
+
+=== V7 PRÉDICTION FINE — modèle n=3444 ===
+   Brackets 1X2 calibrés : 14 home, 12 away
+   Signaux exotiques : HT/FT 1/2 (3.40%), HT/FT 2/1 (3.83%), Score 1-0 (5.45%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Brentford  vs  Wolverhampton
+  Cotes : 1=1.59   X=4.56   2=4.75
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 PROBABILITÉS DES 3 ISSUES (vraies probas, pas juste favori)
+   ┌─────────┬──────────┬──────────┬──────────┬──────────┐
+   │  Issue  │  Cote    │ p_market │ p_modèle │ EV       │
+   ├─────────┼──────────┼──────────┼──────────┼──────────┤
+   │   1    │   1.59   │   59.4%  │   63.2% (+3.8pp)  │  +2.3% ✓│
+   │   X    │   4.56   │   20.7%  │   20.5%           │  -5.0%  │
+   │   2    │   4.75   │   19.9%  │   16.3% (-3.5pp)  │ -21.0%  │
+   └─────────┴──────────┴──────────┴──────────┴──────────┘
+
+   📌 Issue la PLUS PROBABLE : 1  (63.2% d'après modèle)
+   📌 2ème option           : X  (20.5%)
+   📌 Outsider              : 2  (16.3%)
+
+💎 MARCHÉS EXOTIQUES (où les vrais edges existent)
+   Aucun marché exotique disponible.
+
+🎯 RECOMMANDATIONS (toutes options confondues, classées par EV)
+   ✅ 1X2 1                 @ 1.59   p= 63.2%   EV  +2.3%   confiance 6.4/10   [SÉCURISÉ]
+
+   💰 Plan de mise (Kelly 1/8, bankroll 100u) : 0.10u sur 1X2 1 → gain potentiel +0.06u

@@ -1,0 +1,2097 @@
+{
+ "finished_with_opening_odds": {
+  "InstantLeague-8035": {
+   "raw": 6929,
+   "clean_excl_corrupted": 6541
+  },
+  "InstantLeague-8036": {
+   "raw": 530,
+   "clean_excl_corrupted": 530
+  },
+  "InstantLeague-8037": {
+   "raw": 560,
+   "clean_excl_corrupted": 560
+  },
+  "InstantLeague-8042": {
+   "raw": 495,
+   "clean_excl_corrupted": 495
+  },
+  "InstantLeague-8043": {
+   "raw": 504,
+   "clean_excl_corrupted": 504
+  },
+  "InstantLeague-8044": {
+   "raw": 513,
+   "clean_excl_corrupted": 513
+  },
+  "InstantLeague-8056": {
+   "raw": 1080,
+   "clean_excl_corrupted": 1080
+  },
+  "InstantLeague-8060": {
+   "raw": 672,
+   "clean_excl_corrupted": 672
+  },
+  "InstantLeague-8065": {
+   "raw": 1464,
+   "clean_excl_corrupted": 1464
+  }
+ },
+ "events_overview": {
+  "InstantLeague-8035": {
+   "n_events": 19015,
+   "n_with_odds": 13521,
+   "n_finished": 12423,
+   "start_min": "2026-05-28 22:15:50.000000",
+   "start_max": "2026-06-12 11:36:56.000000"
+  },
+  "InstantLeague-8036": {
+   "n_events": 1660,
+   "n_with_odds": 600,
+   "n_finished": 1590,
+   "start_min": "2026-06-12 01:23:56.000000",
+   "start_max": "2026-06-12 11:18:56.000000"
+  },
+  "InstantLeague-8037": {
+   "n_events": 1660,
+   "n_with_odds": 630,
+   "n_finished": 1590,
+   "start_min": "2026-06-12 01:23:56.000000",
+   "start_max": "2026-06-12 11:18:56.000000"
+  },
+  "InstantLeague-8042": {
+   "n_events": 1458,
+   "n_with_odds": 576,
+   "n_finished": 1377,
+   "start_min": "2026-06-12 01:07:37.000000",
+   "start_max": "2026-06-12 11:18:37.000000"
+  },
+  "InstantLeague-8043": {
+   "n_events": 1458,
+   "n_with_odds": 585,
+   "n_finished": 1377,
+   "start_min": "2026-06-12 01:09:36.000000",
+   "start_max": "2026-06-12 11:18:36.000000"
+  },
+  "InstantLeague-8044": {
+   "n_events": 1458,
+   "n_with_odds": 594,
+   "n_finished": 1377,
+   "start_min": "2026-06-12 01:15:36.000000",
+   "start_max": "2026-06-12 11:18:36.000000"
+  },
+  "InstantLeague-8056": {
+   "n_events": 3150,
+   "n_with_odds": 1170,
+   "n_finished": 3060,
+   "start_min": "2026-06-12 01:24:34.000000",
+   "start_max": "2026-06-12 11:18:34.000000"
+  },
+  "InstantLeague-8060": {
+   "n_events": 2004,
+   "n_with_odds": 756,
+   "n_finished": 1920,
+   "start_min": "2026-06-12 01:23:53.000000",
+   "start_max": "2026-06-12 11:17:53.000000"
+  },
+  "InstantLeague-8065": {
+   "n_events": 4176,
+   "n_with_odds": 1584,
+   "n_finished": 4056,
+   "start_min": "2026-06-12 01:23:40.000000",
+   "start_max": "2026-06-12 11:18:40.000000"
+  }
+ },
+ "extra_markets": {
+  "InstantLeague-8035": {
+   "raw_json_type": "dict",
+   "n_snapshots_sampled": 40,
+   "markets": {
+    "+/-": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 2.18,
+      "< 3.5": 1.66
+     }
+    },
+    "1X2 & G/NG": {
+     "n_seen": 40,
+     "selections": [
+      "1 gagne et les deux équipes marquent",
+      "1 gagne et seulement  1  marque",
+      "2 gagne et les deux équipes marquent",
+      "2 gagne et seulement 2 marque",
+      "X et aucun but",
+      "X et les deux équipes marquent"
+     ],
+     "sample": {
+      "1 gagne et les deux équipes marquent": 2.77,
+      "1 gagne et seulement  1  marque": 3.73,
+      "X et les deux équipes marquent": 4.92,
+      "X et aucun but": 26.36,
+      "2 gagne et les deux équipes marquent": 6.25,
+      "2 gagne et seulement 2 marque": 11.06
+     }
+    },
+    "1X2 & Total": {
+     "n_seen": 40,
+     "selections": [
+      "1 / < 3.5",
+      "1 / > 3.5",
+      "2 / < 3.5",
+      "2 / > 3.5",
+      "X / < 3.5",
+      "X / > 3.5"
+     ],
+     "sample": {
+      "1 / > 3.5": 3.44,
+      "X / > 3.5": 10.42,
+      "2 / > 3.5": 11.18,
+      "1 / < 3.5": 3.06,
+      "X / < 3.5": 7.1,
+      "2 / < 3.5": 6.39
+     }
+    },
+    "2ème mi-tps - CS": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "1-0",
+      "1-1",
+      "1-2",
+      "2-0",
+      "2-1",
+      "3-0"
+     ],
+     "sample": {
+      "0-0": 5.67,
+      "0-1": 9.63,
+      "0-2": 18.45,
+      "0-3": 53.03,
+      "1-0": 6.44,
+      "1-1": 4.86,
+      "1-2": 13.96,
+      "2-0": 6.89,
+      "2-1": 7.8,
+      "3-0": 11.06
+     }
+    },
+    "Double Chance": {
+     "n_seen": 40,
+     "selections": [
+      "12",
+      "1X",
+      "X2"
+     ],
+     "sample": {
+      "1X": 1.19,
+      "X2": 2.11,
+      "12": 1.18
+     }
+    },
+    "FTTS": {
+     "n_seen": 40,
+     "selections": [
+      "1",
+      "2",
+      "Pas de but"
+     ],
+     "sample": {
+      "1": 1.59,
+      "2": 2.22,
+      "Pas de but": 26.36
+     }
+    },
+    "G/NG": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.46,
+      "Non": 2.66
+     }
+    },
+    "G/NG equipe domicile": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.07,
+      "Non": 8.23
+     }
+    },
+    "G/NG equipe extérieur": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.3,
+      "Non": 3.45
+     }
+    },
+    "HT/FT": {
+     "n_seen": 40,
+     "selections": [
+      "1/1",
+      "1/2",
+      "1/X",
+      "2/1",
+      "2/2",
+      "2/X",
+      "X/1",
+      "X/2",
+      "X/X"
+     ],
+     "sample": {
+      "1/1": 2.54,
+      "1/X": 20.53,
+      "1/2": 51.42,
+      "X/1": 5.06,
+      "X/X": 6.87,
+      "X/2": 10.57,
+      "2/1": 26.99,
+      "2/X": 21.3,
+      "2/2": 7.34
+     }
+    },
+    "Les deux équipes marquent / 1ère mi temps": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 3.21,
+      "Non": 1.34
+     }
+    },
+    "Mi-tps 1X2": {
+     "n_seen": 40,
+     "selections": [
+      "1",
+      "2",
+      "X"
+     ],
+     "sample": {
+      "1": 2.24,
+      "X": 2.37,
+      "2": 4.71
+     }
+    },
+    "Mi-tps CS": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "1-0",
+      "1-1",
+      "1-2",
+      "2-0",
+      "2-1",
+      "3-0"
+     ],
+     "sample": {
+      "0-0": 3.94,
+      "0-1": 8.56,
+      "0-2": 21.75,
+      "0-3": 82.97,
+      "1-0": 5.3,
+      "1-1": 5.12,
+      "1-2": 19.53,
+      "2-0": 7.55,
+      "2-1": 10.94,
+      "3-0": 16.14
+     }
+    },
+    "Mi-tps DC": {
+     "n_seen": 40,
+     "selections": [
+      "12",
+      "1X",
+      "X2"
+     ],
+     "sample": {
+      "1X": 1.15,
+      "X2": 1.58,
+      "12": 1.52
+     }
+    },
+    "Minute du premier but": {
+     "n_seen": 40,
+     "selections": [
+      "1-15",
+      "16-30",
+      "31-45",
+      "46-60",
+      "61-75",
+      "76-90",
+      "Pas de but"
+     ],
+     "sample": {
+      "1-15": 3.72,
+      "16-30": 2.62,
+      "31-45": 5.02,
+      "46-60": 8.29,
+      "61-75": 16.13,
+      "76-90": 20.25,
+      "Pas de but": 26.36
+     }
+    },
+    "Multi-Buts": {
+     "n_seen": 40,
+     "selections": [
+      "Le total de buts est de 0, 1 ou 2",
+      "Le total de buts est de 1, 2 ou 3",
+      "Le total de buts est de 2, 3 ou 4",
+      "Le total de buts est supérieur à 4"
+     ],
+     "sample": {
+      "Le total de buts est de 0, 1 ou 2": 2.91,
+      "Le total de buts est de 1, 2 ou 3": 1.7,
+      "Le total de buts est de 2, 3 ou 4": 1.35,
+      "Le total de buts est supérieur à 4": 4.45
+     }
+    },
+    "Pair/Impair": {
+     "n_seen": 40,
+     "selections": [
+      "Impair",
+      "Pair"
+     ],
+     "sample": {
+      "Impair": 1.85,
+      "Pair": 1.85
+     }
+    },
+    "Score exact": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "0-4",
+      "0-5",
+      "0-6",
+      "1-0",
+      "1-1",
+      "1-2",
+      "1-3",
+      "1-4",
+      "1-5",
+      "2-0",
+      "2-1",
+      "2-2",
+      "2-3",
+      "2-4",
+      "3-0",
+      "3-1",
+      "3-2",
+      "3-3",
+      "4-0",
+      "4-1",
+      "4-2",
+      "5-0",
+      "5-1",
+      "6-0"
+     ],
+     "sample": {
+      "0-0": 26.36,
+      "0-1": 25.12,
+      "0-2": 34.71,
+      "0-3": 65.5,
+      "0-4": 100.0,
+      "0-5": 100.0,
+      "0-6": 100.0,
+      "1-0": 16.23,
+      "1-1": 9.48,
+      "1-2": 13.27,
+      "1-3": 30.14,
+      "1-4": 96.5,
+      "1-5": 100.0,
+      "2-0": 13.19,
+      "2-1": 7.94,
+      "2-2": 11.8,
+      "2-3": 29.79,
+      "2-4": 100.0,
+      "3-0": 14.42,
+      "3-1": 10.64,
+      "3-2": 17.29,
+      "3-3": 76.81,
+      "4-0": 25.72,
+      "4-1": 19.47,
+      "4-2": 56.8,
+      "5-0": 56.32,
+      "5-1": 72.86,
+      "6-0": 100.0
+     }
+    },
+    "Total de buts": {
+     "n_seen": 40,
+     "selections": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "sample": {
+      "0": 26.36,
+      "1": 9.86,
+      "2": 4.76,
+      "3": 3.5,
+      "4": 3.91,
+      "5": 5.81,
+      "6": 17.63
+     }
+    },
+    "Total equipe domicile": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 7.33,
+      "< 3.5": 1.08
+     }
+    },
+    "Total equipe extérieur": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 43.47,
+      "< 3.5": 0.96
+     }
+    }
+   }
+  },
+  "InstantLeague-8037": {
+   "raw_json_type": "dict",
+   "n_snapshots_sampled": 40,
+   "markets": {
+    "+/-": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 5.57,
+      "< 3.5": 1.14
+     }
+    },
+    "1X2 & G/NG": {
+     "n_seen": 40,
+     "selections": [
+      "1 gagne et les deux équipes marquent",
+      "1 gagne et seulement  1  marque",
+      "2 gagne et les deux équipes marquent",
+      "2 gagne et seulement 2 marque",
+      "X et aucun but",
+      "X et les deux équipes marquent"
+     ],
+     "sample": {
+      "1 gagne et les deux équipes marquent": 5.26,
+      "1 gagne et seulement  1  marque": 3.17,
+      "X et les deux équipes marquent": 4.81,
+      "X et aucun but": 7.05,
+      "2 gagne et les deux équipes marquent": 9.32,
+      "2 gagne et seulement 2 marque": 6.36
+     }
+    },
+    "1X2 & Total": {
+     "n_seen": 40,
+     "selections": [
+      "1 / < 3.5",
+      "1 / > 3.5",
+      "2 / < 3.5",
+      "2 / > 3.5",
+      "X / < 3.5",
+      "X / > 3.5"
+     ],
+     "sample": {
+      "1 / > 3.5": 10.04,
+      "X / > 3.5": 20.76,
+      "2 / > 3.5": 25.88,
+      "1 / < 3.5": 2.52,
+      "X / < 3.5": 3.38,
+      "2 / < 3.5": 4.52
+     }
+    },
+    "2ème mi-tps - CS": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "1-0",
+      "1-1",
+      "1-2",
+      "2-0",
+      "2-1",
+      "3-0"
+     ],
+     "sample": {
+      "0-0": 2.93,
+      "0-1": 7.45,
+      "0-2": 22.46,
+      "0-3": 100.0,
+      "1-0": 4.98,
+      "1-1": 5.63,
+      "1-2": 25.43,
+      "2-0": 9.55,
+      "2-1": 16.18,
+      "3-0": 27.47
+     }
+    },
+    "Double Chance": {
+     "n_seen": 40,
+     "selections": [
+      "12",
+      "1X",
+      "X2"
+     ],
+     "sample": {
+      "1X": 1.21,
+      "X2": 1.69,
+      "12": 1.35
+     }
+    },
+    "FTTS": {
+     "n_seen": 40,
+     "selections": [
+      "1",
+      "2",
+      "Pas de but"
+     ],
+     "sample": {
+      "1": 1.79,
+      "2": 2.39,
+      "Pas de but": 7.05
+     }
+    },
+    "G/NG": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 2.09,
+      "Non": 1.72
+     }
+    },
+    "G/NG equipe domicile": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.29,
+      "Non": 3.53
+     }
+    },
+    "G/NG equipe extérieur": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.59,
+      "Non": 2.31
+     }
+    },
+    "HT/FT": {
+     "n_seen": 40,
+     "selections": [
+      "1/1",
+      "1/2",
+      "1/X",
+      "2/1",
+      "2/2",
+      "2/X",
+      "X/1",
+      "X/2",
+      "X/X"
+     ],
+     "sample": {
+      "1/1": 3.67,
+      "1/X": 26.28,
+      "1/2": 86.06,
+      "X/1": 4.7,
+      "X/X": 3.65,
+      "X/2": 8.32,
+      "2/1": 50.09,
+      "2/X": 26.1,
+      "2/2": 7.54
+     }
+    },
+    "Les deux équipes marquent / 1ère mi temps": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 5.92,
+      "Non": 1.12
+     }
+    },
+    "Mi-tps 1X2": {
+     "n_seen": 40,
+     "selections": [
+      "1",
+      "2",
+      "X"
+     ],
+     "sample": {
+      "1": 3.22,
+      "X": 1.71,
+      "2": 5.43
+     }
+    },
+    "Mi-tps CS": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "1-0",
+      "1-1",
+      "1-2",
+      "2-0",
+      "2-1",
+      "3-0"
+     ],
+     "sample": {
+      "0-0": 2.03,
+      "0-1": 7.22,
+      "0-2": 31.06,
+      "0-3": 100.0,
+      "1-0": 4.82,
+      "1-1": 7.61,
+      "1-2": 49.06,
+      "2-0": 13.47,
+      "2-1": 31.89,
+      "3-0": 56.45
+     }
+    },
+    "Mi-tps DC": {
+     "n_seen": 40,
+     "selections": [
+      "12",
+      "1X",
+      "X2"
+     ],
+     "sample": {
+      "1X": 1.12,
+      "X2": 1.3,
+      "12": 2.02
+     }
+    },
+    "Minute du premier but": {
+     "n_seen": 40,
+     "selections": [
+      "1-15",
+      "16-30",
+      "31-45",
+      "46-60",
+      "61-75",
+      "76-90",
+      "Pas de but"
+     ],
+     "sample": {
+      "1-15": 5.52,
+      "16-30": 3.53,
+      "31-45": 5.44,
+      "46-60": 6.4,
+      "61-75": 10.87,
+      "76-90": 12.23,
+      "Pas de but": 7.05
+     }
+    },
+    "Multi-Buts": {
+     "n_seen": 40,
+     "selections": [
+      "Le total de buts est de 0, 1 ou 2",
+      "Le total de buts est de 1, 2 ou 3",
+      "Le total de buts est de 2, 3 ou 4",
+      "Le total de buts est supérieur à 4"
+     ],
+     "sample": {
+      "Le total de buts est de 0, 1 ou 2": 1.49,
+      "Le total de buts est de 1, 2 ou 3": 1.29,
+      "Le total de buts est de 2, 3 ou 4": 1.5,
+      "Le total de buts est supérieur à 4": 17.08
+     }
+    },
+    "Pair/Impair": {
+     "n_seen": 40,
+     "selections": [
+      "Impair",
+      "Pair"
+     ],
+     "sample": {
+      "Impair": 1.94,
+      "Pair": 1.77
+     }
+    },
+    "Score exact": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "0-4",
+      "0-5",
+      "0-6",
+      "1-0",
+      "1-1",
+      "1-2",
+      "1-3",
+      "1-4",
+      "1-5",
+      "2-0",
+      "2-1",
+      "2-2",
+      "2-3",
+      "2-4",
+      "3-0",
+      "3-1",
+      "3-2",
+      "3-3",
+      "4-0",
+      "4-1",
+      "4-2",
+      "5-0",
+      "5-1",
+      "6-0"
+     ],
+     "sample": {
+      "0-0": 7.05,
+      "0-1": 10.44,
+      "0-2": 22.95,
+      "0-3": 69.34,
+      "0-4": 100.0,
+      "0-5": 100.0,
+      "0-6": 100.0,
+      "1-0": 6.97,
+      "1-1": 6.29,
+      "1-2": 14.02,
+      "1-3": 51.79,
+      "1-4": 100.0,
+      "1-5": 100.0,
+      "2-0": 9.97,
+      "2-1": 9.17,
+      "2-2": 21.45,
+      "2-3": 87.91,
+      "2-4": 100.0,
+      "3-0": 19.5,
+      "3-1": 22.07,
+      "3-2": 57.01,
+      "3-3": 100.0,
+      "4-0": 62.54,
+      "4-1": 74.71,
+      "4-2": 100.0,
+      "5-0": 100.0,
+      "5-1": 100.0,
+      "6-0": 100.0
+     }
+    },
+    "Total de buts": {
+     "n_seen": 40,
+     "selections": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "sample": {
+      "0": 7.05,
+      "1": 4.18,
+      "2": 3.3,
+      "3": 4.06,
+      "4": 7.68,
+      "5": 19.88,
+      "6": 100.0
+     }
+    },
+    "Total equipe domicile": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 27.42,
+      "< 3.5": 0.98
+     }
+    },
+    "Total equipe extérieur": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 100.0,
+      "< 3.5": 0.95
+     }
+    }
+   }
+  },
+  "InstantLeague-8065": {
+   "raw_json_type": "dict",
+   "n_snapshots_sampled": 40,
+   "markets": {
+    "+/-": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 2.12,
+      "< 3.5": 1.7
+     }
+    },
+    "1X2 & G/NG": {
+     "n_seen": 40,
+     "selections": [
+      "1 gagne et les deux équipes marquent",
+      "1 gagne et seulement  1  marque",
+      "2 gagne et les deux équipes marquent",
+      "2 gagne et seulement 2 marque",
+      "X et aucun but",
+      "X et les deux équipes marquent"
+     ],
+     "sample": {
+      "1 gagne et les deux équipes marquent": 3.45,
+      "1 gagne et seulement  1  marque": 5.97,
+      "X et les deux équipes marquent": 4.45,
+      "X et aucun but": 28.93,
+      "2 gagne et les deux équipes marquent": 3.85,
+      "2 gagne et seulement 2 marque": 6.95
+     }
+    },
+    "1X2 & Total": {
+     "n_seen": 40,
+     "selections": [
+      "1 / < 3.5",
+      "1 / > 3.5",
+      "2 / < 3.5",
+      "2 / > 3.5",
+      "X / < 3.5",
+      "X / > 3.5"
+     ],
+     "sample": {
+      "1 / > 3.5": 4.94,
+      "X / > 3.5": 8.79,
+      "2 / > 3.5": 5.77,
+      "1 / < 3.5": 4.05,
+      "X / < 3.5": 7.09,
+      "2 / < 3.5": 4.49
+     }
+    },
+    "2ème mi-tps - CS": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "1-0",
+      "1-1",
+      "1-2",
+      "2-0",
+      "2-1",
+      "3-0"
+     ],
+     "sample": {
+      "0-0": 6.04,
+      "0-1": 8.13,
+      "0-2": 11.58,
+      "0-3": 24.75,
+      "1-0": 7.53,
+      "1-1": 4.5,
+      "1-2": 9.62,
+      "2-0": 9.56,
+      "2-1": 8.58,
+      "3-0": 18.22
+     }
+    },
+    "Double Chance": {
+     "n_seen": 40,
+     "selections": [
+      "12",
+      "1X",
+      "X2"
+     ],
+     "sample": {
+      "1X": 1.45,
+      "X2": 1.56,
+      "12": 1.21
+     }
+    },
+    "FTTS": {
+     "n_seen": 40,
+     "selections": [
+      "1",
+      "2",
+      "Pas de but"
+     ],
+     "sample": {
+      "1": 1.82,
+      "2": 1.87,
+      "Pas de but": 28.93
+     }
+    },
+    "G/NG": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.37,
+      "Non": 3.05
+     }
+    },
+    "G/NG equipe domicile": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.12,
+      "Non": 5.92
+     }
+    },
+    "G/NG equipe extérieur": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 1.15,
+      "Non": 5.23
+     }
+    },
+    "HT/FT": {
+     "n_seen": 40,
+     "selections": [
+      "1/1",
+      "1/2",
+      "1/X",
+      "2/1",
+      "2/2",
+      "2/X",
+      "X/1",
+      "X/2",
+      "X/X"
+     ],
+     "sample": {
+      "1/1": 3.78,
+      "1/X": 19.05,
+      "1/2": 35.56,
+      "X/1": 6.3,
+      "X/X": 6.65,
+      "X/2": 7.28,
+      "2/1": 29.08,
+      "2/X": 17.72,
+      "2/2": 4.2
+     }
+    },
+    "Les deux équipes marquent / 1ère mi temps": {
+     "n_seen": 40,
+     "selections": [
+      "Non",
+      "Oui"
+     ],
+     "sample": {
+      "Oui": 2.95,
+      "Non": 1.39
+     }
+    },
+    "Mi-tps 1X2": {
+     "n_seen": 40,
+     "selections": [
+      "1",
+      "2",
+      "X"
+     ],
+     "sample": {
+      "1": 3.01,
+      "X": 2.32,
+      "2": 3.15
+     }
+    },
+    "Mi-tps CS": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "1-0",
+      "1-1",
+      "1-2",
+      "2-0",
+      "2-1",
+      "3-0"
+     ],
+     "sample": {
+      "0-0": 4.06,
+      "0-1": 6.66,
+      "0-2": 12.28,
+      "0-3": 33.95,
+      "1-0": 6.46,
+      "1-1": 4.72,
+      "1-2": 13.05,
+      "2-0": 11.48,
+      "2-1": 12.57,
+      "3-0": 30.57
+     }
+    },
+    "Mi-tps DC": {
+     "n_seen": 40,
+     "selections": [
+      "12",
+      "1X",
+      "X2"
+     ],
+     "sample": {
+      "1X": 1.31,
+      "X2": 1.34,
+      "12": 1.54
+     }
+    },
+    "Minute du premier but": {
+     "n_seen": 40,
+     "selections": [
+      "1-15",
+      "16-30",
+      "31-45",
+      "46-60",
+      "61-75",
+      "76-90",
+      "Pas de but"
+     ],
+     "sample": {
+      "1-15": 3.63,
+      "16-30": 2.57,
+      "31-45": 5.05,
+      "46-60": 8.49,
+      "61-75": 16.92,
+      "76-90": 21.65,
+      "Pas de but": 28.93
+     }
+    },
+    "Multi-Buts": {
+     "n_seen": 40,
+     "selections": [
+      "Le total de buts est de 0, 1 ou 2",
+      "Le total de buts est de 1, 2 ou 3",
+      "Le total de buts est de 2, 3 ou 4",
+      "Le total de buts est supérieur à 4"
+     ],
+     "sample": {
+      "Le total de buts est de 0, 1 ou 2": 3.03,
+      "Le total de buts est de 1, 2 ou 3": 1.73,
+      "Le total de buts est de 2, 3 ou 4": 1.35,
+      "Le total de buts est supérieur à 4": 4.31
+     }
+    },
+    "Pair/Impair": {
+     "n_seen": 40,
+     "selections": [
+      "Impair",
+      "Pair"
+     ],
+     "sample": {
+      "Impair": 1.85,
+      "Pair": 1.85
+     }
+    },
+    "Score exact": {
+     "n_seen": 40,
+     "selections": [
+      "0-0",
+      "0-1",
+      "0-2",
+      "0-3",
+      "0-4",
+      "0-5",
+      "0-6",
+      "1-0",
+      "1-1",
+      "1-2",
+      "1-3",
+      "1-4",
+      "1-5",
+      "2-0",
+      "2-1",
+      "2-2",
+      "2-3",
+      "2-4",
+      "3-0",
+      "3-1",
+      "3-2",
+      "3-3",
+      "4-0",
+      "4-1",
+      "4-2",
+      "5-0",
+      "5-1",
+      "6-0"
+     ],
+     "sample": {
+      "0-0": 28.93,
+      "0-1": 21.41,
+      "0-2": 22.19,
+      "0-3": 31.23,
+      "0-4": 70.64,
+      "0-5": 100.0,
+      "0-6": 100.0,
+      "1-0": 20.23,
+      "1-1": 9.17,
+      "1-2": 9.69,
+      "1-3": 16.5,
+      "1-4": 39.13,
+      "1-5": 100.0,
+      "2-0": 19.44,
+      "2-1": 9.03,
+      "2-2": 10.13,
+      "2-3": 19.05,
+      "2-4": 80.82,
+      "3-0": 25.29,
+      "3-1": 14.34,
+      "3-2": 17.7,
+      "3-3": 58.65,
+      "4-0": 53.81,
+      "4-1": 31.61,
+      "4-2": 69.99,
+      "5-0": 100.0,
+      "5-1": 100.0,
+      "6-0": 100.0
+     }
+    },
+    "Total de buts": {
+     "n_seen": 40,
+     "selections": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "sample": {
+      "0": 28.93,
+      "1": 10.4,
+      "2": 4.86,
+      "3": 3.5,
+      "4": 3.82,
+      "5": 5.62,
+      "6": 17.13
+     }
+    },
+    "Total equipe domicile": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 13.23,
+      "< 3.5": 1.02
+     }
+    },
+    "Total equipe extérieur": {
+     "n_seen": 40,
+     "selections": [
+      "< 3.5",
+      "> 3.5"
+     ],
+     "sample": {
+      "> 3.5": 16.71,
+      "< 3.5": 1.0
+     }
+    }
+   }
+  }
+ },
+ "goals_json": {
+  "InstantLeague-8035": {
+   "n_sampled": 20,
+   "n_null_or_empty": 3,
+   "n_parse_ok": 17,
+   "n_len_equals_total_goals": 17,
+   "sample": [
+    {
+     "minute": 55,
+     "homeScore": 1.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    },
+    {
+     "minute": 57,
+     "homeScore": 2.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    }
+   ]
+  },
+  "InstantLeague-8036": {
+   "n_sampled": 20,
+   "n_null_or_empty": 1,
+   "n_parse_ok": 19,
+   "n_len_equals_total_goals": 19,
+   "sample": [
+    {
+     "minute": 22,
+     "homeScore": 0.0,
+     "awayScore": 1.0,
+     "team": "Away"
+    },
+    {
+     "minute": 37,
+     "homeScore": 1.0,
+     "awayScore": 1.0,
+     "team": "Home"
+    },
+    {
+     "minute": 46,
+     "homeScore": 1.0,
+     "awayScore": 2.0,
+     "team": "Away"
+    }
+   ]
+  },
+  "InstantLeague-8037": {
+   "n_sampled": 20,
+   "n_null_or_empty": 2,
+   "n_parse_ok": 18,
+   "n_len_equals_total_goals": 18,
+   "sample": [
+    {
+     "minute": 4,
+     "homeScore": 0.0,
+     "awayScore": 1.0,
+     "team": "Away"
+    },
+    {
+     "minute": 6,
+     "homeScore": 0.0,
+     "awayScore": 2.0,
+     "team": "Away"
+    },
+    {
+     "minute": 61,
+     "homeScore": 1.0,
+     "awayScore": 2.0,
+     "team": "Home"
+    },
+    {
+     "minute": 87,
+     "homeScore": 1.0,
+     "awayScore": 3.0,
+     "team": "Away"
+    }
+   ]
+  },
+  "InstantLeague-8042": {
+   "n_sampled": 20,
+   "n_null_or_empty": 2,
+   "n_parse_ok": 18,
+   "n_len_equals_total_goals": 18,
+   "sample": [
+    {
+     "minute": 17,
+     "homeScore": 0.0,
+     "awayScore": 1.0,
+     "team": "Away"
+    },
+    {
+     "minute": 21,
+     "homeScore": 1.0,
+     "awayScore": 1.0,
+     "team": "Home"
+    },
+    {
+     "minute": 67,
+     "homeScore": 1.0,
+     "awayScore": 2.0,
+     "team": "Away"
+    }
+   ]
+  },
+  "InstantLeague-8043": {
+   "n_sampled": 20,
+   "n_null_or_empty": 0,
+   "n_parse_ok": 20,
+   "n_len_equals_total_goals": 20,
+   "sample": [
+    {
+     "minute": 89,
+     "homeScore": 1.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    },
+    {
+     "minute": 89,
+     "homeScore": 2.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    },
+    {
+     "minute": 89,
+     "homeScore": 2.0,
+     "awayScore": 1.0,
+     "team": "Away"
+    }
+   ]
+  },
+  "InstantLeague-8044": {
+   "n_sampled": 20,
+   "n_null_or_empty": 2,
+   "n_parse_ok": 18,
+   "n_len_equals_total_goals": 18,
+   "sample": [
+    {
+     "minute": 48,
+     "homeScore": 1.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    }
+   ]
+  },
+  "InstantLeague-8056": {
+   "n_sampled": 20,
+   "n_null_or_empty": 4,
+   "n_parse_ok": 16,
+   "n_len_equals_total_goals": 16,
+   "sample": [
+    {
+     "minute": 10,
+     "homeScore": 1.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    },
+    {
+     "minute": 60,
+     "homeScore": 1.0,
+     "awayScore": 1.0,
+     "team": "Away"
+    }
+   ]
+  },
+  "InstantLeague-8060": {
+   "n_sampled": 20,
+   "n_null_or_empty": 6,
+   "n_parse_ok": 14,
+   "n_len_equals_total_goals": 14,
+   "sample": [
+    {
+     "minute": 52,
+     "homeScore": 1.0,
+     "awayScore": 0.0,
+     "team": "Home"
+    }
+   ]
+  },
+  "InstantLeague-8065": {
+   "n_sampled": 20,
+   "n_null_or_empty": 1,
+   "n_parse_ok": 19,
+   "n_len_equals_total_goals": 19,
+   "sample": [
+    {
+     "minute": 5,
+     "homeScore": 0.0,
+     "awayScore": 1.0,
+     "team": "Away"
+    },
+    {
+     "minute": 19,
+     "homeScore": 0.0,
+     "awayScore": 2.0,
+     "team": "Away"
+    },
+    {
+     "minute": 22,
+     "homeScore": 0.0,
+     "awayScore": 3.0,
+     "team": "Away"
+    },
+    {
+     "minute": 58,
+     "homeScore": 1.0,
+     "awayScore": 3.0,
+     "team": "Home"
+    }
+   ]
+  }
+ },
+ "ht_score": {
+  "InstantLeague-8035": {
+   "n_results": 12423,
+   "n_ht_available": 12086
+  },
+  "InstantLeague-8036": {
+   "n_results": 1590,
+   "n_ht_available": 1590
+  },
+  "InstantLeague-8037": {
+   "n_results": 1590,
+   "n_ht_available": 1590
+  },
+  "InstantLeague-8042": {
+   "n_results": 1377,
+   "n_ht_available": 1377
+  },
+  "InstantLeague-8043": {
+   "n_results": 1377,
+   "n_ht_available": 1377
+  },
+  "InstantLeague-8044": {
+   "n_results": 1377,
+   "n_ht_available": 1377
+  },
+  "InstantLeague-8056": {
+   "n_results": 3060,
+   "n_ht_available": 3060
+  },
+  "InstantLeague-8060": {
+   "n_results": 1920,
+   "n_ht_available": 1920
+  },
+  "InstantLeague-8065": {
+   "n_results": 4056,
+   "n_ht_available": 4056
+  }
+ },
+ "round_info": {
+  "InstantLeague-8035": {
+   "n_distinct_rounds": 39,
+   "round_min": 0,
+   "round_max": 38,
+   "n_events_round0_or_null": 4630,
+   "sample_keys": [
+    "0",
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+   ],
+   "full_dist": {
+    "0": 4630,
+    "1": 482,
+    "10": 377,
+    "11": 373,
+    "12": 382,
+    "13": 372,
+    "14": 382,
+    "15": 396,
+    "16": 404,
+    "17": 372,
+    "18": 425,
+    "19": 429,
+    "2": 398,
+    "20": 399,
+    "21": 391,
+    "22": 438,
+    "23": 405,
+    "24": 382,
+    "25": 364,
+    "26": 378,
+    "27": 375,
+    "28": 385,
+    "29": 377,
+    "3": 435,
+    "30": 394,
+    "31": 354,
+    "32": 362,
+    "33": 363,
+    "34": 359,
+    "35": 356,
+    "36": 285,
+    "37": 234,
+    "38": 199,
+    "4": 388,
+    "5": 394,
+    "6": 395,
+    "7": 401,
+    "8": 384,
+    "9": 396
+   }
+  },
+  "InstantLeague-8036": {
+   "n_distinct_rounds": 38,
+   "round_min": 1,
+   "round_max": 38,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 40,
+    "10": 40,
+    "11": 40,
+    "12": 40,
+    "13": 40,
+    "14": 50,
+    "15": 50,
+    "16": 50,
+    "17": 60,
+    "18": 60,
+    "19": 50,
+    "2": 50,
+    "20": 50,
+    "21": 50,
+    "22": 50,
+    "23": 50,
+    "24": 40,
+    "25": 40,
+    "26": 40,
+    "27": 40,
+    "28": 40,
+    "29": 40,
+    "3": 50,
+    "30": 40,
+    "31": 40,
+    "32": 40,
+    "33": 40,
+    "34": 40,
+    "35": 40,
+    "36": 30,
+    "37": 20,
+    "38": 10,
+    "4": 50,
+    "5": 50,
+    "6": 50,
+    "7": 50,
+    "8": 50,
+    "9": 50
+   }
+  },
+  "InstantLeague-8037": {
+   "n_distinct_rounds": 38,
+   "round_min": 1,
+   "round_max": 38,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 40,
+    "10": 40,
+    "11": 40,
+    "12": 40,
+    "13": 40,
+    "14": 40,
+    "15": 50,
+    "16": 50,
+    "17": 60,
+    "18": 60,
+    "19": 60,
+    "2": 50,
+    "20": 50,
+    "21": 50,
+    "22": 50,
+    "23": 50,
+    "24": 40,
+    "25": 40,
+    "26": 40,
+    "27": 40,
+    "28": 40,
+    "29": 40,
+    "3": 50,
+    "30": 40,
+    "31": 40,
+    "32": 40,
+    "33": 40,
+    "34": 40,
+    "35": 40,
+    "36": 30,
+    "37": 20,
+    "38": 10,
+    "4": 50,
+    "5": 50,
+    "6": 50,
+    "7": 50,
+    "8": 50,
+    "9": 50
+   }
+  },
+  "InstantLeague-8042": {
+   "n_distinct_rounds": 34,
+   "round_min": 1,
+   "round_max": 34,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 54,
+    "10": 54,
+    "11": 45,
+    "12": 45,
+    "13": 45,
+    "14": 36,
+    "15": 36,
+    "16": 36,
+    "17": 36,
+    "18": 36,
+    "19": 36,
+    "2": 54,
+    "20": 36,
+    "21": 36,
+    "22": 36,
+    "23": 36,
+    "24": 45,
+    "25": 54,
+    "26": 54,
+    "27": 54,
+    "28": 54,
+    "29": 45,
+    "3": 54,
+    "30": 36,
+    "31": 36,
+    "32": 36,
+    "33": 36,
+    "34": 18,
+    "4": 45,
+    "5": 45,
+    "6": 45,
+    "7": 45,
+    "8": 45,
+    "9": 54
+   }
+  },
+  "InstantLeague-8043": {
+   "n_distinct_rounds": 34,
+   "round_min": 1,
+   "round_max": 34,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 54,
+    "10": 54,
+    "11": 45,
+    "12": 45,
+    "13": 45,
+    "14": 36,
+    "15": 36,
+    "16": 36,
+    "17": 36,
+    "18": 36,
+    "19": 36,
+    "2": 54,
+    "20": 36,
+    "21": 36,
+    "22": 36,
+    "23": 36,
+    "24": 45,
+    "25": 54,
+    "26": 54,
+    "27": 54,
+    "28": 54,
+    "29": 45,
+    "3": 54,
+    "30": 36,
+    "31": 36,
+    "32": 36,
+    "33": 36,
+    "34": 18,
+    "4": 45,
+    "5": 45,
+    "6": 45,
+    "7": 45,
+    "8": 45,
+    "9": 54
+   }
+  },
+  "InstantLeague-8044": {
+   "n_distinct_rounds": 34,
+   "round_min": 1,
+   "round_max": 34,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 54,
+    "10": 54,
+    "11": 45,
+    "12": 45,
+    "13": 45,
+    "14": 45,
+    "15": 36,
+    "16": 36,
+    "17": 36,
+    "18": 36,
+    "19": 36,
+    "2": 54,
+    "20": 36,
+    "21": 36,
+    "22": 36,
+    "23": 36,
+    "24": 36,
+    "25": 45,
+    "26": 45,
+    "27": 45,
+    "28": 54,
+    "29": 54,
+    "3": 54,
+    "30": 45,
+    "31": 45,
+    "32": 45,
+    "33": 36,
+    "34": 18,
+    "4": 45,
+    "5": 45,
+    "6": 45,
+    "7": 45,
+    "8": 45,
+    "9": 45
+   }
+  },
+  "InstantLeague-8056": {
+   "n_distinct_rounds": 70,
+   "round_min": 1,
+   "round_max": 70,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 36,
+    "10": 36,
+    "11": 54,
+    "12": 54,
+    "13": 54,
+    "14": 54,
+    "15": 54,
+    "16": 54,
+    "17": 54,
+    "18": 54,
+    "19": 54,
+    "2": 36,
+    "20": 54,
+    "21": 54,
+    "22": 72,
+    "23": 72,
+    "24": 72,
+    "25": 72,
+    "26": 72,
+    "27": 72,
+    "28": 72,
+    "29": 54,
+    "3": 36,
+    "30": 54,
+    "31": 54,
+    "32": 54,
+    "33": 72,
+    "34": 54,
+    "35": 54,
+    "36": 54,
+    "37": 54,
+    "38": 36,
+    "39": 36,
+    "4": 36,
+    "40": 36,
+    "41": 36,
+    "42": 36,
+    "43": 36,
+    "44": 36,
+    "45": 36,
+    "46": 36,
+    "47": 36,
+    "48": 36,
+    "49": 36,
+    "5": 36,
+    "50": 36,
+    "51": 36,
+    "52": 36,
+    "53": 36,
+    "54": 36,
+    "55": 36,
+    "56": 36,
+    "57": 36,
+    "58": 36,
+    "59": 36,
+    "6": 36,
+    "60": 36,
+    "61": 36,
+    "62": 36,
+    "63": 36,
+    "64": 36,
+    "65": 36,
+    "66": 36,
+    "67": 36,
+    "68": 36,
+    "69": 36,
+    "7": 36,
+    "70": 36,
+    "8": 36,
+    "9": 36
+   }
+  },
+  "InstantLeague-8060": {
+   "n_distinct_rounds": 46,
+   "round_min": 1,
+   "round_max": 46,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 48,
+    "10": 36,
+    "11": 36,
+    "12": 36,
+    "13": 36,
+    "14": 36,
+    "15": 36,
+    "16": 36,
+    "17": 36,
+    "18": 36,
+    "19": 36,
+    "2": 48,
+    "20": 36,
+    "21": 36,
+    "22": 36,
+    "23": 36,
+    "24": 36,
+    "25": 48,
+    "26": 48,
+    "27": 48,
+    "28": 48,
+    "29": 48,
+    "3": 48,
+    "30": 48,
+    "31": 48,
+    "32": 48,
+    "33": 48,
+    "34": 60,
+    "35": 60,
+    "36": 60,
+    "37": 60,
+    "38": 60,
+    "39": 60,
+    "4": 36,
+    "40": 60,
+    "41": 60,
+    "42": 48,
+    "43": 48,
+    "44": 36,
+    "45": 24,
+    "46": 36,
+    "5": 36,
+    "6": 36,
+    "7": 36,
+    "8": 36,
+    "9": 36
+   }
+  },
+  "InstantLeague-8065": {
+   "n_distinct_rounds": 94,
+   "round_min": 1,
+   "round_max": 94,
+   "n_events_round0_or_null": 0,
+   "sample_keys": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "full_dist": {
+    "1": 48,
+    "10": 72,
+    "11": 72,
+    "12": 72,
+    "13": 72,
+    "14": 72,
+    "15": 72,
+    "16": 48,
+    "17": 48,
+    "18": 48,
+    "19": 48,
+    "2": 48,
+    "20": 48,
+    "21": 48,
+    "22": 48,
+    "23": 48,
+    "24": 48,
+    "25": 24,
+    "26": 24,
+    "27": 24,
+    "28": 24,
+    "29": 24,
+    "3": 48,
+    "30": 24,
+    "31": 24,
+    "32": 24,
+    "33": 24,
+    "34": 24,
+    "35": 24,
+    "36": 24,
+    "37": 24,
+    "38": 24,
+    "39": 24,
+    "4": 48,
+    "40": 24,
+    "41": 24,
+    "42": 24,
+    "43": 24,
+    "44": 24,
+    "45": 48,
+    "46": 48,
+    "47": 48,
+    "48": 48,
+    "49": 48,
+    "5": 48,
+    "50": 48,
+    "51": 48,
+    "52": 48,
+    "53": 48,
+    "54": 48,
+    "55": 48,
+    "56": 48,
+    "57": 48,
+    "58": 48,
+    "59": 48,
+    "6": 48,
+    "60": 48,
+    "61": 48,
+    "62": 48,
+    "63": 48,
+    "64": 48,
+    "65": 48,
+    "66": 48,
+    "67": 48,
+    "68": 48,
+    "69": 48,
+    "7": 48,
+    "70": 48,
+    "71": 48,
+    "72": 48,
+    "73": 48,
+    "74": 48,
+    "75": 48,
+    "76": 48,
+    "77": 48,
+    "78": 48,
+    "79": 48,
+    "8": 72,
+    "80": 48,
+    "81": 48,
+    "82": 48,
+    "83": 48,
+    "84": 48,
+    "85": 48,
+    "86": 48,
+    "87": 48,
+    "88": 48,
+    "89": 48,
+    "9": 72,
+    "90": 48,
+    "91": 48,
+    "92": 48,
+    "93": 24,
+    "94": 24
+   }
+  }
+ }
+}

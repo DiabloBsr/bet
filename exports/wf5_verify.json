@@ -1,0 +1,102 @@
+{
+ "n_matches": 7331,
+ "corr_n50": {
+  "n": 42,
+  "pearson": -0.276,
+  "spearman": 0.039
+ },
+ "sig_cells": [
+  {
+   "cell": [
+    "DS",
+    "away",
+    "long_shot_5plus"
+   ],
+   "n_o": 145,
+   "roi_o": -37.4,
+   "z_o": -2.15,
+   "n_r": 77,
+   "roi_r": 69.1
+  },
+  {
+   "cell": [
+    "FS",
+    "away",
+    "favori_modere_1.5_1.8"
+   ],
+   "n_o": 42,
+   "roi_o": -37.7,
+   "z_o": -3.03,
+   "n_r": 15,
+   "roi_r": 1.3
+  },
+  {
+   "cell": [
+    "MS_early",
+    "away",
+    "leger_favori_1.8_2.2"
+   ],
+   "n_o": 91,
+   "roi_o": -25.6,
+   "z_o": -2.58,
+   "n_r": 47,
+   "roi_r": -30.1
+  },
+  {
+   "cell": [
+    "MS_late",
+    "home",
+    "favori_solide_1.3_1.5"
+   ],
+   "n_o": 146,
+   "roi_o": -11.3,
+   "z_o": -2.02,
+   "n_r": 96,
+   "roi_r": -5.1
+  }
+ ],
+ "portfolios": {
+  "edges_plus_orig": {
+   "n": 1269,
+   "roi_pct": 10.63,
+   "se_pct": 6.87,
+   "z_vs_0": 1.55,
+   "declared_exp_pct": 24.59,
+   "z_vs_declared": -2.03
+  },
+  "edges_plus_recent": {
+   "n": 764,
+   "roi_pct": 0.19,
+   "se_pct": 9.03,
+   "z_vs_0": 0.02,
+   "declared_exp_pct": 23.73,
+   "z_vs_declared": -2.61
+  },
+  "traps_orig": {
+   "n": 1044,
+   "roi_pct": -14.89,
+   "se_pct": 3.3,
+   "z_vs_0": -4.51,
+   "declared_exp_pct": -22.12,
+   "z_vs_declared": 2.19
+  },
+  "traps_recent": {
+   "n": 631,
+   "roi_pct": 4.16,
+   "se_pct": 4.61,
+   "z_vs_0": 0.9,
+   "declared_exp_pct": -21.18,
+   "z_vs_declared": 5.49
+  }
+ },
+ "baseline": {
+  "orig": {
+   "n": 9182,
+   "roi_pct": -3.17
+  },
+  "recent": {
+   "n": 5480,
+   "roi_pct": -2.86
+  }
+ }
+}

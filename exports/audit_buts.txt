@@ -1,0 +1,188 @@
+=== AUDIT BUTS / SCORE PATTERNS — n=4404 ===
+
+Stats globales :
+  Over 2.5 : 61.4%
+  BTTS     : 56.2%
+  Buts moy : 2.94
+
+====================================================================================================
+TEST 1 : OVER/UNDER 2.5 PAR PAIRE (anomalies fortes)
+====================================================================================================
+
+  💎 TOP 15 paires Over 2.5 (parier Over):
+  Paire                                         n      Over%      BTTS%
+  A. Villa vs Fulham                            12    100.0%    100.0%
+  Fulham vs Sunderland                          13     92.3%     84.6%
+  Spurs vs Burnley                              12     91.7%     91.7%
+  Fulham vs Manchester Red                      12     91.7%     83.3%
+  Manchester Blue vs Bournemouth                11     90.9%     36.4%
+  Leeds vs Newcastle                            11     90.9%     72.7%
+  Spurs vs Brighton                             10     90.0%     80.0%
+  Liverpool vs London Blues                     10     90.0%     80.0%
+  A. Villa vs Newcastle                         10     90.0%     70.0%
+  Liverpool vs Spurs                            14     85.7%     42.9%
+  Leeds vs Brighton                             14     85.7%     85.7%
+  Manchester Red vs London Reds                 14     85.7%     71.4%
+  Spurs vs Bournemouth                          14     85.7%     64.3%
+  C. Palace vs Brighton                         13     84.6%     61.5%
+  Manchester Blue vs Brighton                   13     84.6%     53.8%
+
+  💎 TOP 15 paires Under 2.5 (parier Under):
+  Everton vs West Ham                           12    Over  16.7%   BTTS  25.0%
+  Everton vs Wolverhampton                      10    Over  20.0%   BTTS  30.0%
+  Manchester Blue vs C. Palace                  15    Over  20.0%   BTTS  46.7%
+  London Blues vs Manchester Red                15    Over  20.0%   BTTS  20.0%
+  Burnley vs Everton                            14    Over  21.4%   BTTS  42.9%
+  Everton vs London Reds                        13    Over  23.1%   BTTS  30.8%
+  Burnley vs Liverpool                          13    Over  23.1%   BTTS  30.8%
+  Sunderland vs Leeds                           13    Over  23.1%   BTTS  38.5%
+  A. Villa vs C. Palace                         12    Over  25.0%   BTTS  33.3%
+  Everton vs Brentford                          12    Over  25.0%   BTTS  25.0%
+  Bournemouth vs West Ham                       11    Over  27.3%   BTTS  54.5%
+  Bournemouth vs Everton                        14    Over  28.6%   BTTS  42.9%
+  West Ham vs Manchester Blue                   10    Over  30.0%   BTTS  40.0%
+  Sunderland vs London Blues                    10    Over  30.0%   BTTS  20.0%
+  Burnley vs Wolverhampton                      13    Over  30.8%   BTTS  53.8%
+
+====================================================================================================
+TEST 2 : BTTS PAR PAIRE
+====================================================================================================
+
+  💎 TOP 15 paires BTTS Oui (parier 'Les 2 marquent'):
+  Paire                                         n      BTTS%      Over%
+  A. Villa vs Fulham                            12    100.0%    100.0%
+  Fulham vs Spurs                               12    100.0%     75.0%
+  A. Villa vs West Ham                          13     92.3%     76.9%
+  Spurs vs Burnley                              12     91.7%     91.7%
+  Everton vs Burnley                            12     91.7%     75.0%
+  Manchester Blue vs Liverpool                  11     90.9%     81.8%
+  Leeds vs Brighton                             14     85.7%     85.7%
+  Manchester Red vs N. Forest                   14     85.7%     71.4%
+  N. Forest vs Wolverhampton                    14     85.7%     71.4%
+  Fulham vs Sunderland                          13     84.6%     92.3%
+  Bournemouth vs Wolverhampton                  13     84.6%     69.2%
+  A. Villa vs Manchester Blue                   13     84.6%     69.2%
+  Fulham vs Manchester Red                      12     83.3%     91.7%
+  Spurs vs Fulham                               12     83.3%     75.0%
+  Newcastle vs Manchester Red                   12     83.3%     58.3%
+
+  💎 TOP 15 paires BTTS Non:
+  Liverpool vs Everton                          13    BTTS  15.4%   Over  53.8%
+  Sunderland vs London Reds                     12    BTTS  16.7%   Over  41.7%
+  Manchester Blue vs Leeds                      16    BTTS  18.8%   Over  81.2%
+  London Blues vs Manchester Red                15    BTTS  20.0%   Over  20.0%
+  Sunderland vs London Blues                    10    BTTS  20.0%   Over  30.0%
+  Wolverhampton vs West Ham                     15    BTTS  20.0%   Over  46.7%
+  London Reds vs Leeds                          14    BTTS  21.4%   Over  64.3%
+  Spurs vs West Ham                             13    BTTS  23.1%   Over  46.2%
+  Everton vs West Ham                           12    BTTS  25.0%   Over  16.7%
+  Everton vs Brentford                          12    BTTS  25.0%   Over  25.0%
+  A. Villa vs Everton                           12    BTTS  25.0%   Over  41.7%
+  Manchester Blue vs Wolverhampton              12    BTTS  25.0%   Over  58.3%
+  Liverpool vs C. Palace                        12    BTTS  25.0%   Over  58.3%
+  Liverpool vs Leeds                            12    BTTS  25.0%   Over  83.3%
+  Manchester Blue vs A. Villa                   11    BTTS  27.3%   Over  54.5%
+
+====================================================================================================
+TEST 3 : SCORE EXACT RÉCURRENT (paire + score arrivant ≥30% du temps)
+====================================================================================================
+
+  Paires avec score dominant ≥ 30% (n≥10) :
+  Paire                                         n     Score le + fréquent  %
+  Sunderland vs Leeds                           13   0-1 (4/13)            30.8%
+  C. Palace vs Burnley                          12   4-0 (4/12)            33.3%
+  Wolverhampton vs Liverpool                    13   1-1 (4/13)            30.8%
+  Manchester Red vs Wolverhampton               13   1-0 (4/13)            30.8%
+  Brentford vs Sunderland                       10   1-0 (3/10)            30.0%
+  A. Villa vs West Ham                          13   2-1 (4/13)            30.8%
+  Brighton vs Sunderland                        10   2-0 (3/10)            30.0%
+  Everton vs C. Palace                          10   1-1 (3/10)            30.0%
+  Manchester Red vs West Ham                    10   2-1 (3/10)            30.0%
+  Wolverhampton vs N. Forest                    13   1-1 (4/13)            30.8%
+  Manchester Red vs Bournemouth                 12   1-0 (5/12)            41.7%
+  Newcastle vs Manchester Blue                  10   0-0 (3/10)            30.0%
+  Liverpool vs West Ham                         10   3-0 (4/10)            40.0%
+  Newcastle vs West Ham                         11   3-0 (5/11)            45.5%
+  Bournemouth vs West Ham                       11   2-0 (4/11)            36.4%
+  Bournemouth vs Manchester Blue                12   1-1 (4/12)            33.3%
+  Brentford vs Liverpool                        12   1-2 (4/12)            33.3%
+  Sunderland vs London Blues                    10   0-1 (4/10)            40.0%
+  N. Forest vs Everton                          12   3-0 (4/12)            33.3%
+  C. Palace vs London Blues                     13   1-2 (4/13)            30.8%
+  West Ham vs A. Villa                          14   1-1 (6/14)            42.9%
+  Fulham vs Manchester Blue                     12   1-2 (4/12)            33.3%
+  Wolverhampton vs London Reds                  10   1-2 (3/10)            30.0%
+  N. Forest vs A. Villa                         10   2-1 (3/10)            30.0%
+  Brighton vs West Ham                          13   4-0 (4/13)            30.8%
+  Everton vs Bournemouth                        11   1-1 (4/11)            36.4%
+  A. Villa vs Sunderland                        13   2-2 (4/13)            30.8%
+  London Blues vs Leeds                         10   3-1 (4/10)            40.0%
+  A. Villa vs C. Palace                         12   2-0 (4/12)            33.3%
+  London Blues vs A. Villa                      12   1-0 (4/12)            33.3%
+  Liverpool vs C. Palace                        12   3-0 (4/12)            33.3%
+  Newcastle vs Sunderland                       12   3-1 (4/12)            33.3%
+  Sunderland vs London Reds                     12   0-1 (5/12)            41.7%
+  Everton vs A. Villa                           16   0-1 (5/16)            31.2%
+  Sunderland vs Manchester Blue                 18   0-3 (6/18)            33.3%
+  Everton vs Wolverhampton                      10   0-2 (4/10)            40.0%
+  A. Villa vs Brentford                         12   1-2 (4/12)            33.3%
+  London Reds vs London Blues                   14   2-1 (5/14)            35.7%
+  Spurs vs West Ham                             13   1-0 (4/13)            30.8%
+  Burnley vs Liverpool                          13   0-2 (4/13)            30.8%
+  Everton vs London Reds                        13   0-0 (4/13)            30.8%
+  Bournemouth vs Sunderland                     15   1-1 (5/15)            33.3%
+  Liverpool vs Brighton                         10   2-0 (3/10)            30.0%
+  A. Villa vs Fulham                            12   2-1 (4/12)            33.3%
+  Manchester Blue vs Newcastle                  10   2-1 (3/10)            30.0%
+  Brighton vs Manchester Red                    11   2-1 (4/11)            36.4%
+  C. Palace vs Spurs                            10   2-1 (5/10)            50.0%
+  A. Villa vs Brighton                          12   2-2 (4/12)            33.3%
+  Leeds vs Brentford                            14   1-2 (5/14)            35.7%
+  A. Villa vs Wolverhampton                     11   2-0 (4/11)            36.4%
+  Spurs vs N. Forest                            10   0-0 (3/10)            30.0%
+  Wolverhampton vs Fulham                       11   2-1 (4/11)            36.4%
+  Burnley vs Wolverhampton                      13   1-0 (5/13)            38.5%
+  Everton vs Sunderland                         12   1-1 (4/12)            33.3%
+  Manchester Red vs Burnley                     10   2-1 (3/10)            30.0%
+  A. Villa vs Liverpool                         10   1-1 (3/10)            30.0%
+  West Ham vs London Reds                       10   2-2 (4/10)            40.0%
+  Burnley vs Sunderland                         13   1-1 (4/13)            30.8%
+  London Blues vs Everton                       14   0-1 (5/14)            35.7%
+  N. Forest vs Spurs                            10   0-0 (3/10)            30.0%
+  Liverpool vs Manchester Red                   13   1-1 (4/13)            30.8%
+  Liverpool vs London Reds                      14   2-0 (5/14)            35.7%
+  Wolverhampton vs London Blues                 10   0-3 (3/10)            30.0%
+  Brentford vs Leeds                            10   2-1 (3/10)            30.0%
+  Newcastle vs Everton                          10   2-1 (3/10)            30.0%
+  Bournemouth vs Brighton                       10   1-2 (3/10)            30.0%
+  West Ham vs Manchester Blue                   10   0-2 (3/10)            30.0%
+  Manchester Blue vs Sunderland                 10   3-0 (3/10)            30.0%
+
+====================================================================================================
+TEST 4 : BTTS PAR ÉQUIPE — qui produit le plus de matchs où les 2 marquent ?
+====================================================================================================
+
+  HOME : qui produit le plus de BTTS quand reçoit ?
+  Équipe                 n      BTTS%      Over%
+  Fulham                 229    65.1%     69.9%
+  Brentford              199    63.8%     71.9%
+  A. Villa               223    62.8%     66.4%
+  Manchester Red         219    61.6%     64.4%
+  West Ham               207    61.4%     56.0%
+  Bournemouth            231    60.6%     53.2%
+  Spurs                  225    60.4%     66.2%
+  C. Palace              215    58.6%     61.9%
+  Wolverhampton          233    58.4%     53.6%
+  N. Forest              224    58.0%     62.1%
+
+  AWAY : qui produit le plus de BTTS quand visiteur ?
+  Spurs                  208    67.8%     73.1%
+  Newcastle              218    65.1%     69.3%
+  Liverpool              217    63.6%     61.8%
+  Burnley                210    61.0%     70.5%
+  Brighton               227    60.4%     70.0%
+  Fulham                 203    59.6%     61.1%
+  Sunderland             217    59.0%     59.0%
+  Manchester Red         224    58.5%     56.7%
+  London Blues           222    58.1%     64.0%
+  Wolverhampton          220    56.8%     59.5%
