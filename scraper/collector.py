@@ -132,7 +132,13 @@ def _fetch_league_api(league_id: str, user_agent: str
                 return []  # round pas encore publié côté serveur
             if not ro.get("expectedStart") or str(ro.get("expectedStart")).startswith("0001"):
                 ro["expectedStart"] = r.get("expectedStart")
-            return parse_from_xhr_payload({"rounds": [ro]}, src_round)
+            evs2 = parse_from_xhr_payload({"rounds": [ro]}, src_round)
+            # ⚠️ Le payload /round wrappé perd le contexte de ligue -> le parser tague
+            # competition='InstantLeague' (sans suffixe). On force la bonne ligue, sinon
+            # tous les rounds futurs sont invisibles pour les lectures filtrées par ligue.
+            for x in evs2:
+                x.competition = f"InstantLeague-{league_id}"
+            return evs2
         except Exception as exc:  # noqa: BLE001
             log.warning("league %s round/%s fetch failed: %s", league_id, rid, exc)
             return []
