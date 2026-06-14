@@ -40,6 +40,18 @@ def _match_key(ev: VirtualEvent) -> str:
     return f"{ev.competition}|{ev.team_a}|{ev.team_b}|{ts}"
 
 
+def _naive_utc(dt):
+    """Normalise un datetime en UTC NAÏF (tzinfo retiré) pour un stockage SQLite
+    cohérent. Sans ça, certains events sont tz-aware ('+00:00') et d'autres naïfs,
+    ce qui casse pd.to_datetime/les comparaisons côté lecture."""
+    if dt is None:
+        return None
+    if dt.tzinfo is not None:
+        from datetime import timezone as _tz
+        return dt.astimezone(_tz.utc).replace(tzinfo=None)
+    return dt
+
+
 # ---------------------------------------------------------------------------
 # MODE API DIRECTE (multi-ligues) — pas de navigateur, pas de timeouts networkidle.
 # L'API Sporty-Tech répond aux GET simples avec Origin/Referer bet261.
@@ -96,24 +108,40 @@ def _fetch_league_api(league_id: str, user_agent: str
     #    et renvoie toujours le round imminent (→ doublons). On prend TOUS les rounds
     #    futurs listés (pas de cap). eventCategoryId est propre à la saison/ligue courante.
     rounds = payload.get("rounds", []) if isinstance(payload, dict) else []
-    cat = next((r.get("eventCategoryId") for r in rounds if r.get("eventCategoryId")), None)
-    estart = {r.get("id"): r.get("expectedStart") for r in rounds}
-    future_ids = [r.get("id") for r in rounds
-                  if not r.get("matches") and r.get("id") is not None]
-    if cat is not None:
-        for rid in future_ids:
-            src_round = f"{_API_BASE}/round/{rid}?eventCategoryId={cat}&getNext=false"
-            try:
+    # ⚠️ CHAQUE round porte SON PROPRE eventCategoryId. Aux transitions de saison,
+    # /matches mélange 2 saisons (cat A pour les rounds courants, cat B pour la
+    # suivante). Utiliser un cat GLOBAL fait échouer les fetches du mauvais cat
+    # -> on récupérait 1 round au lieu de 10. On prend donc le cat de CHAQUE round.
+    future_rounds = [r for r in rounds
+                     if not r.get("matches") and r.get("id") is not None
+                     and r.get("eventCategoryId") is not None]
+
+    def _fetch_round(r: dict) -> list[VirtualEvent]:
+        rid, rcat = r.get("id"), r.get("eventCategoryId")
+        src_round = f"{_API_BASE}/round/{rid}?eventCategoryId={rcat}&getNext=false"
+        try:
+            # 1 retry si l'API renvoie un round VIDE (matches:[]) de façon transitoire
+            ro = None
+            for attempt in range(2):
                 rp = _api_get(src_round, user_agent)
                 ro = rp.get("round") if isinstance(rp, dict) else None
-                if not isinstance(ro, dict):
-                    continue
-                # injecter l'heure réelle du round si /round la renvoie en placeholder
-                if not ro.get("expectedStart") or str(ro.get("expectedStart")).startswith("0001"):
-                    ro["expectedStart"] = estart.get(rid)
-                events.extend(parse_from_xhr_payload({"rounds": [ro]}, src_round))
-            except Exception as exc:  # noqa: BLE001
-                log.warning("league %s round/%s fetch failed: %s", league_id, rid, exc)
+                if isinstance(ro, dict) and ro.get("matches"):
+                    break
+                _time.sleep(0.3)
+            if not isinstance(ro, dict) or not ro.get("matches"):
+                return []  # round pas encore publié côté serveur
+            if not ro.get("expectedStart") or str(ro.get("expectedStart")).startswith("0001"):
+                ro["expectedStart"] = r.get("expectedStart")
+            return parse_from_xhr_payload({"rounds": [ro]}, src_round)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("league %s round/%s fetch failed: %s", league_id, rid, exc)
+            return []
+
+    # Parallélise les fetches /round (rapidité : ~9 appels en parallèle vs séquentiel).
+    if future_rounds:
+        with ThreadPoolExecutor(max_workers=min(10, len(future_rounds))) as pool:
+            for evs2 in pool.map(_fetch_round, future_rounds):
+                events.extend(evs2)
 
     # 3. résultats récents (take=12 ≈ 25 min d'historique : amortit les coupures réseau)
     src_results = f"{base}/results?skip=0&take=12"
@@ -275,7 +303,7 @@ def _merge_event(session, ev: VirtualEvent) -> Event:
             team_a=ev.team_a,
             team_b=ev.team_b,
             round_info=ev.round_info,
-            expected_start=ev.expected_start,
+            expected_start=_naive_utc(ev.expected_start),
             source_url=ev.source_url,
         )
         session.add(event)
@@ -290,15 +318,13 @@ def _merge_event(session, ev: VirtualEvent) -> Event:
         if ev.round_info and ev.round_info != "0":
             if not event.round_info or event.round_info == "0":
                 event.round_info = ev.round_info
-        # Toujours mettre a jour expected_start vers le PLUS RECENT (prochaine occurrence)
-        if ev.expected_start:
-            current = event.expected_start
-            # Si current est naive, on l'aligne en UTC
-            if current is not None and current.tzinfo is None:
-                from datetime import timezone as _tz
-                current = current.replace(tzinfo=_tz.utc)
-            if current is None or ev.expected_start > current:
-                event.expected_start = ev.expected_start
+        # Mettre a jour expected_start vers le PLUS RECENT (prochaine occurrence),
+        # toujours en UTC NAÏF pour un stockage cohérent.
+        new_es = _naive_utc(ev.expected_start)
+        if new_es is not None:
+            current = _naive_utc(event.expected_start)
+            if current is None or new_es > current:
+                event.expected_start = new_es
     return event
 
 
@@ -308,88 +334,93 @@ def _persist(events: list[VirtualEvent], rankings: list[TeamRanking], run_id: in
         if run is None:
             raise RuntimeError(f"ScrapeRun {run_id} disappeared")
 
+        # Dédup du batch par match_key : le round-robin + le chevauchement avec le
+        # feed /results créent des match_keys en double dans un même batch -> churn de
+        # contrainte. On garde la version la + riche (celle qui porte un score).
+        dedup: dict[str, VirtualEvent] = {}
         for ev in events:
             if not ev.team_a or not ev.team_b or ev.round_info is None:
                 continue
-            # Garde-fou anti-doublon : ignorer tout match sans vraie date (sentinelle
-            # '0001-01-01' des rounds futurs sans cotes). Sinon un match_key fantôme
-            # est créé puis dupliqué quand le round devient imminent avec sa vraie date.
+            # Ignorer tout match sans vraie date (sentinelle '0001-01-01' des rounds
+            # futurs pas encore publiés) -> évite un match_key fantôme dupliqué ensuite.
             if ev.expected_start is None or ev.expected_start.year < 2000:
                 continue
-            event = _merge_event(session, ev)
-            run.events_seen += 1
+            k = _match_key(ev)
+            prev = dedup.get(k)
+            if prev is None or (ev.score_a is not None and prev.score_a is None):
+                dedup[k] = ev
 
-            has_any_odd = any(
-                v is not None for v in (ev.odds_home, ev.odds_draw, ev.odds_away)
-            )
-            if has_any_odd:
-                odds_payload = {
-                    "odds_home": ev.odds_home,
-                    "odds_draw": ev.odds_draw,
-                    "odds_away": ev.odds_away,
-                    "status": ev.status,
-                    "extra": {k: v for k, v in ev.extra_markets.items()
-                              if k not in ("goals", "halfTimeScore")},
-                }
-                content_hash = hash_payload({**odds_payload, "event": event.id})
-                already = session.scalar(
-                    select(OddsSnapshot).where(
-                        OddsSnapshot.event_id == event.id,
-                        OddsSnapshot.content_hash == content_hash,
-                    )
-                )
-                if already is None:
-                    session.add(OddsSnapshot(
-                        event_id=event.id,
-                        status=ev.status,
-                        odds_home=ev.odds_home,
-                        odds_draw=ev.odds_draw,
-                        odds_away=ev.odds_away,
-                        extra_markets=odds_payload["extra"] or None,
-                        content_hash=content_hash,
-                        scrape_run_id=run_id,
-                    ))
-                    run.snapshots_inserted += 1
+        for ev in dedup.values():
+            # Savepoint PAR EVENT : un échec isolé (collision de contrainte, doublon de
+            # résultat) n'annule que CET event, pas tout le batch. Corrige la perte
+            # silencieuse des rounds futurs (90 fetchés -> 0 persistés sans erreur).
+            try:
+                with session.begin_nested():
+                    event = _merge_event(session, ev)
+                    run.events_seen += 1
 
-            if ev.score_a is not None and ev.score_b is not None:
-                # Garde-fou : si l'event est vieux de plus de 6h et qu'on tente d'attacher
-                # un résultat maintenant, c'est suspect (probable bug match_key résiduel).
-                from datetime import timezone as _tz_check
-                now_check = utcnow()
-                if event.expected_start:
-                    exp = event.expected_start
-                    if exp.tzinfo is None:
-                        exp = exp.replace(tzinfo=_tz_check.utc)
-                    delta_h = (now_check - exp).total_seconds() / 3600
-                    if delta_h > 6:
-                        log.warning(
-                            "skipping result for event %d : expected_start too old (%.1fh ago)",
-                            event.id, delta_h
+                    if any(v is not None for v in (ev.odds_home, ev.odds_draw, ev.odds_away)):
+                        odds_payload = {
+                            "odds_home": ev.odds_home,
+                            "odds_draw": ev.odds_draw,
+                            "odds_away": ev.odds_away,
+                            "status": ev.status,
+                            "extra": {k: v for k, v in ev.extra_markets.items()
+                                      if k not in ("goals", "halfTimeScore")},
+                        }
+                        content_hash = hash_payload({**odds_payload, "event": event.id})
+                        already = session.scalar(
+                            select(OddsSnapshot).where(
+                                OddsSnapshot.event_id == event.id,
+                                OddsSnapshot.content_hash == content_hash,
+                            )
                         )
-                        continue
+                        if already is None:
+                            session.add(OddsSnapshot(
+                                event_id=event.id,
+                                status=ev.status,
+                                odds_home=ev.odds_home,
+                                odds_draw=ev.odds_draw,
+                                odds_away=ev.odds_away,
+                                extra_markets=odds_payload["extra"] or None,
+                                content_hash=content_hash,
+                                scrape_run_id=run_id,
+                            ))
+                            run.snapshots_inserted += 1
 
-                existing = session.scalar(
-                    select(Result).where(Result.event_id == event.id)
-                )
-                if existing is None:
-                    session.add(Result(
-                        event_id=event.id,
-                        score_a=ev.score_a,
-                        score_b=ev.score_b,
-                        raw_score=ev.raw_score,
-                        ht_score_a=ev.ht_score_a,
-                        ht_score_b=ev.ht_score_b,
-                        goals_json=ev.goals,
-                        scrape_run_id=run_id,
-                    ))
-                    run.results_inserted += 1
-                else:
-                    # backfill HT et goals si on les n'avait pas
-                    if existing.ht_score_a is None and ev.ht_score_a is not None:
-                        existing.ht_score_a = ev.ht_score_a
-                        existing.ht_score_b = ev.ht_score_b
-                    if existing.goals_json is None and ev.goals:
-                        existing.goals_json = ev.goals
+                    if ev.score_a is not None and ev.score_b is not None:
+                        # ne pas rattacher un résultat à un event vieux de >6h (suspect)
+                        from datetime import timezone as _tz_check
+                        too_old = False
+                        if event.expected_start:
+                            exp = event.expected_start
+                            if exp.tzinfo is None:
+                                exp = exp.replace(tzinfo=_tz_check.utc)
+                            too_old = (utcnow() - exp).total_seconds() / 3600 > 6
+                        if not too_old:
+                            existing = session.scalar(
+                                select(Result).where(Result.event_id == event.id)
+                            )
+                            if existing is None:
+                                session.add(Result(
+                                    event_id=event.id,
+                                    score_a=ev.score_a,
+                                    score_b=ev.score_b,
+                                    raw_score=ev.raw_score,
+                                    ht_score_a=ev.ht_score_a,
+                                    ht_score_b=ev.ht_score_b,
+                                    goals_json=ev.goals,
+                                    scrape_run_id=run_id,
+                                ))
+                                run.results_inserted += 1
+                            else:
+                                if existing.ht_score_a is None and ev.ht_score_a is not None:
+                                    existing.ht_score_a = ev.ht_score_a
+                                    existing.ht_score_b = ev.ht_score_b
+                                if existing.goals_json is None and ev.goals:
+                                    existing.goals_json = ev.goals
+            except Exception as exc:  # noqa: BLE001
+                log.warning("persist: %s vs %s ignoré: %s", ev.team_a, ev.team_b, exc)
 
         for r in rankings:
             rank_payload = {
