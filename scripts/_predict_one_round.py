@@ -31,7 +31,7 @@ from scraper.market_inversion import (
 from scraper.halftime_model import ht_predictions
 
 MG_TZ = timezone(timedelta(hours=3))
-TARGET = "23:21"
+TARGET = "00:24"
 
 # Registre des cles combinees (Track B) — optionnel, charge si present
 import json as _json
@@ -87,6 +87,15 @@ def _narrow_lookup(nt, lam_tot, lam_diff, p_btts):
     if not (tl and dl and bl):
         return None
     return nt["cells"].get(f"{tl}|{dl}|{bl}")
+def _chain_lookup(ct, lam_tot, lam_diff, p_btts):
+    """Table de chaînage validée OOS+3-fold (total×dominance×BTTS → score+direction)."""
+    if not ct or p_btts is None:
+        return None
+    b = ct["_bands"]
+    tl = _band(lam_tot, b["tot"]); dl = _band(lam_diff, b["diff"]); bl = _band(p_btts, b["btts"])
+    if not (tl and dl and bl):
+        return None
+    return ct["cells"].get(f"{tl}|{dl}|{bl}")
 
 
 def main():
@@ -160,6 +169,7 @@ def main():
     ck_binspec = _load_binspec()
     totals_cal = _load_json("totals_calibration.json")
     narrow_tab = _load_json("narrow_table.json")
+    chain_tab = _load_json("chain_table.json")
 
     for i, (_, m) in enumerate(matches.iterrows(), 1):
         pred5 = predict_match_v5(model_v5, m.team_a, m.team_b, m.odds_home, m.odds_draw, m.odds_away,
@@ -333,6 +343,19 @@ def main():
             evs = f" · EV OOS {float(ev_raw):+.0f}% (n={nb['n']}, non confirmé)" if ev_raw not in (None, "None") else ""
             cts = f"@{nb['cote']}" if nb.get("cote") not in (None, "None") else ""
             print(f"│  🔑 Chaînage → score le + probable : {nb['score']} ({nb['rate']}%) {cts}{evs}")
+        # 🎯 EDGE TOTAL — règle confirmée OOS + 3-fold (sur le total attendu = λ_tot).
+        # Under3.5 si λ_tot<2.45 (~76% réel) ; Over2.5 si λ_tot≥3.13 (~72%). Zone morte au milieu.
+        if lam_tot_v < 2.45:
+            print(f"│  🎯 EDGE TOTAL : Under 3.5 (~76% — total attendu {lam_tot_v:.2f} < 2.45, validé 3-fold)")
+            safe_picks.append(("EDGE_TOTAL", f"{m.team_a} vs {m.team_b}", "Under 3.5", None, 0.76))
+        elif lam_tot_v >= 3.13:
+            print(f"│  🎯 EDGE TOTAL : Over 2.5 (~72% — total attendu {lam_tot_v:.2f} ≥ 3.13, validé 3-fold)")
+            safe_picks.append(("EDGE_TOTAL", f"{m.team_a} vs {m.team_b}", "Over 2.5", None, 0.72))
+        # 🎯 EDGE CHAÎNAGE — table total×dominance×BTTS → score + direction (9 cellules robustes OOS).
+        ch = _chain_lookup(chain_tab, lam_tot_v, lam_diff_v, gp["btts_oui"])
+        if ch:
+            print(f"│  🎯 CHAÎNAGE : modal {ch['score']} | Top-3 {'+'.join(ch['top3'])} "
+                  f"({ch['top3_cum']*100:.0f}% réel) | {ch['ou']} {ch['ou_rate']*100:.0f}%")
         # NB : EV inversion/chaînage = indicatifs (le minage rigoureux a trouvé 0 clé +EV
         # après Bonferroni). On N'ALIMENTE PAS le RÉCAP des picks (info seulement).
         # Cles combinees CONFIRMED/WATCH (Track B) touchees par ce match
