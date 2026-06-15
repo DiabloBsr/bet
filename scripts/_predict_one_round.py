@@ -31,7 +31,7 @@ from scraper.market_inversion import (
 from scraper.halftime_model import ht_predictions
 
 MG_TZ = timezone(timedelta(hours=3))
-TARGET = "00:24"
+TARGET = "18:36"
 
 # Registre des cles combinees (Track B) — optionnel, charge si present
 import json as _json

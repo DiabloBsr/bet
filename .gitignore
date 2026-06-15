@@ -28,3 +28,10 @@ exports/*_extra.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Scratch généré par les workflows (analyses one-shot)
+scripts/_wfa_*
+scripts/_wfr_*
+scripts/_wfv_*
+exports/_wfa_*
+exports/_wfr_*
