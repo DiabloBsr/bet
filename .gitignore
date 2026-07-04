@@ -35,3 +35,10 @@ scripts/_wfr_*
 scripts/_wfv_*
 exports/_wfa_*
 exports/_wfr_*
+
+# Gros artefacts d'analyse (non versionnés)
+exports/
+logs/
+*.out
+.scratch_*
+nohup.out
