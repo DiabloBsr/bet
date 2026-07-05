@@ -3,7 +3,8 @@
 streamlit run scripts/aviator/dashboard.py --server.port 8514
 """
 from __future__ import annotations
-import sqlite3, sys
+import json as _json, sqlite3, sys, time
+from datetime import datetime as _dt, timezone as _tz
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -54,8 +55,64 @@ def main():
     st.subheader("📊 Derniers résultats")
     st.write(" · ".join(f"**{x:.2f}×**" if x >= 10 else f"{x:.2f}×" for x in m[-30:][::-1]))
 
-    tab_p, tab_a, tab_s, tab_c = st.tabs(
-        ["🔮 Prochain round", "🔬 Audit d'équité", "🎯 Simulateur de stratégie", "⚖️ Comparateur"])
+    tab_live, tab_p, tab_a, tab_s, tab_c = st.tabs(
+        ["🎮 Cockpit live", "🔮 Prochain round", "🔬 Audit d'équité",
+         "🎯 Simulateur de stratégie", "⚖️ Comparateur"])
+
+    with tab_live:
+        auto = st.toggle("🔄 Rafraîchir en direct (2 s)", value=False, key="live_auto")
+        live = {}
+        lp = ROOT / "data" / "aviator_live.json"
+        if lp.exists():
+            try:
+                live = _json.loads(lp.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+        fresh = False
+        if live.get("updated"):
+            try:
+                fresh = (_dt.now(_tz.utc) - _dt.fromisoformat(live["updated"])).total_seconds() < 15
+            except Exception:
+                pass
+        g = st.columns(3)
+        if fresh:
+            phmap = {"BETTING": "🟢 Mises ouvertes", "GAME_STARTED": "✈️ En vol",
+                     "MULTIPLIER_UPDATE": "✈️ En vol", "WAITING": "⏳ Attente"}
+            g[0].metric("Round en cours", phmap.get(live.get("phase"), live.get("phase") or "—"))
+            cur = live.get("current")
+            g[1].metric("Multiplicateur live", f"{cur:.2f}×" if cur else "—")
+            lc = live.get("last_crash")
+            g[2].metric("Dernier crash", f"{lc:.2f}×" if lc else "—")
+        else:
+            g[0].metric("Round en cours", "hors-ligne")
+            st.caption("⚠️ Pas de flux live — lance le collecteur "
+                       "(`python scripts/aviator/collector_service.py`) et garde-le ouvert.")
+
+        st.markdown("### 🎯 Ta sortie conseillée")
+        risk = st.radio("Profil de risque", ["🛡️ Prudent", "⚖️ Équilibré", "🔥 Agressif"],
+                        horizontal=True, index=1)
+        winrate = {"🛡️ Prudent": 0.68, "⚖️ Équilibré": 0.50, "🔥 Agressif": 0.22}[risk]
+        tgt = max(1.05, round(float(np.quantile(m, 1 - winrate)), 2))
+        p = float((m >= tgt).mean()); ev = p * tgt - 1
+        q = st.columns(3)
+        q[0].metric("Cash-out conseillé", f"{tgt:.2f}×")
+        q[1].metric("Chance de réussite", f"{100*p:.0f}%", f"sur {len(m)} manches")
+        q[2].metric("Espérance / mise", f"{100*ev:+.1f}%")
+        st.caption("⚠️ Ce n'est PAS une prédiction du crash (impossible) : c'est le seuil de sortie "
+                   "qui, historiquement, réussit à ce taux. Tu choisis ton compromis risque/gain — "
+                   "règle un **auto-cash-out** à cette valeur dans le jeu et tiens-t'y (discipline).")
+
+        st.markdown("**📊 Échelle des sorties — choisis en connaissance de cause**")
+        ladder = [1.3, 1.5, 2, 3, 5, 10]
+        rows = [{"sortie": f"{t}×", "réussite": f"{100*(m>=t).mean():.0f}%",
+                 "EV/mise": f"{100*((m>=t).mean()*t-1):+.0f}%",
+                 "profil": "🛡️" if (m >= t).mean() >= .6 else ("⚖️" if (m >= t).mean() >= .4 else "🔥")}
+                for t in ladder]
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+        st.markdown("**Derniers crashs :** " +
+                    " · ".join(f"**{x:.2f}×**" if x >= 10 else f"{x:.2f}×" for x in m[-24:][::-1]))
+        if auto:
+            time.sleep(2); st.rerun()
 
     with tab_p:
         st.markdown("### 🔮 Prédiction du prochain round")

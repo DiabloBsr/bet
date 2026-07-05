@@ -99,6 +99,18 @@ def main():
         if not game_url:
             print("⚠ jeu introuvable (connexion ?) — abandon"); ctx.close(); return
 
+        import json as _json
+        LIVE = ROOT / "data" / "aviator_live.json"
+        live = {"phase": None, "current": 1.0, "last_crash": None, "updated": None}
+        _lw = [0.0]
+
+        def write_live():
+            live["updated"] = datetime.now(timezone.utc).isoformat()
+            try:
+                LIVE.write_text(_json.dumps(live), encoding="utf-8")
+            except Exception:
+                pass
+
         def on_ws(ws):
             def handle(pl):
                 r = decode(pl)
@@ -110,9 +122,23 @@ def main():
                     if n:
                         print(f"  +{n} manches (total {len(seen)})", flush=True)
                 elif ev == "ONGOING_ROUND" and isinstance(payload, dict):
-                    prev = (payload.get("previousRoundData") or {}).get("multiplier")
-                    rid = payload.get("roundId")
-                    # la manche précédente n'a pas toujours d'_id ici -> ignorée, ROUNDS_HISTORY couvre
+                    live["phase"] = payload.get("phase") or live["phase"]
+                    lc = (payload.get("previousRoundData") or {}).get("multiplier")
+                    if lc:
+                        live["last_crash"] = lc
+                    write_live()
+                elif ev == "GAME_UPDATE" and isinstance(payload, dict):
+                    live["phase"] = payload.get("phase") or live["phase"]
+                    if live["phase"] == "BETTING":
+                        live["current"] = 1.0
+                    write_live()
+                elif ev == "MULTIPLIER_UPDATE":
+                    try:
+                        live["current"] = float(payload)
+                    except Exception:
+                        return
+                    if time.time() - _lw[0] > 0.4:       # throttle écriture ~2/s
+                        _lw[0] = time.time(); write_live()
             ws.on("framereceived", handle)
         page.on("websocket", on_ws)
 
