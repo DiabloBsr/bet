@@ -4,16 +4,29 @@ set -u
 
 DB=/data/virtual_sports.db
 
-# ---- 1. seed de la base au premier démarrage (release GitHub privée) ----
+# ---- 1. seed de la base au premier démarrage ----
+# Ordre : (a) seed embarqué dans l'image (repo/HF Space), (b) release GitHub
+# privée si GH_TOKEN fourni, (c) sinon base vide (le scraper accumulera).
 if [ ! -s "$DB" ]; then
-  echo "[start] base absente -> téléchargement du seed…"
-  ASSET_ID=$(curl -s -H "Authorization: token ${GH_TOKEN}" \
-    "https://api.github.com/repos/DiabloBsr/bet/releases/tags/seed-db" \
-    | python -c "import json,sys; print(json.load(sys.stdin)['assets'][0]['id'])")
-  curl -sL -H "Authorization: token ${GH_TOKEN}" -H "Accept: application/octet-stream" \
-    "https://api.github.com/repos/DiabloBsr/bet/releases/assets/${ASSET_ID}" -o /tmp/seed.gz
-  gunzip -c /tmp/seed.gz > "$DB" && rm -f /tmp/seed.gz
-  echo "[start] seed installé : $(du -h "$DB" | cut -f1)"
+  if [ -s /app/seed/virtual_sports_seed.db.gz ]; then
+    echo "[start] seed embarqué -> installation…"
+    gunzip -c /app/seed/virtual_sports_seed.db.gz > "$DB"
+  elif [ -n "${GH_TOKEN:-}" ]; then
+    echo "[start] téléchargement du seed (release GitHub)…"
+    ASSET_ID=$(curl -s -H "Authorization: token ${GH_TOKEN}" \
+      "https://api.github.com/repos/DiabloBsr/bet/releases/tags/seed-db" \
+      | python -c "import json,sys; print(json.load(sys.stdin)['assets'][0]['id'])" || echo "")
+    if [ -n "$ASSET_ID" ]; then
+      curl -sL -H "Authorization: token ${GH_TOKEN}" -H "Accept: application/octet-stream" \
+        "https://api.github.com/repos/DiabloBsr/bet/releases/assets/${ASSET_ID}" -o /tmp/seed.gz \
+        && gunzip -c /tmp/seed.gz > "$DB" && rm -f /tmp/seed.gz
+    fi
+  fi
+  if [ -s "$DB" ]; then
+    echo "[start] seed installé : $(du -h "$DB" | cut -f1)"
+  else
+    echo "[start] AVERTISSEMENT : pas de seed (GH_TOKEN absent ?) -> base vide, le scraper accumule."
+  fi
 fi
 
 # ---- 2. calibration embarquée -> emplacement attendu par predict_trio ----
