@@ -154,6 +154,21 @@ def market_board(extra_markets, oh, od, oa) -> dict:
     return board
 
 
+# marchés "sûrs" pour le cadran de précision (du plus fin au plus large)
+CONF_MARKETS = ["1X2", "Mi-tps 1X2", "+/-", "G/NG", "Double Chance", "Mi-tps DC",
+                "Total de buts", "Multi-Buts"]
+
+
+def pick_for_confidence(board: dict, target: float):
+    """Meilleur pari (cote la plus haute) dont la proba >= target, tous marchés sûrs
+    confondus. Rend (marché, sélection, proba, cote) ou None si aucun n'atteint target."""
+    cands = [(mkt, s, p, o) for mkt in CONF_MARKETS
+             for (s, p, o) in (board.get(mkt) or []) if p >= target]
+    if not cands:
+        return None
+    return max(cands, key=lambda r: r[3])          # cote max qui tient la confiance
+
+
 # marchés autorisés pour le combiné conseillé : marges fines (~5.7-7.3%) + les
 # CONJONCTIFS natifs (1X2&Total ~8.7%, 1X2&G/NG ~10.3%) — moins chers que
 # d'empiler 2 jambes du même match (2x6% composés = ~12%) pour monter la cote.

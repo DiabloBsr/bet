@@ -146,6 +146,15 @@ def main():
         except Exception:
             cd = ""
         st.success(f"Round {res['target']} Mada — {len(res['matches'])} matchs   {cd}")
+        # ---- CADRAN DE PRÉCISION : choisis ta confiance -> meilleur pari par match ----
+        import predict_trio as _ptc
+        cpr1, cpr2 = st.columns([3, 2])
+        want_conf = cpr1.slider("🎯 Je veux être sûr à… (%)", 50, 95, 70, 5,
+                                help="Pour chaque match, l'app cherche le pari à la COTE la plus haute "
+                                     "dont la probabilité atteint ce seuil. Monte le seuil = plus sûr mais "
+                                     "cote plus basse ; baisse-le = plus payant mais plus risqué.") / 100.0
+        cpr2.caption("La précision est un **cadran** : score exact ~31%, mais 1X2 ~55%, "
+                     "O/U ~62%, Double Chance ~74%, bandes larges ~80%.")
         # ---- FILTRE CONFIANCE (prédiction sélective) ----
         matches_all = res["matches"]
         hi_only = st.toggle("🎯 Haute confiance seulement (matchs les plus prévisibles)", value=False,
@@ -168,6 +177,13 @@ def main():
                 st.markdown(f"**{m['match']}**  \n`{m['cotes'][0]}/{m['cotes'][1]}/{m['cotes'][2]}`")
                 st.markdown(f"1 **{ph*100:.0f}%** · X {pd_*100:.0f}% · 2 **{pa*100:.0f}%**")
                 st.caption(f"confiance {badge} ({conf*100:.0f}% de masse Top-3)")
+                pick = _ptc.pick_for_confidence(m.get("board") or {}, want_conf)
+                if pick:
+                    pmk, ps, pp, po = pick
+                    st.success(f"🎯 Pour ≥{want_conf*100:.0f}% : **{ps}** [{pmk}] — "
+                               f"{pp*100:.0f}% · cote {po:g}")
+                else:
+                    st.warning(f"Aucun pari ≥{want_conf*100:.0f}% sur ce match (baisse le seuil).")
                 acc = m.get("accord", "?")
                 badge = "🟢" if acc.startswith("3/") else ("🟡" if acc.startswith("2/") else "🔴")
                 st.caption(f"{badge} accord moteurs : {acc}")
