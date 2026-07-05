@@ -296,6 +296,7 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
             "market_top3": [(s, round(p, 3)) for s, p in mkttop[:3]],
             "consensus_top3": [(s, round(p, 3)) for s, p in ctop],
             "top1_calibre": (top1_cal[0], round(top1_cal[1], 3)) if top1_cal else None,
+            "confidence": round(sum(p for _, p in ctop), 3),   # masse Top-3 = concentration
             "board": market_board(extra_markets, oh, od, oa),
             "accord": accord}
 

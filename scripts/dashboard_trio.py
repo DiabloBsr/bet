@@ -146,12 +146,28 @@ def main():
         except Exception:
             cd = ""
         st.success(f"Round {res['target']} Mada — {len(res['matches'])} matchs   {cd}")
-        for m in res["matches"]:
+        # ---- FILTRE CONFIANCE (prédiction sélective) ----
+        matches_all = res["matches"]
+        hi_only = st.toggle("🎯 Haute confiance seulement (matchs les plus prévisibles)", value=False,
+                            help="Ne montre que les matchs à forte concentration Top-3 (~masse ≥0.32). "
+                                 "Le Top-3 réel y grimpe à ~36-39% au lieu de 31% — MAIS ce n'est ni 100% "
+                                 "ni rentable (cotes basses). Concentre ton attention, ne promet rien.")
+        HI = 0.32
+        shown = [m for m in matches_all if (m.get("confidence") or 0) >= HI] if hi_only else matches_all
+        if hi_only:
+            st.caption(f"🎯 {len(shown)}/{len(matches_all)} matchs à haute confiance ce round "
+                       f"(Top-3 attendu ~36-39% vs 31% global).")
+            if not shown:
+                st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
+        for m in shown:
             ph, pd_, pa = m["x12"]
+            conf = m.get("confidence") or 0
+            badge = "🟢 haute" if conf >= 0.32 else ("🟡 moyenne" if conf >= 0.29 else "🔴 faible")
             c1, c2, c3 = st.columns([3, 2, 3])
             with c1:
                 st.markdown(f"**{m['match']}**  \n`{m['cotes'][0]}/{m['cotes'][1]}/{m['cotes'][2]}`")
                 st.markdown(f"1 **{ph*100:.0f}%** · X {pd_*100:.0f}% · 2 **{pa*100:.0f}%**")
+                st.caption(f"confiance {badge} ({conf*100:.0f}% de masse Top-3)")
                 acc = m.get("accord", "?")
                 badge = "🟢" if acc.startswith("3/") else ("🟡" if acc.startswith("2/") else "🔴")
                 st.caption(f"{badge} accord moteurs : {acc}")
