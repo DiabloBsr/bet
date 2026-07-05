@@ -16,8 +16,8 @@ def inject_theme(st, accent: str = "#22c55e", accent2: str = "#2dd4bf", accent3:
 
 :root {{
   --accent: {accent}; --accent2: {accent2}; --accent3: {accent3};
-  --bg: #07090c; --surface: rgba(255,255,255,.035); --stroke: rgba(255,255,255,.09);
-  --text: #e8eef4; --muted: #8b98a6;
+  --bg: #0a0d12; --surface: rgba(255,255,255,.045); --stroke: rgba(255,255,255,.11);
+  --text: #eef3f8; --muted: #b4c0cd;
 }}
 
 /* fond near-black + halos + grille de points (dot-pattern glow) */
@@ -30,13 +30,27 @@ def inject_theme(st, accent: str = "#22c55e", accent2: str = "#2dd4bf", accent3:
 }}
 [data-testid="stAppViewContainer"]::before {{
   content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 22px 22px; mask-image: radial-gradient(1200px 600px at 50% 0%, #000 25%, transparent 75%);
+  background-image: radial-gradient(rgba(255,255,255,.028) 1px, transparent 1px);
+  background-size: 26px 26px; mask-image: radial-gradient(900px 400px at 50% -5%, #000 20%, transparent 70%);
 }}
 [data-testid="stHeader"] {{ background: transparent; }}
 .block-container {{ padding-top: 2.2rem; position: relative; z-index: 1; max-width: 1300px; }}
 html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; color: var(--text); }}
-h1,h2,h3 {{ font-family: 'Space Grotesk', sans-serif; letter-spacing: -.02em; }}
+h1,h2,h3,h4 {{ font-family: 'Space Grotesk', sans-serif; letter-spacing: -.02em; color: #fff; }}
+
+/* ---- LISIBILITÉ : texte et captions bien contrastés ---- */
+[data-testid="stMarkdownContainer"], [data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li, [data-testid="stText"], .stMarkdown {{
+  color: var(--text); font-size: .95rem;
+}}
+[data-testid="stMarkdownContainer"] strong {{ color: #fff; }}
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p,
+[data-testid="stCaptionContainer"] * {{ color: var(--muted) !important; font-size: .84rem; }}
+/* alertes (info/warning/error/success) : fond lisible + texte clair */
+[data-testid="stAlert"] {{ background: rgba(255,255,255,.05); backdrop-filter: blur(6px); }}
+[data-testid="stAlert"] * {{ color: #f2f6fa !important; }}
+[data-testid="stAlert"][data-baseweb="notification"] p {{ color: #f2f6fa !important; }}
+label, [data-testid="stWidgetLabel"] p {{ color: var(--text) !important; font-weight: 600; }}
 
 /* ---- HERO ---- */
 .trio-hero {{ margin: 0 0 1.4rem; }}

@@ -96,6 +96,32 @@ def main():
                     "C'est la preuve mathématique de l'imprévisibilité — utilise le simulateur pour "
                     "gérer ton RISQUE, la seule variable que tu contrôles.")
 
+        st.divider()
+        st.markdown("### 🎰 Gros multiplicateurs — fréquence & attente")
+        st.caption("Ta question : « quand un x10/x15/x20 est-il probable ? » Réponse honnête : "
+                   "**chaque round a la même chance, le passé n'y change rien**. Voici les vraies "
+                   "probabilités par palier (1 round ≈ 30 s).")
+        tiers = [5, 10, 15, 20, 50]
+        cols = st.columns(len(tiers))
+        for c, T in zip(cols, tiers):
+            p = (m >= T).mean()
+            if p > 0:
+                wr = 1 / p
+                c.metric(f"≥ {T}×", f"{100*p:.1f}%", f"~1 tous les {wr:.0f} rounds (~{wr*0.5:.0f} min)")
+            else:
+                c.metric(f"≥ {T}×", "0 vu", f"n={len(m)}")
+        # sécheresse courante + verdict "pas dû"
+        since = 0
+        for x in m[::-1]:
+            if x >= 10:
+                break
+            since += 1
+        base10 = (m >= 10).mean()
+        st.warning(f"⛽ Sécheresse actuelle : **{since} rounds** sans ≥10×. "
+                   f"⚠️ Ça ne rend PAS un gros plus probable : P(≥10× au prochain) reste "
+                   f"**{100*base10:.0f}%** (prouvé : la théorie du « dû » est fausse sur nos données). "
+                   "Le crash est sans mémoire — ne « chasse » jamais un gros après une série de petits.")
+
     with tab_a:
         st.markdown("**Distribution des multiplicateurs de crash**")
         bins = [1, 1.2, 1.5, 2, 3, 5, 10, 20, 50, 1000]
