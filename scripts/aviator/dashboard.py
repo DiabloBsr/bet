@@ -54,7 +54,47 @@ def main():
     st.subheader("📊 Derniers résultats")
     st.write(" · ".join(f"**{x:.2f}×**" if x >= 10 else f"{x:.2f}×" for x in m[-30:][::-1]))
 
-    tab_a, tab_s, tab_c = st.tabs(["🔬 Audit d'équité", "🎯 Simulateur de stratégie", "⚖️ Comparateur"])
+    tab_p, tab_a, tab_s, tab_c = st.tabs(
+        ["🔮 Prochain round", "🔬 Audit d'équité", "🎯 Simulateur de stratégie", "⚖️ Comparateur"])
+
+    with tab_p:
+        st.markdown("### 🔮 Prédiction du prochain round")
+        st.error("⚠️ **Le multiplicateur exact est IMPRÉVISIBLE** — le crash est scellé "
+                 "cryptographiquement (provably-fair) AVANT ta mise. Personne ne peut le prédire, "
+                 "et tout « prédicteur Aviator » qui promet un chiffre est une **arnaque**. "
+                 "Voici la SEULE prédiction honnête : la **probabilité** que ton objectif soit atteint.")
+        cp = st.columns([2, 2, 3])
+        T = cp[0].number_input("Ton objectif de cash-out ×", 1.05, 100.0, 2.0, 0.1)
+        _t = cp[1].text_input("Heure du round (optionnel)", value="", placeholder="ex 21:30")
+        # proba de survie + IC Wilson
+        k = int((m >= T).sum()); n = len(m); p = k / n
+        z = 1.96
+        cen = (p + z*z/(2*n)) / (1 + z*z/n)
+        half = z*np.sqrt(p*(1-p)/n + z*z/(4*n*n)) / (1 + z*z/n)
+        lo, hi = max(0, cen-half), min(1, cen+half)
+        cp[2].metric(f"P(prochain ≥ {T:g}×)", f"{100*p:.1f}%",
+                     f"IC95 [{100*lo:.0f}–{100*hi:.0f}%] · n={n}")
+        if _t.strip():
+            st.caption(f"⏱️ Heure saisie « {_t} » — **ça ne change RIEN** : les manches sont "
+                       "i.i.d. (indépendantes). La proba ci-dessus vaut pour N'IMPORTE quel round.")
+        # « au plus proche du résultat » : la distribution honnête, par percentiles
+        st.markdown("**Le plus proche possible du résultat = la distribution (pas un chiffre)** :")
+        qs = [50, 25, 10, 5, 1]
+        cols = st.columns(len(qs))
+        for c, q in zip(cols, qs):
+            thr = np.percentile(m, 100 - q)
+            c.metric(f"{q}% de chance ≥", f"{thr:.2f}×")
+        st.caption(f"Médiane {np.median(m):.2f}× · un cash-out prudent vise ≤ médiane. "
+                   "Ces seuils sont l'estimation la plus proche possible — le reste est du hasard pur.")
+        # preuve live que le passé ne prédit pas le futur
+        if n > 15:
+            lm = np.log(np.clip(m, 1, None))
+            a, b = lm[:-1] - lm[:-1].mean(), lm[1:] - lm[1:].mean()
+            corr = float((a @ b) / (np.sqrt((a@a)*(b@b)) or 1))
+            st.info(f"🔬 Corrélation entre manche N et N+1 : **{corr:+.3f}** "
+                    f"({'≈ 0 → le passé ne prédit RIEN' if abs(corr) < 0.15 else 'à surveiller'}). "
+                    "C'est la preuve mathématique de l'imprévisibilité — utilise le simulateur pour "
+                    "gérer ton RISQUE, la seule variable que tu contrôles.")
 
     with tab_a:
         st.markdown("**Distribution des multiplicateurs de crash**")
