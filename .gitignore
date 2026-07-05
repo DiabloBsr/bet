@@ -42,3 +42,6 @@ logs/
 *.out
 .scratch_*
 nohup.out
+.bet_session/
+aviator.db
+data/aviator.db
