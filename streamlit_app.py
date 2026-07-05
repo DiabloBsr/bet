@@ -200,9 +200,14 @@ def render_round(lg_name: str, want) -> None:
 
 def main():
     st.set_page_config(page_title="Bet261 Virtual â€” LIVE", page_icon="âš½", layout="wide")
-    st.title("âš½ Bet261 Virtual Football â€” prÃ©diction LIVE (cloud)")
-    st.caption("Moteur MARCHÃ‰ certifiÃ© champion (tournoi d'algos, 32k matchs OOS) : probas dÃ©vigÃ©es "
-               "calibrÃ©es + Over 2.5 maison. DonnÃ©es en direct de l'API â€” aucun serveur local requis.")
+    try:
+        from scripts.ui_theme import inject_theme, hero
+    except Exception:
+        from ui_theme import inject_theme, hero
+    inject_theme(st, accent="#22c55e", accent2="#2dd4bf", accent3="#38bdf8")
+    hero(st, "âš½ Bet261 Virtual â€” LIVE",
+         "Moteur MarchÃ© certifiÃ© champion (tournoi d'algos, 32k matchs OOS) â€” probas dÃ©vigÃ©es calibrÃ©es, en direct de l'API",
+         badges=["ðŸ† moteur champion", "âœ… 9 ligues", "ðŸ“‹ tous marchÃ©s", "ðŸŽ¯ combinÃ©s conseillÃ©s"])
     now_mada = datetime.now(MADA)
     c1, c2, c3 = st.columns([2, 2, 2])
     c1.metric("ðŸ• Heure Mada (UTC+3)", now_mada.strftime("%d/%m %H:%M"))

@@ -78,10 +78,15 @@ def _alerts():
 def main():
     import streamlit as st
     st.set_page_config(page_title="TRIO — V2×V5×Marché", page_icon="⚖️", layout="wide")
-    st.title("⚖️ Prédiction TRIO — V2 + V5 + arbitre MARCHÉ")
-    st.caption("Trois votes à poids égaux : V2 (Poisson+DC+marché) · V5 (HT/FT) · Marché (Score-exact devigé, "
-               "arbitre neutre). Le marché tranche les désaccords V2/V5 sans favoritisme. "
-               "App clone indépendante — ne touche pas au dashboard principal.")
+    try:
+        from scripts.ui_theme import inject_theme, hero
+    except Exception:
+        from ui_theme import inject_theme, hero
+    inject_theme(st, accent="#22c55e", accent2="#2dd4bf", accent3="#38bdf8")
+    hero(st, "⚖️ Prédiction TRIO",
+         "V2 + V5 + arbitre Marché — trois votes à poids égaux, le marché tranche les désaccords",
+         badges=["🧠 <b>V2</b> Poisson+DC", "🕐 <b>V5</b> HT/FT", "⚖️ <b>Marché</b> devigé",
+                 "✅ 9 ligues", "📈 suivi forward"])
 
     # ---- ALERTES VEILLE (edge ligne / dérive RNG) ----
     alerts = _alerts()

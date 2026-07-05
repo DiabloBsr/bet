@@ -28,9 +28,14 @@ def load():
 
 def main():
     st.set_page_config(page_title="Aviator — Audit & Stratégies", page_icon="✈️", layout="wide")
-    st.title("✈️ Aviator Bet261 — audit d'équité & simulateur de stratégies")
-    st.caption("Le crash est **provably-fair = imprévisible**. Cette app NE PRÉDIT RIEN : elle "
-               "mesure l'équité réelle du jeu et te dit le vrai risque de chaque stratégie de cash-out.")
+    try:
+        from scripts.ui_theme import inject_theme, hero
+    except Exception:
+        sys.path.insert(0, str(ROOT / "scripts")); from ui_theme import inject_theme, hero
+    inject_theme(st, accent="#ef4444", accent2="#f59e0b", accent3="#ec4899")
+    hero(st, "✈️ Aviator — Audit & Stratégies",
+         "Provably-fair = IMPRÉVISIBLE. Zéro prédiction : audit d'équité réel + vrai risque de chaque cash-out",
+         badges=["🔬 audit équité", "🎯 simulateur cash-out", "⚖️ marge mesurée", "🛡️ risque de ruine"])
 
     m = load()
     if len(m) < 10:
