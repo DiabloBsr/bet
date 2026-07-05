@@ -79,6 +79,13 @@ def _over25_calib(oh, od, oa):
         g = np.asarray(apply_sim_deviations(lh, la, "cells"), float)[:7, :7]; g /= g.sum()
         if _CALIB is not None:
             g = g * _CALIB; g /= g.sum()
+        # plafond dur du RNG : total <= 6 buts (0/58083 dépassement) -> cases
+        # impossibles zérotées, probas renormalisées (justesse exacte des totaux)
+        for h in range(7):
+            for a in range(7):
+                if h + a > 6:
+                    g[h, a] = 0.0
+        g = g / (g.sum() or 1.0)
         return round(100 * float(sum(g[h, a] for h in range(7) for a in range(7) if h + a > 2.5)), 1)
     except Exception:
         return None
