@@ -166,6 +166,20 @@ def main():
                                    "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
                                    "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
 
+    # ---- 💰 BANKROLL + 📏 FIABILITÉ (toujours accessibles) ----
+    with st.expander("💰 Mon bankroll — journal, courbe & stop-loss"):
+        try:
+            import bankroll as _bk
+            _bk.render(st)
+        except Exception as exc:
+            st.caption(f"Bankroll indisponible : {exc}")
+    with st.expander("📏 Fiabilité des probabilités affichées"):
+        try:
+            import reliability as _rel
+            _rel.render(st, st.cache_resource(_engine)())
+        except Exception as exc:
+            st.caption(f"Fiabilité indisponible : {exc}")
+
     # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
     cached_fit = st.cache_resource(_fit)
