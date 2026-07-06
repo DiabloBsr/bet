@@ -176,6 +176,49 @@ def pick_for_confidence(board: dict, target: float):
     return max(cands, key=lambda r: r[3])          # cote max qui tient la confiance
 
 
+def top_confidence_pick(board: dict):
+    """Le pari le PLUS PROBABLE du match (tous marchés sûrs) -> (marché, sél, proba, cote)."""
+    cands = [(mkt, s, p, o) for mkt in CONF_MARKETS for (s, p, o) in (board.get(mkt) or [])]
+    return max(cands, key=lambda r: r[2]) if cands else None
+
+
+def upcoming_window(engine, start_local: str, end_local: str, target: float = 0.75,
+                    min_odds: float = 1.08, horizon_min: int = 240) -> list:
+    """Matchs à venir des 9 LIGUES dont l'heure Mada (HH:MM) tombe dans [start,end].
+    Pour chaque match : le pari qui PAIE LE MIEUX tout en restant >= target de confiance
+    (et cote >= min_odds pour écarter les 1.01 sans valeur). Trié par proba décroissante.
+    Retour : dict par match {match, tag, local, board, best=(marché,sél,proba,cote)}."""
+    now = datetime.now(timezone.utc)
+    up = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm, e.id ev FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition LIKE 'InstantLeague-%'""", engine)
+    if not len(up):
+        return []
+    up["es"] = pd.to_datetime(up.expected_start, utc=True)
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon_min))]
+    up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+    up = up[(up.local >= start_local) & (up.local <= end_local)]
+    up = up.sort_values(["es", "ev"]).drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    out = []
+    for r in up.itertuples():
+        if float(r.oh) <= 1 or float(r.oa) <= 1:
+            continue
+        board = market_board(r.xm, r.oh, r.od, r.oa)
+        # meilleur pari (cote max) avec proba >= target ET cote >= min_odds
+        cands = [(mkt, s, p, o) for mkt in CONF_MARKETS
+                 for (s, p, o) in (board.get(mkt) or []) if p >= target and o >= min_odds]
+        if not cands:
+            continue
+        best = max(cands, key=lambda x: x[3])       # meilleur payout qui tient la confiance
+        out.append({"match": f"{r.team_a} v {r.team_b}", "tag": LEAGUE_TAGS.get(r.c, r.c[-4:]),
+                    "local": r.local, "board": board, "best": best})
+    out.sort(key=lambda m: -m["best"][2])           # meilleure proba d'abord
+    return out
+
+
 # marchés autorisés pour le combiné conseillé : marges fines (~5.7-7.3%) + les
 # CONJONCTIFS natifs (1X2&Total ~8.7%, 1X2&G/NG ~10.3%) — moins chers que
 # d'empiler 2 jambes du même match (2x6% composés = ~12%) pour monter la cote.

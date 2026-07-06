@@ -30,6 +30,14 @@ def _fit():
     return eng, m5, v2, n
 
 
+def _engine():
+    """Engine seul (instantané) — pour le scanner cross-ligues (pas de fit requis).
+    timeout=30s : encaisse les locks SQLite quand le scraper écrit en parallèle."""
+    from scraper.config import load_settings
+    from sqlalchemy import create_engine
+    return create_engine(load_settings().db_url, connect_args={"timeout": 30})
+
+
 def _round(models, target=None, lg="InstantLeague-8035"):
     import predict_trio as pt
     eng, m5, v2, _n = models
@@ -97,6 +105,41 @@ def main():
 
     now_mada = datetime.now(timezone.utc) + timedelta(hours=3)
     st.metric("🕐 Heure Mada (UTC+3)", now_mada.strftime("%d/%m/%Y %H:%M"))
+
+    # ---- 🌍 FENÊTRE FULL-CONFIANCE : scanner cross-ligues sur un créneau ----
+    with st.expander("🌍 Fenêtre full-confiance — meilleurs paris de TOUTES les ligues sur un créneau",
+                     expanded=False):
+        w1, w2, w3, w4 = st.columns([2, 2, 2, 2])
+        ws = w1.text_input("De (HH:MM Mada)", value=now_mada.strftime("%H:%M"), key="fcw_s")
+        we = w2.text_input("À (HH:MM Mada)", value=(now_mada + timedelta(minutes=6)).strftime("%H:%M"),
+                           key="fcw_e")
+        conf_min = w3.slider("Confiance min %", 55, 90, 75, 5, key="fcw_c")
+        topn = w4.slider("Nb de matchs", 5, 40, 15, key="fcw_n")
+        if st.button("🔍 Scanner les 9 ligues", key="fcw_go", type="primary"):
+            import predict_trio as _ptw
+            def _norm(t):
+                d = re.findall(r"\d+", t or "")
+                return f"{int(d[0])%24:02d}:{int(d[1])%60:02d}" if len(d) >= 2 else None
+            s, e = _norm(ws), _norm(we)
+            if not (s and e):
+                st.warning("Format horaire invalide (ex: 11:41).")
+            else:
+                eng = st.cache_resource(_engine)()
+                with st.spinner(f"Scan {s} → {e} sur les 9 ligues (confiance ≥{conf_min}%)…"):
+                    res = _ptw.upcoming_window(eng, s, e, target=conf_min/100.0)
+                if not res:
+                    st.info(f"Aucun match publié entre {s} et {e} (élargis le créneau ou attends "
+                            "que les rounds soient publiés).")
+                else:
+                    st.success(f"{len(res)} matchs dans le créneau — top {min(topn, len(res))} par confiance :")
+                    for i, m in enumerate(res[:topn], 1):
+                        mk, sname, p, o = m["best"]
+                        flag = "🟢" if p >= 0.75 else ("🟡" if p >= 0.6 else "⚪")
+                        st.markdown(f"{flag} **{i}. [{m['tag']} {m['local']}] {m['match']}** — "
+                                    f"{sname} `[{mk}]` : **{p*100:.0f}%** · cote {o:g}")
+                    st.caption("Classé par la proba du pari le plus SÛR de chaque match, toutes ligues "
+                               "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
+                               "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
 
     # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
