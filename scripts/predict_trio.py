@@ -219,6 +219,47 @@ def upcoming_window(engine, start_local: str, end_local: str, target: float = 0.
     return out
 
 
+# marchés scannés en mode "cote cible" (large : on filtre par cote, pas par type)
+ODDS_SCAN_MARKETS = ["1X2", "Double Chance", "+/-", "Total de buts", "Multi-Buts", "G/NG",
+                     "Mi-tps 1X2", "Mi-tps DC", "HT/FT", "1X2 & Total", "1X2 & G/NG",
+                     "Total equipe domicile", "Total equipe extérieur"]
+
+
+def odds_window(engine, start_local: str, end_local: str, target_odds: float,
+                tol: float = 0.12, horizon_min: int = 240) -> list:
+    """Sur le créneau [start,end] et les 9 LIGUES : tous les paris dont la cote est
+    proche de target_odds (±tol), classés par PROBABILITÉ décroissante.
+    Retour : liste de dict {match, tag, local, market, sel, p, o}."""
+    now = datetime.now(timezone.utc)
+    lo_c, hi_c = target_odds * (1 - tol), target_odds * (1 + tol)
+    up = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm, e.id ev FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition LIKE 'InstantLeague-%'""", engine)
+    if not len(up):
+        return []
+    up["es"] = pd.to_datetime(up.expected_start, utc=True)
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon_min))]
+    up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+    up = up[(up.local >= start_local) & (up.local <= end_local)]
+    up = up.sort_values(["es", "ev"]).drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    out = []
+    for r in up.itertuples():
+        if float(r.oh) <= 1 or float(r.oa) <= 1:
+            continue
+        board = market_board(r.xm, r.oh, r.od, r.oa)
+        tag = LEAGUE_TAGS.get(r.c, r.c[-4:])
+        for mkt in ODDS_SCAN_MARKETS:
+            for (s, p, o) in (board.get(mkt) or []):
+                if lo_c <= o <= hi_c:
+                    out.append({"match": f"{r.team_a} v {r.team_b}", "tag": tag, "local": r.local,
+                                "market": mkt, "sel": s, "p": p, "o": o})
+    out.sort(key=lambda x: -x["p"])                 # plus probable à cette cote d'abord
+    return out
+
+
 # marchés autorisés pour le combiné conseillé : marges fines (~5.7-7.3%) + les
 # CONJONCTIFS natifs (1X2&Total ~8.7%, 1X2&G/NG ~10.3%) — moins chers que
 # d'empiler 2 jambes du même match (2x6% composés = ~12%) pour monter la cote.

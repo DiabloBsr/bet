@@ -109,12 +109,20 @@ def main():
     # ---- 🌍 FENÊTRE FULL-CONFIANCE : scanner cross-ligues sur un créneau ----
     with st.expander("🌍 Fenêtre full-confiance — meilleurs paris de TOUTES les ligues sur un créneau",
                      expanded=False):
+        mode = st.radio("Mode de scan", ["Par confiance (meilleur payout sûr)",
+                                         "Par cote cible (le plus probable à cette cote)"],
+                        horizontal=True, key="fcw_mode")
         w1, w2, w3, w4 = st.columns([2, 2, 2, 2])
         ws = w1.text_input("De (HH:MM Mada)", value=now_mada.strftime("%H:%M"), key="fcw_s")
         we = w2.text_input("À (HH:MM Mada)", value=(now_mada + timedelta(minutes=6)).strftime("%H:%M"),
                            key="fcw_e")
-        conf_min = w3.slider("Confiance min %", 55, 90, 75, 5, key="fcw_c")
-        topn = w4.slider("Nb de matchs", 5, 40, 15, key="fcw_n")
+        by_odds = mode.startswith("Par cote")
+        if by_odds:
+            tgt_odds = w3.number_input("Cote cible", 1.05, 50.0, 2.0, 0.1, key="fcw_o")
+            topn = w4.slider("Nb de paris", 5, 40, 15, key="fcw_n2")
+        else:
+            conf_min = w3.slider("Confiance min %", 55, 90, 75, 5, key="fcw_c")
+            topn = w4.slider("Nb de matchs", 5, 40, 15, key="fcw_n")
         if st.button("🔍 Scanner les 9 ligues", key="fcw_go", type="primary"):
             import predict_trio as _ptw
             def _norm(t):
@@ -125,21 +133,38 @@ def main():
                 st.warning("Format horaire invalide (ex: 11:41).")
             else:
                 eng = st.cache_resource(_engine)()
-                with st.spinner(f"Scan {s} → {e} sur les 9 ligues (confiance ≥{conf_min}%)…"):
-                    res = _ptw.upcoming_window(eng, s, e, target=conf_min/100.0)
-                if not res:
-                    st.info(f"Aucun match publié entre {s} et {e} (élargis le créneau ou attends "
-                            "que les rounds soient publiés).")
+                if by_odds:
+                    with st.spinner(f"Scan {s} → {e} : paris à cote ~{tgt_odds:g} sur 9 ligues…"):
+                        rows = _ptw.odds_window(eng, s, e, float(tgt_odds))
+                    if not rows:
+                        st.info(f"Aucun pari à cote ~{tgt_odds:g} entre {s} et {e} "
+                                "(élargis le créneau ou change la cote).")
+                    else:
+                        st.success(f"{len(rows)} paris à cote ~{tgt_odds:g} — top {min(topn, len(rows))} "
+                                   "par PROBABILITÉ :")
+                        for i, m in enumerate(rows[:topn], 1):
+                            flag = "🟢" if m["p"] >= 0.6 else ("🟡" if m["p"] >= 0.5 else "⚪")
+                            st.markdown(f"{flag} **{i}. [{m['tag']} {m['local']}] {m['match']}** — "
+                                        f"{m['sel']} `[{m['market']}]` : **{m['p']*100:.0f}%** · cote {m['o']:g}")
+                        st.caption(f"Le pari le plus PROBABLE à cote ~{tgt_odds:g}, toutes ligues. "
+                                   "⚠️ À cote fixée, proba haute = meilleure chance mais l'EV reste "
+                                   "négative (marge du book) — ce n'est pas un edge.")
                 else:
-                    st.success(f"{len(res)} matchs dans le créneau — top {min(topn, len(res))} par confiance :")
-                    for i, m in enumerate(res[:topn], 1):
-                        mk, sname, p, o = m["best"]
-                        flag = "🟢" if p >= 0.75 else ("🟡" if p >= 0.6 else "⚪")
-                        st.markdown(f"{flag} **{i}. [{m['tag']} {m['local']}] {m['match']}** — "
-                                    f"{sname} `[{mk}]` : **{p*100:.0f}%** · cote {o:g}")
-                    st.caption("Classé par la proba du pari le plus SÛR de chaque match, toutes ligues "
-                               "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
-                               "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
+                    with st.spinner(f"Scan {s} → {e} sur les 9 ligues (confiance ≥{conf_min}%)…"):
+                        res = _ptw.upcoming_window(eng, s, e, target=conf_min/100.0)
+                    if not res:
+                        st.info(f"Aucun match publié entre {s} et {e} (élargis le créneau ou attends "
+                                "que les rounds soient publiés).")
+                    else:
+                        st.success(f"{len(res)} matchs dans le créneau — top {min(topn, len(res))} par confiance :")
+                        for i, m in enumerate(res[:topn], 1):
+                            mk, sname, p, o = m["best"]
+                            flag = "🟢" if p >= 0.75 else ("🟡" if p >= 0.6 else "⚪")
+                            st.markdown(f"{flag} **{i}. [{m['tag']} {m['local']}] {m['match']}** — "
+                                        f"{sname} `[{mk}]` : **{p*100:.0f}%** · cote {o:g}")
+                        st.caption("Classé par la proba du pari le plus SÛR de chaque match, toutes ligues "
+                                   "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
+                                   "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
 
     # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
