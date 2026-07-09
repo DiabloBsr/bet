@@ -46,3 +46,4 @@ nohup.out
 aviator.db
 data/aviator.db
 data/bankroll.db
+.bet_session/
