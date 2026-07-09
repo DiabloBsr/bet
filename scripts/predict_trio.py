@@ -225,8 +225,71 @@ ODDS_SCAN_MARKETS = ["1X2", "Double Chance", "+/-", "Total de buts", "Multi-Buts
                      "Total equipe domicile", "Total equipe extérieur"]
 
 
+def team_strength(engine, lg: str = LG) -> dict:
+    """Profil de force par équipe (historique) : buts marqués/encaissés + % victoire
+    domicile/extérieur. Sert de contexte 'équipe forte ou pas'."""
+    d = pd.read_sql(f"""SELECT e.team_a, e.team_b, r.score_a, r.score_b FROM events e
+        JOIN results r ON r.event_id=e.id WHERE r.score_a IS NOT NULL AND e.competition='{lg}'""", engine)
+    prof = {}
+    for r in d.itertuples():
+        h = prof.setdefault(r.team_a, {"gf": 0, "ga": 0, "n": 0, "w": 0, "wh": 0, "nh": 0})
+        a = prof.setdefault(r.team_b, {"gf": 0, "ga": 0, "n": 0, "w": 0, "wh": 0, "nh": 0})
+        h["gf"] += r.score_a; h["ga"] += r.score_b; h["n"] += 1; h["nh"] += 1
+        a["gf"] += r.score_b; a["ga"] += r.score_a; a["n"] += 1
+        h["w"] += int(r.score_a > r.score_b); h["wh"] += int(r.score_a > r.score_b)
+        a["w"] += int(r.score_b > r.score_a)
+    out = {}
+    for t, v in prof.items():
+        if v["n"] >= 20:
+            out[t] = {"gf": v["gf"]/v["n"], "ga": v["ga"]/v["n"], "winrate": v["w"]/v["n"]}
+    return out
+
+
+def find_targets(engine, team: str | None = None, side: str = "any",
+                 lo: float = 2.0, hi: float = 3.5, window_min: int = 300,
+                 leagues: list | None = None) -> list:
+    """Matchs à venir (9 ligues) où l'équipe visée (ou toute équipe) joue au côté demandé
+    avec une cote de victoire dans [lo,hi]. Rend match, équipe, cote, PROBA de victoire
+    (implicite dévigée = honnête), adversaire. Trié par proba décroissante (le + probable
+    dans la fourchette de cote = ton 'gros coup probable')."""
+    now = datetime.now(timezone.utc)
+    up = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition LIKE 'InstantLeague-%'""", engine)
+    if not len(up):
+        return []
+    up["es"] = pd.to_datetime(up.expected_start, utc=True)
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=window_min))]
+    if leagues:
+        up = up[up.c.isin(leagues)]
+    up = up.sort_values("es").drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    tl = (team or "").lower().strip()
+    out = []
+    for r in up.itertuples():
+        oh, od, oa = float(r.oh), float(r.od), float(r.oa)
+        if oh <= 1 or oa <= 1:
+            continue
+        inv = 1/oh + 1/od + 1/oa
+        cands = []
+        if side in ("any", "home"):
+            cands.append((r.team_a, "domicile", oh, (1/oh)/inv, r.team_b))
+        if side in ("any", "away"):
+            cands.append((r.team_b, "extérieur", oa, (1/oa)/inv, r.team_a))
+        for tm, sd, o, p, opp in cands:
+            if lo <= o <= hi and (not tl or tl in tm.lower()):
+                out.append({"comp": r.c, "tag": LEAGUE_TAGS.get(r.c, r.c[-4:]),
+                            "local": r.es.tz_convert(MADA).strftime("%H:%M"),
+                            "team": tm, "side": sd, "opp": opp, "odds": o, "winprob": p})
+    out.sort(key=lambda x: -x["winprob"])
+    return out
+
+
 def odds_window(engine, start_local: str, end_local: str, target_odds: float,
-                tol: float = 0.12, horizon_min: int = 240) -> list:
+                tol: float = 0.12, horizon_min: int = 240, leagues: list | None = None,
+                markets: list | None = None) -> list:
     """Sur le créneau [start,end] et les 9 LIGUES : tous les paris dont la cote est
     proche de target_odds (±tol), classés par PROBABILITÉ décroissante.
     Retour : liste de dict {match, tag, local, market, sel, p, o}."""
@@ -242,16 +305,19 @@ def odds_window(engine, start_local: str, end_local: str, target_odds: float,
         return []
     up["es"] = pd.to_datetime(up.expected_start, utc=True)
     up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon_min))]
+    if leagues:
+        up = up[up.c.isin(leagues)]
     up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
     up = up[(up.local >= start_local) & (up.local <= end_local)]
     up = up.sort_values(["es", "ev"]).drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    scan_mkts = markets if markets else ODDS_SCAN_MARKETS
     out = []
     for r in up.itertuples():
         if float(r.oh) <= 1 or float(r.oa) <= 1:
             continue
         board = market_board(r.xm, r.oh, r.od, r.oa)
         tag = LEAGUE_TAGS.get(r.c, r.c[-4:])
-        for mkt in ODDS_SCAN_MARKETS:
+        for mkt in scan_mkts:
             for (s, p, o) in (board.get(mkt) or []):
                 if lo_c <= o <= hi_c:
                     out.append({"match": f"{r.team_a} v {r.team_b}", "tag": tag, "local": r.local,

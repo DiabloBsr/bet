@@ -166,6 +166,76 @@ def main():
                                    "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
                                    "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
 
+    # ---- 🎯 GROS CÔTES & OUTSIDER PAR ÉQUIPE ----
+    with st.expander("🎯 Gros côtes & outsider — cible une équipe à cote moyenne"):
+        import predict_trio as _ptt
+        eng2 = st.cache_resource(_engine)()
+        try:
+            import pandas as _pd
+            teams = ["(toutes)"] + sorted(_pd.read_sql(
+                "SELECT DISTINCT team_a FROM events WHERE competition='InstantLeague-8035'",
+                eng2).team_a.dropna().tolist())
+        except Exception:
+            teams = ["(toutes)"]
+        g1, g2, g3, g4 = st.columns([3, 2, 2, 2])
+        tsel = g1.selectbox("Équipe", teams, key="ft_team")
+        sd = g2.radio("Côté", ["Peu importe", "Domicile", "Extérieur"], key="ft_side")
+        olo = g3.number_input("Cote min", 1.2, 20.0, 2.0, 0.1, key="ft_lo")
+        ohi = g4.number_input("Cote max", 1.2, 20.0, 3.0, 0.1, key="ft_hi")
+        if st.button("🔍 Chercher", key="ft_go", type="primary"):
+            side = {"Peu importe": "any", "Domicile": "home", "Extérieur": "away"}[sd]
+            team = None if tsel == "(toutes)" else tsel
+            with st.spinner("Recherche sur les 9 ligues…"):
+                res = _ptt.find_targets(eng2, team, side, float(olo), float(ohi))
+                strength = _ptt.team_strength(eng2)
+            if not res:
+                st.info("Aucun match ne correspond (élargis la fourchette ou attends des rounds).")
+            else:
+                st.success(f"{len(res)} paris — l'équipe la PLUS PROBABLE de gagner dans ta fourchette d'abord :")
+                for m in res[:20]:
+                    pr = strength.get(m["team"])
+                    force = f" · ⚡{pr['gf']:.1f} buts/m, {100*pr['winrate']:.0f}% vict." if pr else ""
+                    flag = "🟢" if m["winprob"] >= 0.42 else ("🟡" if m["winprob"] >= 0.35 else "⚪")
+                    st.markdown(f"{flag} **[{m['tag']} {m['local']}] {m['team']}** ({m['side']}) vs {m['opp']} "
+                                f"— cote **{m['odds']:g}** · **{m['winprob']*100:.0f}%** de gagner{force}")
+                st.caption("Proba = cote dévigée (honnête). « Man Blue extérieur à 2.8 = 38% de gagner » : "
+                           "gros payout ET chance correcte. ⚠️ EV toujours −marge, mais bien plus malin "
+                           "que chasser des 15× (qui gagnent ~7%).")
+
+    # ---- 🔍 RECHERCHE AVANCÉE (cote cible + ligues cochées + marchés) ----
+    with st.expander("🔍 Recherche avancée — cote voulue + ligues au choix"):
+        import predict_trio as _pta
+        eng3 = st.cache_resource(_engine)()
+        a1, a2 = st.columns([2, 3])
+        a_odds = a1.number_input("Cote visée", 1.1, 100.0, 2.5, 0.1, key="ra_o")
+        a_tol = a2.slider("Tolérance ±%", 5, 40, 15, key="ra_t")
+        st.markdown("**Ligues à inclure :**")
+        cols = st.columns(3)
+        picked = [comp for i, (name, comp) in enumerate(LEAGUES.items())
+                  if cols[i % 3].checkbox(name, value=True, key=f"ra_lg_{comp}")]
+        a3, a4 = st.columns(2)
+        topn = a3.slider("Nb de paris", 5, 40, 20, key="ra_n")
+        only_safe = a4.checkbox("Marchés sûrs uniquement (1X2/DC/O-U/G-NG)", value=False, key="ra_safe")
+        if st.button("🔍 Rechercher les meilleurs paris", key="ra_go", type="primary"):
+            if not picked:
+                st.warning("Coche au moins une ligue.")
+            else:
+                nm = datetime.now(timezone.utc) + timedelta(hours=3)
+                s, e = nm.strftime("%H:%M"), (nm + timedelta(minutes=30)).strftime("%H:%M")
+                mkts = ["1X2", "Double Chance", "+/-", "G/NG"] if only_safe else None
+                with st.spinner(f"Recherche cote ~{a_odds:g} sur {len(picked)} ligue(s)…"):
+                    rows = _pta.odds_window(eng3, s, e, float(a_odds), tol=a_tol/100.0,
+                                            leagues=picked, markets=mkts)
+                if not rows:
+                    st.info(f"Aucun pari à cote ~{a_odds:g} dans les ligues cochées (élargis la tolérance).")
+                else:
+                    st.success(f"{len(rows)} paris à cote ~{a_odds:g} — top {min(topn, len(rows))} par PROBABILITÉ :")
+                    for i, m in enumerate(rows[:topn], 1):
+                        flag = "🟢" if m["p"] >= 0.5 else ("🟡" if m["p"] >= 0.35 else "⚪")
+                        st.markdown(f"{flag} **{i}. [{m['tag']} {m['local']}] {m['match']}** — "
+                                    f"{m['sel']} `[{m['market']}]` : **{m['p']*100:.0f}%** · cote {m['o']:g}")
+                    st.caption("Le pari le plus probable à ta cote, dans les ligues cochées. ⚠️ EV −marge.")
+
     # ---- 💰 BANKROLL + 📏 FIABILITÉ (toujours accessibles) ----
     with st.expander("💰 Mon bankroll — journal, courbe & stop-loss"):
         try:
