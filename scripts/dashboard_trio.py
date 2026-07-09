@@ -65,6 +65,14 @@ def _alerts():
     except Exception:
         pass
     try:
+        h = (ROOT / "data" / "vfoot_ml" / "seeded_history.jsonl").read_text(encoding="utf-8").strip().splitlines()
+        rec = _j.loads(h[-1])
+        if rec.get("confirmed"):
+            msgs.append(f"🚨 CYCLE SEEDÉ CONFIRMÉ (théorie en ligne #1) — après 5 unders, ROI OOS "
+                        f"{100*rec.get('roi_oos',0):+.1f}% IC95 au-dessus de 0. Vérif adverse avant toute mise.")
+    except Exception:
+        pass
+    try:
         import numpy as np, pandas as pd
         from sqlalchemy import create_engine as _ce
         from scraper.config import load_settings as _ls

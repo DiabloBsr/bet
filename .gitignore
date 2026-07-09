@@ -47,3 +47,4 @@ aviator.db
 data/aviator.db
 data/bankroll.db
 .bet_session/
+data/vfoot_ml/seeded_history.jsonl
