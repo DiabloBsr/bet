@@ -245,9 +245,23 @@ def team_strength(engine, lg: str = LG) -> dict:
     return out
 
 
+def nodraw_streaks(engine, lg: str = LG) -> dict:
+    """Par équipe : nb de matchs depuis son dernier nul (sécheresse). CONTEXTE
+    seulement — ne prédit RIEN (le 'dû' est prouvé faux)."""
+    d = pd.read_sql(f"""SELECT e.team_a, e.team_b, r.score_a, r.score_b, e.expected_start
+        FROM events e JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND e.competition='{lg}' ORDER BY e.expected_start""", engine)
+    since = {}
+    for r in d.itertuples():
+        draw = r.score_a == r.score_b
+        for t in (r.team_a, r.team_b):
+            since[t] = 0 if draw else since.get(t, 0) + 1
+    return since
+
+
 def find_targets(engine, team: str | None = None, side: str = "any",
                  lo: float = 2.0, hi: float = 3.5, window_min: int = 300,
-                 leagues: list | None = None) -> list:
+                 leagues: list | None = None, draw_ctx: dict | None = None) -> list:
     """Matchs à venir (9 ligues) où l'équipe visée (ou toute équipe) joue au côté demandé
     avec une cote de victoire dans [lo,hi]. Rend match, équipe, cote, PROBA de victoire
     (implicite dévigée = honnête), adversaire. Trié par proba décroissante (le + probable
@@ -278,11 +292,21 @@ def find_targets(engine, team: str | None = None, side: str = "any",
             cands.append((r.team_a, "domicile", oh, (1/oh)/inv, r.team_b))
         if side in ("any", "away"):
             cands.append((r.team_b, "extérieur", oa, (1/oa)/inv, r.team_a))
-        for tm, sd, o, p, opp in cands:
-            if lo <= o <= hi and (not tl or tl in tm.lower()):
+        if side in ("any", "draw", "nul"):
+            dry = ""
+            if draw_ctx is not None:
+                da, db = draw_ctx.get(r.team_a, 0), draw_ctx.get(r.team_b, 0)
+                dry = f"sécheresse nuls: {r.team_a[:12]} {da}, {r.team_b[:12]} {db}"
+            cands.append((f"Nul ({r.team_a} v {r.team_b})", "nul", od, (1/od)/inv,
+                          f"{r.team_a} v {r.team_b}", dry))
+        for cand in cands:
+            tm, sd, o, p, opp = cand[:5]
+            extra = cand[5] if len(cand) > 5 else ""
+            if lo <= o <= hi and (not tl or tl in tm.lower() or (sd == "nul" and tl in opp.lower())):
                 out.append({"comp": r.c, "tag": LEAGUE_TAGS.get(r.c, r.c[-4:]),
                             "local": r.es.tz_convert(MADA).strftime("%H:%M"),
-                            "team": tm, "side": sd, "opp": opp, "odds": o, "winprob": p})
+                            "team": tm, "side": sd, "opp": opp, "odds": o, "winprob": p,
+                            "ctx": extra})
     out.sort(key=lambda x: -x["winprob"])
     return out
 

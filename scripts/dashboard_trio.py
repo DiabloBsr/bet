@@ -175,28 +175,38 @@ def main():
         ft_leagues = None if lg_choice.startswith("🌍") else [LEAGUES[lg_choice]]
         g1, g2, g3, g4 = st.columns([3, 2, 2, 2])
         tsel = g1.text_input("Équipe (optionnel, ex: Man)", value="", key="ft_team")
-        sd = g2.radio("Côté", ["Peu importe", "Domicile", "Extérieur"], key="ft_side")
+        sd = g2.radio("Côté", ["Peu importe", "Domicile", "Extérieur", "Nul (X)"], key="ft_side")
         olo = g3.number_input("Cote min", 1.2, 20.0, 2.0, 0.1, key="ft_lo")
-        ohi = g4.number_input("Cote max", 1.2, 20.0, 3.0, 0.1, key="ft_hi")
+        ohi = g4.number_input("Cote max", 1.2, 20.0, 3.5, 0.1, key="ft_hi")
         if st.button("🔍 Chercher", key="ft_go", type="primary"):
-            side = {"Peu importe": "any", "Domicile": "home", "Extérieur": "away"}[sd]
+            side = {"Peu importe": "any", "Domicile": "home", "Extérieur": "away", "Nul (X)": "nul"}[sd]
             team = tsel.strip() or None
             with st.spinner(f"Recherche ({'toutes ligues' if ft_leagues is None else lg_choice})…"):
-                res = _ptt.find_targets(eng2, team, side, float(olo), float(ohi), leagues=ft_leagues)
+                dctx = _ptt.nodraw_streaks(eng2, ft_leagues[0]) if ft_leagues else _ptt.nodraw_streaks(eng2)
+                res = _ptt.find_targets(eng2, team, side, float(olo), float(ohi),
+                                        leagues=ft_leagues, draw_ctx=dctx)
                 strength = _ptt.team_strength(eng2, ft_leagues[0]) if ft_leagues else _ptt.team_strength(eng2)
             if not res:
                 st.info("Aucun match ne correspond (élargis la fourchette ou attends des rounds).")
             else:
-                st.success(f"{len(res)} paris — l'équipe la PLUS PROBABLE de gagner dans ta fourchette d'abord :")
+                st.success(f"{len(res)} paris — le plus PROBABLE dans ta fourchette d'abord :")
                 for m in res[:20]:
-                    pr = strength.get(m["team"])
-                    force = f" · ⚡{pr['gf']:.1f} buts/m, {100*pr['winrate']:.0f}% vict." if pr else ""
-                    flag = "🟢" if m["winprob"] >= 0.42 else ("🟡" if m["winprob"] >= 0.35 else "⚪")
-                    st.markdown(f"{flag} **[{m['tag']} {m['local']}] {m['team']}** ({m['side']}) vs {m['opp']} "
-                                f"— cote **{m['odds']:g}** · **{m['winprob']*100:.0f}%** de gagner{force}")
-                st.caption("Proba = cote dévigée (honnête). « Man Blue extérieur à 2.8 = 38% de gagner » : "
-                           "gros payout ET chance correcte. ⚠️ EV toujours −marge, mais bien plus malin "
-                           "que chasser des 15× (qui gagnent ~7%).")
+                    if m["side"] == "nul":
+                        flag = "🟢" if m["winprob"] >= 0.30 else ("🟡" if m["winprob"] >= 0.27 else "⚪")
+                        st.markdown(f"{flag} **[{m['tag']} {m['local']}] Nul — {m['opp']}** "
+                                    f"— cote **{m['odds']:g}** · **{m['winprob']*100:.0f}%** de nul")
+                        if m.get("ctx"):
+                            st.caption(f"    ℹ️ {m['ctx']} — ⚠️ n'augmente PAS la proba de nul (théorie du «dû» "
+                                       "prouvée fausse : le nul reste à sa cote quoi qu'il arrive).")
+                    else:
+                        pr = strength.get(m["team"])
+                        force = f" · ⚡{pr['gf']:.1f} buts/m, {100*pr['winrate']:.0f}% vict." if pr else ""
+                        flag = "🟢" if m["winprob"] >= 0.42 else ("🟡" if m["winprob"] >= 0.35 else "⚪")
+                        st.markdown(f"{flag} **[{m['tag']} {m['local']}] {m['team']}** ({m['side']}) vs {m['opp']} "
+                                    f"— cote **{m['odds']:g}** · **{m['winprob']*100:.0f}%** de gagner{force}")
+                st.caption("Proba = cote dévigée (honnête, marché+notre modèle donnent le même). "
+                           "« Man Blue ext. à 2.8 = 38% » ou « Nul à 3.2 = 30% » : gros payout + chance "
+                           "correcte. ⚠️ EV toujours −marge, mais bien plus malin que chasser des 15×.")
 
     # ---- 🔍 RECHERCHE AVANCÉE (cote cible + ligues cochées + marchés) ----
     with st.expander("🔍 Recherche avancée — cote voulue + ligues au choix"):
