@@ -73,12 +73,13 @@ def load():
     c = sqlite3.connect(DB, timeout=60)
     rows = c.execute("""
         SELECT e.competition comp, e.external_id xid, o.extra_markets xm,
-               r.score_a sa, r.score_b sb, o.odds_home oh, o.odds_draw od, o.odds_away oa
+               r.score_a sa, r.score_b sb, o.odds_home oh, o.odds_draw od, o.odds_away oa,
+               r.ht_score_a ha, r.ht_score_b hb
         FROM events e JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
         JOIN results r ON r.event_id=e.id
         WHERE e.competition LIKE 'InstantLeague-%' AND r.score_a IS NOT NULL""").fetchall()
     seqs = {}
-    for comp, xid, xm, sa, sb, oh, od, oa in rows:
+    for comp, xid, xm, sa, sb, oh, od, oa, ha, hb in rows:
         try:
             j = json.loads(xm) if isinstance(xm, str) else (xm or {})
             xi = int(xid)
@@ -100,11 +101,20 @@ def load():
         fav = None
         if ok(oh) and ok(oa):
             fav = ("H", ok(oh)) if oh < oa else ("A", ok(oa))
+        # --- marche mi-temps : outsider mene a la MT ? + sa cote MT ---
+        o_ht_out = None
+        ht_out_leads = None
+        ht = gm(j, "Mi-tps 1X2")
+        if isinstance(ht, dict) and fav and ha is not None and hb is not None:
+            out_side = "A" if fav[0] == "H" else "H"      # outsider = pas le favori
+            o_ht_out = ok(ht.get("2")) if out_side == "A" else ok(ht.get("1"))
+            ht_out_leads = int((hb > ha) if out_side == "A" else (ha > hb))
         seqs.setdefault(comp, []).append({
             "xi": xi, "tot": tot, "u25": int(tot <= 2), "u35": int(tot <= 3),
             "o_o35": o_o35, "o_u35": o_u35, "o_u25": o_u25,
             "btts": int(sa > 0 and sb > 0), "o_ng": o_ng, "o_g": o_g,
             "odd": tot % 2, "fav": fav, "res": ("H" if sa > sb else "A" if sb > sa else "D"),
+            "o_ht_out": o_ht_out, "ht_out_leads": ht_out_leads,
         })
     for comp in seqs:
         seqs[comp].sort(key=lambda r: r["xi"])
@@ -145,6 +155,15 @@ def main():
             if r["xi"] >= half and r["fav"]:
                 favp.append(int(r["res"] == r["fav"][0]) * r["fav"][1] - 1)
     tests[-1] = ("Suivre le favori (1X2, 5.7%)", favp)
+
+    # -- marche mi-temps : outsider mene a la MT (grosse cote) --
+    htp = []
+    for comp, arr in seqs.items():
+        half = arr[len(arr) // 2]["xi"] if arr else 0
+        for r in arr:
+            if r["xi"] >= half and r.get("o_ht_out") and r.get("ht_out_leads") is not None:
+                htp.append(r["ht_out_leads"] * r["o_ht_out"] - 1)
+    tests.append(("Outsider mene a la MT (grosse cote)", htp))
 
     # -- conditionnels : apres k unders/overs -> canal le moins cher (Under 3.5) --
     for K in (3, 5, 7):
