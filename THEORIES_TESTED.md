@@ -19,6 +19,7 @@ par permutation. Data : ~250 000 matchs, 9 ligues.
 | **Over sous-pricés / mode drama** (plan interne) | simulateur surproduit → Over = value, surtout matchs serrés | ❌ FAUX | Over 3.5 ROI −5.7% = **la marge exacte** ; serrés −6.3%, déséq. −4.8% ; tout calibré |
 | **Canal moins cher** (math) | exprimer une vue sur le marché à plus faible marge | ✅ vrai levier | Under 2.5 (9%) −9.3% → Under 3.5 (5.7%) −5.2% : perte /2, mais IC95 toujours < 0 |
 | **Outsider à la mi-temps** (intuition user) | parier l'outsider à grosse cote sur le résultat MT = + rentable (peu importe la suite) | ❌ FAUX, pire | ROI −8.7% ; marge MT ~8-9% > marge FT 5.7% ; outsider mène 16.6% mais taux réel < implicite dans **chaque** bande de cote (surcôté) |
+| **Paris mi-temps en général** (verdict complet) | un marché HT serait + rentable/prévisible | ❌ FAUX, tous pires que FT | Marges : BTTS-1H 6%, Mi-tps 1X2/DC 8%, **HT/FT 12% (pire du board)**. ROI = −marge partout (calibré) : favori-MT −7.0%, DC-MT −7.2%, nul-MT −7.6%, HT/FT outsider −11.7%. Meilleur HT (« 0 but en 1re période » −5.4%) même pas > meilleur FT. **Fuir le HT/FT.** |
 | **Stake 2-3% + discipline** (tous) | money management | ✅ **le seul conseil valable** | ne gagne pas, limite la casse |
 
 ## Conclusion
