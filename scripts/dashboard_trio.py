@@ -270,6 +270,46 @@ def main():
                                     f"{m['sel']} `[{m['market']}]` : **{m['p']*100:.0f}%** · cote {m['o']:g}")
                     st.caption("Le pari le plus probable à ta cote, dans les ligues cochées. ⚠️ EV −marge.")
 
+    # ---- 🚨 DÉTECTEUR DE PIÈGE ----
+    with st.expander("🚨 Détecteur de piège — teste ton pari AVANT de miser"):
+        import trap_detector as _td
+        st.caption("Encode tout ce qu'on a prouvé : chaque marché est −EV (la marge). Le détecteur "
+                   "note ton pari, explique pourquoi, chiffre la perte attendue et propose le moins mauvais.")
+        td_mode = st.radio("Type de pari", ["1 pari simple", "Combiné (multiple)", "Panier de simples"],
+                           horizontal=True, key="td_mode")
+        td_opts = {lbl: k for k, (lbl, _m, _r) in _td.MARKETS.items()}
+        td_stake = st.number_input("Mise totale (Ar, 0 = ignorer)", 0, 100_000_000, 10_000, 1000, key="td_stake")
+
+        def _td_badge(v):
+            st.markdown(f"### {v.severity} {v.headline}")
+            line = f"**ROI attendu : {v.roi*100:+.1f}%**"
+            if v.expected_loss:
+                line += f" · perte moyenne ≈ **{v.expected_loss:,.0f} Ar** sur {td_stake:,.0f} misés"
+            st.markdown(line)
+            for r in v.reasons:
+                st.markdown(f"- {r}")
+            if v.better:
+                st.info(v.better)
+
+        if td_mode == "1 pari simple":
+            c1, c2 = st.columns([3, 1])
+            mk = c1.selectbox("Marché", list(td_opts), key="td_mk")
+            od = c2.number_input("Cote", 1.01, 200.0, 2.0, 0.1, key="td_od")
+            if st.button("🔍 Analyser le pari", key="td_go1", type="primary"):
+                _td_badge(_td.evaluate_single(td_opts[mk], od, stake=td_stake or None))
+        else:
+            n = st.slider("Nombre de paris", 2, 6, 3, key="td_n")
+            legs = []
+            for i in range(n):
+                lc1, lc2 = st.columns([3, 1])
+                mk = lc1.selectbox(f"Marché {i+1}", list(td_opts), key=f"td_mk_{i}")
+                od = lc2.number_input(f"Cote {i+1}", 1.01, 200.0, 2.0, 0.1, key=f"td_od_{i}")
+                legs.append((td_opts[mk], od))
+            if st.button("🔍 Analyser", key="td_go2", type="primary"):
+                v = (_td.evaluate_combo(legs, stake=td_stake or None) if td_mode.startswith("Combiné")
+                     else _td.evaluate_basket(legs, stake=td_stake or None))
+                _td_badge(v)
+
     # ---- 💰 BANKROLL + 📏 FIABILITÉ (toujours accessibles) ----
     with st.expander("💰 Mon bankroll — journal, courbe & stop-loss"):
         try:
