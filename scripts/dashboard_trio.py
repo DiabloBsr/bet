@@ -178,22 +178,26 @@ def main():
     with st.expander("🎯 Gros côtes & outsider — cible une ligue (et/ou une équipe)"):
         import predict_trio as _ptt
         eng2 = st.cache_resource(_engine)()
-        lg_names = ["🌍 Toutes les ligues"] + list(LEAGUES)
-        lg_choice = st.selectbox("Ligue à analyser", lg_names, index=0, key="ft_lg")
-        ft_leagues = None if lg_choice.startswith("🌍") else [LEAGUES[lg_choice]]
+        st.markdown("**Ligues à analyser :**")
+        fcols = st.columns(3)
+        ft_leagues = [comp for i, (name, comp) in enumerate(LEAGUES.items())
+                      if fcols[i % 3].checkbox(name, value=True, key=f"ft_lg_{comp}")]
         g1, g2, g3, g4 = st.columns([3, 2, 2, 2])
         tsel = g1.text_input("Équipe (optionnel, ex: Man)", value="", key="ft_team")
         sd = g2.radio("Côté", ["Peu importe", "Domicile", "Extérieur", "Nul (X)"], key="ft_side")
         olo = g3.number_input("Cote min", 1.2, 20.0, 2.0, 0.1, key="ft_lo")
         ohi = g4.number_input("Cote max", 1.2, 20.0, 3.5, 0.1, key="ft_hi")
-        if st.button("🔍 Chercher", key="ft_go", type="primary"):
+        go = st.button("🔍 Chercher", key="ft_go", type="primary")
+        if go and not ft_leagues:
+            st.warning("Coche au moins une ligue.")
+        if go and ft_leagues:
             side = {"Peu importe": "any", "Domicile": "home", "Extérieur": "away", "Nul (X)": "nul"}[sd]
             team = tsel.strip() or None
-            with st.spinner(f"Recherche ({'toutes ligues' if ft_leagues is None else lg_choice})…"):
-                dctx = _ptt.nodraw_streaks(eng2, ft_leagues[0]) if ft_leagues else _ptt.nodraw_streaks(eng2)
+            with st.spinner(f"Recherche ({len(ft_leagues)} ligue(s))…"):
+                dctx = _ptt.nodraw_streaks(eng2, leagues=ft_leagues)
                 res = _ptt.find_targets(eng2, team, side, float(olo), float(ohi),
                                         leagues=ft_leagues, draw_ctx=dctx)
-                strength = _ptt.team_strength(eng2, ft_leagues[0]) if ft_leagues else _ptt.team_strength(eng2)
+                strength = _ptt.team_strength(eng2, leagues=ft_leagues)
             if not res:
                 st.info("Aucun match ne correspond (élargis la fourchette ou attends des rounds).")
             else:

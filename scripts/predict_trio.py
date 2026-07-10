@@ -225,11 +225,12 @@ ODDS_SCAN_MARKETS = ["1X2", "Double Chance", "+/-", "Total de buts", "Multi-Buts
                      "Total equipe domicile", "Total equipe extérieur"]
 
 
-def team_strength(engine, lg: str = LG) -> dict:
+def team_strength(engine, lg: str = LG, leagues: list | None = None) -> dict:
     """Profil de force par équipe (historique) : buts marqués/encaissés + % victoire
-    domicile/extérieur. Sert de contexte 'équipe forte ou pas'."""
+    domicile/extérieur. Sert de contexte 'équipe forte ou pas'. `leagues` = liste (union)."""
     d = pd.read_sql(f"""SELECT e.team_a, e.team_b, r.score_a, r.score_b FROM events e
-        JOIN results r ON r.event_id=e.id WHERE r.score_a IS NOT NULL AND e.competition='{lg}'""", engine)
+        JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND {_league_where(lg, leagues)}""", engine)
     prof = {}
     for r in d.itertuples():
         h = prof.setdefault(r.team_a, {"gf": 0, "ga": 0, "n": 0, "w": 0, "wh": 0, "nh": 0})
@@ -245,12 +246,20 @@ def team_strength(engine, lg: str = LG) -> dict:
     return out
 
 
-def nodraw_streaks(engine, lg: str = LG) -> dict:
+def _league_where(lg: str, leagues: list | None) -> str:
+    """Clause WHERE de filtrage ligue : liste (IN) si fournie, sinon la ligue unique `lg`."""
+    if leagues:
+        vals = ",".join("'" + str(x).replace("'", "''") + "'" for x in leagues)
+        return f"e.competition IN ({vals})"
+    return f"e.competition='{lg}'"
+
+
+def nodraw_streaks(engine, lg: str = LG, leagues: list | None = None) -> dict:
     """Par équipe : nb de matchs depuis son dernier nul (sécheresse). CONTEXTE
-    seulement — ne prédit RIEN (le 'dû' est prouvé faux)."""
+    seulement — ne prédit RIEN (le 'dû' est prouvé faux). `leagues` = liste (union)."""
     d = pd.read_sql(f"""SELECT e.team_a, e.team_b, r.score_a, r.score_b, e.expected_start
         FROM events e JOIN results r ON r.event_id=e.id
-        WHERE r.score_a IS NOT NULL AND e.competition='{lg}' ORDER BY e.expected_start""", engine)
+        WHERE r.score_a IS NOT NULL AND {_league_where(lg, leagues)} ORDER BY e.expected_start""", engine)
     since = {}
     for r in d.itertuples():
         draw = r.score_a == r.score_b
