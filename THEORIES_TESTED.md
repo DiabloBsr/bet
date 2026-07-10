@@ -16,6 +16,8 @@ par permutation. Data : ~250 000 matchs, 9 ligues.
 | **Suivre le favori** | favori = gain | ❌ | 55.8% = implicite, ROI −marge |
 | **Momentum meter** (Medium) | ratio 10 derniers prédit | ❌ gambler's fallacy | sans mémoire prouvé |
 | **Fréquence buts par ligue** | certaines ligues + prolifiques | ✅ vrai MAIS pricé | dans les cotes, 0 edge |
+| **Over sous-pricés / mode drama** (plan interne) | simulateur surproduit → Over = value, surtout matchs serrés | ❌ FAUX | Over 3.5 ROI −5.7% = **la marge exacte** ; serrés −6.3%, déséq. −4.8% ; tout calibré |
+| **Canal moins cher** (math) | exprimer une vue sur le marché à plus faible marge | ✅ vrai levier | Under 2.5 (9%) −9.3% → Under 3.5 (5.7%) −5.2% : perte /2, mais IC95 toujours < 0 |
 | **Stake 2-3% + discipline** (tous) | money management | ✅ **le seul conseil valable** | ne gagne pas, limite la casse |
 
 ## Conclusion
