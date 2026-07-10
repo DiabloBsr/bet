@@ -270,11 +270,14 @@ def nodraw_streaks(engine, lg: str = LG, leagues: list | None = None) -> dict:
 
 def find_targets(engine, team: str | None = None, side: str = "any",
                  lo: float = 2.0, hi: float = 3.5, window_min: int = 300,
-                 leagues: list | None = None, draw_ctx: dict | None = None) -> list:
+                 leagues: list | None = None, draw_ctx: dict | None = None,
+                 start_local: str | None = None, end_local: str | None = None) -> list:
     """Matchs à venir (9 ligues) où l'équipe visée (ou toute équipe) joue au côté demandé
     avec une cote de victoire dans [lo,hi]. Rend match, équipe, cote, PROBA de victoire
     (implicite dévigée = honnête), adversaire. Trié par proba décroissante (le + probable
-    dans la fourchette de cote = ton 'gros coup probable')."""
+    dans la fourchette de cote = ton 'gros coup probable').
+    Si start_local/end_local (HH:MM Mada) sont donnés, ne garde que les matchs dont
+    l'heure Mada tombe dans [start,end] (sinon : fenêtre glissante depuis maintenant)."""
     now = datetime.now(timezone.utc)
     up = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
         o.odds_home oh, o.odds_draw od, o.odds_away oa FROM events e
@@ -285,7 +288,13 @@ def find_targets(engine, team: str | None = None, side: str = "any",
     if not len(up):
         return []
     up["es"] = pd.to_datetime(up.expected_start, utc=True)
-    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=window_min))]
+    interval = bool(start_local and end_local)
+    horizon = 1440 if interval else window_min       # intervalle -> cherche sur 24 h de matchs publiés
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon))]
+    if interval:
+        up = up.copy()
+        up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+        up = up[(up.local >= start_local) & (up.local <= end_local)]
     if leagues:
         up = up[up.c.isin(leagues)]
     up = up.sort_values("es").drop_duplicates(["c", "team_a", "team_b", "expected_start"])

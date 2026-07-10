@@ -187,16 +187,32 @@ def main():
         sd = g2.radio("Côté", ["Peu importe", "Domicile", "Extérieur", "Nul (X)"], key="ft_side")
         olo = g3.number_input("Cote min", 1.2, 20.0, 2.0, 0.1, key="ft_lo")
         ohi = g4.number_input("Cote max", 1.2, 20.0, 3.5, 0.1, key="ft_hi")
+        t1, t2 = st.columns(2)
+        ft_ws = t1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
+                              key="ft_ws", placeholder="ex: 14:30")
+        ft_we = t2.text_input("À (HH:MM Mada)", value="", key="ft_we", placeholder="ex: 15:30")
         go = st.button("🔍 Chercher", key="ft_go", type="primary")
         if go and not ft_leagues:
             st.warning("Coche au moins une ligue.")
-        if go and ft_leagues:
+        sl, el = ft_ws.strip(), ft_we.strip()
+        _hhmm = re.compile(r"^\d{1,2}:\d{2}$")
+        bad_fmt = (sl and not _hhmm.match(sl)) or (el and not _hhmm.match(el))
+        one_only = bool(sl) != bool(el)
+        if go and ft_leagues and bad_fmt:
+            st.warning("Format d'heure attendu : HH:MM (ex : 14:30).")
+        elif go and ft_leagues and one_only:
+            st.warning("Renseigne les DEUX heures (début et fin), ou laisse les deux vides.")
+        elif go and ft_leagues:
+            sl2 = (sl.zfill(5) if sl else None)      # '9:30' -> '09:30' pour comparer les chaînes
+            el2 = (el.zfill(5) if el else None)
             side = {"Peu importe": "any", "Domicile": "home", "Extérieur": "away", "Nul (X)": "nul"}[sd]
             team = tsel.strip() or None
-            with st.spinner(f"Recherche ({len(ft_leagues)} ligue(s))…"):
+            span = f" · {sl2}→{el2}" if sl2 else ""
+            with st.spinner(f"Recherche ({len(ft_leagues)} ligue(s){span})…"):
                 dctx = _ptt.nodraw_streaks(eng2, leagues=ft_leagues)
                 res = _ptt.find_targets(eng2, team, side, float(olo), float(ohi),
-                                        leagues=ft_leagues, draw_ctx=dctx)
+                                        leagues=ft_leagues, draw_ctx=dctx,
+                                        start_local=sl2, end_local=el2)
                 strength = _ptt.team_strength(eng2, leagues=ft_leagues)
             if not res:
                 st.info("Aucun match ne correspond (élargis la fourchette ou attends des rounds).")
