@@ -183,6 +183,12 @@ def main():
                    "est le pari le moins mauvais** (ROI −2.4% vs favori −6%). ⚠️ Ça reste −EV (aucun "
                    "edge confirmé, TRAIN/TEST divergent) : cet outil **trie les outsiders par CHANCE "
                    "RÉELLE**, il ne garantit pas de gain. La règle d'or CAN : tape l'outsider, jamais le favori.")
+        st.warning("⚠️ **Piège à éviter — les « petits totaux » (0 but / ≤1).** En CAN, 0-0 arrive "
+                   "**25%** du temps et ≤1 but **51%** (vs 5%/17% ailleurs), avec de grosses cotes "
+                   "(« 0 but » cote médiane 3.78, jusqu'à 29×). **Ça semble de la value, c'est l'inverse** : "
+                   "mesuré à **ROI −10.6%** (réel 25.4% < implicite 28.6%, overpricé dans toutes les bandes). "
+                   "C'est le **pire pari CAN** — 20× pire que l'outsider-victoire (−0.5% en cote 6-10). "
+                   "Le book te fait payer la rareté des buts plus cher qu'elle ne vaut. **Reste sur l'outsider.**")
         cc1, cc2, cc3 = st.columns([2, 2, 2])
         can_lo = cc1.number_input("Cote outsider min", 2.0, 50.0, 5.0, 0.5, key="can_lo")
         can_hi = cc2.number_input("Cote outsider max", 2.0, 100.0, 15.0, 0.5, key="can_hi")
