@@ -33,17 +33,18 @@ fi
 mkdir -p data/vfoot_ml logs
 cp -f config/score_calibration.json data/vfoot_ml/score_calibration.json 2>/dev/null || true
 
-# ---- 3-5. STACK LOURD (scraper + tracker + monitors + calibration) — OPT-IN seulement ----
-#   Chacun charge pandas/httpx/le modèle et pègue les 2 vCPU de cpu-basic pendant que
-#   Streamlit fait son fit -> le health-check HF expire -> HF tue/relance -> crash-loop.
-#   Défaut = app SEULE (sert le dashboard depuis le seed = stable). Le vrai stack de
-#   collecte/analyse tourne en LOCAL. Pour tout activer en ligne (hardware payant) : CLOUD_FULL_STACK=1.
+# ---- 3. scraper LÉGER (httpx, pas de pandas/modèle) — throttlé, pour les matchs À VENIR ----
+#   180s au lieu de 45s : 4x moins de charge CPU sur cpu-basic. Le scraper seul est léger ;
+#   c'était le rendu Fiabilité (446 Mo) + la grosse DB qui pégaient le CPU (crash-loop), pas lui.
+( while true; do
+    python scripts/_scrape_loop.py --interval 180 --n 100000 >> /data/scrape.log 2>&1 || true
+    sleep 15
+  done ) &
+
+# ---- 4-5. jobs LOURDS (tracker, monitors, calibration) — OPT-IN (chargent pandas+modèle) ----
+#   Le vrai stack d'analyse tourne en LOCAL. Pour les activer en ligne : CLOUD_FULL_STACK=1.
 if [ "${CLOUD_FULL_STACK:-0}" = "1" ]; then
-  echo "[start] CLOUD_FULL_STACK=1 -> scraper + tracker + monitors + calibration activés"
-  ( while true; do
-      python scripts/_scrape_loop.py --interval 180 --n 100000 >> /data/scrape.log 2>&1 || true
-      sleep 15
-    done ) &
+  echo "[start] CLOUD_FULL_STACK=1 -> tracker + monitors + calibration activés"
   ( sleep 120
     while true; do
       python scripts/trio_tracker.py >> /data/tracker.log 2>&1 || true
@@ -61,7 +62,7 @@ if [ "${CLOUD_FULL_STACK:-0}" = "1" ]; then
       sleep 604800
     done ) &
 else
-  echo "[start] mode SERVE-ONLY (défaut) : app seule depuis le seed (stable sur cpu-basic)"
+  echo "[start] mode LÉGER (défaut) : scraper + app (jobs lourds désactivés = stable sur cpu-basic)"
 fi
 
 # ---- 6. app trio (avant-plan = process principal du conteneur) ----
