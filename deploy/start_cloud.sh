@@ -33,32 +33,39 @@ fi
 mkdir -p data/vfoot_ml logs
 cp -f config/score_calibration.json data/vfoot_ml/score_calibration.json 2>/dev/null || true
 
-# ---- 3. scraper continu 9 ligues (fond, auto-relance) ----
+# ---- 3. scraper continu (fond, throttlé) — garde des matchs À VENIR sans peguer le CPU ----
+#   interval 180s (au lieu de 45s) : bien assez pour un round, mais 4x moins de charge CPU.
+#   Sur cpu-basic (2 vCPU), un scrape trop fréquent fait échouer le health-check HF -> crash-loop.
 ( while true; do
-    python scripts/_scrape_loop.py --interval 45 --n 100000 >> /data/scrape.log 2>&1 || true
+    python scripts/_scrape_loop.py --interval 180 --n 100000 >> /data/scrape.log 2>&1 || true
     echo "[watchdog] scrape loop terminé/mort -> relance dans 15s" >> /data/scrape.log
     sleep 15
   done ) &
 
-# ---- 4. tracker forward (fond, toutes les 30 min) ----
-( sleep 120
-  while true; do
-    python scripts/trio_tracker.py >> /data/tracker.log 2>&1 || true
-    sleep 1800
-  done ) &
-
-# ---- 5. moniteur ligne + calibration (fond, 1x/jour) ----
-( sleep 600
-  while true; do
-    python scripts/vfoot_ml/line_edge_monitor.py >> /data/line_monitor.log 2>&1 || true
-    python scripts/vfoot_ml/line_paper_trader.py >> /data/line_paper.log 2>&1 || true
-    sleep 86400
-  done ) &
-( sleep 900
-  while true; do
-    python scripts/refresh_calibration.py >> /data/calib.log 2>&1 || true
-    sleep 604800
-  done ) &
+# ---- 4-5. jobs LOURDS (tracker, monitors, calibration) — OPT-IN seulement ----
+#   Chacun charge pandas + le modèle -> OOM/CPU sur le tier gratuit. Le vrai stack
+#   d'analyse tourne en LOCAL. Pour les réactiver en ligne : variable CLOUD_FULL_STACK=1.
+if [ "${CLOUD_FULL_STACK:-0}" = "1" ]; then
+  echo "[start] CLOUD_FULL_STACK=1 -> tracker + monitors + calibration activés"
+  ( sleep 120
+    while true; do
+      python scripts/trio_tracker.py >> /data/tracker.log 2>&1 || true
+      sleep 1800
+    done ) &
+  ( sleep 600
+    while true; do
+      python scripts/vfoot_ml/line_edge_monitor.py >> /data/line_monitor.log 2>&1 || true
+      python scripts/vfoot_ml/line_paper_trader.py >> /data/line_paper.log 2>&1 || true
+      sleep 86400
+    done ) &
+  ( sleep 900
+    while true; do
+      python scripts/refresh_calibration.py >> /data/calib.log 2>&1 || true
+      sleep 604800
+    done ) &
+else
+  echo "[start] mode LÉGER (défaut) : scraper + app seulement (jobs lourds désactivés)"
+fi
 
 # ---- 6. app trio (avant-plan = process principal du conteneur) ----
 exec streamlit run scripts/dashboard_trio.py \
