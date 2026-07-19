@@ -217,6 +217,23 @@ def main():
                     st.caption("Trié par proba dévigée (chance réelle pour le payout). EV moyen ≈ −2% "
                                "(moins mauvais que le favori −6%, mais pas gagnant). Mise plate, petit % "
                                "du bankroll, et **jamais** le favori en CAN. 🟢 ≥18% · 🟡 ≥14% de chance.")
+        st.divider()
+        if st.button("📋 Liste favoris / outsiders des équipes CAN", key="can_teams_go"):
+            with st.spinner("Profils équipes CAN…"):
+                profs = _ptcan.can_team_profiles(engC)
+            if profs:
+                st.markdown("**Équipes CAN — du + fort (favori habituel) au + faible (outsider) :**")
+                df = pd.DataFrame([{
+                    "Équipe": p["team"], "Vict%": round(p["winrate"]*100),
+                    "Cote moy": round(p["avg_odds"], 2), "%favori": round(p["fav_pct"]*100),
+                    "Buts/m": round(p["gf"], 2), "Encaissé": round(p["ga"], 2), "Matchs": p["n"],
+                } for p in profs])
+                st.dataframe(df, use_container_width=True, hide_index=True)
+                st.caption("À cote égale, la proba est la même (marché calibré). Utilité : privilégier "
+                           "un outsider du MILIEU (Ivory Coast, Nigeria, Tunisia ~38%) plutôt qu'un "
+                           "Sudan/Botswana à cote équivalente — base plus solide, moins risqué.")
+            else:
+                st.info("Pas assez de données équipes CAN.")
 
     # ---- 🎯 GROS CÔTES & OUTSIDER PAR ÉQUIPE ----
     with st.expander("🎯 Gros côtes & outsider — cible une ligue (et/ou une équipe)"):

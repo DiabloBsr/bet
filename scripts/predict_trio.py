@@ -380,6 +380,37 @@ def can_outsiders(engine, lo: float = 5.0, hi: float = 15.0, minutes: int = 60,
     return out
 
 
+def can_team_profiles(engine, min_n: int = 200) -> list:
+    """Profil favori/outsider de chaque équipe CAN (historique BDD) : taux de victoire,
+    cote moyenne, % de matchs en favori, buts marqués/encaissés. Classé du + fort (favori
+    habituel) au + faible (outsider habituel). Contexte : à cote égale, la proba est la même
+    (marché calibré) — sert à repérer les outsiders 'les moins risqués' (base plus solide)."""
+    d = pd.read_sql(f"""SELECT e.team_a, e.team_b, o.odds_home oh, o.odds_away oa,
+        r.score_a sa, r.score_b sb FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
+        JOIN results r ON r.event_id=e.id
+        WHERE e.competition='{CAN_LG}' AND r.score_a IS NOT NULL""", engine)
+    prof = {}
+    for r in d.itertuples():
+        oh, oa = r.oh, r.oa
+        if not (oh and oa and 1 < oh < 99.99 and 1 < oa < 99.99):
+            continue
+        for team, mo, gf, ga, is_fav in [(r.team_a, oh, r.sa, r.sb, oh < oa),
+                                         (r.team_b, oa, r.sb, r.sa, oa < oh)]:
+            t = prof.setdefault(team, {"n": 0, "w": 0, "fav": 0, "osum": 0.0, "gf": 0, "ga": 0})
+            t["n"] += 1; t["w"] += int(gf > ga); t["fav"] += int(is_fav)
+            t["osum"] += mo; t["gf"] += gf; t["ga"] += ga
+    out = []
+    for team, t in prof.items():
+        if t["n"] < min_n:
+            continue
+        out.append({"team": team, "n": t["n"], "winrate": t["w"]/t["n"],
+                    "avg_odds": t["osum"]/t["n"], "fav_pct": t["fav"]/t["n"],
+                    "gf": t["gf"]/t["n"], "ga": t["ga"]/t["n"]})
+    out.sort(key=lambda x: -x["winrate"])
+    return out
+
+
 def goal_totalizer(engine, minutes: int = 30, leagues: list | None = None) -> list:
     """Pour chaque match à venir : distribution des TOTAUX de buts + top scores exacts
     (probas dévigées = calibrées, cotes offertes). Honnête : marchés −EV, aucun edge.
