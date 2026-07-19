@@ -222,6 +222,7 @@ def main():
             with st.spinner("Profils équipes CAN…"):
                 profs = _ptcan.can_team_profiles(engC)
             if profs:
+                import pandas as pd
                 st.markdown("**Équipes CAN — du + fort (favori habituel) au + faible (outsider) :**")
                 df = pd.DataFrame([{
                     "Équipe": p["team"], "Vict%": round(p["winrate"]*100),
