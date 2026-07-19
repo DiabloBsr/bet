@@ -186,9 +186,9 @@ def main():
         cc1, cc2, cc3 = st.columns([2, 2, 2])
         can_lo = cc1.number_input("Cote outsider min", 2.0, 50.0, 5.0, 0.5, key="can_lo")
         can_hi = cc2.number_input("Cote outsider max", 2.0, 100.0, 15.0, 0.5, key="can_hi")
-        can_pmin = cc3.slider("Chance réelle min (%)", 0, 40, 12, key="can_pmin",
+        can_pmin = cc3.slider("Chance réelle min (%)", 0, 40, 0, key="can_pmin",
                               help="Ne garde que les outsiders dont la probabilité dévigée de gagner "
-                                   "atteint ce seuil = les meilleurs moments pour taper.")
+                                   "atteint ce seuil = les meilleurs moments pour taper (0 = tout montrer).")
         cd1, cd2 = st.columns(2)
         can_ws = cd1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
                                 key="can_ws", placeholder="ex: 21:00")
@@ -207,13 +207,18 @@ def main():
                     rows = _ptcan.can_outsiders(engC, lo=float(can_lo), hi=float(can_hi),
                                                 p_min=can_pmin/100.0, start_local=sl2, end_local=el2)
                 if not rows:
-                    st.info("Aucun outsider CAN dans ces critères (élargis la bande ou attends un round).")
+                    st.info("Aucun match CAN dans la base (élargis la bande ou attends que le scraper capte des rounds).")
                 else:
+                    if rows[0].get("recent"):
+                        st.warning("⏳ Aucun match CAN **à venir** capté à cet instant (le scraper en ligne "
+                                   "est throttlé) — voici les **derniers matchs CAN réels** comme exemples "
+                                   "de ce que l'outil remonte. Reviens dans quelques minutes pour du live.")
                     st.success(f"{len(rows)} outsiders CAN — triés par CHANCE RÉELLE (meilleur moment d'abord) :")
                     for m in rows[:25]:
                         flag = "🟢" if m["p"] >= 0.18 else ("🟡" if m["p"] >= 0.14 else "⚪")
+                        tag = " · *(exemple passé)*" if m.get("recent") else ""
                         st.markdown(f"{flag} **{m['local']} · {m['team']}** ({m['side']}) vs {m['opp']} "
-                                    f"— cote **{m['odds']:g}** · **{m['p']*100:.0f}%** de chance réelle")
+                                    f"— cote **{m['odds']:g}** · **{m['p']*100:.0f}%** de chance réelle{tag}")
                     st.caption("Trié par proba dévigée (chance réelle pour le payout). EV moyen ≈ −2% "
                                "(moins mauvais que le favori −6%, mais pas gagnant). Mise plate, petit % "
                                "du bankroll, et **jamais** le favori en CAN. 🟢 ≥18% · 🟡 ≥14% de chance.")
