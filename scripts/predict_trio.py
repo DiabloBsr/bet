@@ -329,6 +329,57 @@ def find_targets(engine, team: str | None = None, side: str = "any",
     return out
 
 
+CAN_LG = "InstantLeague-8060"
+
+
+def can_outsiders(engine, lo: float = 5.0, hi: float = 15.0, minutes: int = 60,
+                  p_min: float = 0.0, start_local: str | None = None,
+                  end_local: str | None = None) -> list:
+    """Matchs CAN (8060) à venir : l'OUTSIDER (côté à cote la plus haute) de chaque match,
+    filtré sur la bande de cote [lo,hi] et proba dévigée >= p_min. Trié par proba
+    décroissante (meilleure CHANCE RÉELLE pour le payout = le bon moment pour taper).
+    Rappel mesuré : dans CAN l'outsider est le pari le MOINS MAUVAIS (marge sur le favori,
+    ROI ~-2.4% vs favori -6%), MAIS reste -EV — aucun edge confirmé (TRAIN/TEST divergent)."""
+    now = datetime.now(timezone.utc)
+    up = pd.read_sql(f"""SELECT e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition='{CAN_LG}'""", engine)
+    if not len(up):
+        return []
+    up["es"] = pd.to_datetime(up.expected_start, utc=True)
+    interval = bool(start_local and end_local)
+    horizon = 1440 if interval else minutes
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon))]
+    if interval:
+        up = up.copy()
+        up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+        up = up[(up.local >= start_local) & (up.local <= end_local)]
+    up = up.sort_values("es").drop_duplicates(["team_a", "team_b", "expected_start"])
+    out = []
+    for r in up.itertuples():
+        oh, od, oa = float(r.oh), float(r.od), float(r.oa)
+        if oh <= 1 or oa <= 1 or od <= 1:
+            continue
+        if oh >= oa:
+            side, team, opp, o_out = "domicile", r.team_a, r.team_b, oh
+        else:
+            side, team, opp, o_out = "extérieur", r.team_b, r.team_a, oa
+        if not (lo <= o_out <= hi):
+            continue
+        inv = 1/oh + 1/od + 1/oa
+        p = (1/o_out) / inv                 # proba dévigée (honnête, ~vraie sur CAN calibrée)
+        if p < p_min:
+            continue
+        out.append({"match": f"{team} vs {opp}",
+                    "local": r.es.tz_convert(MADA).strftime("%H:%M"),
+                    "team": team, "side": side, "opp": opp, "odds": o_out, "p": p})
+    out.sort(key=lambda x: -x["p"])
+    return out
+
+
 def goal_totalizer(engine, minutes: int = 30, leagues: list | None = None) -> list:
     """Pour chaque match à venir : distribution des TOTAUX de buts + top scores exacts
     (probas dévigées = calibrées, cotes offertes). Honnête : marchés −EV, aucun edge.

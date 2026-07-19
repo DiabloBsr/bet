@@ -174,6 +174,50 @@ def main():
                                    "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
                                    "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
 
+    # ---- 🌍 SPÉCIAL CAN — CHASSE AUX OUTSIDERS ----
+    with st.expander("🌍 SPÉCIAL CAN — chasse aux outsiders à grosse cote"):
+        import predict_trio as _ptcan
+        engC = st.cache_resource(_engine)()
+        st.caption("**Ligue CAN** (la + équilibrée des 9 : cote outsider moy. 11.9, grosses cotes "
+                   "partout). Règle **mesurée** : la marge est chargée sur le FAVORI → l'**outsider "
+                   "est le pari le moins mauvais** (ROI −2.4% vs favori −6%). ⚠️ Ça reste −EV (aucun "
+                   "edge confirmé, TRAIN/TEST divergent) : cet outil **trie les outsiders par CHANCE "
+                   "RÉELLE**, il ne garantit pas de gain. La règle d'or CAN : tape l'outsider, jamais le favori.")
+        cc1, cc2, cc3 = st.columns([2, 2, 2])
+        can_lo = cc1.number_input("Cote outsider min", 2.0, 50.0, 5.0, 0.5, key="can_lo")
+        can_hi = cc2.number_input("Cote outsider max", 2.0, 100.0, 15.0, 0.5, key="can_hi")
+        can_pmin = cc3.slider("Chance réelle min (%)", 0, 40, 12, key="can_pmin",
+                              help="Ne garde que les outsiders dont la probabilité dévigée de gagner "
+                                   "atteint ce seuil = les meilleurs moments pour taper.")
+        cd1, cd2 = st.columns(2)
+        can_ws = cd1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
+                                key="can_ws", placeholder="ex: 21:00")
+        can_we = cd2.text_input("À (HH:MM Mada)", value="", key="can_we", placeholder="ex: 22:00")
+        if st.button("🌍 Débusquer les outsiders CAN", key="can_go", type="primary"):
+            sl, el = can_ws.strip(), can_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)):
+                st.warning("Format d'heure : HH:MM (ex : 21:00).")
+            elif bool(sl) != bool(el):
+                st.warning("Renseigne les DEUX heures, ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                with st.spinner("Scan CAN…"):
+                    rows = _ptcan.can_outsiders(engC, lo=float(can_lo), hi=float(can_hi),
+                                                p_min=can_pmin/100.0, start_local=sl2, end_local=el2)
+                if not rows:
+                    st.info("Aucun outsider CAN dans ces critères (élargis la bande ou attends un round).")
+                else:
+                    st.success(f"{len(rows)} outsiders CAN — triés par CHANCE RÉELLE (meilleur moment d'abord) :")
+                    for m in rows[:25]:
+                        flag = "🟢" if m["p"] >= 0.18 else ("🟡" if m["p"] >= 0.14 else "⚪")
+                        st.markdown(f"{flag} **{m['local']} · {m['team']}** ({m['side']}) vs {m['opp']} "
+                                    f"— cote **{m['odds']:g}** · **{m['p']*100:.0f}%** de chance réelle")
+                    st.caption("Trié par proba dévigée (chance réelle pour le payout). EV moyen ≈ −2% "
+                               "(moins mauvais que le favori −6%, mais pas gagnant). Mise plate, petit % "
+                               "du bankroll, et **jamais** le favori en CAN. 🟢 ≥18% · 🟡 ≥14% de chance.")
+
     # ---- 🎯 GROS CÔTES & OUTSIDER PAR ÉQUIPE ----
     with st.expander("🎯 Gros côtes & outsider — cible une ligue (et/ou une équipe)"):
         import predict_trio as _ptt
