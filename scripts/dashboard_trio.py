@@ -354,11 +354,15 @@ def main():
         except Exception as exc:
             st.caption(f"Bankroll indisponible : {exc}")
     with st.expander("📏 Fiabilité des probabilités affichées"):
-        try:
-            import reliability as _rel
-            _rel.render(st, st.cache_resource(_engine)())
-        except Exception as exc:
-            st.caption(f"Fiabilité indisponible : {exc}")
+        # LAZY : le diagramme lit toute la base (~400 Mo) — le lancer au chargement
+        # pègue le CPU du tier gratuit et fait échouer le health-check HF (crash-loop).
+        if st.button("📏 Calculer le diagramme de fiabilité", key="rel_go"):
+            try:
+                import reliability as _rel
+                with st.spinner("Calcul de la calibration…"):
+                    _rel.render(st, st.cache_resource(_engine)())
+            except Exception as exc:
+                st.caption(f"Fiabilité indisponible : {exc}")
 
     # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
