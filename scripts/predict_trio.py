@@ -329,6 +329,40 @@ def find_targets(engine, team: str | None = None, side: str = "any",
     return out
 
 
+def goal_totalizer(engine, minutes: int = 30, leagues: list | None = None) -> list:
+    """Pour chaque match à venir : distribution des TOTAUX de buts + top scores exacts
+    (probas dévigées = calibrées, cotes offertes). Honnête : marchés −EV, aucun edge.
+    Retour : liste de dict {match, tag, local, totals=[(sel,p,o)], scores=[(sel,p,o)]}."""
+    now = datetime.now(timezone.utc)
+    up = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition LIKE 'InstantLeague-%'""", engine)
+    if not len(up):
+        return []
+    up["es"] = pd.to_datetime(up.expected_start, utc=True)
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=minutes))]
+    if leagues:
+        up = up[up.c.isin(leagues)]
+    up = up.sort_values("es").drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    out = []
+    for r in up.itertuples():
+        if float(r.oh) <= 1 or float(r.oa) <= 1:
+            continue
+        board = market_board(r.xm, r.oh, r.od, r.oa)
+        totals = board.get("Total de buts", [])
+        scores = board.get("Score exact", [])
+        if not totals and not scores:
+            continue
+        out.append({"match": f"{r.team_a} vs {r.team_b}",
+                    "tag": LEAGUE_TAGS.get(r.c, r.c[-4:]),
+                    "local": r.es.tz_convert(MADA).strftime("%H:%M"),
+                    "totals": totals, "scores": scores[:10]})
+    return out
+
+
 def odds_window(engine, start_local: str, end_local: str, target_odds: float,
                 tol: float = 0.12, horizon_min: int = 240, leagues: list | None = None,
                 markets: list | None = None) -> list:

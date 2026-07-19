@@ -9,7 +9,18 @@ Constantes = MARGES et ROI OOS **mesurés** sur ~250 000 matchs (split chrono,
 IC95). Voir THEORIES_TESTED.md. Module pur (pas de DB) → rapide, déployable.
 """
 from __future__ import annotations
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
+
+# ROI OOS **mesuré** par score exact (0-0, 2-2, 3-3, 3-2 …). Tous négatifs.
+SCORE_ROI: dict[str, dict] = {}
+try:
+    _p = Path(__file__).resolve().parents[1] / "data" / "vfoot_ml" / "score_exact_roi.json"
+    if _p.exists():
+        SCORE_ROI = json.loads(_p.read_text(encoding="utf-8")).get("scores", {})
+except Exception:
+    SCORE_ROI = {}
 
 # marché -> (libellé, marge mesurée, ROI OOS mesuré) ; ROI ≈ -marge (calibré)
 MARKETS: dict[str, tuple[str, float, float]] = {
@@ -23,7 +34,7 @@ MARKETS: dict[str, tuple[str, float, float]] = {
     "mitps_1x2":   ("Mi-tps 1X2",               0.080, -0.070),
     "mitps_dc":    ("Mi-tps DC",                0.080, -0.072),
     "htft":        ("HT/FT (mi-tps/fin)",       0.120, -0.117),
-    "score_exact": ("Score exact",              0.240, -0.240),
+    "score_exact": ("Score exact",              0.240, -0.120),   # 24% marge marché ; ~-12% par score (mesuré)
 }
 
 # alternative « canal moins cher » : marché piégeux -> (marché conseillé, raison)
@@ -85,6 +96,29 @@ def evaluate_single(market: str, odds: float | None = None, stake: float | None 
             "🟠": "Cher — marge alourdie",
             "🔴": "PIÈGE — marge lourde"}[sev]
     v = Verdict(sev, head, roi, margin, reasons, better)
+    if stake:
+        v.expected_loss = -roi * stake
+    return v
+
+
+def evaluate_exact_score(score: str, odds: float | None = None, stake: float | None = None) -> Verdict:
+    """Note un pari SCORE EXACT précis (ex '2-2', '3-1') avec le ROI **mesuré** de cette cellule."""
+    key = score.replace(":", "-").replace(" ", "")
+    rec = SCORE_ROI.get(key)
+    if not rec:
+        v = evaluate_single("score_exact", odds, stake)
+        v.reasons.insert(0, f"Score **{key}** : pas de ROI mesuré (rare) — estimation marché Score exact.")
+        return v
+    roi = rec["roi"]
+    reasons = [
+        f"Score exact **{key}** : ROI **mesuré** {roi*100:+.1f}% "
+        f"(IC95 [{rec['ci_lo']*100:+.1f}, {rec['ci_hi']*100:+.1f}], n={rec['n']:,}).",
+        f"Taux réel {rec['real']*100:.2f}% — le marché Score exact porte **24% de marge** ; "
+        "aucun score n'est sous-côté (tous overpricés, les rares jusqu'à −19%).",
+    ]
+    better = "👉 Si tu veux « peu de buts », vise **Under 3.5** (marge 5.7%) au lieu d'un score précis (−12 à −19%)."
+    sev = _sev(roi)
+    v = Verdict(sev, f"Score exact {key} — {('PIÈGE' if sev=='🔴' else 'cher')}", roi, 0.24, reasons, better)
     if stake:
         v.expected_loss = -roi * stake
     return v

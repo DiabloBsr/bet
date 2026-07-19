@@ -310,6 +310,42 @@ def main():
                      else _td.evaluate_basket(legs, stake=td_stake or None))
                 _td_badge(v)
 
+    # ---- 🎲 TOTALISATEUR BUTS & SCORES EXACTS ----
+    with st.expander("🎲 Totalisateur de buts & scores exacts (0-0, 2-2, 3-3, 3-1…)"):
+        import predict_trio as _ptg
+        import trap_detector as _tdg
+        engT = st.cache_resource(_engine)()
+        st.caption("Proba + cote de chaque TOTAL de buts et de chaque SCORE EXACT des matchs à venir. "
+                   "⚠️ Vérité mesurée (28 scores testés) : **AUCUN score exact n'est rentable** — tous "
+                   "overpricés (−10 à −19%), le marché Score exact porte 24% de marge. Le 0-0 à grosse "
+                   "cote reste −10.4%, le 3-3 −15.3%.")
+        gt_min = st.slider("Horizon (minutes)", 5, 60, 20, key="gt_min")
+        if st.button("🎲 Afficher les totaux & scores", key="gt_go", type="primary"):
+            with st.spinner("Lecture des marchés…"):
+                grows = _ptg.goal_totalizer(engT, minutes=gt_min)
+            if not grows:
+                st.info("Aucun match publié dans l'horizon (élargis ou attends un round).")
+            else:
+                st.success(f"{len(grows)} matchs — probas dévigées (honnêtes) + ROI réel par score :")
+                for m in grows[:8]:
+                    st.markdown(f"**[{m['tag']} {m['local']}] {m['match']}**")
+                    if m["totals"]:
+                        def _tl(sel):
+                            return "0 but (Under 0.5)" if sel == "0" else ("6+ buts" if sel == "6" else f"{sel} buts")
+                        tline = " · ".join(f"{_tl(sel)}: **{p*100:.0f}%** (cote {o:g})"
+                                           for sel, p, o in sorted(m["totals"], key=lambda x: x[0])[:7])
+                        st.markdown(f"  📊 Totaux (marché −10%) — {tline}")
+                    if m["scores"]:
+                        st.markdown("  🎯 Scores exacts (proba · cote · **ROI réel mesuré**) :")
+                        for sel, p, o in m["scores"][:6]:
+                            v = _tdg.evaluate_exact_score(sel, o)
+                            st.markdown(f"    {v.severity} **{sel}** — {p*100:.1f}% · cote {o:g} · "
+                                        f"ROI **{v.roi*100:+.1f}%**")
+                    st.markdown("---")
+                st.caption("La proba = marché dévigé (calibré, notre meilleure estimation honnête). "
+                           "Pour « peu de buts », **Under 3.5** (marge 5.7%) coûte ~2× moins qu'un score exact. "
+                           "Viser 0-0/2-2/3-3 = payer 10-15% de marge pour le frisson de la grosse cote.")
+
     # ---- 💰 BANKROLL + 📏 FIABILITÉ (toujours accessibles) ----
     with st.expander("💰 Mon bankroll — journal, courbe & stop-loss"):
         try:
