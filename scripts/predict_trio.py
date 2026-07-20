@@ -427,6 +427,68 @@ def can_team_profiles(engine, min_n: int = 200) -> list:
     return out
 
 
+def low_total_scan(engine, minutes: int = 120, leagues: list | None = None,
+                   start_local: str | None = None, end_local: str | None = None) -> list:
+    """Détecteur 0/1 but : matchs à venir (9 ligues) triés par P(≤1 but) dévigée décroissante.
+    Pour chaque : proba de 0 but, proba de ≤1 but, cotes offertes « 0 » et « 1 ».
+    D'abord les matchs À VENIR ; repli sur les derniers matchs réels si rien de capté.
+    ⚠️ Info seulement — parier ces petits totaux est OVERPRICÉ (ROI mesuré ~-10%, marché
+    Total de buts = 10.7% de marge ; en CAN 0 but = -10.6%). Sert à repérer les matchs
+    défensifs, pas à gagner."""
+    now = datetime.now(timezone.utc)
+    base = f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)"""
+
+    def _pick(df, recent):
+        res = []
+        for r in df.itertuples():
+            oh, od, oa = float(r.oh), float(r.od), float(r.oa)
+            if oh <= 1 or oa <= 1 or od <= 1:
+                continue
+            board = market_board(r.xm, oh, od, oa)
+            tot = board.get("Total de buts", [])
+            if not tot:
+                continue
+            pm = {sel: (p, o) for sel, p, o in tot}
+            if "0" not in pm and "1" not in pm:
+                continue
+            p0, o0 = pm.get("0", (0.0, None))
+            p1, o1 = pm.get("1", (0.0, None))
+            if leagues and r.c not in leagues:
+                continue
+            res.append({"match": f"{r.team_a} vs {r.team_b}", "tag": LEAGUE_TAGS.get(r.c, r.c[-4:]),
+                        "local": r.es.tz_convert(MADA).strftime("%H:%M"), "p0": p0, "p_le1": p0 + p1,
+                        "o0": o0, "o1": o1, "recent": recent})
+        res.sort(key=lambda x: (x["recent"], -x["p_le1"]))
+        return res
+
+    up = pd.read_sql(base + """ LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition LIKE 'InstantLeague-%'""", engine)
+    interval = bool(start_local and end_local)
+    if len(up):
+        up["es"] = pd.to_datetime(up.expected_start, utc=True)
+        horizon = 1440 if interval else minutes
+        up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon))]
+        if interval:
+            up = up.copy()
+            up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+            up = up[(up.local >= start_local) & (up.local <= end_local)]
+        up = up.sort_values("es").drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+        rows = _pick(up, recent=False)
+        if rows or interval:
+            return rows
+    rec = pd.read_sql(base + f""" WHERE e.expected_start IS NOT NULL
+        {("AND e.competition IN (" + ",".join("'"+x+"'" for x in leagues) + ")") if leagues else "AND e.competition LIKE 'InstantLeague-%'"}
+        ORDER BY e.expected_start DESC LIMIT 400""", engine)
+    if not len(rec):
+        return []
+    rec["es"] = pd.to_datetime(rec.expected_start, utc=True)
+    rec = rec.drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    return _pick(rec, recent=True)
+
+
 def goal_totalizer(engine, minutes: int = 30, leagues: list | None = None) -> list:
     """Pour chaque match à venir : distribution des TOTAUX de buts + top scores exacts
     (probas dévigées = calibrées, cotes offertes). Honnête : marchés −EV, aucun edge.

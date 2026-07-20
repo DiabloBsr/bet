@@ -419,6 +419,49 @@ def main():
                            "Pour « peu de buts », **Under 3.5** (marge 5.7%) coûte ~2× moins qu'un score exact. "
                            "Viser 0-0/2-2/3-3 = payer 10-15% de marge pour le frisson de la grosse cote.")
 
+    # ---- 🥅 DÉTECTEUR 0/1 BUT ----
+    with st.expander("🥅 Détecteur 0/1 but — matchs les plus défensifs à venir"):
+        import predict_trio as _ptlt
+        engLT = st.cache_resource(_engine)()
+        st.caption("Scanne les matchs à venir et remonte les plus DÉFENSIFS (proba de 0 but / ≤1 but "
+                   "la plus haute, dévigée). La CAN domine (ligue ultra-défensive : 0-0 = 25%, ≤1 but = 51%). "
+                   "⚠️ **INFO seulement** : parier ces petits totaux est **overpricé** (ROI mesuré ~−10%, "
+                   "jusqu'à −10.6% en CAN — réel < implicite partout). Radar de matchs fermés, pas un tuyau gagnant.")
+        lt_can = st.checkbox("🌍 CAN uniquement (la plus défensive)", value=True, key="lt_can")
+        lt1, lt2 = st.columns(2)
+        lt_ws = lt1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
+                               key="lt_ws", placeholder="ex: 21:00")
+        lt_we = lt2.text_input("À (HH:MM Mada)", value="", key="lt_we", placeholder="ex: 22:00")
+        if st.button("🥅 Détecter les matchs 0/1 but", key="lt_go", type="primary"):
+            sl, el = lt_ws.strip(), lt_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)):
+                st.warning("Format d'heure : HH:MM (ex : 21:00).")
+            elif bool(sl) != bool(el):
+                st.warning("Renseigne les DEUX heures, ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                lgs = ["InstantLeague-8060"] if lt_can else None
+                with st.spinner("Scan des matchs défensifs…"):
+                    rows = _ptlt.low_total_scan(engLT, leagues=lgs, start_local=sl2, end_local=el2)
+                if not rows:
+                    st.info("Aucun match capté (élargis ou attends un round).")
+                else:
+                    if rows[0].get("recent"):
+                        st.warning("⏳ Pas de match à venir capté (scraper en ligne throttlé) — voici les "
+                                   "derniers matchs réels comme exemples.")
+                    st.success(f"{len(rows)} matchs — les plus fermés (proba ≤1 but) d'abord :")
+                    for m in rows[:20]:
+                        flag = "🥅" if m["p_le1"] >= 0.7 else ("🟡" if m["p_le1"] >= 0.5 else "⚪")
+                        o0 = f"cote {m['o0']:g}" if m["o0"] else "—"
+                        tg = " · *(exemple passé)*" if m.get("recent") else ""
+                        st.markdown(f"{flag} **[{m['tag']} {m['local']}] {m['match']}** — "
+                                    f"0 but **{m['p0']*100:.0f}%** ({o0}) · ≤1 but **{m['p_le1']*100:.0f}%**{tg}")
+                    st.caption("Trié par proba de ≤1 but (marché dévigé = honnête). ⚠️ Rappel gravé : parier "
+                               "« 0 but » = ROI **−10.6%** en CAN (le book price la rareté des buts plus cher "
+                               "qu'elle ne vaut). Utile pour LIRE un match fermé, pas pour miser dessus.")
+
     # ---- 💰 BANKROLL + 📏 FIABILITÉ (toujours accessibles) ----
     with st.expander("💰 Mon bankroll — journal, courbe & stop-loss"):
         try:
