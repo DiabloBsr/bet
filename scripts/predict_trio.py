@@ -568,10 +568,12 @@ BIG_ODDS_MARKETS = ["1X2", "Double Chance", "Total de buts", "+/-", "G/NG", "Mul
 
 
 def big_odds_fixtures(engine, leagues=None, min_odds=5.0, max_odds=50.0, markets=None,
-                      minutes=120, start_local=None, end_local=None, top=60) -> list:
+                      minutes=120, start_local=None, end_local=None, top=60,
+                      with_context=False, ctx_n=5) -> list:
     """Débusqueur : matchs à venir dont une sélection (marchés choisis) est à GROSSE COTE
     (min_odds..max_odds). Trié par proba dévigée décroissante (le + probable des gros paris d'abord).
-    Chaque ligne porte les 2 équipes pour attacher l'historique."""
+    Chaque ligne porte les 2 équipes. with_context=True attache la FORME récente de chaque équipe
+    + le résumé face-à-face (pour une vision globale directement à côté de la cote)."""
     up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
     if not len(up):
         return []
@@ -588,7 +590,22 @@ def big_odds_fixtures(engine, leagues=None, min_odds=5.0, max_odds=50.0, markets
                                 "home": r.team_a, "away": r.team_b, "comp": r.c,
                                 "market": mk, "sel": sel, "odds": float(o), "p": float(p)})
     out.sort(key=lambda x: -x["p"])
-    return out[:top]
+    out = out[:top]
+    if with_context:
+        lgs = leagues if leagues else None
+        cache = {}
+        for m in out:
+            for side in ("home", "away"):
+                t = m[side]
+                if t not in cache:
+                    cache[t] = match_history(engine, t, ctx_n, lgs)
+                m[side + "_hist"] = cache[t]
+            h2h = head_to_head(engine, m["home"], m["away"], lgs, n=20)
+            m["h2h_n"] = len(h2h)
+            m["h2h_zeros"] = sum(1 for x in h2h if x["tot"] == 0)
+            m["h2h_avg"] = round(sum(x["tot"] for x in h2h) / len(h2h), 1) if h2h else 0.0
+            m["h2h_recent"] = h2h[:5]
+    return out
 
 
 def combo_by_target(engine, target_odds: float, n_legs: int = 3, leagues=None,

@@ -310,26 +310,42 @@ def main():
             else:
                 sl2 = sl.zfill(5) if sl else None
                 el2 = el.zfill(5) if el else None
-                with st.spinner("Scan des grosses cotes…"):
+                with st.spinner("Scan des grosses cotes + historiques…"):
                     st.session_state["db_res"] = _ptd.big_odds_fixtures(
                         engD, [db_comp], min_odds=float(db_lo), max_odds=float(db_hi),
-                        markets=db_mkts or None, start_local=sl2, end_local=el2)
-                st.session_state["db_comp"] = db_comp
+                        markets=db_mkts or None, start_local=sl2, end_local=el2,
+                        top=15, with_context=True, ctx_n=5)
         res = st.session_state.get("db_res")
         if res is not None:
             if not res:
                 st.info("Aucune grosse cote dans ces critères (élargis la bande/les marchés ou attends un round).")
             else:
-                st.success(f"{len(res)} sélections à grosse cote — la + probable d'abord :")
-                for m in res[:25]:
-                    st.markdown(f"🎲 **{m['local']} · {m['home']} vs {m['away']}** — "
-                                f"**{m['sel']}** `[{m['market']}]` cote **{m['odds']:g}** · {m['p']*100:.0f}% de chance")
-                labels = [f"{m['local']} · {m['home']} vs {m['away']} — {m['sel']} @{m['odds']:g}" for m in res]
-                pick = st.selectbox("📊 Voir l'historique d'un match :", range(len(res)),
-                                    format_func=lambda i: labels[i], key="db_pick")
-                mm = res[pick]
-                st.markdown(f"### 📊 {mm['home']} vs {mm['away']} — {mm['sel']} (cote {mm['odds']:g})")
-                _hist_block(st, engD, mm["home"], mm["away"], [st.session_state.get("db_comp", db_comp)])
+                st.success(f"{len(res)} grosses cotes — forme des équipes + face-à-face à côté, la + probable d'abord :")
+
+                def _forme(hist):
+                    if not hist:
+                        return "_(pas d'historique)_"
+                    emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
+                    seq = " ".join(emo.get(m["res"], "?") for m in hist)
+                    sco = " · ".join(f"{m['gf']}-{m['ga']}" for m in hist)
+                    return f"{seq}  ({sco})"
+                for m in res:
+                    st.markdown(f"#### 🎲 {m['local']} · {m['home']} vs {m['away']}")
+                    st.markdown(f"**{m['sel']}** `[{m['market']}]` — cote **{m['odds']:g}** · "
+                                f"**{m['p']*100:.0f}%** de chance")
+                    st.markdown(f"　🏠 **{m['home']}** : {_forme(m.get('home_hist'))}")
+                    st.markdown(f"　✈️ **{m['away']}** : {_forme(m.get('away_hist'))}")
+                    if m.get("h2h_n"):
+                        rec = " · ".join(f"{x['sa']}-{x['sb']}" for x in m.get("h2h_recent", []))
+                        st.markdown(f"　⚔️ **Face-à-face** : {m['h2h_n']} matchs · "
+                                    f"{m['h2h_zeros']}× 0-0 ({100*m['h2h_zeros']/m['h2h_n']:.0f}%) · "
+                                    f"{m['h2h_avg']} buts/m · récents : {rec}")
+                    else:
+                        st.markdown("　⚔️ Face-à-face : aucun en base")
+                    st.markdown("---")
+                st.caption("🟢 victoire · ⚪ nul · 🔴 défaite (du + récent à gauche). Vision globale : "
+                           "la grosse cote + la forme des 2 équipes + le face-à-face, d'un coup d'œil. "
+                           "⚠️ contexte pour juger, pas un edge (le RNG reste sans mémoire).")
 
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
