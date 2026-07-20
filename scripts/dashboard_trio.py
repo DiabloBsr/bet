@@ -413,6 +413,60 @@ def main():
                     st.caption("Rappel : « le + probable » ne veut pas dire rentable — un combiné multiplie la marge. "
                                "P(tout gagner) chute vite avec le nombre de legs.")
 
+    # ---- 🎲 SIMULATEUR CAN — teste ta stratégie ----
+    with st.expander("🎲 Simulateur CAN — teste ta stratégie (miroir de vérité)"):
+        import predict_trio as _pts
+        engS = st.cache_resource(_engine)()
+        st.caption("Rejoue ta stratégie sur 3000 sessions à partir des VRAIS résultats CAN. Ce n'est PAS "
+                   "une prédiction — c'est un miroir honnête : tu vois la variance, le risque de ruine, et "
+                   "pourquoi une session gagnante (chance) ne veut pas dire gagnant sur la durée.")
+        sc1, sc2, sc3 = st.columns(3)
+        s_bet_lbl = sc1.selectbox("Pari testé", ["Outsider (le moins pire)", "Favori",
+                                                 "0-0 (grosse cote)", "Under 3.5"], key="s_bet")
+        s_bet = {"Outsider (le moins pire)": "outsider", "Favori": "favori",
+                 "0-0 (grosse cote)": "zero", "Under 3.5": "under35"}[s_bet_lbl]
+        _dlo = 6.0 if s_bet == "outsider" else (5.0 if s_bet == "zero" else 1.1)
+        _dhi = 10.0 if s_bet == "outsider" else (50.0 if s_bet == "zero" else 100.0)
+        s_lo = sc2.number_input("Cote min", 1.1, 50.0, _dlo, 0.5, key="s_lo")
+        s_hi = sc3.number_input("Cote max", 1.1, 200.0, _dhi, 0.5, key="s_hi")
+        sd1, sd2, sd3 = st.columns(3)
+        s_stake = sd1.number_input("Mise / pari (Ar)", 100, 10_000_000, 1000, 100, key="s_stake")
+        s_bank = sd2.number_input("Bankroll de départ (Ar)", 1000, 100_000_000, 50000, 1000, key="s_bank")
+        s_nbets = sd3.slider("Nb de paris (1 session)", 10, 500, 100, key="s_nbets")
+        se1, se2 = st.columns(2)
+        s_sl = se1.slider("Stop-loss (%)", 10, 100, 50, key="s_sl") / 100.0
+        s_tp = se2.slider("Take-profit (%)", 10, 500, 100, key="s_tp") / 100.0
+        if st.button("🎲 Lancer 3000 sessions", key="s_go", type="primary"):
+            with st.spinner("Simulation Monte-Carlo…"):
+                r = _pts.can_simulate(engS, bet=s_bet, lo=float(s_lo), hi=float(s_hi),
+                                      stake=float(s_stake), n_bets=int(s_nbets), bankroll=float(s_bank),
+                                      stop_loss=s_sl, take_profit=s_tp, n_sims=3000)
+            if r.get("error"):
+                st.warning(f"Pas assez de données pour ce pari/bande ({r.get('n_pool', 0)} paris). Élargis la bande de cote.")
+            else:
+                m1, m2, m3, m4 = st.columns(4)
+                m1.metric("Sessions gagnantes", f"{r['pct_profit']:.0f}%")
+                m2.metric("Sessions ruinées", f"{r['pct_ruin']:.0f}%")
+                m3.metric("Bankroll médiane", f"{r['median']:,.0f}", delta=f"{r['median']-r['start']:,.0f}")
+                m4.metric("ROI réel du pari", f"{r['roi']*100:+.1f}%")
+                import pandas as pd
+                maxlen = max(len(c) for c in r["curves"]) if r["curves"] else 1
+                data = {f"s{i}": c + [None] * (maxlen - len(c)) for i, c in enumerate(r["curves"][:25])}
+                if data:
+                    st.line_chart(pd.DataFrame(data))
+                st.caption(f"25 sessions simulées (courbes de bankroll, départ {r['start']:,.0f} Ar). "
+                           f"Fourchette réaliste : p10 {r['p10']:,.0f} → p90 {r['p90']:,.0f} · "
+                           f"pire {r['worst']:,.0f} · meilleur {r['best']:,.0f}.")
+                if r["roi"] > -0.03:
+                    verdict = ("Même le MEILLEUR pari CAN te laisse **sous ton départ** à la médiane, "
+                               "avec un vrai risque de ruine.")
+                else:
+                    verdict = "Ce pari te **ruine vite** : la variance des grosses cotes te wipe avant le jackpot."
+                st.markdown(f"**Lecture honnête** : {verdict} Les quelques courbes qui montent = la CHANCE "
+                            "(variance), pas une méthode. Sur assez de paris, presque toutes redescendent — "
+                            "c'est le ROI négatif qui l'emporte toujours à la fin. Aucun réglage ne rend ça positif "
+                            "(essaie : la data est calibrée, le simulateur ne peut pas mentir).")
+
     # ---- 🎯 GROS CÔTES & OUTSIDER PAR ÉQUIPE ----
     with st.expander("🎯 Gros côtes & outsider — cible une ligue (et/ou une équipe)"):
         import predict_trio as _ptt

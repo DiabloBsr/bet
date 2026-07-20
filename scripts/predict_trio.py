@@ -625,6 +625,87 @@ def combo_by_target(engine, target_odds: float, n_legs: int = 3, leagues=None,
                         top=top, p_min=p_min)
 
 
+def _can_bet_pool(engine, bet: str, lo: float, hi: float) -> list:
+    """Pool historique CAN de (gagné 0/1, cote offerte) pour un type de pari + bande de cote."""
+    import json as _json
+    d = pd.read_sql("""SELECT o.odds_home oh, o.odds_draw od, o.odds_away oa,
+        o.extra_markets xm, r.score_a sa, r.score_b sb FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
+        JOIN results r ON r.event_id=e.id
+        WHERE e.competition='InstantLeague-8060' AND r.score_a IS NOT NULL""", engine)
+
+    def gm(x, p):
+        for k, v in (x or {}).items():
+            if k.replace("\x82", "e").replace("\xe9", "e").startswith(p):
+                return v
+        return None
+    pool = []
+    for r in d.itertuples():
+        oh, oa = r.oh, r.oa
+        if not (oh and oa and oh > 1 and oa > 1):
+            continue
+        tot = r.sa + r.sb
+        odds = win = None
+        if bet == "outsider":
+            odds = max(oh, oa); win = int((r.sb > r.sa) if oh < oa else (r.sa > r.sb))
+        elif bet == "favori":
+            odds = min(oh, oa); win = int((r.sa > r.sb) if oh < oa else (r.sb > r.sa))
+        elif bet in ("zero", "under35"):
+            try:
+                mk = _json.loads(r.xm) if isinstance(r.xm, str) else (r.xm or {})
+            except Exception:
+                continue
+            if bet == "zero":
+                tb = gm(mk, "Total de buts")
+                odds = tb.get("0") if isinstance(tb, dict) else None; win = int(tot == 0)
+            else:
+                pm = gm(mk, "+/-")
+                odds = pm.get("< 3.5") if isinstance(pm, dict) else None; win = int(tot <= 3)
+        if odds and 1 < odds < 99.99 and lo <= odds <= hi:
+            pool.append((win, float(odds)))
+    return pool
+
+
+def can_simulate(engine, bet="outsider", lo=6.0, hi=10.0, stake=1000.0, n_bets=100,
+                 bankroll=50000.0, stop_loss=0.5, take_profit=1.0, n_sims=3000) -> dict:
+    """Simulateur Monte-Carlo : rejoue n_bets paris (tirés au hasard dans le pool historique
+    CAN réel) sur n_sims sessions, mise plate, avec stop-loss / take-profit. Rend la
+    distribution des résultats (pas une prédiction — un miroir honnête de la variance)."""
+    import random
+    pool = _can_bet_pool(engine, bet, lo, hi)
+    if len(pool) < 100:
+        return {"error": "pool trop petit", "n_pool": len(pool)}
+    wr = sum(w for w, _ in pool) / len(pool)
+    roi = sum(w * o - 1 for w, o in pool) / len(pool)
+    random.seed(20260720)
+    lo_bk, hi_bk = bankroll * (1 - stop_loss), bankroll * (1 + take_profit)
+    finals, profit, ruin, curves = [], 0, 0, []
+    npool = len(pool)
+    for s in range(n_sims):
+        bk = bankroll; curve = [bk]
+        for _ in range(n_bets):
+            if bk < stake or bk <= lo_bk or bk >= hi_bk:
+                break
+            w, o = pool[random.randrange(npool)]
+            bk += (o - 1) * stake if w else -stake
+            curve.append(bk)
+        finals.append(bk)
+        profit += int(bk > bankroll)
+        ruin += int(bk <= lo_bk)
+        if s < 40:
+            curves.append(curve)
+    finals.sort()
+    n = len(finals)
+    return {
+        "n_pool": npool, "win_rate": wr, "roi": roi,
+        "pct_profit": 100 * profit / n, "pct_ruin": 100 * ruin / n,
+        "median": finals[n // 2], "mean": sum(finals) / n,
+        "p10": finals[int(0.10 * n)], "p90": finals[int(0.90 * n)],
+        "best": finals[-1], "worst": finals[0], "start": bankroll,
+        "curves": curves, "n_bets": n_bets, "stake": stake,
+    }
+
+
 def goal_totalizer(engine, minutes: int = 30, leagues: list | None = None) -> list:
     """Pour chaque match à venir : distribution des TOTAUX de buts + top scores exacts
     (probas dévigées = calibrées, cotes offertes). Honnête : marchés −EV, aucun edge.
