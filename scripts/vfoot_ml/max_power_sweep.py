@@ -99,8 +99,10 @@ def load():
         o_g = ok(gg.get("Oui")) if isinstance(gg, dict) else None
         tot = sa + sb
         fav = None
+        dog = None
         if ok(oh) and ok(oa):
             fav = ("H", ok(oh)) if oh < oa else ("A", ok(oa))
+            dog = ("A", ok(oa)) if oh < oa else ("H", ok(oh))   # outsider = cote la + haute
         # --- marche mi-temps : outsider mene a la MT ? + sa cote MT ---
         o_ht_out = None
         ht_out_leads = None
@@ -113,7 +115,8 @@ def load():
             "xi": xi, "tot": tot, "u25": int(tot <= 2), "u35": int(tot <= 3),
             "o_o35": o_o35, "o_u35": o_u35, "o_u25": o_u25,
             "btts": int(sa > 0 and sb > 0), "o_ng": o_ng, "o_g": o_g,
-            "odd": tot % 2, "fav": fav, "res": ("H" if sa > sb else "A" if sb > sa else "D"),
+            "odd": tot % 2, "fav": fav, "dog": dog,
+            "res": ("H" if sa > sb else "A" if sb > sa else "D"),
             "o_ht_out": o_ht_out, "ht_out_leads": ht_out_leads,
         })
     for comp in seqs:
@@ -155,6 +158,16 @@ def main():
             if r["xi"] >= half and r["fav"]:
                 favp.append(int(r["res"] == r["fav"][0]) * r["fav"][1] - 1)
     tests[-1] = ("Suivre le favori (1X2, 5.7%)", favp)
+
+    # -- CAN outsider cote 6-10 : le pari le MOINS marge de tout Bet261 (~breakeven) --
+    #    surveille en permanence : si un jour il passe +EV (IC_bas>0), le RNG a derive.
+    canp = []
+    can_arr = seqs.get("InstantLeague-8060", [])
+    half_can = can_arr[len(can_arr) // 2]["xi"] if can_arr else 0
+    for r in can_arr:
+        if r["xi"] >= half_can and r.get("dog") and 6.0 <= r["dog"][1] <= 10.0:
+            canp.append(int(r["res"] == r["dog"][0]) * r["dog"][1] - 1)
+    tests.append(("CAN outsider cote 6-10 (le moins marge)", canp))
 
     # -- marche mi-temps : outsider mene a la MT (grosse cote) --
     htp = []

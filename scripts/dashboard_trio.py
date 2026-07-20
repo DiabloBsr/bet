@@ -91,6 +91,41 @@ def _alerts():
     return msgs
 
 
+def _hist_block(st, engine, home, away, leagues, n=5):
+    """Composant historique réutilisable : 3 menus (H2H / équipe home / équipe away),
+    du + récent au + ancien. Utilisable partout dans l'app sur les 9 ligues."""
+    import predict_trio as _pth
+
+    def _row(m):
+        emo = "🟢" if m["res"] == "V" else ("⚪" if m["res"] == "N" else "🔴")
+        return (f"{emo} `{m['date']}` · {m['side']} vs **{m['opp']}** — **{m['gf']}-{m['ga']}** "
+                f"({m['tot']} but{'s' if m['tot'] != 1 else ''}, cote {m['odds']:g})")
+    t1, t2, t3 = st.tabs([f"⚔️ Face-à-face", f"🏠 {home}", f"✈️ {away}"])
+    with t1:
+        h2h = _pth.head_to_head(engine, home, away, leagues)
+        if not h2h:
+            st.caption("Aucun face-à-face direct en base.")
+        else:
+            nz = sum(1 for m in h2h if m["tot"] == 0)
+            st.caption(f"{len(h2h)} confrontations · {nz} finies 0-0 ({100*nz/len(h2h):.0f}%) · "
+                       f"total buts moyen {sum(m['tot'] for m in h2h)/len(h2h):.1f}")
+            for m in h2h[:20]:
+                mark = " 🥅" if m["tot"] == 0 else ""
+                st.markdown(f"`{m['date']}` — {m['home']} **{m['sa']}-{m['sb']}** {m['away']}{mark}")
+    with t2:
+        hh = _pth.match_history(engine, home, n, leagues)
+        if not hh:
+            st.caption("Pas d'historique.")
+        for m in hh:
+            st.markdown(_row(m))
+    with t3:
+        ha = _pth.match_history(engine, away, n, leagues)
+        if not ha:
+            st.caption("Pas d'historique.")
+        for m in ha:
+            st.markdown(_row(m))
+
+
 def main():
     import streamlit as st
     st.set_page_config(page_title="TRIO — V2×V5×Marché", page_icon="⚖️", layout="wide")
@@ -246,6 +281,121 @@ def main():
                            "Sudan/Botswana à cote équivalente — base plus solide, moins risqué.")
             else:
                 st.info("Pas assez de données équipes CAN.")
+
+    # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
+    with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
+        import predict_trio as _ptd
+        engD = st.cache_resource(_engine)()
+        st.caption("Trouve les matchs à venir avec une sélection à GROSSE COTE (n'importe quel marché), "
+                   "triés par chance réelle. Choisis un match → historique complet (face-à-face + 5 derniers "
+                   "de chaque équipe, du + récent au + ancien). ⚠️ Grosse cote = event rare + marge : "
+                   "l'historique donne le contexte, pas un edge.")
+        db1, db2, db3 = st.columns([3, 2, 2])
+        _lgn = list(LEAGUES)
+        _dfi = next((i for i, k in enumerate(_lgn) if LEAGUES[k] == "InstantLeague-8060"), 0)
+        db_lg = db1.selectbox("Ligue", _lgn, index=_dfi, key="db_lg")
+        db_comp = LEAGUES[db_lg]
+        db_lo = db2.number_input("Cote min", 2.0, 100.0, 8.0, 0.5, key="db_lo")
+        db_hi = db3.number_input("Cote max", 2.0, 200.0, 50.0, 1.0, key="db_hi")
+        db_mkts = st.multiselect("Marchés à scanner", _ptd.BIG_ODDS_MARKETS,
+                                 default=["1X2", "Total de buts", "+/-", "G/NG"], key="db_mkts")
+        dbt1, dbt2 = st.columns(2)
+        db_ws = dbt1.text_input("De (HH:MM Mada — vide = maintenant)", value="", key="db_ws", placeholder="ex: 21:00")
+        db_we = dbt2.text_input("À (HH:MM Mada)", value="", key="db_we", placeholder="ex: 22:00")
+        if st.button("🔦 Débusquer", key="db_go", type="primary"):
+            sl, el = db_ws.strip(), db_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)) or (bool(sl) != bool(el)):
+                st.warning("Heures au format HH:MM, les deux ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                with st.spinner("Scan des grosses cotes…"):
+                    st.session_state["db_res"] = _ptd.big_odds_fixtures(
+                        engD, [db_comp], min_odds=float(db_lo), max_odds=float(db_hi),
+                        markets=db_mkts or None, start_local=sl2, end_local=el2)
+                st.session_state["db_comp"] = db_comp
+        res = st.session_state.get("db_res")
+        if res is not None:
+            if not res:
+                st.info("Aucune grosse cote dans ces critères (élargis la bande/les marchés ou attends un round).")
+            else:
+                st.success(f"{len(res)} sélections à grosse cote — la + probable d'abord :")
+                for m in res[:25]:
+                    st.markdown(f"🎲 **{m['local']} · {m['home']} vs {m['away']}** — "
+                                f"**{m['sel']}** `[{m['market']}]` cote **{m['odds']:g}** · {m['p']*100:.0f}% de chance")
+                labels = [f"{m['local']} · {m['home']} vs {m['away']} — {m['sel']} @{m['odds']:g}" for m in res]
+                pick = st.selectbox("📊 Voir l'historique d'un match :", range(len(res)),
+                                    format_func=lambda i: labels[i], key="db_pick")
+                mm = res[pick]
+                st.markdown(f"### 📊 {mm['home']} vs {mm['away']} — {mm['sel']} (cote {mm['odds']:g})")
+                _hist_block(st, engD, mm["home"], mm["away"], [st.session_state.get("db_comp", db_comp)])
+
+    # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
+    with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
+        import predict_trio as _pth2
+        engH = st.cache_resource(_engine)()
+        st.caption("Choisis une ligue et deux équipes → face-à-face direct + 5 derniers matchs de chacune "
+                   "(du + récent au + ancien). Contexte pour juger un pari — pas un prédicteur (RNG sans mémoire).")
+        hl1, hl2, hl3 = st.columns([2, 2, 2])
+        h_lg = hl1.selectbox("Ligue", list(LEAGUES), index=_dfi, key="h_lg")
+        h_comp = LEAGUES[h_lg]
+        _hteams = _pth2.league_teams(engH, h_comp)
+        if _hteams:
+            h_home = hl2.selectbox("Équipe A (domicile)", _hteams, index=0, key="h_home")
+            h_away = hl3.selectbox("Équipe B (extérieur)", _hteams,
+                                   index=min(1, len(_hteams)-1), key="h_away")
+            h_n = st.slider("Nb de derniers matchs par équipe", 3, 15, 5, key="h_n")
+            if st.button("🔎 Afficher l'historique", key="h_go", type="primary"):
+                if h_home == h_away:
+                    st.warning("Choisis deux équipes différentes.")
+                else:
+                    _hist_block(st, engH, h_home, h_away, [h_comp], n=h_n)
+        else:
+            st.info("Pas d'équipes trouvées pour cette ligue.")
+
+    # ---- 🎰 CONSTRUCTEUR DE PARIS PAR CÔTE CIBLE ----
+    with st.expander("🎰 Constructeur de paris par cote cible (combiné le + probable)"):
+        import predict_trio as _ptc2
+        engK = st.cache_resource(_engine)()
+        st.caption("Tu entres la COTE visée + le nombre de matchs + les ligues + un créneau horaire → l'app "
+                   "construit le combiné qui atteint cette cote, **du plus probable au moins probable**. "
+                   "⚠️ Combiner multiplie la marge : plus de legs = EV plus négatif. Outil de ciblage de gain, pas d'edge.")
+        kc1, kc2 = st.columns([2, 2])
+        k_odds = kc1.number_input("Cote visée", 1.5, 500.0, 10.0, 0.5, key="k_odds")
+        k_legs = kc2.slider("Nombre de matchs (legs)", 2, 6, 3, key="k_legs")
+        st.markdown("**Ligues à inclure :**")
+        kcols = st.columns(3)
+        k_leagues = [comp for i, (name, comp) in enumerate(LEAGUES.items())
+                     if kcols[i % 3].checkbox(name, value=(comp == "InstantLeague-8060"), key=f"k_lg_{comp}")]
+        kt1, kt2 = st.columns(2)
+        k_ws = kt1.text_input("De (HH:MM Mada — vide = maintenant)", value="", key="k_ws", placeholder="ex: 21:00")
+        k_we = kt2.text_input("À (HH:MM Mada)", value="", key="k_we", placeholder="ex: 22:00")
+        if st.button("🎰 Construire le combiné", key="k_go", type="primary"):
+            sl, el = k_ws.strip(), k_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if not k_leagues:
+                st.warning("Coche au moins une ligue.")
+            elif (sl and not valid.match(sl)) or (el and not valid.match(el)) or (bool(sl) != bool(el)):
+                st.warning("Heures au format HH:MM, les deux ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                with st.spinner(f"Construction de combinés {k_legs} legs à cote ~{k_odds:g}…"):
+                    combos = _ptc2.combo_by_target(engK, float(k_odds), n_legs=int(k_legs),
+                                                   leagues=k_leagues, start_local=sl2, end_local=el2)
+                if not combos:
+                    st.info("Aucun combiné à cette cote dans le créneau (baisse la cote, élargis le créneau/les ligues).")
+                else:
+                    st.success(f"{len(combos)} combinés atteignant ~{k_odds:g} — du PLUS PROBABLE d'abord :")
+                    for i, c in enumerate(combos, 1):
+                        st.markdown(f"**#{i} — cote totale {c['odds']:g} · {c['p']*100:.0f}% de tout gagner** "
+                                    f"(EV {c['ev']*100:+.0f}%)")
+                        for mtch, mkt, sel, p, o in c["legs"]:
+                            st.markdown(f"　• {mtch} → **{sel}** `[{mkt}]` ({p*100:.0f}%, cote {o:g})")
+                        st.markdown("---")
+                    st.caption("Rappel : « le + probable » ne veut pas dire rentable — un combiné multiplie la marge. "
+                               "P(tout gagner) chute vite avec le nombre de legs.")
 
     # ---- 🎯 GROS CÔTES & OUTSIDER PAR ÉQUIPE ----
     with st.expander("🎯 Gros côtes & outsider — cible une ligue (et/ou une équipe)"):

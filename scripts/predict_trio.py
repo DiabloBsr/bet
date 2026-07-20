@@ -489,6 +489,125 @@ def low_total_scan(engine, minutes: int = 120, leagues: list | None = None,
     return _pick(rec, recent=True)
 
 
+def _lg_clause(leagues, col="e.competition"):
+    if leagues:
+        vals = ",".join("'" + str(x).replace("'", "''") + "'" for x in leagues)
+        return f"AND {col} IN ({vals})"
+    return f"AND {col} LIKE 'InstantLeague-%'"
+
+
+def league_teams(engine, league: str) -> list:
+    """Liste des équipes d'une ligue (pour les menus déroulants)."""
+    lg = str(league).replace("'", "''")
+    d = pd.read_sql(f"""SELECT team_a t FROM events WHERE competition='{lg}'
+        UNION SELECT team_b t FROM events WHERE competition='{lg}'""", engine)
+    return sorted(x for x in d.t.dropna().tolist() if x)
+
+
+def match_history(engine, team: str, n: int = 5, leagues: list | None = None) -> list:
+    """Les n derniers matchs JOUÉS d'une équipe, du + récent au + ancien. Rend date (Mada),
+    ligue, adversaire, côté (dom/ext), score, résultat (V/N/D), cote 1X2 de l'équipe, total buts."""
+    t = str(team).replace("'", "''")
+    d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_away oa, r.score_a sa, r.score_b sb FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
+        JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND (e.team_a='{t}' OR e.team_b='{t}') {_lg_clause(leagues)}
+        ORDER BY e.expected_start DESC LIMIT {int(n)}""", engine)
+    out = []
+    for r in d.itertuples():
+        home = (r.team_a == team)
+        gf, ga = (r.sa, r.sb) if home else (r.sb, r.sa)
+        es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
+        out.append({"date": es.strftime("%d/%m %H:%M"), "tag": LEAGUE_TAGS.get(r.c, r.c[-4:]),
+                    "opp": r.team_b if home else r.team_a, "side": "dom" if home else "ext",
+                    "gf": int(gf), "ga": int(ga), "res": "V" if gf > ga else ("N" if gf == ga else "D"),
+                    "odds": float(r.oh if home else r.oa), "tot": int(gf + ga)})
+    return out
+
+
+def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, n: int = 30) -> list:
+    """Tous les face-à-face directs entre 2 équipes (les deux orientations), du + récent au + ancien."""
+    a = str(team_a).replace("'", "''"); b = str(team_b).replace("'", "''")
+    d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        r.score_a sa, r.score_b sb FROM events e JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL {_lg_clause(leagues)}
+        AND ((e.team_a='{a}' AND e.team_b='{b}') OR (e.team_a='{b}' AND e.team_b='{a}'))
+        ORDER BY e.expected_start DESC LIMIT {int(n)}""", engine)
+    out = []
+    for r in d.itertuples():
+        es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
+        out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
+                    "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb)})
+    return out
+
+
+def _upcoming_df(engine, leagues=None, minutes=120, start_local=None, end_local=None):
+    now = datetime.now(timezone.utc)
+    up = pd.read_sql("""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition LIKE 'InstantLeague-%'""", engine)
+    if not len(up):
+        return up
+    up["es"] = pd.to_datetime(up.expected_start, utc=True)
+    interval = bool(start_local and end_local)
+    horizon = 1440 if interval else minutes
+    up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon))].copy()
+    up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+    if interval:
+        up = up[(up.local >= start_local) & (up.local <= end_local)]
+    if leagues:
+        up = up[up.c.isin(leagues)]
+    return up.sort_values("es").drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+
+
+BIG_ODDS_MARKETS = ["1X2", "Double Chance", "Total de buts", "+/-", "G/NG", "Multi-Buts", "Score exact"]
+
+
+def big_odds_fixtures(engine, leagues=None, min_odds=5.0, max_odds=50.0, markets=None,
+                      minutes=120, start_local=None, end_local=None, top=60) -> list:
+    """Débusqueur : matchs à venir dont une sélection (marchés choisis) est à GROSSE COTE
+    (min_odds..max_odds). Trié par proba dévigée décroissante (le + probable des gros paris d'abord).
+    Chaque ligne porte les 2 équipes pour attacher l'historique."""
+    up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
+    if not len(up):
+        return []
+    mkts = markets or BIG_ODDS_MARKETS
+    out = []
+    for r in up.itertuples():
+        if float(r.oh) <= 1 or float(r.oa) <= 1:
+            continue
+        board = market_board(r.xm, r.oh, r.od, r.oa)
+        for mk in mkts:
+            for sel, p, o in board.get(mk, []):
+                if min_odds <= o <= max_odds:
+                    out.append({"tag": LEAGUE_TAGS.get(r.c, r.c[-4:]), "local": r.local,
+                                "home": r.team_a, "away": r.team_b, "comp": r.c,
+                                "market": mk, "sel": sel, "odds": float(o), "p": float(p)})
+    out.sort(key=lambda x: -x["p"])
+    return out[:top]
+
+
+def combo_by_target(engine, target_odds: float, n_legs: int = 3, leagues=None,
+                    start_local=None, end_local=None, top: int = 6, p_min: float = 0.35) -> list:
+    """Constructeur : combiné de n_legs matchs (à venir, ligue/créneau choisis) dont la cote
+    produit >= target_odds, du PLUS PROBABLE au moins probable (via build_combos)."""
+    up = _upcoming_df(engine, leagues, 120, start_local, end_local)
+    if not len(up):
+        return []
+    matches = []
+    for r in up.itertuples():
+        if float(r.oh) <= 1 or float(r.oa) <= 1:
+            continue
+        matches.append({"match": f"[{LEAGUE_TAGS.get(r.c, r.c[-4:])} {r.local}] {r.team_a} vs {r.team_b}",
+                        "board": market_board(r.xm, r.oh, r.od, r.oa)})
+    return build_combos(matches, target_odds=target_odds, max_legs=n_legs, min_legs=n_legs,
+                        top=top, p_min=p_min)
+
+
 def goal_totalizer(engine, minutes: int = 30, leagues: list | None = None) -> list:
     """Pour chaque match à venir : distribution des TOTAUX de buts + top scores exacts
     (probas dévigées = calibrées, cotes offertes). Honnête : marchés −EV, aucun edge.
