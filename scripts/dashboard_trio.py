@@ -6,6 +6,7 @@ Lancement : streamlit run scripts/dashboard_trio.py --server.port 8513
 from __future__ import annotations
 import json as _j
 import sys, time
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -38,6 +39,32 @@ def _engine():
     from scraper.config import load_settings
     from sqlalchemy import create_engine
     return create_engine(load_settings().db_url, connect_args={"timeout": 30})
+
+
+@contextmanager
+def _db(label: str):
+    """Encadre un accès base derrière un spinner, et rate proprement.
+
+    Le scraper écrit en continu dans la même base SQLite : rencontrer un verrou
+    est un fonctionnement NORMAL, pas un bug. Sans cette garde, une base occupée
+    affiche une trace Python en pleine page — la classe de bug qui a provoqué la
+    boucle de crash sur Hugging Face. On explique, puis on arrête le rendu au lieu
+    de laisser la suite planter sur une variable jamais affectée.
+    """
+    import streamlit as st
+    try:
+        with _db(label):
+            yield
+    except Exception as exc:
+        m = str(exc).lower()
+        if "locked" in m or "busy" in m or "timeout" in m:
+            st.warning("⏳ Base occupée par le scraper (écriture en cours) — "
+                       "relance dans quelques secondes.")
+        elif "malformed" in m or "corrupt" in m:
+            st.error("💥 Lecture incohérente (la base était en cours d'écriture) — relance.")
+        else:
+            st.error(f"❌ Échec : {type(exc).__name__} — {exc}")
+        st.stop()
 
 
 def _round(models, target=None, lg="InstantLeague-8035"):
@@ -102,9 +129,18 @@ def _hist_block(st, engine, home, away, leagues, n=5):
         emo = "🟢" if m["res"] == "V" else ("⚪" if m["res"] == "N" else "🔴")
         return (f"{emo} `{m['date']}` · {m['side']} vs **{m['opp']}** — **{m['gf']}-{m['ga']}** "
                 f"({m['tot']} but{'s' if m['tot'] != 1 else ''}, cote {m['odds']:g})")
+    def _safe(fn, *a):
+        """Ici on dégrade au lieu d'arrêter : les 3 onglets sont indépendants,
+        l'un peut échouer sur un verrou sans priver l'utilisateur des deux autres."""
+        try:
+            return fn(*a)
+        except Exception as exc:
+            st.caption(f"⏳ Historique indisponible (base occupée) : {type(exc).__name__}")
+            return []
+
     t1, t2, t3 = st.tabs([f"⚔️ Face-à-face", f"🏠 {home}", f"✈️ {away}"])
     with t1:
-        h2h = _pth.head_to_head(engine, home, away, leagues)
+        h2h = _safe(_pth.head_to_head, engine, home, away, leagues)
         if not h2h:
             st.caption("Aucun face-à-face direct en base.")
         else:
@@ -115,13 +151,13 @@ def _hist_block(st, engine, home, away, leagues, n=5):
                 mark = " 🥅" if m["tot"] == 0 else ""
                 st.markdown(f"`{m['date']}` — {m['home']} **{m['sa']}-{m['sb']}** {m['away']}{mark}")
     with t2:
-        hh = _pth.match_history(engine, home, n, leagues)
+        hh = _safe(_pth.match_history, engine, home, n, leagues)
         if not hh:
             st.caption("Pas d'historique.")
         for m in hh:
             st.markdown(_row(m))
     with t3:
-        ha = _pth.match_history(engine, away, n, leagues)
+        ha = _safe(_pth.match_history, engine, away, n, leagues)
         if not ha:
             st.caption("Pas d'historique.")
         for m in ha:
@@ -179,7 +215,7 @@ def main():
             else:
                 eng = st.cache_resource(_engine)()
                 if by_odds:
-                    with st.spinner(f"Scan {s} → {e} : paris à cote ~{tgt_odds:g} sur 9 ligues…"):
+                    with _db(f"Scan {s} → {e} : paris à cote ~{tgt_odds:g} sur 9 ligues…"):
                         rows = _ptw.odds_window(eng, s, e, float(tgt_odds))
                     if not rows:
                         st.info(f"Aucun pari à cote ~{tgt_odds:g} entre {s} et {e} "
@@ -195,7 +231,7 @@ def main():
                                    "⚠️ À cote fixée, proba haute = meilleure chance mais l'EV reste "
                                    "négative (marge du book) — ce n'est pas un edge.")
                 else:
-                    with st.spinner(f"Scan {s} → {e} sur les 9 ligues (confiance ≥{conf_min}%)…"):
+                    with _db(f"Scan {s} → {e} sur les 9 ligues (confiance ≥{conf_min}%)…"):
                         res = _ptw.upcoming_window(eng, s, e, target=conf_min/100.0)
                     if not res:
                         st.info(f"Aucun match publié entre {s} et {e} (élargis le créneau ou attends "
@@ -246,7 +282,7 @@ def main():
             else:
                 sl2 = sl.zfill(5) if sl else None
                 el2 = el.zfill(5) if el else None
-                with st.spinner("Scan CAN…"):
+                with _db("Scan CAN…"):
                     rows = _ptcan.can_outsiders(engC, lo=float(can_lo), hi=float(can_hi),
                                                 p_min=can_pmin/100.0, start_local=sl2, end_local=el2)
                 if not rows:
@@ -267,7 +303,7 @@ def main():
                                "du bankroll, et **jamais** le favori en CAN. 🟢 ≥18% · 🟡 ≥14% de chance.")
         st.divider()
         if st.button("📋 Liste favoris / outsiders des équipes CAN", key="can_teams_go"):
-            with st.spinner("Profils équipes CAN…"):
+            with _db("Profils équipes CAN…"):
                 profs = _ptcan.can_team_profiles(engC)
             if profs:
                 st.markdown("**Équipes CAN — du + fort (favori habituel) au + faible (outsider) :**")
@@ -311,7 +347,7 @@ def main():
             else:
                 sl2 = sl.zfill(5) if sl else None
                 el2 = el.zfill(5) if el else None
-                with st.spinner("Scan des grosses cotes + historiques…"):
+                with _db("Scan des grosses cotes + historiques…"):
                     st.session_state["db_res"] = _ptd.big_odds_fixtures(
                         engD, [db_comp], min_odds=float(db_lo), max_odds=float(db_hi),
                         markets=db_mkts or None, start_local=sl2, end_local=el2,
@@ -398,7 +434,7 @@ def main():
             else:
                 sl2 = sl.zfill(5) if sl else None
                 el2 = el.zfill(5) if el else None
-                with st.spinner(f"Construction de combinés {k_legs} legs à cote ~{k_odds:g}…"):
+                with _db(f"Construction de combinés {k_legs} legs à cote ~{k_odds:g}…"):
                     combos = _ptc2.combo_by_target(engK, float(k_odds), n_legs=int(k_legs),
                                                    leagues=k_leagues, start_local=sl2, end_local=el2)
                 if not combos:
@@ -438,7 +474,7 @@ def main():
         s_sl = se1.slider("Stop-loss (%)", 10, 100, 50, key="s_sl") / 100.0
         s_tp = se2.slider("Take-profit (%)", 10, 500, 100, key="s_tp") / 100.0
         if st.button("🎲 Lancer 3000 sessions", key="s_go", type="primary"):
-            with st.spinner("Simulation Monte-Carlo…"):
+            with _db("Simulation Monte-Carlo…"):
                 r = _pts.can_simulate(engS, bet=s_bet, lo=float(s_lo), hi=float(s_hi),
                                       stake=float(s_stake), n_bets=int(s_nbets), bankroll=float(s_bank),
                                       stop_loss=s_sl, take_profit=s_tp, n_sims=3000)
@@ -501,7 +537,7 @@ def main():
             side = {"Peu importe": "any", "Domicile": "home", "Extérieur": "away", "Nul (X)": "nul"}[sd]
             team = tsel.strip() or None
             span = f" · {sl2}→{el2}" if sl2 else ""
-            with st.spinner(f"Recherche ({len(ft_leagues)} ligue(s){span})…"):
+            with _db(f"Recherche ({len(ft_leagues)} ligue(s){span})…"):
                 dctx = _ptt.nodraw_streaks(eng2, leagues=ft_leagues)
                 res = _ptt.find_targets(eng2, team, side, float(olo), float(ohi),
                                         leagues=ft_leagues, draw_ctx=dctx,
@@ -550,7 +586,7 @@ def main():
                 nm = datetime.now(timezone.utc) + timedelta(hours=3)
                 s, e = nm.strftime("%H:%M"), (nm + timedelta(minutes=30)).strftime("%H:%M")
                 mkts = ["1X2", "Double Chance", "+/-", "G/NG"] if only_safe else None
-                with st.spinner(f"Recherche cote ~{a_odds:g} sur {len(picked)} ligue(s)…"):
+                with _db(f"Recherche cote ~{a_odds:g} sur {len(picked)} ligue(s)…"):
                     rows = _pta.odds_window(eng3, s, e, float(a_odds), tol=a_tol/100.0,
                                             leagues=picked, markets=mkts)
                 if not rows:
@@ -614,7 +650,7 @@ def main():
                    "cote reste −10.4%, le 3-3 −15.3%.")
         gt_min = st.slider("Horizon (minutes)", 5, 60, 20, key="gt_min")
         if st.button("🎲 Afficher les totaux & scores", key="gt_go", type="primary"):
-            with st.spinner("Lecture des marchés…"):
+            with _db("Lecture des marchés…"):
                 grows = _ptg.goal_totalizer(engT, minutes=gt_min)
             if not grows:
                 st.info("Aucun match publié dans l'horizon (élargis ou attends un round).")
@@ -663,7 +699,7 @@ def main():
                 sl2 = sl.zfill(5) if sl else None
                 el2 = el.zfill(5) if el else None
                 lgs = ["InstantLeague-8060"] if lt_can else None
-                with st.spinner("Scan des matchs défensifs…"):
+                with _db("Scan des matchs défensifs…"):
                     rows = _ptlt.low_total_scan(engLT, leagues=lgs, start_local=sl2, end_local=el2)
                 if not rows:
                     st.info("Aucun match capté (élargis ou attends un round).")
@@ -729,7 +765,7 @@ def main():
             st.caption(f"✓ V5+V2 fittés sur {models[3]} matchs (cache).")
         except Exception as exc:
             st.error(f"Fit impossible : {exc}"); return
-        with st.spinner("Calcul du trio…"):
+        with _db("Calcul du trio…"):
             res = _round(models, target, lg)
         if target and res.get("rounds") and target not in res["rounds"]:
             st.warning(f"Round {target} non dispo. Rounds : {res['rounds'][:10]}")

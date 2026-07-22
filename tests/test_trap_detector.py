@@ -81,13 +81,31 @@ def test_unknown_market_does_not_crash():
 # ---- calibration consciente de la ligue (bug mesuré : CAN 7.8pp -> 3.5pp) ----
 
 def test_calibration_table_is_league_aware():
-    """La table de calibration est ajustée sur l'anglaise (LG=8035). L'appliquer à
-    une autre ligue dé-calibre (mesuré : écart max CAN 3.5pp -> 8.0pp)."""
+    """Chaque ligue doit utiliser SA table, jamais celle d'une autre.
+
+    Les constantes du simulateur sont ajustées sur l'anglaise ; réutiliser sa table
+    ailleurs dé-calibre. Hold-out CAN (n=8000, matchs antérieurs à la fenêtre
+    d'ajustement) : sans calibration écart max/total 5.0pp, avec la table anglaise
+    0.9pp, avec sa propre table 0.8pp (et max/score 2.7 -> 0.9 -> 0.6pp)."""
     import predict_trio as pt
-    if pt._CALIB is None:
-        return  # table absente : rien à vérifier
+    if not pt._CALIB_BY_LG:
+        return  # tables absentes : rien à vérifier
     dist = {"1-0": 0.4, "0-0": 0.3, "2-1": 0.3}
-    same = pt._apply_calib(dist, "InstantLeague-8060")   # autre ligue -> inchangé
-    assert same == dist, "la table ne doit PAS s'appliquer hors de sa ligue d'ajustement"
-    fitted = pt._apply_calib(dist, pt.LG)                # ligue d'ajustement -> corrigé
-    assert fitted != dist, "la table doit s'appliquer sur sa propre ligue"
+    CAN = "InstantLeague-8060"
+    if CAN in pt._CALIB_BY_LG and pt.LG in pt._CALIB_BY_LG:
+        assert pt._apply_calib(dist, CAN) != pt._apply_calib(dist, pt.LG), (
+            "deux ligues ne doivent pas partager la même correction")
+    # une ligue sans table mesurée n'est PAS corrigée au hasard
+    assert pt._apply_calib(dist, "InstantLeague-INEXISTANTE") == dist
+    assert pt._calib_for("InstantLeague-INEXISTANTE") is None
+
+
+def test_every_league_has_its_own_calibration():
+    """Les 9 ligues suivies doivent chacune avoir une table (sinon elles ne sont pas corrigées)."""
+    import predict_trio as pt
+    if not pt._CALIB_BY_LG:
+        return
+    assert len(pt._CALIB_BY_LG) >= 9, f"seulement {len(pt._CALIB_BY_LG)} tables"
+    for lg, mat in pt._CALIB_BY_LG.items():
+        assert mat.shape == (7, 7), f"{lg} : matrice {mat.shape}"
+        assert (mat > 0).all(), f"{lg} : correction nulle ou négative"

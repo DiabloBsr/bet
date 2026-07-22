@@ -25,28 +25,44 @@ from scraper.market_inversion import exact_invert_1x2, apply_sim_deviations
 MADA = timezone(timedelta(hours=3))
 LG = "InstantLeague-8035"
 
-_CALIB = None
+_CALIB_BY_LG: dict = {}      # ligue -> matrice 7x7
+_CALIB = None                # table de la ligue de référence (compat ascendante)
+_CALIB_REF = LG
 try:
     _cp = Path(__file__).resolve().parents[1] / "data" / "vfoot_ml" / "score_calibration.json"
     if _cp.exists():
-        _CALIB = np.asarray(json.loads(_cp.read_text(encoding="utf-8"))["correction"], float)
+        _raw = json.loads(_cp.read_text(encoding="utf-8"))
+        _CALIB_REF = _raw.get("reference_league", LG)
+        _CALIB_BY_LG = {k: np.asarray(v, float)
+                        for k, v in (_raw.get("per_league") or {}).items()}
+        if not _CALIB_BY_LG and _raw.get("correction"):     # ancien format mono-ligue
+            _CALIB_BY_LG = {_CALIB_REF: np.asarray(_raw["correction"], float)}
+        _CALIB = _CALIB_BY_LG.get(_CALIB_REF)
 except Exception:
-    _CALIB = None
+    _CALIB_BY_LG, _CALIB = {}, None
+
+
+def _calib_for(lg: str = None):
+    """Table de correction PROPRE à cette ligue, ou None si elle n'en a pas.
+
+    Une table par ligue est indispensable : les constantes du simulateur
+    (MU_BOOST, RHO_SIM, SIM_CELL_BOOST) sont ajustées sur l'anglaise, et les
+    réutiliser telles quelles ailleurs dé-calibre — mesuré sur CAN (λ=1.49 vs
+    2.83), l'écart max passait de 3.5pp à 8.0pp. Une ligue sans table mesurée
+    n'est PAS corrigée (mieux vaut non corrigé que corrigé avec la mauvaise)."""
+    return _CALIB_BY_LG.get(lg if lg is not None else LG)
 
 
 def _apply_calib(d: dict, lg: str = None) -> dict:
-    """Applique la table de calibration 7x7 à une distribution {score: p}, renormalise.
-
-    La table est ajustée sur la SEULE ligue anglaise (refresh_calibration.py, LG=8035).
-    L'appliquer ailleurs dé-calibre : mesuré sur CAN (λ=1.49 vs 2.83), l'écart max
-    passait de 3.5pp à 8.0pp. On ne l'applique donc qu'à la ligue d'ajustement."""
-    if _CALIB is None or not d or (lg is not None and lg != LG):
+    """Applique la table de calibration 7x7 de la ligue à {score: p}, renormalise."""
+    cal = _calib_for(lg)
+    if cal is None or not d:
         return d
     out = {}
     for sc, p in d.items():
         try:
             h, a = map(int, sc.split("-"))
-            f = float(_CALIB[h][a]) if (0 <= h < 7 and 0 <= a < 7) else 1.0
+            f = float(cal[h][a]) if (0 <= h < 7 and 0 <= a < 7) else 1.0
         except Exception:
             f = 1.0
         out[sc] = p * f
@@ -81,8 +97,9 @@ def _over25_calib(oh, od, oa, lg: str = None):
     try:
         lh, la = exact_invert_1x2(oh, od, oa)
         g = np.asarray(apply_sim_deviations(lh, la, "cells"), float)[:7, :7]; g /= g.sum()
-        if _CALIB is not None and (lg is None or lg == LG):
-            g = g * _CALIB; g /= g.sum()
+        cal = _calib_for(lg)
+        if cal is not None:
+            g = g * cal; g /= g.sum()
         # plafond dur du RNG : total <= 6 buts (0/58083 dépassement) -> cases
         # impossibles zérotées, probas renormalisées (justesse exacte des totaux)
         for h in range(7):

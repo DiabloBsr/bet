@@ -73,3 +73,46 @@ def test_widget_keys_are_unique():
     keys = re.findall(r'key\s*=\s*"([^"]+)"', src)
     dupes = {k for k in keys if keys.count(k) > 1}
     assert not dupes, f"clés de widget dupliquées : {sorted(dupes)}"
+
+
+# ---- accès base : le scraper écrit en parallèle, un verrou est NORMAL ----
+
+# Ces deux-là ont déjà leur propre try/except avec un message adapté.
+SPINNERS_AUTORISES = ("Calcul de la calibration", "Fit V5+V2")
+
+
+def test_db_calls_are_guarded():
+    """BUG RÉEL : un `st.spinner` nu autour d'un accès base affiche une trace Python
+    en pleine page quand SQLite est verrouillé (crash-loop Hugging Face). Tout accès
+    doit passer par `_db()`, qui explique et arrête proprement le rendu."""
+    src = DASH.read_text(encoding="utf-8")
+    nus = [ln.strip() for ln in src.splitlines()
+           if "with st.spinner(" in ln and not any(a in ln for a in SPINNERS_AUTORISES)]
+    assert not nus, f"accès base non gardé (utiliser _db) : {nus}"
+    assert "def _db(" in src, "le garde-fou _db() a disparu"
+    assert src.count("with _db(") >= 12, "des accès base ne passent plus par _db()"
+
+
+def test_db_guard_stops_the_page():
+    """La garde doit ARRÊTER le rendu : sinon le code suivant plante sur une
+    variable jamais affectée (NameError), ce qui masque la vraie cause."""
+    tree = _tree()
+    fn = next(n for n in ast.walk(tree)
+              if isinstance(n, ast.FunctionDef) and n.name == "_db")
+    handlers = [h for h in ast.walk(fn) if isinstance(h, ast.ExceptHandler)]
+    assert handlers, "_db doit intercepter les erreurs base"
+    calls = {getattr(c.func, "attr", "") for h in handlers for c in ast.walk(h)
+             if isinstance(c, ast.Call)}
+    assert "stop" in calls, "_db doit appeler st.stop() après avoir expliqué"
+
+
+def test_history_block_degrades_without_stopping():
+    """Les 3 onglets d'historique sont indépendants : l'un peut échouer sur un
+    verrou sans priver l'utilisateur des deux autres (donc pas de st.stop() ici)."""
+    src = DASH.read_text(encoding="utf-8")
+    tree = _tree()
+    fn = next(n for n in ast.walk(tree)
+              if isinstance(n, ast.FunctionDef) and n.name == "_hist_block")
+    seg = ast.get_source_segment(src, fn) or ""
+    assert "_safe(" in seg, "les lectures base de _hist_block doivent passer par _safe"
+    assert "head_to_head(engine" not in seg, "appel base non gardé dans _hist_block"

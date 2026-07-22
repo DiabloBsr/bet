@@ -27,7 +27,11 @@ DEFAULT_FILES = [
     "scripts/predict_trio.py",
     "scripts/dashboard_trio.py",
     "scripts/trap_detector.py",
+    "scripts/market_ranges.py",
     "deploy/start_cloud.sh",
+    # les corrections par ligue : sans ce fichier, l'app en ligne resterait sur
+    # l'ancienne table (anglaise) et afficherait des probas fausses hors anglaise.
+    "data/vfoot_ml/score_calibration.json",
 ]
 BUILD_WAIT = 240      # laisser le temps au rebuild Docker + boot
 PROBES = 5            # nb de requêtes de contrôle
