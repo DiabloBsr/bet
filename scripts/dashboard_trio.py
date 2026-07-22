@@ -53,8 +53,8 @@ def _db(label: str):
     """
     import streamlit as st
     try:
-        with _db(label):
-            yield
+        with st.spinner(label):   # surtout PAS _db(label) : la garde s'appelait
+            yield                 # elle-meme -> RecursionError sur chaque acces base.
     except Exception as exc:
         m = str(exc).lower()
         if "locked" in m or "busy" in m or "timeout" in m:

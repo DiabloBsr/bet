@@ -84,11 +84,26 @@ SPINNERS_AUTORISES = ("Calcul de la calibration", "Fit V5+V2")
 def test_db_calls_are_guarded():
     """BUG RÉEL : un `st.spinner` nu autour d'un accès base affiche une trace Python
     en pleine page quand SQLite est verrouillé (crash-loop Hugging Face). Tout accès
-    doit passer par `_db()`, qui explique et arrête proprement le rendu."""
-    src = DASH.read_text(encoding="utf-8")
-    nus = [ln.strip() for ln in src.splitlines()
-           if "with st.spinner(" in ln and not any(a in ln for a in SPINNERS_AUTORISES)]
+    doit passer par `_db()`, qui explique et arrête proprement le rendu.
+    Exception NÉCESSAIRE : `_db` lui-même appelle `st.spinner` — c'est ce qu'il
+    encapsule. Cette règle, écrite trop largement, avait poussé à remplacer ce
+    spinner par un appel à `_db` : la garde s'appelait elle-même et toute l'app
+    tombait en RecursionError. On raisonne donc sur l'AST, pas sur le texte, pour
+    ne viser que les spinners situés HORS de `_db`.
+    """
+    tree = _tree()
+    dans_db = {id(n) for f in _contextmanagers(tree) if f.name == "_db" for n in ast.walk(f)}
+    nus = []
+    for n in ast.walk(tree):
+        if id(n) in dans_db:
+            continue
+        if (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                and n.func.attr == "spinner"):
+            lbl = n.args[0].value if (n.args and isinstance(n.args[0], ast.Constant)) else ""
+            if not any(a in str(lbl) for a in SPINNERS_AUTORISES):
+                nus.append(f"ligne {n.lineno} : {lbl}")
     assert not nus, f"accès base non gardé (utiliser _db) : {nus}"
+    src = DASH.read_text(encoding="utf-8")
     assert "def _db(" in src, "le garde-fou _db() a disparu"
     assert src.count("with _db(") >= 12, "des accès base ne passent plus par _db()"
 
@@ -149,3 +164,42 @@ def test_embedded_calibration_has_every_league():
         return
     c = json.loads(p.read_text(encoding="utf-8"))
     assert len(c.get("per_league", {})) >= 9, "tables par ligue manquantes dans config/"
+
+
+# ---- garde anti-recursion (bug reel : _db appelait _db) ----------------------
+
+def _contextmanagers(tree):
+    """Les fonctions decorees @contextmanager du module."""
+    for n in ast.walk(tree):
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            noms = [d.id if isinstance(d, ast.Name) else getattr(d, "attr", "")
+                    for d in n.decorator_list]
+            if "contextmanager" in noms:
+                yield n
+
+
+def test_aucun_contextmanager_ne_sappelle_lui_meme():
+    """BUG REEL : `_db` ouvrait `with _db(label)` au lieu de `with st.spinner(label)`.
+
+    Chaque acces base partait donc en recursion infinie, et l'exception etait
+    rattrapee par sa propre garde -> l'app affichait
+    « Echec : RecursionError — maximum recursion depth exceeded » sur tous les
+    boutons. La garde censee eviter les plantages ETAIT le plantage.
+    """
+    tree = _tree()
+    for fn in _contextmanagers(tree):
+        appels = [c.func.id for c in ast.walk(fn)
+                  if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)]
+        assert fn.name not in appels, (
+            f"{fn.name} s'appelle elle-meme : recursion infinie a chaque usage")
+
+
+def test_le_garde_db_encadre_bien_un_spinner():
+    """La garde doit deleguer a st.spinner : c'est ce qui affiche l'attente."""
+    tree = _tree()
+    db = next((f for f in _contextmanagers(tree) if f.name == "_db"), None)
+    assert db is not None, "_db introuvable"
+    attrs = [c.func.attr for c in ast.walk(db)
+             if isinstance(c, ast.Call) and isinstance(c.func, ast.Attribute)]
+    assert "spinner" in attrs, "_db n'appelle plus st.spinner"
+    assert "stop" in attrs, "_db doit arreter le rendu au lieu de laisser planter la suite"
