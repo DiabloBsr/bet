@@ -27,10 +27,15 @@ from scraper.predictor_v2 import grid_top_k_scores, market_score_grid
 import predict_trio as pt
 
 # calibration embarquÃ©e dans le repo (data/ n'est pas versionnÃ©)
-if pt._CALIB is None:
+if not pt._CALIB_BY_LG:
     try:
-        pt._CALIB = np.asarray(json.loads(
-            (ROOT / "config" / "score_calibration.json").read_text(encoding="utf-8"))["correction"], float)
+        _c = json.loads((ROOT / "config" / "score_calibration.json").read_text(encoding="utf-8"))
+        # UNE TABLE PAR LIGUE : les constantes du simulateur sont ajustees sur
+        # l'anglaise ; appliquer sa correction aux 8 autres ligues les decalibre.
+        pt._CALIB_BY_LG = {k: np.asarray(v, float) for k, v in (_c.get("per_league") or {}).items()}
+        if not pt._CALIB_BY_LG and _c.get("correction"):        # ancien format mono-ligue
+            pt._CALIB_BY_LG = {pt.LG: np.asarray(_c["correction"], float)}
+        pt._CALIB = pt._CALIB_BY_LG.get(_c.get("reference_league", pt.LG))
     except Exception:
         pass
 
@@ -77,6 +82,7 @@ def fetch_upcoming(lid: str):
 def to_match(ev) -> dict:
     """Construit l'objet match (board + probas champion) pour l'affichage/combos."""
     oh, od, oa = ev["oh"], ev["od"], ev["oa"]
+    lg = f"InstantLeague-{ev['lid']}"        # chaque ligue a SA table de calibration
     inv = 1/oh + 1/od + 1/oa
     x12 = ((1/oh)/inv, (1/od)/inv, (1/oa)/inv)
     cons, top1c = [], None
@@ -84,14 +90,14 @@ def to_match(ev) -> dict:
         g = market_score_grid(ev["xm"].get("Score exact"))
         if g is not None:
             cons = [(s, float(p)) for s, p in grid_top_k_scores(g, 8)]
-            cal = pt._apply_calib(dict(cons))
+            cal = pt._apply_calib(dict(cons), lg)
             top1c = max(cal.items(), key=lambda kv: kv[1]) if cal else None
     except Exception:
         pass
     local = ev["es"].astimezone(MADA).strftime("%H:%M")
     return {"match": f"{ev['team_a']} v {ev['team_b']}", "local": local,
             "cotes": (oh, od, oa), "x12": x12,
-            "over25_pct": pt._over25_calib(oh, od, oa),
+            "over25_pct": pt._over25_calib(oh, od, oa, lg),
             "consensus_top3": cons[:3], "top1_calibre": top1c,
             "board": pt.market_board(ev["xm"], oh, od, oa)}
 

@@ -116,3 +116,36 @@ def test_history_block_degrades_without_stopping():
     seg = ast.get_source_segment(src, fn) or ""
     assert "_safe(" in seg, "les lectures base de _hist_block doivent passer par _safe"
     assert "head_to_head(engine" not in seg, "appel base non gardé dans _hist_block"
+
+
+# ---- app cloud (streamlit_app.py) : meme piege de calibration ----
+
+CLOUD = Path(__file__).resolve().parents[1] / "scripts" / ".." / "streamlit_app.py"
+
+
+def test_cloud_app_passes_the_league_to_calibration():
+    """BUG RÉEL : l'app cloud appelait _apply_calib/_over25_calib SANS ligue, donc
+    appliquait la table anglaise aux 9 ligues. Mêmes cotes -> Over 2.5 48.4% (ANG)
+    vs 44.8% (CAN) : 3.6pp d'écart qui étaient auparavant confondus."""
+    src = CLOUD.read_text(encoding="utf-8", errors="replace")
+    assert "_apply_calib(dict(cons), lg)" in src, "_apply_calib appelé sans ligue"
+    assert "_over25_calib(oh, od, oa, lg)" in src, "_over25_calib appelé sans ligue"
+    assert 'lg = f"InstantLeague-{ev[\'lid\']}"' in src, "la ligue n'est plus dérivée du match"
+
+
+def test_cloud_app_loads_per_league_tables():
+    """Le bootstrap doit remplir _CALIB_BY_LG : écrire dans _CALIB seul ne calibre
+    plus rien depuis le passage aux tables par ligue (perte silencieuse)."""
+    src = CLOUD.read_text(encoding="utf-8", errors="replace")
+    assert "_CALIB_BY_LG" in src, "le bootstrap n'alimente pas les tables par ligue"
+
+
+def test_embedded_calibration_has_every_league():
+    """config/score_calibration.json est la copie embarquée (data/ n'est pas versionné) :
+    si elle se désynchronise, l'app en ligne calibre avec une table périmée."""
+    import json
+    p = Path(__file__).resolve().parents[1] / "config" / "score_calibration.json"
+    if not p.exists():
+        return
+    c = json.loads(p.read_text(encoding="utf-8"))
+    assert len(c.get("per_league", {})) >= 9, "tables par ligue manquantes dans config/"
