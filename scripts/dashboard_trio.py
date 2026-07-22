@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 import re
+import pandas as pd          # module-level : évite le piège UnboundLocalError si `pd`
+                             # n'est importé qu'en local dans main() (bug survenu en prod)
 
 LEAGUES = {"🏴 Angleterre": "InstantLeague-8035", "🌍 Coupe du Monde": "InstantLeague-8065",
            "🏆 Champions": "InstantLeague-8056", "🌍 CAN": "InstantLeague-8060",
@@ -268,7 +270,6 @@ def main():
             with st.spinner("Profils équipes CAN…"):
                 profs = _ptcan.can_team_profiles(engC)
             if profs:
-                import pandas as pd
                 st.markdown("**Équipes CAN — du + fort (favori habituel) au + faible (outsider) :**")
                 df = pd.DataFrame([{
                     "Équipe": p["team"], "Vict%": round(p["winrate"]*100),
@@ -449,7 +450,6 @@ def main():
                 m2.metric("Sessions ruinées", f"{r['pct_ruin']:.0f}%")
                 m3.metric("Bankroll médiane", f"{r['median']:,.0f}", delta=f"{r['median']-r['start']:,.0f}")
                 m4.metric("ROI réel du pari", f"{r['roi']*100:+.1f}%")
-                import pandas as pd
                 maxlen = max(len(c) for c in r["curves"]) if r["curves"] else 1
                 data = {f"s{i}": c + [None] * (maxlen - len(c)) for i, c in enumerate(r["curves"][:25])}
                 if data:
@@ -934,7 +934,6 @@ def main():
     st.divider()
     st.subheader("📈 Suivi réel (forward)")
     try:
-        import pandas as pd
         from sqlalchemy import create_engine as _ce
         from scraper.config import load_settings as _ls
         _eng = _ce(_ls().db_url)
