@@ -76,3 +76,18 @@ def test_exact_score_uses_measured_roi_when_available():
 def test_unknown_market_does_not_crash():
     v = td.evaluate_single("marche_inexistant")
     assert v.severity == "⚪"
+
+
+# ---- calibration consciente de la ligue (bug mesuré : CAN 7.8pp -> 3.5pp) ----
+
+def test_calibration_table_is_league_aware():
+    """La table de calibration est ajustée sur l'anglaise (LG=8035). L'appliquer à
+    une autre ligue dé-calibre (mesuré : écart max CAN 3.5pp -> 8.0pp)."""
+    import predict_trio as pt
+    if pt._CALIB is None:
+        return  # table absente : rien à vérifier
+    dist = {"1-0": 0.4, "0-0": 0.3, "2-1": 0.3}
+    same = pt._apply_calib(dist, "InstantLeague-8060")   # autre ligue -> inchangé
+    assert same == dist, "la table ne doit PAS s'appliquer hors de sa ligue d'ajustement"
+    fitted = pt._apply_calib(dist, pt.LG)                # ligue d'ajustement -> corrigé
+    assert fitted != dist, "la table doit s'appliquer sur sa propre ligue"

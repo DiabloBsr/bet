@@ -34,9 +34,13 @@ except Exception:
     _CALIB = None
 
 
-def _apply_calib(d: dict) -> dict:
-    """Applique la table de calibration 7x7 à une distribution {score: p}, renormalise."""
-    if _CALIB is None or not d:
+def _apply_calib(d: dict, lg: str = None) -> dict:
+    """Applique la table de calibration 7x7 à une distribution {score: p}, renormalise.
+
+    La table est ajustée sur la SEULE ligue anglaise (refresh_calibration.py, LG=8035).
+    L'appliquer ailleurs dé-calibre : mesuré sur CAN (λ=1.49 vs 2.83), l'écart max
+    passait de 3.5pp à 8.0pp. On ne l'applique donc qu'à la ligue d'ajustement."""
+    if _CALIB is None or not d or (lg is not None and lg != LG):
         return d
     out = {}
     for sc, p in d.items():
@@ -73,11 +77,11 @@ def _sem(extra_markets):
     return extra_markets.get("Score exact") if isinstance(extra_markets, dict) else None
 
 
-def _over25_calib(oh, od, oa):
+def _over25_calib(oh, od, oa, lg: str = None):
     try:
         lh, la = exact_invert_1x2(oh, od, oa)
         g = np.asarray(apply_sim_deviations(lh, la, "cells"), float)[:7, :7]; g /= g.sum()
-        if _CALIB is not None:
+        if _CALIB is not None and (lg is None or lg == LG):
             g = g * _CALIB; g /= g.sum()
         # plafond dur du RNG : total <= 6 buts (0/58083 dépassement) -> cases
         # impossibles zérotées, probas renormalisées (justesse exacte des totaux)
@@ -859,7 +863,8 @@ def upcoming_all(engine, minutes: int = 6) -> list:
     return out
 
 
-def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=None) -> dict:
+def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=None,
+                lg: str = None) -> dict:
     oh, od, oa = float(oh), float(od), float(oa)
     sem = _sem(extra_markets)
     # --- V2 (grille blendée) ---
@@ -904,7 +909,7 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
     ctop = sorted(cons.items(), key=lambda kv: -kv[1])[:3]
     # DOUBLE MODE (backtest 9334 OOS) : calib aide le Top-1 (+0.3pp) mais coûte au
     # Top-3 (-0.4pp) -> Top-1 = distribution CALIBRÉE ; Top-3 = distribution BRUTE.
-    cons_cal = _apply_calib(cons)
+    cons_cal = _apply_calib(cons, lg)
     top1_cal = max(cons_cal.items(), key=lambda kv: kv[1]) if cons_cal else None
     # accord = les moteurs présents s'accordent-ils sur le top-1 ?
     tops = [src[0][0] for src in sources]
@@ -915,7 +920,7 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
         ph, pd_, pa = (1/oh)/inv, (1/od)/inv, (1/oa)/inv
     return {"match": f"{team_a} v {team_b}", "team_a": team_a, "team_b": team_b,
             "cotes": [oh, od, oa], "x12": [round(ph, 3), round(pd_, 3), round(pa, 3)],
-            "over25_pct": _over25_calib(oh, od, oa),
+            "over25_pct": _over25_calib(oh, od, oa, lg),
             "v2_top3": [(s, round(p, 3)) for s, p in v2top[:3]],
             "v5_top3": [(s, round(p, 3)) for s, p in v5top[:3]],
             "market_top3": [(s, round(p, 3)) for s, p in mkttop[:3]],
@@ -944,7 +949,7 @@ def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
         return {"target": None, "rounds": [], "matches": []}
     target = target_local if (target_local and target_local in rounds) else rounds[0]
     ms = up[up.local == target]
-    matches = [predict_one(engine, m5, v2model, r.team_a, r.team_b, r.oh, r.od, r.oa, r.extra_markets)
+    matches = [predict_one(engine, m5, v2model, r.team_a, r.team_b, r.oh, r.od, r.oa, r.extra_markets, lg)
                for r in ms.itertuples() if float(r.oh) > 1 and float(r.oa) > 1]
     return {"target": target, "rounds": rounds, "matches": matches}
 
