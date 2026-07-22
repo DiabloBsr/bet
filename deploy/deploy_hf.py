@@ -29,9 +29,10 @@ DEFAULT_FILES = [
     "scripts/trap_detector.py",
     "scripts/market_ranges.py",
     "deploy/start_cloud.sh",
-    # les corrections par ligue : sans ce fichier, l'app en ligne resterait sur
-    # l'ancienne table (anglaise) et afficherait des probas fausses hors anglaise.
-    "data/vfoot_ml/score_calibration.json",
+    # Les corrections par ligue. C'est bien config/ qu'il faut pousser : start_cloud.sh
+    # le recopie au boot vers data/vfoot_ml/ (deployer data/ serait ecrase). Sans ce
+    # fichier, l'app en ligne afficherait des probas fausses hors anglaise.
+    "config/score_calibration.json",
 ]
 BUILD_WAIT = 240      # laisser le temps au rebuild Docker + boot
 PROBES = 5            # nb de requêtes de contrôle
