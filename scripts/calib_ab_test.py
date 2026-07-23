@@ -38,11 +38,34 @@ from refresh_calibration import SQL, _calibrate  # noqa: E402
 from scraper.config import load_settings        # noqa: E402
 
 TRAIN_FRAC = 0.70
+_DB = ""                                   # extrait fige eventuel (--db)
 NOMS = {"InstantLeague-8060": "CAN", "InstantLeague-8035": "ANG",
         "InstantLeague-8036": "FRA", "InstantLeague-8037": "ESP",
         "InstantLeague-8042": "ITA", "InstantLeague-8043": "ALL",
         "InstantLeague-8044": "POR", "InstantLeague-8056": "UCL",
         "InstantLeague-8065": "CDM"}
+
+
+def _lire(sql: str) -> pd.DataFrame:
+    """Lecture SEULE + patience : le scraper ecrit dans la meme base sqlite, et
+    rencontrer un verrou est normal (un run precedent est mort dessus)."""
+    import sqlite3
+    import time
+    chemin = _DB or load_settings().db_url.split("///")[-1]
+    for essai in range(6):
+        try:
+            c = sqlite3.connect(f"file:{chemin}?mode=ro", uri=True, timeout=180)
+            c.execute("PRAGMA busy_timeout=180000")
+            try:
+                return pd.read_sql(sql, c)
+            finally:
+                c.close()
+        except Exception as exc:
+            if essai == 5:
+                raise
+            print(f"  base occupee ({str(exc)[:60]}…), nouvel essai dans 10s")
+            time.sleep(10)
+    return pd.DataFrame()
 
 
 def _mcnemar(n01: int, n10: int) -> float:
@@ -59,12 +82,23 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=1500, help="matchs de test par ligue")
     ap.add_argument("--leagues", type=str, default="8060,8035")
+    ap.add_argument("--db", type=str, default="",
+                    help="extrait fige (evite de se battre avec le scraper qui ecrit)")
     args = ap.parse_args()
     cibles = [f"InstantLeague-{x.strip()}" for x in args.leagues.split(",") if x.strip()]
 
-    eng = create_engine(load_settings().db_url)
+    global _DB
+    _DB = args.db
+    if _DB:
+        # lecture seule + longue patience : l extrait est fige, mais on garde le
+        # meme contrat que sur la base vive.
+        eng = create_engine(f"sqlite:///file:{_DB}?mode=ro&uri=true",
+                            connect_args={"timeout": 180, "uri": True})
+        print(f"base : extrait fige {_DB}")
+    else:
+        eng = create_engine(load_settings().db_url)
     print("lecture de l'historique cote…")
-    df = pd.read_sql(SQL, eng)                  # deja trie par expected_start
+    df = _lire(SQL)                             # deja trie par expected_start
     print(f"  {len(df)} matchs, {df.lg.nunique()} ligues")
 
     print("ajustement des moteurs V2/V5…")
@@ -86,7 +120,7 @@ def main() -> int:
         pt._CALIB = corr
 
         # les cotes du test doivent etre rejointes a leurs marches + resultats
-        ids = pd.read_sql(f"""
+        ids = _lire(f"""
             SELECT e.id ev, e.team_a, e.team_b, o.odds_home oh, o.odds_draw od,
                    o.odds_away oa, o.extra_markets, r.score_a sa, r.score_b sb
             FROM events e
@@ -95,7 +129,7 @@ def main() -> int:
             JOIN odds_snapshots o ON o.id = f.mid
             JOIN results r ON r.event_id = e.id
             WHERE e.competition = '{lg}' AND r.score_a IS NOT NULL AND o.odds_home > 1
-            ORDER BY e.expected_start DESC LIMIT {len(test)}""", eng)
+            ORDER BY e.expected_start DESC LIMIT {len(test)}""")
 
         brut = cal = n = n01 = n10 = 0
         for r in ids.itertuples():
