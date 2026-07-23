@@ -417,6 +417,103 @@ def can_outsiders(engine, lo: float = 5.0, hi: float = 15.0, minutes: int = 120,
     return _can_pick_outsiders(rec, lo, hi, p_min, recent=True)
 
 
+def _devig_over25(xm) -> float | None:
+    """P(total > 2.5) DÉVIGÉE depuis le marché « Total de buts » (cellules 0..6).
+    C'est le pricing Under/Over le plus DIRECT du book (pas une inversion)."""
+    try:
+        mk = json.loads(xm) if isinstance(xm, str) else (xm or {})
+    except Exception:
+        return None
+    T = None
+    for k, v in (mk or {}).items():
+        if str(k).replace("é", "e").startswith("Total de buts"):
+            T = v; break
+    if not isinstance(T, dict):
+        return None
+    inv = {i: 1.0 / T[str(i)] for i in range(7)
+           if isinstance(T.get(str(i)), (int, float)) and T[str(i)] > 1}
+    if len(inv) != 7:
+        return None
+    s = sum(inv.values())
+    return sum(v for i, v in inv.items() if i > 2) / s if s > 0 else None
+
+
+def can_over_under_signal(engine, minutes: int = 120, start_local: str | None = None,
+                          end_local: str | None = None, n_recent: int = 300) -> list:
+    """Signal Under/Over 2.5 pour les matchs CAN — INDICATEUR D'AFFICHAGE, PAS une reco.
+
+    Mesuré (rejeu 8000 matchs, marché « Total de buts » dévigé) : la direction
+    Under/Over en CAN tombe juste 76.9% du temps, soit +3.6pp au-dessus de « toujours
+    under » (IC ±0.9, net) — le SEUL domaine où le book porte une info que la règle
+    bête rate. On l'expose donc, en surfaçant les matchs qui penchent OVER (à
+    contre-courant du taux de base ~74% under) : ce sont les appels informatifs.
+
+    RIEN À PARIER : la cote intègre déjà ce taux (Under 2.5 CAN se paie ~1.25 -> 0.96 < 1).
+    'p_over' = marché « Total de buts » dévigé (le pricing O/U DIRECT du book) ; repli
+    sur l'inversion 1X2 si ce marché manque. D'abord les matchs à venir, sinon récents.
+    """
+    now = datetime.now(timezone.utc)
+    interval = bool(start_local and end_local)
+
+    def _rows(df, recent):
+        out = []
+        for r in df.itertuples():
+            oh, od, oa = float(r.oh), float(r.od), float(r.oa)
+            if oh <= 1 or od <= 1 or oa <= 1:
+                continue
+            p_over = _devig_over25(r.xm)                   # pricing O/U direct du book
+            source = "marché"
+            if p_over is None:                             # repli : inversion 1X2 (modèle)
+                pv = _over25_calib(oh, od, oa, CAN_LG)
+                if pv is None:
+                    continue
+                p_over = pv / 100.0; source = "inversion"
+            lean = "OVER" if p_over >= 0.5 else "UNDER"
+            conf = abs(p_over - 0.5)                       # distance à l'indécision
+            niveau = ("forte" if conf >= 0.25 else "moyenne" if conf >= 0.12 else "faible")
+            out.append({
+                "match": f"{r.team_a} vs {r.team_b}",
+                "local": r.es.tz_convert(MADA).strftime("%H:%M"),
+                "p_over": round(p_over, 4), "p_under": round(1 - p_over, 4),
+                "lean": lean, "confiance": niveau, "source": source,
+                "cote_juste": round(1.0 / max(p_over if lean == "OVER" else 1 - p_over, 1e-6), 2),
+                "contre_courant": lean == "OVER",          # OVER = à contre-courant en CAN
+                "recent": recent,
+            })
+        # à contre-courant d'abord (les appels informatifs), puis par confiance
+        out.sort(key=lambda x: (x["recent"], not x["contre_courant"], -abs(x["p_over"] - 0.5)))
+        return out
+
+    up = pd.read_sql(f"""SELECT e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+          AND e.competition='{CAN_LG}'""", engine)
+    if len(up):
+        up["es"] = pd.to_datetime(up.expected_start, utc=True)
+        horizon = 1440 if interval else minutes
+        up = up[(up.es > now - pd.Timedelta(minutes=3)) & (up.es < now + pd.Timedelta(minutes=horizon))]
+        if interval:
+            up = up.copy()
+            up["local"] = up.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+            up = up[(up.local >= start_local) & (up.local <= end_local)]
+        up = up.sort_values("es").drop_duplicates(["team_a", "team_b", "expected_start"])
+        rows = _rows(up, recent=False)
+        if rows or interval:
+            return rows
+    rec = pd.read_sql(f"""SELECT e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        WHERE e.competition='{CAN_LG}' AND e.expected_start IS NOT NULL
+        ORDER BY e.expected_start DESC LIMIT {int(n_recent)}""", engine)
+    if not len(rec):
+        return []
+    rec["es"] = pd.to_datetime(rec.expected_start, utc=True)
+    rec = rec.drop_duplicates(["team_a", "team_b", "expected_start"])
+    return _rows(rec, recent=True)
+
+
 def can_team_profiles(engine, min_n: int = 200) -> list:
     """Profil favori/outsider de chaque équipe CAN (historique BDD) : taux de victoire,
     cote moyenne, % de matchs en favori, buts marqués/encaissés. Classé du + fort (favori

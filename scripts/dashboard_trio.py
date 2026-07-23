@@ -319,6 +319,60 @@ def main():
             else:
                 st.info("Pas assez de données équipes CAN.")
 
+    # ---- 🎯 SIGNAL UNDER/OVER CAN — indicateur, PAS un pari ----
+    with st.expander("🎯 Signal Under/Over 2.5 CAN — indicateur de confiance (pas un pari)"):
+        import predict_trio as _ptou
+        engOU = st.cache_resource(_engine)()
+        st.caption("**Le seul endroit** où le book porte une info que la règle bête rate. "
+                   "Mesuré (rejeu 8000 matchs, marché « Total de buts » dévigé) : en CAN la "
+                   "direction Under/Over tombe juste **76.9%** du temps, soit **+3.6pp** au-dessus "
+                   "de « toujours under » (IC ±0.9, net). Ailleurs c'est plat (ANG +1.1pp).")
+        st.info("🔎 **À lire comme un indicateur, jamais comme une mise.** La cote **paie déjà** "
+                "ce taux : Under 2.5 CAN se cote ~1.25 → 0.77 × 1.25 = **0.96 < 1**, donc **−EV**. "
+                "Ce panneau te dit *ce que le marché anticipe*, pas où gagner. Les matchs qui "
+                "penchent **OVER** (à contre-courant du 74% under habituel) sont les plus informatifs.")
+        oe1, oe2 = st.columns(2)
+        ou_ws = oe1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
+                               key="ou_ws", placeholder="ex: 21:00")
+        ou_we = oe2.text_input("À (HH:MM Mada)", value="", key="ou_we", placeholder="ex: 22:00")
+        if st.button("🎯 Afficher le signal Under/Over CAN", key="ou_go", type="primary"):
+            sl, el = ou_ws.strip(), ou_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)):
+                st.warning("Format d'heure : HH:MM (ex : 21:00).")
+            elif bool(sl) != bool(el):
+                st.warning("Renseigne les DEUX heures, ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                with _db("Signal Under/Over CAN…"):
+                    sig = _ptou.can_over_under_signal(engOU, start_local=sl2, end_local=el2)
+                if not sig:
+                    st.info("Aucun match CAN dans la base (attends que le scraper capte des rounds).")
+                else:
+                    if sig[0].get("recent"):
+                        st.warning("⏳ Aucun match CAN **à venir** capté à cet instant — voici les "
+                                   "**derniers matchs CAN réels** comme exemples. Reviens plus tard pour du live.")
+                    over = [s for s in sig if s["contre_courant"]]
+                    if over:
+                        st.markdown(f"**🔺 {len(over)} match(s) penchent OVER — à contre-courant, "
+                                    "les plus informatifs :**")
+                        for s in over[:15]:
+                            ic = {"forte": "🟢", "moyenne": "🟡", "faible": "⚪"}[s["confiance"]]
+                            tag = " · *(exemple passé)*" if s.get("recent") else ""
+                            st.markdown(f"{ic} **{s['local']} · {s['match']}** — **OVER 2.5** à "
+                                        f"**{s['p_over']*100:.0f}%** (confiance {s['confiance']}, "
+                                        f"cote juste {s['cote_juste']:g}){tag}")
+                    under = [s for s in sig if not s["contre_courant"]]
+                    st.markdown(f"**🔻 {len(under)} match(s) penchent UNDER** (le régime habituel de la CAN) :")
+                    for s in under[:15]:
+                        tag = " · *(exemple passé)*" if s.get("recent") else ""
+                        st.markdown(f"⚪ {s['local']} · {s['match']} — under 2.5 à "
+                                    f"**{s['p_under']*100:.0f}%** (cote juste {s['cote_juste']:g}){tag}")
+                    st.caption("🟢 confiance forte (≥75%/≤25%) · 🟡 moyenne · ⚪ faible. « Cote juste » = "
+                               "1/proba (sans marge) : la cote offerte est toujours en-dessous → −EV. "
+                               "Source : marché « Total de buts » dévigé (pricing O/U direct du book).")
+
     # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
     with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
         import predict_trio as _ptd
