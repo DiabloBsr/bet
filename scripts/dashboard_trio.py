@@ -373,6 +373,62 @@ def main():
                                "1/proba (sans marge) : la cote offerte est toujours en-dessous → −EV. "
                                "Source : marché « Total de buts » dévigé (pricing O/U direct du book).")
 
+    # ---- 🌍 SPÉCIAL CDM / ALL / POR — lecture par signature de ligue ----
+    with st.expander("🌍 SPÉCIAL CDM / ALL / POR — config & favori côte 2 (indicateur, pas un pari)"):
+        import predict_trio as _pts3
+        engS3 = st.cache_resource(_engine)()
+        st.caption("**3 ligues à signature marquée** (mesuré sur ~440k matchs) : **ALL** = surbut "
+                   "(BTTS 61%, Over 2.5 66%, 0-0 seulement 4%) → guette Over/BTTS ; **POR** = bascule "
+                   "défensive (Over 2.5 47%) ; **CDM** = terrain neutre (domicile 38% ≈ extérieur 38%, "
+                   "pas d'avantage du terrain). Le panneau affiche la **config de cotes** (ex. 2-3-3) et "
+                   "le **favori** de chaque match.")
+        st.info("🔎 **Indicateur, jamais une mise.** Vérifié : le favori à ~2.x gagne **le plus souvent** "
+                "mais **~44%** en config asymétrique (2-3-3 / 3-3-2), PAS « presque toujours » — il perd "
+                "56% du temps et 0.44×2.2 = 0.97 < 1 → **−EV**. En **2-3-2** (deux favoris) il tombe à "
+                "~40% : personne ne domine. Chasse exhaustive (76 500 configs) = **0 edge** : ceci te "
+                "montre *ce que le marché price*, pas où gagner.")
+        fc1, fc2, fc3 = st.columns([2, 2, 2])
+        s3_only2 = fc1.toggle("Favori côte 2.x seulement", value=True, key="s3_only2",
+                              help="Ne garde que les matchs avec un favori entre 2.0 et 3.0 (ton angle).")
+        s3_ws = fc2.text_input("De (HH:MM Mada — vide = maintenant)", value="",
+                               key="s3_ws", placeholder="ex: 21:00")
+        s3_we = fc3.text_input("À (HH:MM Mada)", value="", key="s3_we", placeholder="ex: 22:00")
+        if st.button("🌍 Scanner CDM / ALL / POR", key="s3_go", type="primary"):
+            sl, el = s3_ws.strip(), s3_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)):
+                st.warning("Format d'heure : HH:MM (ex : 21:00).")
+            elif bool(sl) != bool(el):
+                st.warning("Renseigne les DEUX heures, ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                with _db("Scan CDM/ALL/POR…"):
+                    scan = _pts3.special_scan(engS3, start_local=sl2, end_local=el2)
+                if s3_only2:
+                    scan = [m for m in scan if 2.0 <= m["fav_odds"] < 3.0]
+                if not scan:
+                    st.info("Aucun match dans la base pour ce filtre (décoche « côte 2 » ou attends le scraper).")
+                else:
+                    if scan[0].get("recent"):
+                        st.warning("⏳ Aucun match **à venir** capté à cet instant — voici les "
+                                   "**derniers matchs réels** comme exemples. Reviens plus tard pour du live.")
+                    st.success(f"{len(scan)} match(s) — config, favori et signaux Over/BTTS :")
+                    for m in scan[:25]:
+                        emj = {"CDM": "🌍", "ALL": "🇩🇪", "POR": "🇵🇹"}.get(m["lg"], "•")
+                        ov = f"{m['p_over']*100:.0f}%" if m["p_over"] is not None else "?"
+                        bt = f"{m['p_btts']*100:.0f}%" if m["p_btts"] is not None else "?"
+                        dbl = " · ⚠️ **2 favoris** (ni l'un ni l'autre ne domine)" if m["deux_favoris"] else ""
+                        tag = " · *(exemple passé)*" if m.get("recent") else ""
+                        favn = m["fav_name"] if m["fav_side"] != "X" else "nul"
+                        st.markdown(
+                            f"{emj} **{m['local']} · {m['match']}** — config **`{m['config']}`** · "
+                            f"favori **{favn}** @{m['fav_odds']:g} (**{m['fav_p']*100:.0f}%**) · "
+                            f"Over 2.5 {ov} · BTTS {bt}{dbl}{tag}")
+                    st.caption("Config = plancher des 3 cotes (home-nul-away). « Favori » = issue la plus "
+                               "probable (sa proba dévigée). ALL : guette Over/BTTS élevés. Rappel : ~44% "
+                               "≠ « presque toujours », et tout est −EV (le book price la config au dixième).")
+
     # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
     with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
         import predict_trio as _ptd

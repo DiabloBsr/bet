@@ -47,7 +47,9 @@ import cross_market_check as cm  # noqa: E402  (prédicats de marché testés)
 
 DB = ROOT / "data" / "virtual_sports.db"
 OUT = ROOT / "data" / "logs" / "hunt_survivors.jsonl"
-NOMS = {"8035": "ANG", "8036": "FRA", "8037": "ESP", "8042": "ITA", "8043": "ALL",
+# mapping CANONIQUE (aligné sur dashboard LEAGUES + predict_trio.LEAGUE_TAGS) :
+# 8036=ITA, 8042=FRA (ne PAS inverser — une version antérieure les avait swappés).
+NOMS = {"8035": "ANG", "8036": "ITA", "8037": "ESP", "8042": "FRA", "8043": "ALL",
         "8044": "POR", "8056": "UCL", "8065": "CDM", "8060": "CAN"}
 
 

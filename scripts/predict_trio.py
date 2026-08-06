@@ -950,6 +950,97 @@ LEAGUE_TAGS = {"InstantLeague-8035": "ANG", "InstantLeague-8065": "CDM", "Instan
                "InstantLeague-8060": "CAN", "InstantLeague-8036": "ITA", "InstantLeague-8037": "ESP",
                "InstantLeague-8042": "FRA", "InstantLeague-8043": "ALL", "InstantLeague-8044": "POR"}
 
+# ligues du panneau SPÉCIAL (mesuré) : ALL surbut (BTTS 61%, O2.5 66%, 0-0 4%),
+# POR bascule défensive (O2.5 47%), CDM terrain neutre (dom 38% ≈ ext 38%).
+SPECIAL3 = {"InstantLeague-8065": "CDM", "InstantLeague-8043": "ALL", "InstantLeague-8044": "POR"}
+
+
+def _devig_btts(xm) -> float | None:
+    """P(les deux marquent) DÉVIGÉE depuis le marché « G/NG » (Oui/Non). Direct."""
+    try:
+        mk = json.loads(xm) if isinstance(xm, str) else (xm or {})
+    except Exception:
+        return None
+    g = None
+    for k, v in (mk or {}).items():
+        if str(k).replace("é", "e").startswith("G/NG"):
+            g = v; break
+    if not isinstance(g, dict):
+        return None
+    oui = no = None
+    for k, o in g.items():
+        kk = str(k).replace("é", "e").strip().lower()
+        if not isinstance(o, (int, float)) or o <= 1:
+            continue
+        if kk.startswith("oui"):
+            oui = o
+        elif kk.startswith("non"):
+            no = o
+    if not (oui and no):
+        return None
+    s = 1 / oui + 1 / no
+    return (1 / oui) / s if s > 0 else None
+
+
+def special_scan(engine, leagues=None, minutes: int = 120, start_local: str | None = None,
+                 end_local: str | None = None, n_recent: int = 200) -> list:
+    """Scan des ligues CDM / ALL / POR — INDICATEUR D'AFFICHAGE, PAS une reco.
+
+    Pour chaque match : la config de cotes (triplet plancher, ex. 2-3-3), le FAVORI
+    (issue la + probable) et sa proba dévigée, le signal Over 2.5 et BTTS (marchés
+    dévigés directs). Sert à LIRE le match selon la signature de la ligue :
+      • ALL surbut → guette Over/BTTS ; POR bascule défensive ; CDM terrain neutre.
+    RIEN À PARIER : tout est price (chasse exhaustive 76 500 cellules = 0 edge). Le
+    « favori gagne le + souvent » ≈ 44% en config asymétrique, PAS « presque toujours ».
+    D'abord les matchs à venir ; repli sur les derniers matchs réels si aucun.
+    """
+    lgs = leagues or list(SPECIAL3)
+    now = datetime.now(timezone.utc)
+    interval = bool(start_local and end_local)
+
+    def _rows(df, recent):
+        out = []
+        for r in df.itertuples():
+            oh, od, oa = float(r.oh), float(r.od), float(r.oa)
+            if oh <= 1 or od <= 1 or oa <= 1:
+                continue
+            inv = 1 / oh + 1 / od + 1 / oa
+            trip = [("1", oh, r.team_a), ("X", od, "nul"), ("2", oa, r.team_b)]
+            fav = min(trip, key=lambda t: t[1])
+            cfg = "-".join(str(min(int(x), 9)) for x in (oh, od, oa))
+            n2 = sum(1 for x in (oh, od, oa) if int(x) == 2)   # nb de côtes à 2.x
+            out.append({
+                "match": f"{r.team_a} vs {r.team_b}",
+                "local": r.es.tz_convert(MADA).strftime("%H:%M"),
+                "lg": SPECIAL3.get(r.c, r.c[-4:]),
+                "config": cfg, "deux_favoris": n2 >= 2,
+                "fav_side": fav[0], "fav_name": fav[2], "fav_odds": round(fav[1], 2),
+                "fav_p": round((1 / fav[1]) / inv, 4),
+                "p_over": _devig_over25(r.xm), "p_btts": _devig_btts(r.xm),
+                "recent": recent,
+            })
+        # les configs à UN seul favori clair d'abord (les + lisibles), puis proba fav
+        out.sort(key=lambda x: (x["recent"], x["deux_favoris"], -x["fav_p"]))
+        return out
+
+    up = _upcoming_df(engine, lgs, minutes, start_local, end_local)
+    if len(up):
+        rows = _rows(up, recent=False)
+        if rows or interval:
+            return rows
+    # repli : derniers matchs réels des 3 ligues
+    ph = ",".join("?" * len(lgs))
+    rec = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        WHERE e.competition IN ({ph}) AND e.expected_start IS NOT NULL
+        ORDER BY e.expected_start DESC LIMIT {int(n_recent)}""", engine, params=tuple(lgs))
+    if not len(rec):
+        return []
+    rec["es"] = pd.to_datetime(rec.expected_start, utc=True)
+    rec = rec.drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    return _rows(rec, recent=True)
+
 
 def upcoming_all(engine, minutes: int = 6) -> list:
     """Matchs à venir des 9 LIGUES dans les `minutes` prochaines (boards marché, sans fit)

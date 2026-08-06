@@ -60,3 +60,30 @@ def test_over_leaning_matches_sortent_en_tete():
     ]
     rows.sort(key=lambda x: (x["recent"], not x["contre_courant"], -abs(x["p_over"] - 0.5)))
     assert rows[0]["contre_courant"] is True, "les OVER doivent être affichés d'abord"
+
+
+def test_devig_btts_partition():
+    """G/NG Oui/Non à cote 2 -> P(BTTS)=50% ; marge uniforme ne déplace pas."""
+    assert abs(pt._devig_btts({"G/NG": {"Oui": 2.0, "Non": 2.0}}) - 0.5) < 1e-9
+    assert abs(pt._devig_btts({"G/NG": {"Oui": 2.4, "Non": 2.4}}) - 0.5) < 1e-9
+
+
+def test_devig_btts_profil_et_incomplet():
+    """Oui plus probable -> P>0.5 ; marché absent/incomplet -> None (on n'invente pas)."""
+    assert pt._devig_btts({"G/NG": {"Oui": 1.5, "Non": 2.6}}) > 0.5
+    assert pt._devig_btts({"G/NG": {"Oui": 2.0}}) is None
+    assert pt._devig_btts({}) is None
+
+
+def test_special3_mapping_canonique():
+    """CDM=8065, ALL=8043, POR=8044 (non ambigus) ; alignés sur LEAGUE_TAGS."""
+    assert pt.SPECIAL3 == {"InstantLeague-8065": "CDM", "InstantLeague-8043": "ALL",
+                           "InstantLeague-8044": "POR"}
+    for lg, tag in pt.SPECIAL3.items():
+        assert pt.LEAGUE_TAGS[lg] == tag
+
+
+def test_league_tags_fra_ita_non_swappes():
+    """Garde-fou : 8036=ITA, 8042=FRA (une version antérieure les avait inversés)."""
+    assert pt.LEAGUE_TAGS["InstantLeague-8036"] == "ITA"
+    assert pt.LEAGUE_TAGS["InstantLeague-8042"] == "FRA"
