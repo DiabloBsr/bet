@@ -251,17 +251,8 @@ def main():
     with st.expander("🌍 SPÉCIAL CAN — chasse aux outsiders à grosse cote"):
         import predict_trio as _ptcan
         engC = st.cache_resource(_engine)()
-        st.caption("**Ligue CAN** (la + équilibrée des 9 : cote outsider moy. 11.9, grosses cotes "
-                   "partout). Règle **mesurée** : la marge est chargée sur le FAVORI → l'**outsider "
-                   "est le pari le moins mauvais** (ROI −2.4% vs favori −6%). ⚠️ Ça reste −EV (aucun "
-                   "edge confirmé, TRAIN/TEST divergent) : cet outil **trie les outsiders par CHANCE "
-                   "RÉELLE**, il ne garantit pas de gain. La règle d'or CAN : tape l'outsider, jamais le favori.")
-        st.warning("⚠️ **Piège à éviter — les « petits totaux » (0 but / ≤1).** En CAN, 0-0 arrive "
-                   "**25%** du temps et ≤1 but **51%** (vs 5%/17% ailleurs), avec de grosses cotes "
-                   "(« 0 but » cote médiane 3.78, jusqu'à 29×). **Ça semble de la value, c'est l'inverse** : "
-                   "mesuré à **ROI −10.6%** (réel 25.4% < implicite 28.6%, overpricé dans toutes les bandes). "
-                   "C'est le **pire pari CAN** — 20× pire que l'outsider-victoire (−0.5% en cote 6-10). "
-                   "Le book te fait payer la rareté des buts plus cher qu'elle ne vaut. **Reste sur l'outsider.**")
+        st.caption("Outsider trié par chance réelle (−EV, indicateur). Évite les « petits totaux » "
+                   "(0 but/≤1) : pire pari CAN.")
         cc1, cc2, cc3 = st.columns([2, 2, 2])
         can_lo = cc1.number_input("Cote outsider min", 2.0, 50.0, 5.0, 0.5, key="can_lo")
         can_hi = cc2.number_input("Cote outsider max", 2.0, 100.0, 15.0, 0.5, key="can_hi")
@@ -298,9 +289,7 @@ def main():
                         tag = " · *(exemple passé)*" if m.get("recent") else ""
                         st.markdown(f"{flag} **{m['local']} · {m['team']}** ({m['side']}) vs {m['opp']} "
                                     f"— cote **{m['odds']:g}** · **{m['p']*100:.0f}%** de chance réelle{tag}")
-                    st.caption("Trié par proba dévigée (chance réelle pour le payout). EV moyen ≈ −2% "
-                               "(moins mauvais que le favori −6%, mais pas gagnant). Mise plate, petit % "
-                               "du bankroll, et **jamais** le favori en CAN. 🟢 ≥18% · 🟡 ≥14% de chance.")
+                    st.caption("🟢 ≥18% · 🟡 ≥14% de chance réelle. Mise plate, jamais le favori en CAN.")
         st.divider()
         if st.button("📋 Liste favoris / outsiders des équipes CAN", key="can_teams_go"):
             with _db("Profils équipes CAN…"):
@@ -377,16 +366,8 @@ def main():
     with st.expander("🌍 SPÉCIAL CDM / ALL / POR — config & favori côte 2 (indicateur, pas un pari)"):
         import predict_trio as _pts3
         engS3 = st.cache_resource(_engine)()
-        st.caption("**3 ligues à signature marquée** (mesuré sur ~440k matchs) : **ALL** = surbut "
-                   "(BTTS 61%, Over 2.5 66%, 0-0 seulement 4%) → guette Over/BTTS ; **POR** = bascule "
-                   "défensive (Over 2.5 47%) ; **CDM** = terrain neutre (domicile 38% ≈ extérieur 38%, "
-                   "pas d'avantage du terrain). Le panneau affiche la **config de cotes** (ex. 2-3-3) et "
-                   "le **favori** de chaque match.")
-        st.info("🔎 **Indicateur, jamais une mise.** Vérifié : le favori à ~2.x gagne **le plus souvent** "
-                "mais **~44%** en config asymétrique (2-3-3 / 3-3-2), PAS « presque toujours » — il perd "
-                "56% du temps et 0.44×2.2 = 0.97 < 1 → **−EV**. En **2-3-2** (deux favoris) il tombe à "
-                "~40% : personne ne domine. Chasse exhaustive (76 500 configs) = **0 edge** : ceci te "
-                "montre *ce que le marché price*, pas où gagner.")
+        st.caption("Config de cotes + favori de chaque match. ALL = surbut (guette Over/BTTS). "
+                   "Indicateur, pas une mise (tout −EV).")
         fc1, fc2, fc3 = st.columns([2, 2, 2])
         s3_only2 = fc1.toggle("Favori côte 2.x seulement", value=True, key="s3_only2",
                               help="Ne garde que les matchs avec un favori entre 2.0 et 3.0 (ton angle).")
@@ -425,9 +406,7 @@ def main():
                             f"{emj} **{m['local']} · {m['match']}** — config **`{m['config']}`** · "
                             f"favori **{favn}** @{m['fav_odds']:g} (**{m['fav_p']*100:.0f}%**) · "
                             f"Over 2.5 {ov} · BTTS {bt}{dbl}{tag}")
-                    st.caption("Config = plancher des 3 cotes (home-nul-away). « Favori » = issue la plus "
-                               "probable (sa proba dévigée). ALL : guette Over/BTTS élevés. Rappel : ~44% "
-                               "≠ « presque toujours », et tout est −EV (le book price la config au dixième).")
+                    st.caption("Config = plancher des 3 cotes (home-nul-away). Favori = issue la plus probable.")
 
     # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
     with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
