@@ -243,9 +243,7 @@ def main():
                             flag = "🟢" if p >= 0.75 else ("🟡" if p >= 0.6 else "⚪")
                             st.markdown(f"{flag} **{i}. [{m['tag']} {m['local']}] {m['match']}** — "
                                         f"{sname} `[{mk}]` : **{p*100:.0f}%** · cote {o:g}")
-                        st.caption("Classé par la proba du pari le plus SÛR de chaque match, toutes ligues "
-                                   "confondues. ⚠️ Proba haute = cote basse : c'est le compromis "
-                                   "réussite/gain le plus safe, pas un edge (aucun pari n'est +EV).")
+                        st.caption('Classé par la proba du pari le plus SÛR de chaque match, toutes ligues confondues.')
 
     # ---- 🌍 SPÉCIAL CAN — CHASSE AUX OUTSIDERS ----
     with st.expander("🌍 SPÉCIAL CAN — chasse aux outsiders à grosse cote"):
@@ -280,9 +278,7 @@ def main():
                     st.info("Aucun match CAN dans la base (élargis la bande ou attends que le scraper capte des rounds).")
                 else:
                     if rows[0].get("recent"):
-                        st.warning("⏳ Aucun match CAN **à venir** capté à cet instant (le scraper en ligne "
-                                   "est throttlé) — voici les **derniers matchs CAN réels** comme exemples "
-                                   "de ce que l'outil remonte. Reviens dans quelques minutes pour du live.")
+                        st.warning("⏳ Aucun match CAN à venir capté — voici les derniers matchs CAN réels.")
                     st.success(f"{len(rows)} outsiders CAN — triés par CHANCE RÉELLE (meilleur moment d'abord) :")
                     for m in rows[:25]:
                         flag = "🟢" if m["p"] >= 0.18 else ("🟡" if m["p"] >= 0.14 else "⚪")
@@ -302,9 +298,7 @@ def main():
                     "Buts/m": round(p["gf"], 2), "Encaissé": round(p["ga"], 2), "Matchs": p["n"],
                 } for p in profs])
                 st.dataframe(df, use_container_width=True, hide_index=True)
-                st.caption("À cote égale, la proba est la même (marché calibré). Utilité : privilégier "
-                           "un outsider du MILIEU (Ivory Coast, Nigeria, Tunisia ~38%) plutôt qu'un "
-                           "Sudan/Botswana à cote équivalente — base plus solide, moins risqué.")
+                st.caption('À cote égale, la proba est la même (marché calibré).')
             else:
                 st.info("Pas assez de données équipes CAN.")
 
@@ -312,14 +306,8 @@ def main():
     with st.expander("🎯 Signal Under/Over 2.5 CAN — indicateur de confiance (pas un pari)"):
         import predict_trio as _ptou
         engOU = st.cache_resource(_engine)()
-        st.caption("**Le seul endroit** où le book porte une info que la règle bête rate. "
-                   "Mesuré (rejeu 8000 matchs, marché « Total de buts » dévigé) : en CAN la "
-                   "direction Under/Over tombe juste **76.9%** du temps, soit **+3.6pp** au-dessus "
-                   "de « toujours under » (IC ±0.9, net). Ailleurs c'est plat (ANG +1.1pp).")
-        st.info("🔎 **À lire comme un indicateur, jamais comme une mise.** La cote **paie déjà** "
-                "ce taux : Under 2.5 CAN se cote ~1.25 → 0.77 × 1.25 = **0.96 < 1**, donc **−EV**. "
-                "Ce panneau te dit *ce que le marché anticipe*, pas où gagner. Les matchs qui "
-                "penchent **OVER** (à contre-courant du 74% under habituel) sont les plus informatifs.")
+        st.caption('**Le seul endroit** où le book porte une info que la règle bête rate.')
+        st.info("🔎 Indicateur, pas une mise : la cote paie déjà ce taux (−EV).")
         oe1, oe2 = st.columns(2)
         ou_ws = oe1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
                                key="ou_ws", placeholder="ex: 21:00")
@@ -358,9 +346,7 @@ def main():
                         tag = " · *(exemple passé)*" if s.get("recent") else ""
                         st.markdown(f"⚪ {s['local']} · {s['match']} — under 2.5 à "
                                     f"**{s['p_under']*100:.0f}%** (cote juste {s['cote_juste']:g}){tag}")
-                    st.caption("🟢 confiance forte (≥75%/≤25%) · 🟡 moyenne · ⚪ faible. « Cote juste » = "
-                               "1/proba (sans marge) : la cote offerte est toujours en-dessous → −EV. "
-                               "Source : marché « Total de buts » dévigé (pricing O/U direct du book).")
+                    st.caption('🟢 confiance forte (≥75%/≤25%) · 🟡 moyenne · ⚪ faible.')
 
     # ---- 🌍 SPÉCIAL CDM / ALL / POR — lecture par signature de ligue ----
     with st.expander("🌍 SPÉCIAL CDM / ALL / POR — config & favori côte 2 (indicateur, pas un pari)"):
@@ -412,10 +398,7 @@ def main():
     with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
         import predict_trio as _ptd
         engD = st.cache_resource(_engine)()
-        st.caption("Trouve les matchs à venir avec une sélection à GROSSE COTE (n'importe quel marché), "
-                   "triés par chance réelle. Choisis un match → historique complet (face-à-face + 5 derniers "
-                   "de chaque équipe, du + récent au + ancien). ⚠️ Grosse cote = event rare + marge : "
-                   "l'historique donne le contexte, pas un edge.")
+        st.caption("Trouve les matchs à venir avec une sélection à GROSSE COTE (n'importe quel marché), triés par chance réelle.")
         db1, db2, db3 = st.columns([3, 2, 2])
         _lgn = list(LEAGUES)
         _dfi = next((i for i, k in enumerate(_lgn) if LEAGUES[k] == "InstantLeague-8060"), 0)
@@ -469,16 +452,13 @@ def main():
                     else:
                         st.markdown("　⚔️ Face-à-face : aucun en base")
                     st.markdown("---")
-                st.caption("🟢 victoire · ⚪ nul · 🔴 défaite (du + récent à gauche). Vision globale : "
-                           "la grosse cote + la forme des 2 équipes + le face-à-face, d'un coup d'œil. "
-                           "⚠️ contexte pour juger, pas un edge (le RNG reste sans mémoire).")
+                st.caption('🟢 victoire · ⚪ nul · 🔴 défaite (du + récent à gauche).')
 
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2
         engH = st.cache_resource(_engine)()
-        st.caption("Choisis une ligue et deux équipes → face-à-face direct + 5 derniers matchs de chacune "
-                   "(du + récent au + ancien). Contexte pour juger un pari — pas un prédicteur (RNG sans mémoire).")
+        st.caption('Choisis une ligue et deux équipes → face-à-face direct + 5 derniers matchs de chacune (du + récent au + ancien).')
         hl1, hl2, hl3 = st.columns([2, 2, 2])
         h_lg = hl1.selectbox("Ligue", list(LEAGUES), index=_dfi, key="h_lg")
         h_comp = LEAGUES[h_lg]
@@ -500,9 +480,7 @@ def main():
     with st.expander("🎰 Constructeur de paris par cote cible (combiné le + probable)"):
         import predict_trio as _ptc2
         engK = st.cache_resource(_engine)()
-        st.caption("Tu entres la COTE visée + le nombre de matchs + les ligues + un créneau horaire → l'app "
-                   "construit le combiné qui atteint cette cote, **du plus probable au moins probable**. "
-                   "⚠️ Combiner multiplie la marge : plus de legs = EV plus négatif. Outil de ciblage de gain, pas d'edge.")
+        st.caption("Cote visée + nb de matchs + ligues + créneau → le combiné le plus probable qui l'atteint.")
         kc1, kc2 = st.columns([2, 2])
         k_odds = kc1.number_input("Cote visée", 1.5, 500.0, 10.0, 0.5, key="k_odds")
         k_legs = kc2.slider("Nombre de matchs (legs)", 2, 6, 3, key="k_legs")
@@ -543,9 +521,7 @@ def main():
     with st.expander("🎲 Simulateur CAN — teste ta stratégie (miroir de vérité)"):
         import predict_trio as _pts
         engS = st.cache_resource(_engine)()
-        st.caption("Rejoue ta stratégie sur 3000 sessions à partir des VRAIS résultats CAN. Ce n'est PAS "
-                   "une prédiction — c'est un miroir honnête : tu vois la variance, le risque de ruine, et "
-                   "pourquoi une session gagnante (chance) ne veut pas dire gagnant sur la durée.")
+        st.caption('Rejoue ta stratégie sur 3000 sessions à partir des VRAIS résultats CAN.')
         sc1, sc2, sc3 = st.columns(3)
         s_bet_lbl = sc1.selectbox("Pari testé", ["Outsider (le moins pire)", "Favori",
                                                  "0-0 (grosse cote)", "Under 3.5"], key="s_bet")
@@ -650,9 +626,7 @@ def main():
                         flag = "🟢" if m["winprob"] >= 0.42 else ("🟡" if m["winprob"] >= 0.35 else "⚪")
                         st.markdown(f"{flag} **[{m['tag']} {m['local']}] {m['team']}** ({m['side']}) vs {m['opp']} "
                                     f"— cote **{m['odds']:g}** · **{m['winprob']*100:.0f}%** de gagner{force}")
-                st.caption("Proba = cote dévigée (honnête, marché+notre modèle donnent le même). "
-                           "« Man Blue ext. à 2.8 = 38% » ou « Nul à 3.2 = 30% » : gros payout + chance "
-                           "correcte. ⚠️ EV toujours −marge, mais bien plus malin que chasser des 15×.")
+                st.caption('Proba = cote dévigée (honnête, marché+notre modèle donnent le même).')
 
     # ---- 🔍 RECHERCHE AVANCÉE (cote cible + ligues cochées + marchés) ----
     with st.expander("🔍 Recherche avancée — cote voulue + ligues au choix"):
@@ -691,8 +665,7 @@ def main():
     # ---- 🚨 DÉTECTEUR DE PIÈGE ----
     with st.expander("🚨 Détecteur de piège — teste ton pari AVANT de miser"):
         import trap_detector as _td
-        st.caption("Encode tout ce qu'on a prouvé : chaque marché est −EV (la marge). Le détecteur "
-                   "note ton pari, explique pourquoi, chiffre la perte attendue et propose le moins mauvais.")
+        st.caption("Encode tout ce qu'on a prouvé : chaque marché est −EV (la marge).")
         td_mode = st.radio("Type de pari", ["1 pari simple", "Combiné (multiple)", "Panier de simples"],
                            horizontal=True, key="td_mode")
         td_opts = {lbl: k for k, (lbl, _m, _r) in _td.MARKETS.items()}
@@ -733,10 +706,7 @@ def main():
         import predict_trio as _ptg
         import trap_detector as _tdg
         engT = st.cache_resource(_engine)()
-        st.caption("Proba + cote de chaque TOTAL de buts et de chaque SCORE EXACT des matchs à venir. "
-                   "⚠️ Vérité mesurée (28 scores testés) : **AUCUN score exact n'est rentable** — tous "
-                   "overpricés (−10 à −19%), le marché Score exact porte 24% de marge. Le 0-0 à grosse "
-                   "cote reste −10.4%, le 3-3 −15.3%.")
+        st.caption('Proba + cote de chaque TOTAL de buts et de chaque SCORE EXACT des matchs à venir.')
         gt_min = st.slider("Horizon (minutes)", 5, 60, 20, key="gt_min")
         if st.button("🎲 Afficher les totaux & scores", key="gt_go", type="primary"):
             with _db("Lecture des marchés…"):
@@ -760,18 +730,13 @@ def main():
                             st.markdown(f"    {v.severity} **{sel}** — {p*100:.1f}% · cote {o:g} · "
                                         f"ROI **{v.roi*100:+.1f}%**")
                     st.markdown("---")
-                st.caption("La proba = marché dévigé (calibré, notre meilleure estimation honnête). "
-                           "Pour « peu de buts », **Under 3.5** (marge 5.7%) coûte ~2× moins qu'un score exact. "
-                           "Viser 0-0/2-2/3-3 = payer 10-15% de marge pour le frisson de la grosse cote.")
+                st.caption('La proba = marché dévigé (calibré, notre meilleure estimation honnête).')
 
     # ---- 🥅 DÉTECTEUR 0/1 BUT ----
     with st.expander("🥅 Détecteur 0/1 but — matchs les plus défensifs à venir"):
         import predict_trio as _ptlt
         engLT = st.cache_resource(_engine)()
-        st.caption("Scanne les matchs à venir et remonte les plus DÉFENSIFS (proba de 0 but / ≤1 but "
-                   "la plus haute, dévigée). La CAN domine (ligue ultra-défensive : 0-0 = 25%, ≤1 but = 51%). "
-                   "⚠️ **INFO seulement** : parier ces petits totaux est **overpricé** (ROI mesuré ~−10%, "
-                   "jusqu'à −10.6% en CAN — réel < implicite partout). Radar de matchs fermés, pas un tuyau gagnant.")
+        st.caption('Scanne les matchs à venir et remonte les plus DÉFENSIFS (proba de 0 but / ≤1 but la plus haute, dévigée).')
         lt_can = st.checkbox("🌍 CAN uniquement (la plus défensive)", value=True, key="lt_can")
         lt1, lt2 = st.columns(2)
         lt_ws = lt1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
@@ -803,9 +768,7 @@ def main():
                         tg = " · *(exemple passé)*" if m.get("recent") else ""
                         st.markdown(f"{flag} **[{m['tag']} {m['local']}] {m['match']}** — "
                                     f"0 but **{m['p0']*100:.0f}%** ({o0}) · ≤1 but **{m['p_le1']*100:.0f}%**{tg}")
-                    st.caption("Trié par proba de ≤1 but (marché dévigé = honnête). ⚠️ Rappel gravé : parier "
-                               "« 0 but » = ROI **−10.6%** en CAN (le book price la rareté des buts plus cher "
-                               "qu'elle ne vaut). Utile pour LIRE un match fermé, pas pour miser dessus.")
+                    st.caption('Trié par proba de ≤1 but (marché dévigé = honnête).')
 
     # ---- 💰 BANKROLL + 📏 FIABILITÉ (toujours accessibles) ----
     with st.expander("💰 Mon bankroll — journal, courbe & stop-loss"):
@@ -981,10 +944,7 @@ def main():
         if totals_mode:
             combos = _pt.build_combos(pool, float(tgt_odds), mx,
                                       markets=_pt.TOTALS_MARKETS, min_legs=1, p_min=0.20)
-            st.caption("📚 Playbook totals (32k matchs, 3312 rounds backtestés) : chaque jambe coûte "
-                       "sa marge (O/U 3.5 ~6%, Total exact 10-13%, Multi-Buts ~9%) — le mode totals "
-                       "autorise donc les combos à **1 jambe** : un Over 3.5 seul (cote ~2.8-3.3, "
-                       "ROI −5.3%) bat un triple under à même cote (ROI −18%) de 13 points.")
+            st.caption("📚 Playbook totals : chaque jambe coûte sa marge (combiner l'aggrave).")
         else:
             combos = _pt.build_combos(pool, float(tgt_odds), mx)
         if combos:
@@ -995,10 +955,7 @@ def main():
                     st.caption(f"  • {mn} — {mkt} : **{s}** ({p*100:.0f}%, cote {o:g})")
         else:
             st.caption("Aucun combiné n'atteint la cote cible sur les marchés sûrs de ce round.")
-        st.caption("⚠️ À cote cible fixée, on te donne le combiné le PLUS PROBABLE (marchés à marge "
-                   "fine uniquement : 1X2, Double Chance, O/U 3.5, G/NG ; indépendance inter-matchs "
-                   "prouvée). Aucun pari n'a d'espérance positive — c'est la façon la moins risquée "
-                   "d'atteindre la cote visée, pas une promesse de gain.")
+        st.caption("⚠️ À cote cible fixée, le combiné le plus probable (marchés à marge fine).")
 
         # ================= ONGLETS SPÉCIALISÉS PAR MARCHÉ =================
         st.subheader("📊 Vues spécialisées par marché")
