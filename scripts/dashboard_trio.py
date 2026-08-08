@@ -149,7 +149,11 @@ def _hist_block(st, engine, home, away, leagues, n=5):
                        f"total buts moyen {sum(m['tot'] for m in h2h)/len(h2h):.1f}")
             for m in h2h[:20]:
                 mark = " 🥅" if m["tot"] == 0 else ""
-                st.markdown(f"`{m['date']}` — {m['home']} **{m['sa']}-{m['sb']}** {m['away']}{mark}")
+                ch = f" `{m['oh']:g}`" if m.get("oh") else ""
+                ca = f" `{m['oa']:g}`" if m.get("oa") else ""
+                cx = f" · nul `{m['od']:g}`" if m.get("od") else ""
+                st.markdown(f"`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
+                            f"{ca}{m['away']}{cx}{mark}")
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)
         if not hh:

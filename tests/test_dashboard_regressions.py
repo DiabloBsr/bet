@@ -203,3 +203,21 @@ def test_le_garde_db_encadre_bien_un_spinner():
              if isinstance(c, ast.Call) and isinstance(c.func, ast.Attribute)]
     assert "spinner" in attrs, "_db n'appelle plus st.spinner"
     assert "stop" in attrs, "_db doit arreter le rendu au lieu de laisser planter la suite"
+
+
+def test_h2h_includes_and_shows_odds():
+    """Le face-à-face doit remonter les cotes de chaque match (oh/od/oa) ET les afficher
+    à côté de chaque équipe (demande user)."""
+    import ast as _ast
+    pt = (Path(__file__).resolve().parents[1] / "scripts" / "predict_trio.py").read_text(encoding="utf-8")
+    tree = _ast.parse(pt)
+    h2h = next(n for n in _ast.walk(tree)
+               if isinstance(n, _ast.FunctionDef) and n.name == "head_to_head")
+    seg = _ast.get_source_segment(pt, h2h) or ""
+    assert "odds_home" in seg and "odds_draw" in seg and "odds_away" in seg, \
+        "head_to_head doit lire les 3 cotes du match H2H"
+    for k in ('"oh"', '"od"', '"oa"'):
+        assert k in seg, f"head_to_head doit renvoyer la clé {k}"
+    dash = DASH.read_text(encoding="utf-8")
+    assert "m['oh']" in dash and "m['oa']" in dash, \
+        "l'affichage H2H doit montrer la cote de chaque équipe"

@@ -645,18 +645,25 @@ def match_history(engine, team: str, n: int = 5, leagues: list | None = None) ->
 
 
 def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, n: int = 30) -> list:
-    """Tous les face-à-face directs entre 2 équipes (les deux orientations), du + récent au + ancien."""
+    """Tous les face-à-face directs entre 2 équipes (les deux orientations), du + récent au + ancien.
+    Inclut les cotes 1X2 (1er snapshot) offertes CE match-là : oh/od/oa (None si absentes)."""
     a = str(team_a).replace("'", "''"); b = str(team_b).replace("'", "''")
     d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
-        r.score_a sa, r.score_b sb FROM events e JOIN results r ON r.event_id=e.id
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, r.score_a sa, r.score_b sb
+        FROM events e JOIN results r ON r.event_id=e.id
+        LEFT JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
         WHERE r.score_a IS NOT NULL {_lg_clause(leagues)}
         AND ((e.team_a='{a}' AND e.team_b='{b}') OR (e.team_a='{b}' AND e.team_b='{a}'))
         ORDER BY e.expected_start DESC LIMIT {int(n)}""", engine)
+
+    def _o(x):
+        return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 1 else None
     out = []
     for r in d.itertuples():
         es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
         out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
-                    "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb)})
+                    "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb),
+                    "oh": _o(r.oh), "od": _o(r.od), "oa": _o(r.oa)})
     return out
 
 
