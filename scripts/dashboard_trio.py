@@ -414,26 +414,24 @@ def main():
                                "Espérance de CHAQUE pari = −marge (~6% marchés simples, ~10-18% exotiques).")
             st.divider()
 
-        # ================= GROSSES CÔTES VALUE — les plus probables du round =================
-        st.subheader("🔦 Grosses cotes value — les plus probables du round")
-        vc1, vc2 = st.columns(2)
-        v_min = vc1.slider("Cote min", 3.0, 50.0, 5.0, 0.5, key="v_min")
-        v_n = int(vc2.selectbox("Combien en afficher", ["5", "10", "20"], index=1, key="v_n"))
-        vpicks = []
+        # ================= PRONOSTIC — grosses cotes value du round (max 3 matchs) =================
+        st.subheader("🔦 Pronostic — grosses cotes value du round")
+        _GC_MIN = 5.0                        # seuil « grosse cote »
+        best = []
         for m in res["matches"]:
-            for mkt, rows in (m.get("board") or {}).items():
-                for s, p, o in rows:
-                    if o >= v_min:
-                        vpicks.append((m["match"], mkt, s, p, o))
-        vpicks.sort(key=lambda r: -r[3])
-        if vpicks:
-            st.caption(f"Tous marchés de ce round · cote ≥{v_min:g}, du PLUS PROBABLE d'abord :")
-            for i, (mn, mk, s, p, o) in enumerate(vpicks[:v_n], 1):
-                st.markdown(f"{i}. **{mn}** — **{s}** `[{mk}]` · cote **{o:g}** · **{p*100:.0f}%**")
-            st.caption("« Le plus probable » parmi les grosses cotes ≠ rentable : −EV (la cote paie "
-                       "déjà cette proba). Indicateur, pas une mise.")
+            cands = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
+                     for s, p, o in rows if o >= _GC_MIN]
+            if cands:                        # la sélection la + PROBABLE de ce match
+                mkt, s, p, o = max(cands, key=lambda x: x[2])
+                best.append((m["match"], mkt, s, p, o))
+        best.sort(key=lambda r: -r[3])       # les matchs les + probables d'abord
+        if best:
+            for i, (mn, mk, s, p, o) in enumerate(best[:3], 1):
+                st.markdown(f"**{i}. {mn}** → **{s}** `[{mk}]` · cote **{o:g}** · **{p*100:.0f}%**")
+            st.caption("Les 3 grosses cotes (≥5) les plus probables du round, 1 par match. "
+                       "« Le plus probable » ≠ rentable (−EV, la cote paie déjà). Indicateur, pas une mise.")
         else:
-            st.caption(f"Aucune grosse cote ≥{v_min:g} dans ce round (baisse la cote min).")
+            st.caption("Aucune grosse cote ≥5 dans ce round.")
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
     st.divider()
