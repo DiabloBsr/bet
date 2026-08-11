@@ -418,22 +418,24 @@ def main():
         st.subheader("🔦 Pronostic — grosses cotes value du round")
         best = []
         for m in res["matches"]:
-            allsel = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
-                      for s, p, o in rows]
-            if not allsel:
+            # on exclut les cotes PLAFONNÉES (≥90) : leur value apparente est un artefact
+            # du plafond du site (le pire pari réel, prouvé −57%).
+            sels = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
+                    for s, p, o in rows if o < 90.0]
+            # une VRAIE grosse cote (≥5, jusqu'à 10/20/50…) sinon ≥3 ; la PLUS PROBABLE
+            grosses = [x for x in sels if x[3] >= 5.0] or [x for x in sels if x[3] >= 3.0]
+            if not grosses:
                 continue
-            # une « grosse cote » (≥3) si dispo, sinon n'importe laquelle ; la + PROBABLE
-            cands = [x for x in allsel if x[3] >= 3.0] or allsel
-            mkt, s, p, o = max(cands, key=lambda x: x[2])
+            mkt, s, p, o = max(grosses, key=lambda x: x[2])
             best.append((m["match"], mkt, s, p, o))
-        best.sort(key=lambda r: -r[3])       # les matchs les + probables d'abord
+        best.sort(key=lambda r: -r[3])
         if best:
             for i, (mn, mk, s, p, o) in enumerate(best[:2], 1):
                 st.markdown(f"**{i}. {mn}** → **{s}** `[{mk}]` · cote **{o:g}** · **{p*100:.0f}%**")
-            st.caption("Le pari value le plus probable de chaque match (2 matchs max). "
-                       "« Le plus probable » ≠ rentable (−EV, la cote paie déjà). Indicateur, pas une mise.")
+            st.caption("La grosse cote la plus probable de chaque match (2 max) — même 10, 20+ si "
+                       "elle sort du lot. Reste −EV (la cote paie déjà). Indicateur, pas une mise.")
         else:
-            st.caption("Aucun pari coté dans ce round.")
+            st.caption("Aucune cote exploitable dans ce round.")
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
     st.divider()
