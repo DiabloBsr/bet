@@ -414,24 +414,26 @@ def main():
                                "Espérance de CHAQUE pari = −marge (~6% marchés simples, ~10-18% exotiques).")
             st.divider()
 
-        # ================= PRONOSTIC — grosses cotes value du round (max 3 matchs) =================
+        # ================= PRONOSTIC — grosses cotes value du round (max 2 matchs) =================
         st.subheader("🔦 Pronostic — grosses cotes value du round")
-        _GC_MIN = 5.0                        # seuil « grosse cote »
         best = []
         for m in res["matches"]:
-            cands = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
-                     for s, p, o in rows if o >= _GC_MIN]
-            if cands:                        # la sélection la + PROBABLE de ce match
-                mkt, s, p, o = max(cands, key=lambda x: x[2])
-                best.append((m["match"], mkt, s, p, o))
+            allsel = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
+                      for s, p, o in rows]
+            if not allsel:
+                continue
+            # une « grosse cote » (≥3) si dispo, sinon n'importe laquelle ; la + PROBABLE
+            cands = [x for x in allsel if x[3] >= 3.0] or allsel
+            mkt, s, p, o = max(cands, key=lambda x: x[2])
+            best.append((m["match"], mkt, s, p, o))
         best.sort(key=lambda r: -r[3])       # les matchs les + probables d'abord
         if best:
-            for i, (mn, mk, s, p, o) in enumerate(best[:3], 1):
+            for i, (mn, mk, s, p, o) in enumerate(best[:2], 1):
                 st.markdown(f"**{i}. {mn}** → **{s}** `[{mk}]` · cote **{o:g}** · **{p*100:.0f}%**")
-            st.caption("Les 3 grosses cotes (≥5) les plus probables du round, 1 par match. "
+            st.caption("Le pari value le plus probable de chaque match (2 matchs max). "
                        "« Le plus probable » ≠ rentable (−EV, la cote paie déjà). Indicateur, pas une mise.")
         else:
-            st.caption("Aucune grosse cote ≥5 dans ce round.")
+            st.caption("Aucun pari coté dans ce round.")
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
     st.divider()
