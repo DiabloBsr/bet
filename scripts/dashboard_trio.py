@@ -170,51 +170,6 @@ def _hist_block(st, engine, home, away, leagues, n=5):
 
 
 
-def _scan_big_odds(engine, min_odds=3.0, n_ev=250):
-    """Grosses cotes (>=min_odds) des matchs À VENIR des 9 ligues, TOUS marchés (market_board),
-    triées par proba dévigée. Retourne (picks, recent).
-
-    Perf : requête en DEUX ÉTAPES indexées (events à venir, PUIS leurs cotes via event_id IN)
-    — évite la sous-requête corrélée MAX(id) qui scanne toute la table odds_snapshots (3.6 Go)
-    et prenait ~90s. Repli sur les derniers matchs réels si aucun à venir.
-    """
-    import predict_trio as pt
-    recent = False
-    ev = pd.read_sql(f"""SELECT e.id, e.competition c, e.team_a, e.team_b, e.expected_start es
-        FROM events e LEFT JOIN results r ON r.event_id=e.id
-        WHERE r.id IS NULL AND e.expected_start IS NOT NULL AND e.competition LIKE 'InstantLeague-%'
-        ORDER BY e.expected_start LIMIT {int(n_ev)}""", engine)
-    if not len(ev):
-        recent = True
-        ev = pd.read_sql("""SELECT e.id, e.competition c, e.team_a, e.team_b, e.expected_start es
-            FROM events e WHERE e.expected_start IS NOT NULL AND e.competition LIKE 'InstantLeague-%'
-            ORDER BY e.expected_start DESC LIMIT 150""", engine)
-        if not len(ev):
-            return [], False
-    ids = ",".join(str(int(x)) for x in ev.id.tolist())
-    od = pd.read_sql(f"""SELECT o.event_id, o.odds_home oh, o.odds_draw od, o.odds_away oa,
-        o.extra_markets xm FROM odds_snapshots o
-        JOIN (SELECT event_id, MAX(id) mid FROM odds_snapshots WHERE event_id IN ({ids})
-              GROUP BY event_id) f ON o.id=f.mid""", engine)
-    up = ev.merge(od, left_on="id", right_on="event_id", how="inner")
-    up["local"] = pd.to_datetime(up.es, utc=True).dt.tz_convert(pt.MADA).dt.strftime("%H:%M")
-    picks = []
-    for r in up.itertuples():
-        try:
-            oh, oo, oa = float(r.oh), float(r.od), float(r.oa)
-        except Exception:
-            continue
-        if oh <= 1 or oa <= 1:
-            continue
-        tag = pt.LEAGUE_TAGS.get(r.c, str(r.c)[-4:])
-        for mkt, rows in pt.market_board(r.xm, oh, oo, oa).items():
-            for s, p, o in rows:
-                if o >= min_odds:
-                    picks.append((tag, r.local, r.team_a, r.team_b, mkt, s, float(p), float(o)))
-    picks.sort(key=lambda x: -x[6])
-    return picks, recent
-
-
 def main():
     import streamlit as st
     st.set_page_config(page_title="TRIO — V2×V5×Marché", page_icon="⚖️", layout="wide")
@@ -238,29 +193,6 @@ def main():
     now_mada = datetime.now(timezone.utc) + timedelta(hours=3)
     st.metric("🕐 Heure Mada (UTC+3)", now_mada.strftime("%d/%m/%Y %H:%M"))
 
-    # ============ GROSSES CÔTES LES PLUS PROBABLES — direct (9 ligues, tous marchés) ============
-    st.subheader("🔦 Grosses cotes les plus probables — tous marchés · 9 ligues")
-    _gcmin = st.slider("Cote min", 3.0, 50.0, 5.0, 0.5, key="gc_min")
-    try:
-        _now = time.time()
-        if "gc_scan" not in st.session_state or _now - st.session_state.get("gc_ts", 0) > 30:
-            st.session_state["gc_scan"] = _scan_big_odds(st.cache_resource(_engine)(), 3.0)
-            st.session_state["gc_ts"] = _now
-    except Exception:
-        st.session_state.setdefault("gc_scan", ([], False))
-    _picks, _recent = st.session_state.get("gc_scan", ([], False))
-    _picks = [x for x in _picks if x[7] >= _gcmin][:20]
-    if _picks:
-        if _recent:
-            st.warning("⏳ Aucun match à venir capté — voici les derniers matchs réels (exemples).")
-        st.caption(f"Toutes ligues · tous marchés · cote ≥{_gcmin:g}, du PLUS PROBABLE d'abord :")
-        for _i, (_tag, _loc, _ta, _tb, _mkt, _s, _p, _o) in enumerate(_picks, 1):
-            st.markdown(f"{_i}. **[{_tag} {_loc}] {_ta} vs {_tb}** — **{_s}** `[{_mkt}]` · "
-                        f"cote **{_o:g}** · **{_p*100:.0f}%**")
-        st.caption("« Le plus probable » parmi les grosses cotes ≠ rentable : −EV (la cote paie déjà). Indicateur.")
-    else:
-        st.caption(f"Aucune grosse cote ≥{_gcmin:g} pour l'instant (baisse la cote min ou attends un round).")
-    st.divider()
 
 
     # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
@@ -482,60 +414,26 @@ def main():
                                "Espérance de CHAQUE pari = −marge (~6% marchés simples, ~10-18% exotiques).")
             st.divider()
 
-        # ================= ONGLETS SPÉCIALISÉS PAR MARCHÉ =================
-        st.subheader("📊 Vues spécialisées par marché")
-        t_ou, t_htft, t_tot, t_gng = st.tabs(
-            ["⬆⬇ Over/Under 3.5", "🕐 HT/FT", "🔢 Total exact", "⚽ G/NG"])
-
-        def _family_view(tab, keys, marge_note, show_ov25=False, per_match_n=7):
-            with tab:
-                picks = []
-                for m in res["matches"]:
-                    b = m.get("board") or {}
-                    rows_all = [(mk, s, p, o) for mk in keys for s, p, o in b.get(mk, [])]
-                    if not rows_all:
-                        continue
-                    rows_all.sort(key=lambda r: -r[2])
-                    extra = (f"  ·  Ov2.5 calibré **{m['over25_pct']}%**"
-                             if show_ov25 and m.get("over25_pct") is not None else "")
-                    st.markdown(f"**{m['match']}** : " + " · ".join(
-                        f"{s} **{p*100:.0f}%** ({o:g})" for _mk, s, p, o in rows_all[:per_match_n])
-                        + extra)
-                    picks += [(m["match"], mk, s, p, o) for mk, s, p, o in rows_all]
-                if not picks:
-                    st.caption("Marché non coté sur ce round."); return
-                st.divider()
-                st.markdown("**💡 Recommandations du round** (les plus probables)")
-                picks.sort(key=lambda r: -r[3])
-                for i, (mn, mk, s, p, o) in enumerate(picks[:5], 1):
-                    st.markdown(f"{i}. {'✅ ' if p >= 0.55 else ''}**{mn}** — {s} [{mk}] : "
-                                f"**{p*100:.0f}%** (cote {o:g})")
-                for tg in (2.0, 3.0):
-                    cs = _pt.build_combos(res["matches"], tg, 3, top=1,
-                                          markets=set(keys), min_legs=1, p_min=0.15)
-                    if cs:
-                        c = cs[0]
-                        legs_txt = "  +  ".join(f"{l[0]} · {l[2]} ({l[3]*100:.0f}%)" for l in c["legs"])
-                        st.markdown(f"**Meilleure voie vers cote ≥{tg:g}** → cote {c['odds']:.2f}, "
-                                    f"réussite {c['p']*100:.0f}% : {legs_txt}")
-                st.caption(marge_note)
-
-        _family_view(t_ou, ["+/-"],
-                     "Marge ~6%/pari — le MEILLEUR marché totals (cf. playbook). "
-                     "Ov2.5 calibré = notre proba maison (odds→sim→calibration).",
-                     show_ov25=True, per_match_n=2)
-        _family_view(t_htft, ["HT/FT", "Mi-tps 1X2"],
-                     "Marge : Mi-tps 1X2 ~7.7%, HT/FT ~11% — dimension temps calibrée "
-                     "(prouvé campagne 17). Le plus probable est presque toujours 1/1 ou X/X.",
-                     per_match_n=5)
-        _family_view(t_tot, ["Total de buts"],
-                     "Marge ~10-12.7% — le total le plus fréquent est 3 (25.6% des matchs). "
-                     "⚠️ préfère l'onglet O/U 3.5 : même famille, moitié moins cher.",
-                     per_match_n=7)
-        _family_view(t_gng, ["G/NG", "Les deux équipes marquent / 1ère mi temps"],
-                     "Marge ~5.6% (G/NG plein temps) — 2e meilleur marché après O/U. "
-                     "BTTS 1ère mi-temps affiché en complément (~24% de oui).",
-                     per_match_n=4)
+        # ================= GROSSES CÔTES VALUE — les plus probables du round =================
+        st.subheader("🔦 Grosses cotes value — les plus probables du round")
+        vc1, vc2 = st.columns(2)
+        v_min = vc1.slider("Cote min", 3.0, 50.0, 5.0, 0.5, key="v_min")
+        v_n = int(vc2.selectbox("Combien en afficher", ["5", "10", "20"], index=1, key="v_n"))
+        vpicks = []
+        for m in res["matches"]:
+            for mkt, rows in (m.get("board") or {}).items():
+                for s, p, o in rows:
+                    if o >= v_min:
+                        vpicks.append((m["match"], mkt, s, p, o))
+        vpicks.sort(key=lambda r: -r[3])
+        if vpicks:
+            st.caption(f"Tous marchés de ce round · cote ≥{v_min:g}, du PLUS PROBABLE d'abord :")
+            for i, (mn, mk, s, p, o) in enumerate(vpicks[:v_n], 1):
+                st.markdown(f"{i}. **{mn}** — **{s}** `[{mk}]` · cote **{o:g}** · **{p*100:.0f}%**")
+            st.caption("« Le plus probable » parmi les grosses cotes ≠ rentable : −EV (la cote paie "
+                       "déjà cette proba). Indicateur, pas une mise.")
+        else:
+            st.caption(f"Aucune grosse cote ≥{v_min:g} dans ce round (baisse la cote min).")
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
     st.divider()
