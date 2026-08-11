@@ -105,10 +105,11 @@ def test_db_calls_are_guarded():
     assert not nus, f"accès base non gardé (utiliser _db) : {nus}"
     src = DASH.read_text(encoding="utf-8")
     assert "def _db(" in src, "le garde-fou _db() a disparu"
-    # app réduite à 2 onglets (Débusqueur + Historique) + prédiction + scan grosses
-    # cotes : le seuil reflète ce périmètre minimal (l'invariant réel = pas de
-    # spinner base nu hors _db, vérifié par AST ci-dessus).
-    assert src.count("with _db(") >= 3, "des accès base ne passent plus par _db()"
+    # app réduite (Débusqueur + Historique + prédiction) : 2 accès passent par _db
+    # (Débusqueur, calcul trio) ; le scan grosses cotes du haut dégrade en try/except
+    # exprès (un verrou ne doit pas tuer toute la page). L'invariant réel = pas de
+    # spinner base nu hors _db, vérifié par AST ci-dessus.
+    assert src.count("with _db(") >= 2, "des accès base ne passent plus par _db()"
 
 
 def test_db_guard_stops_the_page():

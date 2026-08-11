@@ -168,6 +168,53 @@ def _hist_block(st, engine, home, away, leagues, n=5):
             st.markdown(_row(m))
 
 
+
+
+def _scan_big_odds(engine, min_odds=3.0, n_ev=250):
+    """Grosses cotes (>=min_odds) des matchs À VENIR des 9 ligues, TOUS marchés (market_board),
+    triées par proba dévigée. Retourne (picks, recent).
+
+    Perf : requête en DEUX ÉTAPES indexées (events à venir, PUIS leurs cotes via event_id IN)
+    — évite la sous-requête corrélée MAX(id) qui scanne toute la table odds_snapshots (3.6 Go)
+    et prenait ~90s. Repli sur les derniers matchs réels si aucun à venir.
+    """
+    import predict_trio as pt
+    recent = False
+    ev = pd.read_sql(f"""SELECT e.id, e.competition c, e.team_a, e.team_b, e.expected_start es
+        FROM events e LEFT JOIN results r ON r.event_id=e.id
+        WHERE r.id IS NULL AND e.expected_start IS NOT NULL AND e.competition LIKE 'InstantLeague-%'
+        ORDER BY e.expected_start LIMIT {int(n_ev)}""", engine)
+    if not len(ev):
+        recent = True
+        ev = pd.read_sql("""SELECT e.id, e.competition c, e.team_a, e.team_b, e.expected_start es
+            FROM events e WHERE e.expected_start IS NOT NULL AND e.competition LIKE 'InstantLeague-%'
+            ORDER BY e.expected_start DESC LIMIT 150""", engine)
+        if not len(ev):
+            return [], False
+    ids = ",".join(str(int(x)) for x in ev.id.tolist())
+    od = pd.read_sql(f"""SELECT o.event_id, o.odds_home oh, o.odds_draw od, o.odds_away oa,
+        o.extra_markets xm FROM odds_snapshots o
+        JOIN (SELECT event_id, MAX(id) mid FROM odds_snapshots WHERE event_id IN ({ids})
+              GROUP BY event_id) f ON o.id=f.mid""", engine)
+    up = ev.merge(od, left_on="id", right_on="event_id", how="inner")
+    up["local"] = pd.to_datetime(up.es, utc=True).dt.tz_convert(pt.MADA).dt.strftime("%H:%M")
+    picks = []
+    for r in up.itertuples():
+        try:
+            oh, oo, oa = float(r.oh), float(r.od), float(r.oa)
+        except Exception:
+            continue
+        if oh <= 1 or oa <= 1:
+            continue
+        tag = pt.LEAGUE_TAGS.get(r.c, str(r.c)[-4:])
+        for mkt, rows in pt.market_board(r.xm, oh, oo, oa).items():
+            for s, p, o in rows:
+                if o >= min_odds:
+                    picks.append((tag, r.local, r.team_a, r.team_b, mkt, s, float(p), float(o)))
+    picks.sort(key=lambda x: -x[6])
+    return picks, recent
+
+
 def main():
     import streamlit as st
     st.set_page_config(page_title="TRIO — V2×V5×Marché", page_icon="⚖️", layout="wide")
@@ -190,6 +237,31 @@ def main():
 
     now_mada = datetime.now(timezone.utc) + timedelta(hours=3)
     st.metric("🕐 Heure Mada (UTC+3)", now_mada.strftime("%d/%m/%Y %H:%M"))
+
+    # ============ GROSSES CÔTES LES PLUS PROBABLES — direct (9 ligues, tous marchés) ============
+    st.subheader("🔦 Grosses cotes les plus probables — tous marchés · 9 ligues")
+    _gcmin = st.slider("Cote min", 3.0, 50.0, 5.0, 0.5, key="gc_min")
+    try:
+        _now = time.time()
+        if "gc_scan" not in st.session_state or _now - st.session_state.get("gc_ts", 0) > 30:
+            st.session_state["gc_scan"] = _scan_big_odds(st.cache_resource(_engine)(), 3.0)
+            st.session_state["gc_ts"] = _now
+    except Exception:
+        st.session_state.setdefault("gc_scan", ([], False))
+    _picks, _recent = st.session_state.get("gc_scan", ([], False))
+    _picks = [x for x in _picks if x[7] >= _gcmin][:20]
+    if _picks:
+        if _recent:
+            st.warning("⏳ Aucun match à venir capté — voici les derniers matchs réels (exemples).")
+        st.caption(f"Toutes ligues · tous marchés · cote ≥{_gcmin:g}, du PLUS PROBABLE d'abord :")
+        for _i, (_tag, _loc, _ta, _tb, _mkt, _s, _p, _o) in enumerate(_picks, 1):
+            st.markdown(f"{_i}. **[{_tag} {_loc}] {_ta} vs {_tb}** — **{_s}** `[{_mkt}]` · "
+                        f"cote **{_o:g}** · **{_p*100:.0f}%**")
+        st.caption("« Le plus probable » parmi les grosses cotes ≠ rentable : −EV (la cote paie déjà). Indicateur.")
+    else:
+        st.caption(f"Aucune grosse cote ≥{_gcmin:g} pour l'instant (baisse la cote min ou attends un round).")
+    st.divider()
+
 
     # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
     with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
@@ -285,6 +357,15 @@ def main():
         st.caption("ℹ️ Ligue en mode MARCHÉ pur (probas dévigées, calibrées) — V2/V5 sont "
                    "entraînés sur l'anglaise.")
 
+    # ---- Confiance : À CHOISIR AVANT de prédire (persistée, n'efface pas le round) ----
+    cpr1, cpr2 = st.columns([3, 2])
+    want_conf = cpr1.slider("🎯 Je veux être sûr à… (%)", 50, 95, 70, 5, key="want_conf",
+                            help="Pour chaque match, l'app cherche le pari à la COTE la plus haute "
+                                 "dont la probabilité atteint ce seuil. Monte = plus sûr / cote plus "
+                                 "basse ; baisse = plus payant / plus risqué.") / 100.0
+    hi_only = cpr2.toggle("🎯 Haute confiance seulement", value=False, key="hi_only",
+                          help="Ne montre que les matchs à forte concentration Top-3 (~masse ≥0.32).")
+
     cT, cB = st.columns([3, 1])
     t_str = cT.text_input("Heure Mada du round (ex: 21:03) — vide = prochain", value="", key="rt")
     go_h = cB.button("🎯 Ce round")
@@ -299,17 +380,20 @@ def main():
         try:
             with st.spinner("Fit V5+V2 (1er appel ~60-90s, puis instantané)…"):
                 models = cached_fit()
-            st.caption(f"✓ V5+V2 fittés sur {models[3]} matchs (cache).")
         except Exception as exc:
             st.error(f"Fit impossible : {exc}"); return
         with _db("Calcul du trio…"):
-            res = _round(models, target, lg)
-        if target and res.get("rounds") and target not in res["rounds"]:
-            st.warning(f"Round {target} non dispo. Rounds : {res['rounds'][:10]}")
-        if not res.get("matches"):
-            st.info("Aucun match à venir capté (le scraper doit tourner).")
-            return
-        # compte à rebours jusqu'au coup d'envoi
+            res_new = _round(models, target, lg)
+        if target and res_new.get("rounds") and target not in res_new["rounds"]:
+            st.warning(f"Round {target} non dispo. Rounds : {res_new['rounds'][:10]}")
+        st.session_state["pred_res"] = res_new
+
+    res = st.session_state.get("pred_res")
+    if res is not None and not res.get("matches"):
+        st.info("Aucun match à venir capté (le scraper doit tourner).")
+    if res and res.get("matches"):
+        import predict_trio as _ptc
+        _pt = _ptc
         try:
             hh, mm = map(int, res["target"].split(":"))
             nm = datetime.now(timezone.utc) + timedelta(hours=3)
@@ -321,21 +405,9 @@ def main():
         except Exception:
             cd = ""
         st.success(f"Round {res['target']} Mada — {len(res['matches'])} matchs   {cd}")
-        # ---- CADRAN DE PRÉCISION : choisis ta confiance -> meilleur pari par match ----
-        import predict_trio as _ptc
-        cpr1, cpr2 = st.columns([3, 2])
-        want_conf = cpr1.slider("🎯 Je veux être sûr à… (%)", 50, 95, 70, 5,
-                                help="Pour chaque match, l'app cherche le pari à la COTE la plus haute "
-                                     "dont la probabilité atteint ce seuil. Monte le seuil = plus sûr mais "
-                                     "cote plus basse ; baisse-le = plus payant mais plus risqué.") / 100.0
-        cpr2.caption("La précision est un **cadran** : score exact ~31%, mais 1X2 ~55%, "
-                     "O/U ~62%, Double Chance ~74%, bandes larges ~80%.")
-        # ---- FILTRE CONFIANCE (prédiction sélective) ----
+        st.caption("La précision est un cadran : score exact ~31%, 1X2 ~55%, O/U ~62%, "
+                   "Double Chance ~74%, bandes larges ~80%.")
         matches_all = res["matches"]
-        hi_only = st.toggle("🎯 Haute confiance seulement (matchs les plus prévisibles)", value=False,
-                            help="Ne montre que les matchs à forte concentration Top-3 (~masse ≥0.32). "
-                                 "Le Top-3 réel y grimpe à ~36-39% au lieu de 31% — MAIS ce n'est ni 100% "
-                                 "ni rentable (cotes basses). Concentre ton attention, ne promet rien.")
         HI = 0.32
         shown = [m for m in matches_all if (m.get("confidence") or 0) >= HI] if hi_only else matches_all
         if hi_only:
@@ -343,6 +415,7 @@ def main():
                        f"(Top-3 attendu ~36-39% vs 31% global).")
             if not shown:
                 st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
+
         for m in shown:
             ph, pd_, pa = m["x12"]
             conf = m.get("confidence") or 0
@@ -408,39 +481,6 @@ def main():
                     st.caption("Probas = cotes dévigées (calibrées <2pp, prouvé sur 32k matchs). "
                                "Espérance de CHAQUE pari = −marge (~6% marchés simples, ~10-18% exotiques).")
             st.divider()
-
-        # ================= GROSSES CÔTES LES PLUS PROBABLES =================
-        import predict_trio as _pt
-        st.subheader("🔦 Grosses cotes les plus probables — tous marchés · 9 ligues")
-        gc1, gc2 = st.columns(2)
-        gc_min = gc1.number_input("Cote min", 3.0, 200.0, 5.0, 0.5, key="gc_min")
-        gc_n = int(gc2.selectbox("Combien en afficher", ["10", "20", "40"], index=1, key="gc_n"))
-        if st.button("🔦 Scanner (9 ligues, tous marchés)", key="gc_go", type="primary"):
-            with _db("Scan grosses cotes — 9 ligues, tous marchés…"):
-                up = _pt._upcoming_df(st.cache_resource(_engine)(), None, minutes=120)
-                picks = []
-                for r in up.itertuples():
-                    if float(r.oh) <= 1 or float(r.oa) <= 1:
-                        continue
-                    tag = _pt.LEAGUE_TAGS.get(r.c, str(r.c)[-4:])
-                    for mkt, rows in _pt.market_board(r.xm, r.oh, r.od, r.oa).items():
-                        for s, p, o in rows:
-                            if o >= gc_min:
-                                picks.append((tag, r.local, r.team_a, r.team_b, mkt, s, float(p), float(o)))
-                picks.sort(key=lambda x: -x[6])       # la plus PROBABLE d'abord
-                st.session_state["gc_res"] = picks
-        picks = st.session_state.get("gc_res")
-        if picks is not None:
-            picks = [x for x in picks if x[7] >= gc_min]
-            if picks:
-                st.caption(f"Toutes ligues · tous marchés · cote ≥{gc_min:g}, du PLUS PROBABLE d'abord :")
-                for i, (tag, loc, ta, tb, mkt, s, p, o) in enumerate(picks[:gc_n], 1):
-                    st.markdown(f"{i}. **[{tag} {loc}] {ta} vs {tb}** — **{s}** `[{mkt}]` · "
-                                f"cote **{o:g}** · **{p*100:.0f}%**")
-                st.caption("« Le plus probable » parmi les grosses cotes ≠ rentable : −EV (la cote paie "
-                           "déjà cette proba). Indicateur, pas une mise.")
-            else:
-                st.caption(f"Aucune grosse cote ≥{gc_min:g} à venir (baisse la cote min ou attends un round).")
 
         # ================= ONGLETS SPÉCIALISÉS PAR MARCHÉ =================
         st.subheader("📊 Vues spécialisées par marché")
