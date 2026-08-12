@@ -268,12 +268,11 @@ def main():
             h_home = hl2.selectbox("Équipe A (domicile)", _hteams, index=0, key="h_home")
             h_away = hl3.selectbox("Équipe B (extérieur)", _hteams,
                                    index=min(1, len(_hteams)-1), key="h_away")
-            h_n = st.slider("Nb de derniers matchs par équipe", 3, 15, 5, key="h_n")
             if st.button("🔎 Afficher l'historique", key="h_go", type="primary"):
                 if h_home == h_away:
                     st.warning("Choisis deux équipes différentes.")
                 else:
-                    _hist_block(st, engH, h_home, h_away, [h_comp], n=h_n)
+                    _hist_block(st, engH, h_home, h_away, [h_comp], n=5)
         else:
             st.info("Pas d'équipes trouvées pour cette ligue.")
 
