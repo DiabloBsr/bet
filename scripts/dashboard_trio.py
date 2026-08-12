@@ -147,7 +147,7 @@ def _hist_block(st, engine, home, away, leagues, n=5):
             nz = sum(1 for m in h2h if m["tot"] == 0)
             st.caption(f"{len(h2h)} confrontations · {nz} finies 0-0 ({100*nz/len(h2h):.0f}%) · "
                        f"total buts moyen {sum(m['tot'] for m in h2h)/len(h2h):.1f}")
-            for m in h2h[:20]:
+            for m in h2h[:30]:
                 mark = " 🥅" if m["tot"] == 0 else ""
                 ch = f" `{m['oh']:g}`" if m.get("oh") else ""
                 ca = f" `{m['oa']:g}`" if m.get("oa") else ""
