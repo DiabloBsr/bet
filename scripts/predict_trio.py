@@ -747,6 +747,53 @@ def big_odds_fixtures(engine, leagues=None, min_odds=5.0, max_odds=50.0, markets
     return out
 
 
+def under35_scan(engine, target: float = 1.68, tol: float = 0.20, leagues=None,
+                 minutes: int = 180, n_recent: int = 400) -> list:
+    """Matchs À VENIR (9 ligues) dont la cote UNDER 3.5 (marché « +/- » : « < 3.5 »)
+    est proche de `target` (±`tol`), TRIÉS par round (heure de coup d'envoi croissante).
+    D'abord les matchs à venir ; repli sur les derniers matchs réels si aucun capté."""
+    def _pick(df, recent):
+        out = []
+        for r in df.itertuples():
+            try:
+                mk = json.loads(r.xm) if isinstance(r.xm, str) else (r.xm or {})
+            except Exception:
+                continue
+            pm = mk.get("+/-")
+            if not isinstance(pm, dict):
+                continue
+            un, ov = pm.get("< 3.5"), pm.get("> 3.5")
+            if not (isinstance(un, (int, float)) and un > 1):
+                continue          # under coté ≤1 = pas un vrai pari (matchs très défensifs)
+            if abs(float(un) - target) <= tol:
+                out.append({
+                    "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]), "local": r.local, "es": r.es,
+                    "home": r.team_a, "away": r.team_b, "under35": round(float(un), 2),
+                    "over35": round(float(ov), 2) if isinstance(ov, (int, float)) and ov > 1 else None,
+                    "recent": recent})
+        out.sort(key=lambda x: x["es"])        # ordre du round (heure croissante)
+        return out
+
+    up = _upcoming_df(engine, leagues, minutes)
+    if len(up):
+        rows = _pick(up, recent=False)
+        if rows:
+            return rows
+    # repli : derniers matchs réels
+    ph = _lg_clause(leagues)
+    rec = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        o.extra_markets xm FROM events e
+        JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
+        WHERE e.expected_start IS NOT NULL {ph}
+        ORDER BY e.expected_start DESC LIMIT {int(n_recent)}""", engine)
+    if not len(rec):
+        return []
+    rec["es"] = pd.to_datetime(rec.expected_start, utc=True)
+    rec["local"] = rec.es.dt.tz_convert(MADA).dt.strftime("%H:%M")
+    rec = rec.drop_duplicates(["c", "team_a", "team_b", "expected_start"])
+    return _pick(rec, recent=True)
+
+
 def combo_by_target(engine, target_odds: float, n_legs: int = 3, leagues=None,
                     start_local=None, end_local=None, top: int = 6, p_min: float = 0.35) -> list:
     """Constructeur : combiné de n_legs matchs (à venir, ligue/créneau choisis) dont la cote

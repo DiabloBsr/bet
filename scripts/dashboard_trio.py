@@ -286,6 +286,34 @@ def main():
         else:
             st.info("Pas d'équipes trouvées pour cette ligue.")
 
+    # ---- 🎯 DÉBUSQUEUR UNDER 3.5 (9 ligues, cote cible, ordre du round) ----
+    with st.expander("🎯 Débusqueur Under 3.5 — 9 ligues, triés par round"):
+        import predict_trio as _ptu35
+        engU = st.cache_resource(_engine)()
+        st.caption("Matchs à venir des 9 ligues dont la cote Under 3.5 est proche de ta cible, "
+                   "dans l'ordre des rounds (coup d'envoi croissant).")
+        u1, u2 = st.columns(2)
+        u_target = u1.number_input("Cote Under 3.5 cible", 1.05, 3.0, 1.68, 0.01, key="u35_t")
+        u_tol = u2.number_input("Tolérance ±", 0.05, 1.0, 0.20, 0.05, key="u35_tol")
+        if st.button("🎯 Débusquer Under 3.5", key="u35_go", type="primary"):
+            with _db("Scan Under 3.5 — 9 ligues…"):
+                st.session_state["u35_res"] = _ptu35.under35_scan(
+                    engU, target=float(u_target), tol=float(u_tol))
+        u_res = st.session_state.get("u35_res")
+        if u_res is not None:
+            if not u_res:
+                st.info("Aucun match Under 3.5 ~ cible pour l'instant (élargis la tolérance ou attends un round).")
+            else:
+                if u_res[0].get("recent"):
+                    st.warning("⏳ Aucun match à venir capté — voici les derniers matchs réels (exemples).")
+                st.success(f"{len(u_res)} matchs Under 3.5 ≈ {u_target:g} (±{u_tol:g}), dans l'ordre des rounds :")
+                for m in u_res[:60]:
+                    o35 = f" · O3.5 `{m['over35']:g}`" if m.get("over35") else ""
+                    tag = " · *(passé)*" if m.get("recent") else ""
+                    st.markdown(f"**{m['local']}** `[{m['tag']}]` {m['home']} vs {m['away']} — "
+                                f"**U3.5 `{m['under35']:g}`**{o35}{tag}")
+                st.caption("Trié par heure de round. Rappel : Under 3.5 reste −EV (la cote paie la proba). Indicateur.")
+
     # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
     cached_fit = st.cache_resource(_fit)
