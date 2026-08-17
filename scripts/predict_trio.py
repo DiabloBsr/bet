@@ -661,15 +661,20 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
         return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 1 else None
 
     def _ou35(xm):
-        """Cotes Over/Under 3.5 (marché « +/- ») offertes ce match-là."""
+        """Cotes INITIALES Over/Under 3.5 (marché « +/- », 1er snapshot). On garde même
+        une valeur ≤1 (under quasi-certain des matchs défensifs) pour TOUJOURS afficher
+        les deux cotes."""
         try:
             mk = json.loads(xm) if isinstance(xm, str) else (xm or {})
         except Exception:
             return None, None
         pm = mk.get("+/-")
-        if isinstance(pm, dict):
-            return _o(pm.get("> 3.5")), _o(pm.get("< 3.5"))
-        return None, None
+        if not isinstance(pm, dict):
+            return None, None
+
+        def _v(x):
+            return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 0 else None
+        return _v(pm.get("> 3.5")), _v(pm.get("< 3.5"))
     out = []
     for r in d.itertuples():
         es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
