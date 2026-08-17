@@ -648,7 +648,7 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
     """Tous les face-à-face directs entre 2 équipes (les deux orientations), du + récent au + ancien.
     Inclut les cotes 1X2 (1er snapshot) offertes CE match-là : oh/od/oa (None si absentes)."""
     a = str(team_a).replace("'", "''"); b = str(team_b).replace("'", "''")
-    d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+    d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start, e.round_info rd,
         o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm,
         r.score_a sa, r.score_b sb
         FROM events e JOIN results r ON r.event_id=e.id
@@ -680,6 +680,7 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
         es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
         ov, un = _ou35(r.xm)
         out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
+                    "journee": str(r.rd) if r.rd not in (None, "") else None,
                     "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb),
                     "oh": _o(r.oh), "od": _o(r.od), "oa": _o(r.oa),
                     "o_over35": ov, "o_under35": un})

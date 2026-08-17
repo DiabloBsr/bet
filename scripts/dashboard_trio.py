@@ -162,7 +162,8 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
                     if un:
                         parts.append(f"U3.5 `{un:g}`{'✅' if not hit_over else ''}")
                     ou = " · " + " / ".join(parts)
-                st.markdown(f"`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
+                jr = f"`J{m['journee']}` " if m.get("journee") else ""
+                st.markdown(f"{jr}`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
                             f"{ca}{m['away']}{cx}{mark}{ou}")
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)
