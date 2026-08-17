@@ -649,7 +649,9 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
     Inclut les cotes 1X2 (1er snapshot) offertes CE match-là : oh/od/oa (None si absentes)."""
     a = str(team_a).replace("'", "''"); b = str(team_b).replace("'", "''")
     d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start, e.round_info rd,
-        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm,
+        o.odds_home oh, o.odds_draw od, o.odds_away oa,
+        (SELECT extra_markets FROM odds_snapshots WHERE event_id=e.id
+         AND extra_markets IS NOT NULL ORDER BY id LIMIT 1) xm,
         r.score_a sa, r.score_b sb
         FROM events e JOIN results r ON r.event_id=e.id
         LEFT JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
@@ -661,12 +663,19 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
         return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 1 else None
 
     def _ou35(xm):
-        """Cotes INITIALES Over/Under 3.5 (marché « +/- », 1er snapshot). On garde même
-        une valeur ≤1 (under quasi-certain des matchs défensifs) pour TOUJOURS afficher
-        les deux cotes."""
-        try:
-            mk = json.loads(xm) if isinstance(xm, str) else (xm or {})
-        except Exception:
+        """Cotes INITIALES Over/Under 3.5 (marché « +/- »). On garde même une valeur ≤1
+        (under quasi-certain des matchs défensifs) pour TOUJOURS afficher les deux cotes.
+        Robuste : extra_markets NULL -> pandas NaN (float, truthy !) -> on retourne None."""
+        if isinstance(xm, str):
+            try:
+                mk = json.loads(xm)
+            except Exception:
+                return None, None
+        elif isinstance(xm, dict):
+            mk = xm
+        else:
+            return None, None                  # NaN / None / autre : pas de marché
+        if not isinstance(mk, dict):
             return None, None
         pm = mk.get("+/-")
         if not isinstance(pm, dict):
@@ -763,11 +772,17 @@ def under35_scan(engine, target: float = 1.68, tol: float = 0.03, leagues=None,
     def _pick(df, recent):
         out = []
         for r in df.itertuples():
-            try:
-                mk = json.loads(r.xm) if isinstance(r.xm, str) else (r.xm or {})
-            except Exception:
-                continue
-            pm = mk.get("+/-")
+            xm = r.xm
+            if isinstance(xm, str):
+                try:
+                    mk = json.loads(xm)
+                except Exception:
+                    continue
+            elif isinstance(xm, dict):
+                mk = xm
+            else:
+                continue                        # NaN (extra_markets NULL) / None
+            pm = mk.get("+/-") if isinstance(mk, dict) else None
             if not isinstance(pm, dict):
                 continue
             un, ov = pm.get("< 3.5"), pm.get("> 3.5")
