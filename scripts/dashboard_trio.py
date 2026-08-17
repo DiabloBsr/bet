@@ -290,15 +290,28 @@ def main():
     with st.expander("🎯 Débusqueur Under 3.5 — 9 ligues, triés par round"):
         import predict_trio as _ptu35
         engU = st.cache_resource(_engine)()
-        st.caption("Matchs à venir des 9 ligues dont la cote Under 3.5 est proche de ta cible, "
-                   "dans l'ordre des rounds (coup d'envoi croissant).")
+        st.caption("Matchs à venir des 9 ligues dont la cote Under 3.5 vaut ~ta cible (1.68 par "
+                   "défaut), dans l'ordre des rounds. Filtre horaire optionnel (De… À…).")
         u1, u2 = st.columns(2)
-        u_target = u1.number_input("Cote Under 3.5 cible", 1.05, 3.0, 1.68, 0.01, key="u35_t")
-        u_tol = u2.number_input("Tolérance ±", 0.05, 1.0, 0.20, 0.05, key="u35_tol")
+        u_target = u1.number_input("Cote Under 3.5 (exacte)", 1.05, 3.0, 1.68, 0.01, key="u35_t")
+        u_tol = u2.number_input("Tolérance ±", 0.0, 1.0, 0.03, 0.01, key="u35_tol",
+                                help="0.03 ≈ exactement la cible. Monte-la pour élargir.")
+        u3, u4 = st.columns(2)
+        u_ws = u3.text_input("De (HH:MM Mada — vide = maintenant)", value="", key="u35_ws",
+                             placeholder="ex: 21:00")
+        u_we = u4.text_input("À (HH:MM Mada)", value="", key="u35_we", placeholder="ex: 22:00")
         if st.button("🎯 Débusquer Under 3.5", key="u35_go", type="primary"):
-            with _db("Scan Under 3.5 — 9 ligues…"):
-                st.session_state["u35_res"] = _ptu35.under35_scan(
-                    engU, target=float(u_target), tol=float(u_tol))
+            sl, el = u_ws.strip(), u_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)) or (bool(sl) != bool(el)):
+                st.warning("Heures au format HH:MM, les deux ou aucune.")
+            else:
+                sl2 = sl.zfill(5) if sl else None
+                el2 = el.zfill(5) if el else None
+                with _db("Scan Under 3.5 — 9 ligues…"):
+                    st.session_state["u35_res"] = _ptu35.under35_scan(
+                        engU, target=float(u_target), tol=float(u_tol),
+                        start_local=sl2, end_local=el2)
         u_res = st.session_state.get("u35_res")
         if u_res is not None:
             if not u_res:

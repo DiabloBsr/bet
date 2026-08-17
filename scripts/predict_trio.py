@@ -752,10 +752,12 @@ def big_odds_fixtures(engine, leagues=None, min_odds=5.0, max_odds=50.0, markets
     return out
 
 
-def under35_scan(engine, target: float = 1.68, tol: float = 0.20, leagues=None,
-                 minutes: int = 180, n_recent: int = 400) -> list:
+def under35_scan(engine, target: float = 1.68, tol: float = 0.03, leagues=None,
+                 minutes: int = 180, start_local=None, end_local=None,
+                 n_recent: int = 400) -> list:
     """Matchs À VENIR (9 ligues) dont la cote UNDER 3.5 (marché « +/- » : « < 3.5 »)
-    est proche de `target` (±`tol`), TRIÉS par round (heure de coup d'envoi croissante).
+    vaut `target` ± `tol` (tol=0.03 => ~exactement la cible), TRIÉS par round (heure de
+    coup d'envoi croissante). Créneau horaire optionnel (start_local/end_local, HH:MM Mada).
     D'abord les matchs à venir ; repli sur les derniers matchs réels si aucun capté."""
     def _pick(df, recent):
         out = []
@@ -779,11 +781,14 @@ def under35_scan(engine, target: float = 1.68, tol: float = 0.20, leagues=None,
         out.sort(key=lambda x: x["es"])        # ordre du round (heure croissante)
         return out
 
-    up = _upcoming_df(engine, leagues, minutes)
+    interval = bool(start_local and end_local)
+    up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
     if len(up):
         rows = _pick(up, recent=False)
-        if rows:
+        if rows or interval:
             return rows
+    if interval:
+        return []                              # créneau fixé : pas de repli sur le passé
     # repli : derniers matchs réels
     ph = _lg_clause(leagues)
     rec = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
