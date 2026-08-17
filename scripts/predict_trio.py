@@ -649,7 +649,8 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
     Inclut les cotes 1X2 (1er snapshot) offertes CE match-là : oh/od/oa (None si absentes)."""
     a = str(team_a).replace("'", "''"); b = str(team_b).replace("'", "''")
     d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
-        o.odds_home oh, o.odds_draw od, o.odds_away oa, r.score_a sa, r.score_b sb
+        o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm,
+        r.score_a sa, r.score_b sb
         FROM events e JOIN results r ON r.event_id=e.id
         LEFT JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
         WHERE r.score_a IS NOT NULL {_lg_clause(leagues)}
@@ -658,12 +659,25 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
 
     def _o(x):
         return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 1 else None
+
+    def _ou35(xm):
+        """Cotes Over/Under 3.5 (marché « +/- ») offertes ce match-là."""
+        try:
+            mk = json.loads(xm) if isinstance(xm, str) else (xm or {})
+        except Exception:
+            return None, None
+        pm = mk.get("+/-")
+        if isinstance(pm, dict):
+            return _o(pm.get("> 3.5")), _o(pm.get("< 3.5"))
+        return None, None
     out = []
     for r in d.itertuples():
         es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
+        ov, un = _ou35(r.xm)
         out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
                     "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb),
-                    "oh": _o(r.oh), "od": _o(r.od), "oa": _o(r.oa)})
+                    "oh": _o(r.oh), "od": _o(r.od), "oa": _o(r.oa),
+                    "o_over35": ov, "o_under35": un})
     return out
 
 

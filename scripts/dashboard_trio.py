@@ -152,8 +152,18 @@ def _hist_block(st, engine, home, away, leagues, n=5):
                 ch = f" `{m['oh']:g}`" if m.get("oh") else ""
                 ca = f" `{m['oa']:g}`" if m.get("oa") else ""
                 cx = f" · nul `{m['od']:g}`" if m.get("od") else ""
+                ov, un = m.get("o_over35"), m.get("o_under35")
+                ou = ""
+                if ov or un:                    # ✅ = le côté O/U 3.5 réellement sorti (total ≥4 = over)
+                    hit_over = m["tot"] >= 4
+                    parts = []
+                    if ov:
+                        parts.append(f"O3.5 `{ov:g}`{'✅' if hit_over else ''}")
+                    if un:
+                        parts.append(f"U3.5 `{un:g}`{'✅' if not hit_over else ''}")
+                    ou = " · " + " / ".join(parts)
                 st.markdown(f"`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
-                            f"{ca}{m['away']}{cx}{mark}")
+                            f"{ca}{m['away']}{cx}{mark}{ou}")
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)
         if not hh:
