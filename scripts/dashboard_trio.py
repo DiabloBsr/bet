@@ -120,7 +120,7 @@ def _alerts():
     return msgs
 
 
-def _hist_block(st, engine, home, away, leagues, n=5):
+def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
     """Composant historique réutilisable : 3 menus (H2H / équipe home / équipe away),
     du + récent au + ancien. Utilisable partout dans l'app sur les 9 ligues."""
     import predict_trio as _pth
@@ -154,7 +154,7 @@ def _hist_block(st, engine, home, away, leagues, n=5):
                 cx = f" · nul `{m['od']:g}`" if m.get("od") else ""
                 ov, un = m.get("o_over35"), m.get("o_under35")
                 ou = ""
-                if ov or un:                    # ✅ = le côté O/U 3.5 réellement sorti (total ≥4 = over)
+                if show_ou35 and (ov or un):    # ✅ = le côté O/U 3.5 réellement sorti (total ≥4 = over)
                     hit_over = m["tot"] >= 4
                     parts = []
                     if ov:
@@ -278,11 +278,12 @@ def main():
             h_home = hl2.selectbox("Équipe A (domicile)", _hteams, index=0, key="h_home")
             h_away = hl3.selectbox("Équipe B (extérieur)", _hteams,
                                    index=min(1, len(_hteams)-1), key="h_away")
+            h_ou35 = st.checkbox("Afficher les cotes Under / Over 3.5", value=True, key="h_ou35")
             if st.button("🔎 Afficher l'historique", key="h_go", type="primary"):
                 if h_home == h_away:
                     st.warning("Choisis deux équipes différentes.")
                 else:
-                    _hist_block(st, engH, h_home, h_away, [h_comp], n=5)
+                    _hist_block(st, engH, h_home, h_away, [h_comp], n=5, show_ou35=h_ou35)
         else:
             st.info("Pas d'équipes trouvées pour cette ligue.")
 
