@@ -652,7 +652,7 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
         o.odds_home oh, o.odds_draw od, o.odds_away oa,
         (SELECT extra_markets FROM odds_snapshots WHERE event_id=e.id
          AND extra_markets IS NOT NULL ORDER BY id LIMIT 1) xm,
-        r.score_a sa, r.score_b sb
+        r.score_a sa, r.score_b sb, r.goals_json gj
         FROM events e JOIN results r ON r.event_id=e.id
         LEFT JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
         WHERE r.score_a IS NOT NULL {_lg_clause(leagues)}
@@ -684,15 +684,37 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
         def _v(x):
             return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 0 else None
         return _v(pm.get("> 3.5")), _v(pm.get("< 3.5"))
+
+    def _goals(gj):
+        """Minutes des buts, séparées équipe domicile / extérieur (ordre croissant)."""
+        if isinstance(gj, str):
+            try:
+                arr = json.loads(gj)
+            except Exception:
+                return [], []
+        elif isinstance(gj, list):
+            arr = gj
+        else:
+            return [], []
+        hm, am = [], []
+        for g in (arr if isinstance(arr, list) else []):
+            if not isinstance(g, dict):
+                continue
+            mn = g.get("minute")
+            if not isinstance(mn, (int, float)):
+                continue
+            (hm if g.get("team") == "Home" else am).append(int(mn))
+        return sorted(hm), sorted(am)
     out = []
     for r in d.itertuples():
         es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
         ov, un = _ou35(r.xm)
+        hm, am = _goals(r.gj)
         out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
                     "journee": str(r.rd) if r.rd not in (None, "") else None,
                     "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb),
                     "oh": _o(r.oh), "od": _o(r.od), "oa": _o(r.oa),
-                    "o_over35": ov, "o_under35": un})
+                    "o_over35": ov, "o_under35": un, "home_min": hm, "away_min": am})
     return out
 
 
