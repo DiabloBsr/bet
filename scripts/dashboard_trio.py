@@ -5,7 +5,7 @@ Lancement : streamlit run scripts/dashboard_trio.py --server.port 8513
 """
 from __future__ import annotations
 import json as _j
-import sys, time
+import sys
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -375,29 +375,29 @@ def main():
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
     cached_fit = st.cache_resource(_fit)
 
-    cL, cA = st.columns([2, 2])
-    lg_name = cL.selectbox("Ligue", list(LEAGUES), index=0)
+    # Panneau reduit a l'essentiel (demande user) : ligue + heure du round.
+    # Les reglages retires sont FIGES sur la valeur qui etait deja proposee par
+    # defaut, celle que l'app recommandait :
+    #   - seuil de confiance 70 % : c'etait la position initiale du curseur ;
+    #   - "haute confiance seulement" desactive : sinon ~90 % des matchs du round
+    #     disparaissent (les rounds concentres sont rares, ~10 %) ;
+    #   - suivi auto desactive : il relancait un rerun toutes les 45 s.
+    # Un seul bouton au lieu de deux : le champ heure fait deja la distinction,
+    # vide = prochain round. Et on garde le declenchement au clic — le fit prend
+    # 60-90 s au premier appel, le lancer au chargement figerait la page.
+    CONF_RECO = 0.70
+    want_conf, hi_only = CONF_RECO, False
+
+    lg_name = st.selectbox("Ligue", list(LEAGUES), index=0)
     lg = LEAGUES[lg_name]
-    auto = cA.toggle("🔄 Suivi auto (prochain round, refresh ~45s)", value=False)
     if lg != "InstantLeague-8035":
         st.caption("ℹ️ Ligue en mode MARCHÉ pur (probas dévigées, calibrées) — V2/V5 sont "
                    "entraînés sur l'anglaise.")
 
-    # ---- Confiance : À CHOISIR AVANT de prédire (persistée, n'efface pas le round) ----
-    cpr1, cpr2 = st.columns([3, 2])
-    want_conf = cpr1.slider("🎯 Je veux être sûr à… (%)", 50, 95, 70, 5, key="want_conf",
-                            help="Pour chaque match, l'app cherche le pari à la COTE la plus haute "
-                                 "dont la probabilité atteint ce seuil. Monte = plus sûr / cote plus "
-                                 "basse ; baisse = plus payant / plus risqué.") / 100.0
-    hi_only = cpr2.toggle("🎯 Haute confiance seulement", value=False, key="hi_only",
-                          help="Ne montre que les matchs à forte concentration Top-3 (~masse ≥0.32).")
+    t_str = st.text_input("Heure Mada du round (ex: 21:03) — vide = prochain", value="", key="rt")
+    go_h = st.button("🔮 Prédire", type="primary")
 
-    cT, cB = st.columns([3, 1])
-    t_str = cT.text_input("Heure Mada du round (ex: 21:03) — vide = prochain", value="", key="rt")
-    go_h = cB.button("🎯 Ce round")
-    go_now = st.button("🔮 Prédire le prochain round à venir")
-
-    if go_h or go_now or auto:
+    if go_h:
         target = None
         if go_h and t_str.strip():
             d = re.findall(r"\d+", t_str)
@@ -575,11 +575,6 @@ def main():
 
     st.info("⚠️ RNG calibré, pas d'edge directionnel prouvé — le trio améliore la ROBUSTESSE (arbitrage des "
             "désaccords), pas le plafond de précision.")
-
-    # ---- SUIVI AUTO : re-prédit le prochain round toutes les ~45 s ----
-    if auto:
-        time.sleep(45)
-        st.rerun()
 
 
 if __name__ == "__main__":
