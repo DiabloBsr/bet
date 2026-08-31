@@ -145,8 +145,11 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
             st.caption("Aucun face-à-face direct en base.")
         else:
             nz = sum(1 for m in h2h if m["tot"] == 0)
-            st.caption(f"{len(h2h)} confrontations · {nz} finies 0-0 ({100*nz/len(h2h):.0f}%) · "
+            st.caption(f"{len(h2h)} confrontations les + récentes · {nz} finies 0-0 "
+                       f"({100*nz/len(h2h):.0f}%) · "
                        f"total buts moyen {sum(m['tot'] for m in h2h)/len(h2h):.1f}")
+            st.caption("📊 O/U 2.5 reconstitué depuis « Total de buts » — Bet261 ne cote que la "
+                       "ligne 3.5. Marge du book conservée. ✅ = issue réalisée.")
             for m in h2h[:30]:
                 mark = " 🥅" if m["tot"] == 0 else ""
                 ch = f" `{m['oh']:g}`" if m.get("oh") else ""
@@ -169,8 +172,30 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
                     dm = " ".join(f"{x}'" for x in hmin) or "—"
                     xm2 = " ".join(f"{x}'" for x in amin) or "—"
                     gm = f"  \n　⚽ {m['home']} : {dm}  ·  {m['away']} : {xm2}"
+                # O/U 2.5 reconstitué + double chance coté, sur leur propre sous-ligne :
+                # la ligne principale porte déjà 1X2 et O/U 3.5, tout y empiler la rendrait
+                # illisible. ✅ marque l'issue réellement sortie (over 2.5 = total >= 3).
+                seg = []
+                over25 = m["tot"] >= 3
+                p25 = []
+                if m.get("o_over25"):
+                    p25.append(f"O2.5 `{m['o_over25']:g}`{'✅' if over25 else ''}")
+                if m.get("o_under25"):
+                    p25.append(f"U2.5 `{m['o_under25']:g}`{'✅' if not over25 else ''}")
+                if p25:
+                    seg.append(" / ".join(p25))
+                pdc = []
+                if m.get("dc_1x"):
+                    pdc.append(f"1X `{m['dc_1x']:g}`{'✅' if m['sa'] >= m['sb'] else ''}")
+                if m.get("dc_x2"):
+                    pdc.append(f"X2 `{m['dc_x2']:g}`{'✅' if m['sb'] >= m['sa'] else ''}")
+                if m.get("dc_12"):
+                    pdc.append(f"12 `{m['dc_12']:g}`{'✅' if m['sa'] != m['sb'] else ''}")
+                if pdc:
+                    seg.append("DC " + " / ".join(pdc))
+                od25 = "  " + chr(10) + "　📊 " + " · ".join(seg) if seg else ""
                 st.markdown(f"{jr}`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
-                            f"{ca}{m['away']}{cx}{mark}{ou}{gm}")
+                            f"{ca}{m['away']}{cx}{mark}{ou}{od25}{gm}")
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)
         if not hh:
