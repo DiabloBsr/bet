@@ -120,37 +120,6 @@ def _alerts():
     return msgs
 
 
-def _render_match(st, m):
-    """Une rencontre terminée : ligne de score + cotes 1X2, puis O/U 2.5 et double
-    chance en sous-ligne. ✅ marque l'issue réellement sortie. Partagé par les
-    onglets « Toutes ligues » et « Face-à-face 2e choix »."""
-    jr = f"J{m['journee']} · " if m.get("journee") else ""
-    ch = f" `{m['oh']:g}`" if m.get("oh") else ""
-    ca = f" `{m['oa']:g}`" if m.get("oa") else ""
-    cx = f" · nul `{m['od']:g}`" if m.get("od") else ""
-    st.markdown(f"`{m['tag']}` · {jr}`{m['date']}` — {m['home']}{ch} "
-                f"**{m['sa']}-{m['sb']}** {m['away']}{ca}{cx}")
-    seg = []
-    over25 = m["tot"] >= 3
-    ou = []
-    if m.get("o_over25"):
-        ou.append(f"O2.5 `{m['o_over25']:g}`{'✅' if over25 else ''}")
-    if m.get("o_under25"):
-        ou.append(f"U2.5 `{m['o_under25']:g}`{'✅' if not over25 else ''}")
-    if ou:
-        seg.append(" / ".join(ou))
-    dc = []
-    if m.get("dc_1x"):
-        dc.append(f"1X `{m['dc_1x']:g}`{'✅' if m['sa'] >= m['sb'] else ''}")
-    if m.get("dc_x2"):
-        dc.append(f"X2 `{m['dc_x2']:g}`{'✅' if m['sb'] >= m['sa'] else ''}")
-    if m.get("dc_12"):
-        dc.append(f"12 `{m['dc_12']:g}`{'✅' if m['sa'] != m['sb'] else ''}")
-    if dc:
-        seg.append(" / ".join(dc))
-    st.caption("　" + " · ".join(seg) if seg else "　cotes indisponibles")
-
-
 def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
     """Composant historique réutilisable : 3 menus (H2H / équipe home / équipe away),
     du + récent au + ancien. Utilisable partout dans l'app sur les 9 ligues."""
@@ -169,9 +138,7 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
             st.caption(f"⏳ Historique indisponible (base occupée) : {type(exc).__name__}")
             return []
 
-    t1, t_all, t_ff2, t2, t3 = st.tabs([f"⚔️ Face-à-face", "🌍 Toutes ligues",
-                                        "🥈 Face-à-face 2e choix",
-                                        f"🏠 {home}", f"✈️ {away}"])
+    t1, t2, t3 = st.tabs([f"⚔️ Face-à-face", f"🏠 {home}", f"✈️ {away}"])
     with t1:
         h2h = _safe(_pth.head_to_head, engine, home, away, leagues)
         if not h2h:
@@ -204,50 +171,6 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
                     gm = f"  \n　⚽ {m['home']} : {dm}  ·  {m['away']} : {xm2}"
                 st.markdown(f"{jr}`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
                             f"{ca}{m['away']}{cx}{mark}{ou}{gm}")
-    with t_all:
-        # Même paire, mais SANS filtre de ligue : deux équipes peuvent se croiser en
-        # championnat ET en Champions/CDM, ces rencontres-là sont invisibles dans t1.
-        h2a = _safe(_pth.head_to_head, engine, home, away, None)
-        if not h2a:
-            st.caption("Aucun face-à-face direct en base, toutes ligues confondues.")
-        else:
-            from collections import Counter
-            par_lg = Counter(m.get("tag") or "?" for m in h2a)
-            rep = " · ".join(f"{t} {c}" for t, c in par_lg.most_common())
-            n_over = sum(1 for m in h2a if m["tot"] >= 3)
-            st.caption(f"{len(h2a)} confrontations sur {len(par_lg)} ligue(s) — {rep} · "
-                       f"Over 2.5 sorti {n_over}/{len(h2a)} ({100*n_over/len(h2a):.0f}%) · "
-                       f"total buts moyen {sum(m['tot'] for m in h2a)/len(h2a):.1f}")
-            st.caption("⚠️ Cotes O/U 2.5 reconstituées depuis « Total de buts » — Bet261 ne "
-                       "cote que la ligne 3.5. Marge du book conservée. ✅ = issue réalisée.")
-            for m in h2a[:50]:
-                _render_match(st, m)
-
-    with t_ff2:
-        # Vue « flux récent » : on ne part PAS de la paire choisie plus haut, mais des
-        # dernières rencontres jouées. Les 30 derniers matchs toutes ligues confondues
-        # ne couvrent en pratique que 2 ligues (celles qui viennent de jouer), d'où le
-        # sélecteur : « toutes » pour le flux brut, une ligue pour SES 30 derniers.
-        st.caption("Les 30 dernières rencontres terminées, de la plus récente à la plus "
-                   "ancienne — indépendant des deux équipes choisies ci-dessus.")
-        opts = ["Toutes les 9 ligues"] + list(LEAGUES)
-        pick = st.selectbox("Ligue", opts, index=0, key="ff2_lg")
-        lgs = None if pick == opts[0] else [LEAGUES[pick]]
-        rec = _safe(_pth.recent_matches, engine, lgs, 30)
-        if not rec:
-            st.caption("Aucune rencontre terminée en base pour ce périmètre.")
-        else:
-            from collections import Counter
-            par_lg = Counter(m.get("tag") or "?" for m in rec)
-            n_over = sum(1 for m in rec if m["tot"] >= 3)
-            st.caption(f"{len(rec)} rencontres — {' · '.join(f'{t} {c}' for t, c in par_lg.most_common())}"
-                       f" · Over 2.5 sorti {n_over}/{len(rec)} ({100*n_over/len(rec):.0f}%) · "
-                       f"total buts moyen {sum(m['tot'] for m in rec)/len(rec):.1f}")
-            st.caption("⚠️ Cotes O/U 2.5 reconstituées depuis « Total de buts » — Bet261 ne "
-                       "cote que la ligne 3.5. Marge du book conservée. ✅ = issue réalisée.")
-            for m in rec:
-                _render_match(st, m)
-
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)
         if not hh:
