@@ -175,6 +175,15 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
                 # O/U 2.5 reconstitué + double chance coté, sur leur propre sous-ligne :
                 # la ligne principale porte déjà 1X2 et O/U 3.5, tout y empiler la rendrait
                 # illisible. ✅ marque l'issue réellement sortie (over 2.5 = total >= 3).
+                # Ligne 1 : le marché « Total de buts » en entier, ✅ sur la ligne
+                # sortie — on voit d'un coup ce que le book pensait de CE score.
+                # Ligne 2 : O/U 2.5 reconstitué + double chance. Deux sous-lignes car
+                # tout empiler sur celle du score la rendait interminable.
+                lignes = []
+                tl = m.get("totals") or []
+                if tl:
+                    lignes.append("　📊 Total buts : " + " · ".join(
+                        f"{x['label']} `{x['odd']:g}`{'✅' if x['hit'] else ''}" for x in tl))
                 seg = []
                 over25 = m["tot"] >= 3
                 p25 = []
@@ -193,7 +202,9 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
                     pdc.append(f"12 `{m['dc_12']:g}`{'✅' if m['sa'] != m['sb'] else ''}")
                 if pdc:
                     seg.append("DC " + " / ".join(pdc))
-                od25 = "  " + chr(10) + "　📊 " + " · ".join(seg) if seg else ""
+                if seg:
+                    lignes.append("　📊 " + " · ".join(seg))
+                od25 = "".join("  " + chr(10) + l for l in lignes)
                 st.markdown(f"{jr}`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
                             f"{ca}{m['away']}{cx}{mark}{ou}{od25}{gm}")
     with t2:

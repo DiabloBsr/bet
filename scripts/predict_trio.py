@@ -732,6 +732,35 @@ def _goals(gj):
         (hm if g.get("team") == "Home" else am).append(int(mn))
     return sorted(hm), sorted(am)
 
+def _total_lines(mk, tot):
+    """Toutes les lignes cotées du marché « Total de buts », dans l'ordre, chacune
+    marquée si le total RÉELLEMENT sorti retombe dessus.
+
+    La dernière ligne est un « et plus » : le 6 vaut 6+, c'est ce qui rend la somme
+    des probas implicites cohérente (~1.12, la marge habituelle du book). Un match à
+    7 buts y retombe donc, et s'affiche « 6+ » et non « 7 » — il n'a jamais existé
+    de ligne exacte à 7.
+    """
+    tb = mk.get("Total de buts") if mk else None
+    if not isinstance(tb, dict):
+        return []
+    lignes = {}
+    for k, o in tb.items():
+        try:
+            n = int(str(k).strip().rstrip("+"))
+        except (TypeError, ValueError):
+            continue
+        cote = _odd_pos(o)
+        if cote is not None:
+            lignes[n] = cote
+    if not lignes:
+        return []
+    plafond = max(lignes)
+    sorti = plafond if tot >= plafond else tot
+    return [{"label": f"{n}+" if n == plafond else str(n),
+             "odd": lignes[n], "hit": n == sorti} for n in sorted(lignes)]
+
+
 def _match_rows(d) -> list:
     """DataFrame de rencontres terminées -> lignes prêtes pour l'UI. Partagé par
     head_to_head et recent_matches : une seule définition des cotes affichées."""
@@ -742,6 +771,8 @@ def _match_rows(d) -> list:
         ov, un = _ou35(mk)
         ov25, un25 = _ou25(mk)
         dc1x, dcx2, dc12 = _dc(mk)
+        tot_reel = int(r.sa + r.sb)
+        totals = _total_lines(mk, tot_reel)
         hm, am = _goals(r.gj)
         out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
                     "comp": r.c, "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]),
@@ -751,6 +782,7 @@ def _match_rows(d) -> list:
                     "o_over35": ov, "o_under35": un,
                     "o_over25": ov25, "o_under25": un25,
                     "dc_1x": dc1x, "dc_x2": dcx2, "dc_12": dc12,
+                    "totals": totals,
                     "home_min": hm, "away_min": am})
     return out
 
