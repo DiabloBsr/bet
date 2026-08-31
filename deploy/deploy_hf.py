@@ -5,7 +5,7 @@ de stabilité (plusieurs requêtes espacées — un seul 200 ne prouve rien, l'a
 conteneur peut encore répondre pendant le swap).
 
 Usage:
-    export HF_TOKEN=hf_xxx
+    export HF_TOKEN=hf_xxx          # ou HF_TOKEN=... dans le .env a la racine
     python deploy/deploy_hf.py                      # fichiers app par défaut
     python deploy/deploy_hf.py scripts/foo.py ...   # fichiers explicites
     python deploy/deploy_hf.py --no-verify          # déploie sans attendre
@@ -21,6 +21,17 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# Le token vit dans le .env (non versionne) comme le reste de la conf. Sans ca,
+# il faudrait le reexporter a la main dans chaque shell. Une variable deja
+# presente dans l'environnement reste prioritaire (cas CI).
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(ROOT / ".env")
+except ImportError:  # dotenv absent : on retombe sur l'environnement seul
+    pass
+
 SPACE = "olivioBsr/vfoot-trio"
 URL = "https://olivioBsr-vfoot-trio.hf.space/"
 DEFAULT_FILES = [
@@ -54,7 +65,7 @@ def main() -> int:
 
     token = os.environ.get("HF_TOKEN")
     if not token:
-        print("HF_TOKEN absent de l'environnement."); return 1
+        print("HF_TOKEN absent : le renseigner dans .env ou l'exporter."); return 1
 
     missing = [f for f in files if not (ROOT / f).exists()]
     if missing:

@@ -662,28 +662,69 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
     def _o(x):
         return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 1 else None
 
-    def _ou35(xm):
-        """Cotes INITIALES Over/Under 3.5 (marché « +/- »). On garde même une valeur ≤1
-        (under quasi-certain des matchs défensifs) pour TOUJOURS afficher les deux cotes.
-        Robuste : extra_markets NULL -> pandas NaN (float, truthy !) -> on retourne None."""
+    def _mk(xm):
+        """extra_markets -> dict, ou None. Robuste : la colonne est NULL en base pour
+        les vieux snapshots -> pandas NaN (un float, donc truthy !) -> None."""
         if isinstance(xm, str):
             try:
                 mk = json.loads(xm)
             except Exception:
-                return None, None
+                return None
         elif isinstance(xm, dict):
             mk = xm
         else:
-            return None, None                  # NaN / None / autre : pas de marché
-        if not isinstance(mk, dict):
-            return None, None
-        pm = mk.get("+/-")
+            return None                        # NaN / None / autre : pas de marché
+        return mk if isinstance(mk, dict) else None
+
+    def _v(x):
+        return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 0 else None
+
+    def _ou35(mk):
+        """Cotes INITIALES Over/Under 3.5 (marché « +/- »). On garde même une valeur ≤1
+        (under quasi-certain des matchs défensifs) pour TOUJOURS afficher les deux cotes."""
+        pm = mk.get("+/-") if mk else None
         if not isinstance(pm, dict):
             return None, None
-
-        def _v(x):
-            return round(float(x), 2) if isinstance(x, (int, float)) and x and x > 0 else None
         return _v(pm.get("> 3.5")), _v(pm.get("< 3.5"))
+
+    def _dc(mk):
+        """Double chance tel que coté par le book : 1X / X2 / 12."""
+        dc = mk.get("Double Chance") if mk else None
+        if not isinstance(dc, dict):
+            return None, None, None
+        return _v(dc.get("1X")), _v(dc.get("X2")), _v(dc.get("12"))
+
+    def _ou25(mk):
+        """Over/Under 2.5 RECONSTITUÉ. Bet261 ne cote que la ligne 3.5 sur « +/- » ;
+        le 2.5 n'existe nulle part dans le flux. On le rebâtit depuis « Total de buts »,
+        qui cote chaque total exact : under = 0/1/2, over = 3 et plus (le « 6 » est un
+        6+, donc le marché est complet). On somme les probas implicites SANS les
+        normaliser — la marge du book reste dedans, si bien que la cote obtenue est
+        celle qu'il afficherait, et non une cote « juste » gonflée par le dévig.
+        Renvoie (None, None) si la somme des probas sort d'une bande plausible :
+        marché tronqué ou cotes verrouillées, mieux vaut ne rien afficher.
+        """
+        tb = mk.get("Total de buts") if mk else None
+        if not isinstance(tb, dict):
+            return None, None
+        p_under = p_over = 0.0
+        for k, o in tb.items():
+            try:
+                n = int(str(k).strip().rstrip("+"))
+                cote = float(o)
+            except (TypeError, ValueError):
+                continue
+            if cote <= 0:
+                continue
+            if n <= 2:
+                p_under += 1.0 / cote
+            else:
+                p_over += 1.0 / cote
+        if p_under <= 0 or p_over <= 0:
+            return None, None
+        if not (1.0 <= p_under + p_over <= 1.6):   # marge normale ~12 % ; hors bande = marché cassé
+            return None, None
+        return round(1.0 / p_over, 2), round(1.0 / p_under, 2)
 
     def _goals(gj):
         """Minutes des buts, séparées équipe domicile / extérieur (ordre croissant)."""
@@ -708,13 +749,20 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
     out = []
     for r in d.itertuples():
         es = pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA)
-        ov, un = _ou35(r.xm)
+        mk = _mk(r.xm)
+        ov, un = _ou35(mk)
+        ov25, un25 = _ou25(mk)
+        dc1x, dcx2, dc12 = _dc(mk)
         hm, am = _goals(r.gj)
         out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
+                    "comp": r.c, "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]),
                     "journee": str(r.rd) if r.rd not in (None, "") else None,
                     "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb),
                     "oh": _o(r.oh), "od": _o(r.od), "oa": _o(r.oa),
-                    "o_over35": ov, "o_under35": un, "home_min": hm, "away_min": am})
+                    "o_over35": ov, "o_under35": un,
+                    "o_over25": ov25, "o_under25": un25,
+                    "dc_1x": dc1x, "dc_x2": dcx2, "dc_12": dc12,
+                    "home_min": hm, "away_min": am})
     return out
 
 

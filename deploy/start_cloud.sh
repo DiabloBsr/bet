@@ -5,27 +5,44 @@ set -u
 DB=/data/virtual_sports.db
 
 # ---- 1. seed de la base au premier démarrage ----
-# Ordre : (a) seed embarqué dans l'image (repo/HF Space), (b) release GitHub
-# privée si GH_TOKEN fourni, (c) sinon base vide (le scraper accumulera).
+# Ordre : (a) seed embarqué dans l'image (repo/HF Space), (b) release GitHub,
+# (c) sinon base vide (le scraper accumulera).
+#
+# DiabloBsr/bet est PUBLIC : l'asset de la release se télécharge sans jeton.
+# Cette branche était gatée sur `[ -n "$GH_TOKEN" ]` (le repo était privé à
+# l'époque) : un Space sans ce secret démarrait donc sur une base VIDE alors que
+# le fichier est librement accessible — historique et face-à-face vides le temps
+# que le scraper ré-accumule des semaines de données. On tente toujours, et le
+# jeton ne sert plus que de repli si le repo redevenait privé.
+_gh_curl() {                    # curl API GitHub, en-tête d'auth seulement si jeton
+  if [ -n "${GH_TOKEN:-}" ]; then
+    curl -s -H "Authorization: token ${GH_TOKEN}" "$@"
+  else
+    curl -s "$@"
+  fi
+}
+
 if [ ! -s "$DB" ]; then
   if [ -s /app/seed/virtual_sports_seed.db.gz ]; then
     echo "[start] seed embarqué -> installation…"
     gunzip -c /app/seed/virtual_sports_seed.db.gz > "$DB"
-  elif [ -n "${GH_TOKEN:-}" ]; then
-    echo "[start] téléchargement du seed (release GitHub)…"
-    ASSET_ID=$(curl -s -H "Authorization: token ${GH_TOKEN}" \
+  else
+    echo "[start] téléchargement du seed (release GitHub, jeton $([ -n "${GH_TOKEN:-}" ] && echo présent || echo absent))…"
+    ASSET_ID=$(_gh_curl \
       "https://api.github.com/repos/DiabloBsr/bet/releases/tags/seed-db" \
       | python -c "import json,sys; print(json.load(sys.stdin)['assets'][0]['id'])" || echo "")
     if [ -n "$ASSET_ID" ]; then
-      curl -sL -H "Authorization: token ${GH_TOKEN}" -H "Accept: application/octet-stream" \
+      _gh_curl -L -H "Accept: application/octet-stream" \
         "https://api.github.com/repos/DiabloBsr/bet/releases/assets/${ASSET_ID}" -o /tmp/seed.gz \
         && gunzip -c /tmp/seed.gz > "$DB" && rm -f /tmp/seed.gz
+    else
+      echo "[start] release seed-db introuvable (repo redevenu privé sans GH_TOKEN ?)"
     fi
   fi
   if [ -s "$DB" ]; then
     echo "[start] seed installé : $(du -h "$DB" | cut -f1)"
   else
-    echo "[start] AVERTISSEMENT : pas de seed (GH_TOKEN absent ?) -> base vide, le scraper accumule."
+    echo "[start] AVERTISSEMENT : pas de seed -> base vide, le scraper accumule."
   fi
 fi
 
