@@ -435,72 +435,33 @@ def main():
         except Exception:
             cd = ""
         st.success(f"Round {res['target']} Mada — {len(res['matches'])} matchs   {cd}")
-        st.caption("La précision est un cadran : score exact ~31%, 1X2 ~55%, O/U ~62%, "
-                   "Double Chance ~74%, bandes larges ~80%.")
         matches_all = res["matches"]
         HI = 0.32
         shown = [m for m in matches_all if (m.get("confidence") or 0) >= HI] if hi_only else matches_all
-        if hi_only:
-            st.caption(f"🎯 {len(shown)}/{len(matches_all)} matchs à haute confiance ce round "
-                       f"(Top-3 attendu ~36-39% vs 31% global).")
-            if not shown:
-                st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
+        if hi_only and not shown:
+            st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
 
+        # Vue pronostics seuls (demande user) : plus d'etalage probas/marches par
+        # match -- uniquement le pari conseille de chaque match, trie du plus sur
+        # au moins sur. Le detail complet reste dans les onglets du haut.
+        pronos = []
         for m in shown:
-            ph, pd_, pa = m["x12"]
-            conf = m.get("confidence") or 0
-            badge = "🟢 haute" if conf >= 0.32 else ("🟡 moyenne" if conf >= 0.29 else "🔴 faible")
-            # Vue simplifiee (demande user) : plus AUCUN score exact affiche.
-            # Les colonnes Top-1 calibre / Top-3 / V2-V5-Marche ne montraient que des
-            # scores exacts ("1-1", "2-1"...) : elles disparaissent entierement. Reste
-            # ce qui fonde la recommandation du round -- probas 1X2, Over 2.5,
-            # confiance, accord des trois moteurs -- puis le pari conseille.
-            # Colonne unique aussi : trois colonnes etaient illisibles sur mobile.
-            st.markdown(f"**{m['match']}**  \n`{m['cotes'][0]}/{m['cotes'][1]}/{m['cotes'][2]}`")
-            st.markdown(f"1 **{ph*100:.0f}%** · X {pd_*100:.0f}% · 2 **{pa*100:.0f}%**")
-            ov = m.get("over25_pct")
-            if ov is not None:
-                st.caption(f"⚽ Over 2.5 : **{ov}%**")
-            acc = m.get("accord", "?")
-            acc_b = "🟢" if acc.startswith("3/") else ("🟡" if acc.startswith("2/") else "🔴")
-            st.caption(f"confiance {badge} ({conf*100:.0f}% de masse Top-3) · "
-                       f"{acc_b} accord moteurs : {acc}")
             pick = _ptc.pick_for_confidence(m.get("board") or {}, want_conf)
             if pick:
                 pmk, ps, pp, po = pick
-                st.success(f"🎯 Recommandation : **{ps}** [{pmk}] — "
-                           f"{pp*100:.0f}% · cote {po:g}")
-            else:
-                st.warning("Aucun pari ne franchit le seuil de confiance sur ce match.")
-            # ---- TOUS LES MARCHÉS du match (probas dévigées calibrées) ----
-            board = m.get("board") or {}
-            if board:
-                with st.expander(f"📋 Tous les marchés — {m['match']} (✅ = pari probable ≥55%)"):
-                    # bandeau : LES paris les plus probables du match, tous marchés confondus
-                    best = sorted(((mkt, s, p, o) for mkt, rows in board.items()
-                                   if mkt not in SCORES_EXACTS
-                                   for s, p, o in rows if p >= 0.55),
-                                  key=lambda r: -r[2])[:6]
-                    if best:
-                        st.markdown("🎯 **Les plus probables du match** : " + " · ".join(
-                            f"**{s[:22]}** [{mkt}] {p*100:.0f}% ({o:g})" for mkt, s, p, o in best))
-                        st.divider()
-                    order = ["1X2", "Double Chance", "+/-", "Total de buts", "Multi-Buts", "G/NG",
-                             "Pair/Impair", "Total equipe domicile", "Total equipe extérieur",
-                             "G/NG equipe domicile", "G/NG equipe extérieur", "Mi-tps 1X2",
-                             "Mi-tps DC", "HT/FT", "Les deux équipes marquent / 1ère mi temps",
-                             "FTTS", "Minute du premier but", "1X2 & Total", "1X2 & G/NG"]
-                    for mkt in order:
-                        rows = board.get(mkt)
-                        if not rows:
-                            continue
-                        top = rows[:6] if len(rows) > 8 else rows
-                        st.markdown(f"**{mkt}** : " + " · ".join(
-                            f"{'✅ ' if p >= 0.55 else ''}{s} **{p*100:.0f}%** ({o:g})"
-                            for s, p, o in top))
-                    st.caption("Probas = cotes dévigées (calibrées <2pp, prouvé sur 32k matchs). "
-                               "Espérance de CHAQUE pari = −marge (~6% marchés simples, ~10-18% exotiques).")
-            st.divider()
+                pronos.append((pp, po, pmk, ps, m["match"]))
+        pronos.sort(key=lambda r: -r[0])
+        if pronos:
+            st.markdown("### 🎯 Mes pronostics du round — du plus sûr au moins sûr")
+            pp, po, pmk, ps, name = pronos[0]
+            st.success(f"⭐ **{name}** → **{ps}** [{pmk}] — {pp*100:.0f}% · cote {po:g}")
+            for pp, po, pmk, ps, name in pronos[1:]:
+                st.markdown(f"• **{name}** → **{ps}** [{pmk}] — {pp*100:.0f}% · cote {po:g}")
+            st.caption(f"{len(pronos)}/{len(shown)} matchs du round ont un pari conseillé. "
+                       "Proba = cote dévigée (la vraie). Aucun pari n'est +EV : "
+                       "le tri donne le plus sûr, pas un gain garanti.")
+        else:
+            st.warning("Aucun pari ne franchit le seuil sur ce round — attends le prochain.")
 
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
