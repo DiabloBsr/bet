@@ -441,27 +441,32 @@ def main():
         if hi_only and not shown:
             st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
 
-        # Vue pronostics seuls (demande user) : plus d'etalage probas/marches par
-        # match -- uniquement le pari conseille de chaque match, trie du plus sur
-        # au moins sur. Le detail complet reste dans les onglets du haut.
+        # Vue pronostics seuls (demande user) : la PREDICTION d'origine du trio --
+        # issue 1X2 + score exact Top-1 calibre -- une ligne par match, triee du
+        # plus sur au moins sur. Pas de pari de securite (Double Chance & co).
         pronos = []
         for m in shown:
-            pick = _ptc.pick_for_confidence(m.get("board") or {}, want_conf)
-            if pick:
-                pmk, ps, pp, po = pick
-                pronos.append((pp, po, pmk, ps, m["match"]))
-        pronos.sort(key=lambda r: -r[0])
+            ph, pd_, pa = m["x12"]
+            if ph >= pd_ and ph >= pa:
+                issue, pi = f"{m.get('team_a', '1')} gagne", ph
+            elif pa >= pd_:
+                issue, pi = f"{m.get('team_b', '2')} gagne", pa
+            else:
+                issue, pi = "Nul", pd_
+            t1 = m.get("top1_calibre")
+            sc = f" · score **{t1[0]}** ({t1[1]*100:.0f}%)" if t1 else ""
+            pronos.append((pi, m.get("confidence") or 0, m["match"], issue, sc))
+        pronos.sort(key=lambda r: (-r[0], -r[1]))
         if pronos:
-            st.markdown("### 🎯 Mes pronostics du round — du plus sûr au moins sûr")
-            pp, po, pmk, ps, name = pronos[0]
-            st.success(f"⭐ **{name}** → **{ps}** [{pmk}] — {pp*100:.0f}% · cote {po:g}")
-            for pp, po, pmk, ps, name in pronos[1:]:
-                st.markdown(f"• **{name}** → **{ps}** [{pmk}] — {pp*100:.0f}% · cote {po:g}")
-            st.caption(f"{len(pronos)}/{len(shown)} matchs du round ont un pari conseillé. "
-                       "Proba = cote dévigée (la vraie). Aucun pari n'est +EV : "
-                       "le tri donne le plus sûr, pas un gain garanti.")
+            st.markdown("### 🔮 Mes prédictions du round — de la plus sûre à la moins sûre")
+            pi, _, name, issue, sc = pronos[0]
+            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%){sc}")
+            for pi, _, name, issue, sc in pronos[1:]:
+                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%){sc}")
+            st.caption("Issue = 1X2 le plus probable (calibré) · score = Top-1 du consensus "
+                       "V2/V5/marché. Repères honnêtes : issue ~55% de réussite, score exact ~13%.")
         else:
-            st.warning("Aucun pari ne franchit le seuil sur ce round — attends le prochain.")
+            st.warning("Aucun match à prédire sur ce round.")
 
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
