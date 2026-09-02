@@ -444,49 +444,49 @@ def main():
         # Vue pronostics seuls (demande user) : QUI GAGNE, tout simplement --
         # une ligne par match, triee de la plus sure a la moins sure. Pas de
         # double chance ni d'over/under. + les grosses cotes value du round.
-        # Vue "tout debut du projet" (demande user) : le score exact predit
-        # (Top-1 calibre du consensus V2/V5/marche) + Top-3, avec les cotes 1X2
-        # du match -- une ligne par match, la plus concentree d'abord.
+        # Vue simple (demande user) : le vainqueur pronostique de chaque match
+        # du round, avec proba et cote -- rien d'autre.
         pronos = []
         for m in shown:
-            t1 = m.get("top1_calibre")
-            cs = m.get("consensus_top3") or []
-            if not t1 and not cs:
-                continue
-            sc, sp = t1 if t1 else cs[0]
-            top3 = " · ".join(s for s, _ in cs[:3])
             oh, od, oa = m["cotes"]
-            pronos.append((m.get("confidence") or 0, m["match"],
-                           f"{oh:g}/{od:g}/{oa:g}", sc, sp, top3))
+            ph, pd_, pa = m["x12"]
+            if ph >= pd_ and ph >= pa:
+                issue, pi, ci = m.get("team_a") or "1", ph, oh
+            elif pa >= pd_:
+                issue, pi, ci = m.get("team_b") or "2", pa, oa
+            else:
+                issue, pi, ci = "Nul", pd_, od
+            pronos.append((pi, m["match"], issue, ci))
         pronos.sort(key=lambda r: -r[0])
         if pronos:
-            st.markdown("### 🔮 Mes prédictions du round — score exact")
-            _, name, cotes, sc, sp, top3 = pronos[0]
-            st.success(f"⭐ **{name}** `{cotes}` → **{sc}** ({sp*100:.0f}%) — Top-3 : {top3}")
-            for _, name, cotes, sc, sp, top3 in pronos[1:]:
-                st.markdown(f"• **{name}** `{cotes}` → **{sc}** ({sp*100:.0f}%) — Top-3 : {top3}")
-            st.caption("Top-1 calibré du consensus V2/V5/marché, comme aux origines du projet. "
-                       "Repères réels : Top-1 ~13%, Top-3 ~31%.")
+            st.markdown("### 🔮 Mes pronostics du round")
+            pi, name, issue, ci = pronos[0]
+            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%) · cote **{ci:g}**")
+            for pi, name, issue, ci in pronos[1:]:
+                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%) · cote **{ci:g}**")
         else:
             st.warning("Aucun match à prédire sur ce round.")
 
-        # Grosses cotes value : UNIQUEMENT une victoire d'outsider a cote >=5 --
-        # et si le round n'en offre aucune, le bloc n'apparait pas du tout.
+        # Grosses cotes value (demande user) : SUGGEREES uniquement quand le
+        # moteur estime une victoire d'outsider payee au-dessus de sa proba
+        # (p x cote >= 1, cote >= 5) -- donc pas a chaque round -- et sans
+        # limite de nombre quand il y en a.
         gros = []
         for m in shown:
             oh, od, oa = m["cotes"]
             ph, pd_, pa = m["x12"]
-            sides = [(t, p, o) for t, p, o in ((m.get("team_a") or "1", ph, oh),
-                                               (m.get("team_b") or "2", pa, oa)) if o >= 5.0]
-            if sides:
-                team, p, o = max(sides, key=lambda x: x[1])
-                gros.append((p, o, team, m["match"]))
+            for team, p, o in ((m.get("team_a") or "1", ph, oh),
+                               (m.get("team_b") or "2", pa, oa)):
+                if o >= 5.0 and p * o >= 1.0:
+                    gros.append((p * o, p, o, team, m["match"]))
         gros.sort(key=lambda r: -r[0])
         if gros:
-            st.markdown("**🔦 Grosses cotes value — victoires surprises (2 max)**")
-            for p, o, team, name in gros[:2]:
-                st.markdown(f"• **{name}** → **{team} gagne** — cote **{o:g}** · {p*100:.0f}%")
-            st.caption("Victoires d'outsider (cote ≥5) les plus probables du round — mise petite.")
+            st.markdown("**🔦 Grosses cotes value repérées ce round**")
+            for v, p, o, team, name in gros:
+                st.markdown(f"• **{name}** → **{team} gagne** — cote **{o:g}** · "
+                            f"{p*100:.0f}% (value ×{v:.2f})")
+            st.caption("Affiché seulement quand la cote paie au-dessus de la proba estimée "
+                       "par le moteur (cote ≥5). Spéculatif — RNG calibré, mise petite.")
 
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
