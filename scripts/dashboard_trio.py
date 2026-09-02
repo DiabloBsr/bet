@@ -444,8 +444,8 @@ def main():
         # Vue pronostics seuls (demande user) : QUI GAGNE, tout simplement --
         # une ligne par match, triee de la plus sure a la moins sure. Pas de
         # double chance ni d'over/under. + les grosses cotes value du round.
-        # Vue simple (demande user) : le vainqueur pronostique de chaque match
-        # du round, avec proba et cote -- rien d'autre.
+        # Vue simple (demande user) : Top 3 du round AVEC score exact, puis le
+        # vainqueur pronostique des autres matchs, avec proba et cote.
         pronos = []
         for m in shown:
             oh, od, oa = m["cotes"]
@@ -456,15 +456,27 @@ def main():
                 issue, pi, ci = m.get("team_b") or "2", pa, oa
             else:
                 issue, pi, ci = "Nul", pd_, od
-            pronos.append((pi, m["match"], issue, ci))
-        pronos.sort(key=lambda r: -r[0])
-        if pronos:
-            st.markdown("### 🔮 Mes pronostics du round")
-            pi, name, issue, ci = pronos[0]
-            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%) · cote **{ci:g}**")
-            for pi, name, issue, ci in pronos[1:]:
-                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%) · cote **{ci:g}**")
-        else:
+            t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
+            pronos.append({"pi": pi, "name": m["match"], "issue": issue, "ci": ci,
+                           "conf": m.get("confidence") or 0, "t1": t1})
+        top3 = sorted(pronos, key=lambda r: -r["conf"])[:3]
+        top3_names = {r["name"] for r in top3}
+        if top3:
+            st.markdown("### 🏆 Top 3 du round — avec score exact")
+            for i, r in enumerate(top3, 1):
+                sc = (f" · score **{r['t1'][0]}** ({r['t1'][1]*100:.0f}%)"
+                      if r["t1"] and r["t1"][0] else "")
+                line = (f"**{i}. {r['name']}** → **{r['issue']}** ({r['pi']*100:.0f}%) "
+                        f"· cote **{r['ci']:g}**{sc}")
+                (st.success if i == 1 else st.markdown)(line)
+        reste = sorted((r for r in pronos if r["name"] not in top3_names),
+                       key=lambda r: -r["pi"])
+        if reste:
+            st.markdown("**Les autres matchs :**")
+            for r in reste:
+                st.markdown(f"• **{r['name']}** → **{r['issue']}** "
+                            f"({r['pi']*100:.0f}%) · cote **{r['ci']:g}**")
+        if not pronos:
             st.warning("Aucun match à prédire sur ce round.")
 
         # Grosses cotes value (demande user) : SUGGEREES uniquement quand le
