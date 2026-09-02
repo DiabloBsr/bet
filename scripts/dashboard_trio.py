@@ -446,42 +446,45 @@ def main():
         # double chance ni d'over/under. + les grosses cotes value du round.
         pronos = []
         for m in shown:
+            oh, od, oa = m["cotes"]
             ph, pd_, pa = m["x12"]
             if ph >= pd_ and ph >= pa:
-                issue, pi = m.get("team_a") or "1", ph
+                issue, pi, ci = m.get("team_a") or "1", ph, oh
             elif pa >= pd_:
-                issue, pi = m.get("team_b") or "2", pa
+                issue, pi, ci = m.get("team_b") or "2", pa, oa
             else:
-                issue, pi = "Nul", pd_
-            pronos.append((pi, m["match"], issue))
+                issue, pi, ci = "Nul", pd_, od
+            pronos.append((pi, m["match"], issue, ci))
         pronos.sort(key=lambda r: -r[0])
         if pronos:
             st.markdown("### 🔮 Mes prédictions du round — qui gagne")
-            pi, name, issue = pronos[0]
-            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%)")
-            for pi, name, issue in pronos[1:]:
-                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%)")
+            pi, name, issue, ci = pronos[0]
+            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%) · cote **{ci:g}**")
+            for pi, name, issue, ci in pronos[1:]:
+                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%) · cote **{ci:g}**")
             st.caption("Le vainqueur le plus probable de chaque match (probas calibrées), "
-                       "du plus sûr au moins sûr.")
+                       "du plus sûr au moins sûr, avec sa cote.")
         else:
             st.warning("Aucun match à prédire sur ce round.")
 
-        # Grosses cotes du round : la selection >=5 (sinon >=3) la plus probable
-        # de chaque match ; cotes cap (>=90) exclues (pire pari prouve, -57%).
+        # Grosses cotes du round (demande user) : uniquement une EQUIPE qui
+        # gagne a grosse cote (>=5, sinon >=3) -- pas de nul, pas d'over/under
+        # ni d'exotiques. Les 2 victoires surprises les plus probables.
         gros = []
         for m in shown:
-            sels = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
-                    for s, p, o in rows if o < 90.0]
-            cand = [x for x in sels if x[3] >= 5.0] or [x for x in sels if x[3] >= 3.0]
+            oh, od, oa = m["cotes"]
+            ph, pd_, pa = m["x12"]
+            sides = [(m.get("team_a") or "1", ph, oh), (m.get("team_b") or "2", pa, oa)]
+            cand = [x for x in sides if x[2] >= 5.0] or [x for x in sides if x[2] >= 3.0]
             if cand:
-                mkt, s, p, o = max(cand, key=lambda x: x[2])
-                gros.append((p, o, mkt, s, m["match"]))
+                team, p, o = max(cand, key=lambda x: x[1])
+                gros.append((p, o, team, m["match"]))
         gros.sort(key=lambda r: -r[0])
         if gros:
-            st.markdown("**🔦 Grosses cotes à tenter (2 max)**")
-            for p, o, mkt, s, name in gros[:2]:
-                st.markdown(f"• **{name}** → **{s}** [{mkt}] — cote **{o:g}** · {p*100:.1f}%")
-            st.caption("Les plus probables parmi les grosses cotes du round. "
+            st.markdown("**🔦 Grosses cotes à tenter — victoires surprises (2 max)**")
+            for p, o, team, name in gros[:2]:
+                st.markdown(f"• **{name}** → **{team} gagne** — cote **{o:g}** · {p*100:.0f}%")
+            st.caption("Les victoires d'outsider les plus probables du round. "
                        "Rare par nature — mise petite.")
 
 
