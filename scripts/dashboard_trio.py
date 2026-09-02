@@ -441,32 +441,48 @@ def main():
         if hi_only and not shown:
             st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
 
-        # Vue pronostics seuls (demande user) : la PREDICTION d'origine du trio --
-        # issue 1X2 + score exact Top-1 calibre -- une ligne par match, triee du
-        # plus sur au moins sur. Pas de pari de securite (Double Chance & co).
+        # Vue pronostics seuls (demande user) : QUI GAGNE, tout simplement --
+        # une ligne par match, triee de la plus sure a la moins sure. Pas de
+        # double chance ni d'over/under. + les grosses cotes value du round.
         pronos = []
         for m in shown:
             ph, pd_, pa = m["x12"]
             if ph >= pd_ and ph >= pa:
-                issue, pi = f"{m.get('team_a', '1')} gagne", ph
+                issue, pi = m.get("team_a") or "1", ph
             elif pa >= pd_:
-                issue, pi = f"{m.get('team_b', '2')} gagne", pa
+                issue, pi = m.get("team_b") or "2", pa
             else:
                 issue, pi = "Nul", pd_
-            t1 = m.get("top1_calibre")
-            sc = f" · score **{t1[0]}** ({t1[1]*100:.0f}%)" if t1 else ""
-            pronos.append((pi, m.get("confidence") or 0, m["match"], issue, sc))
-        pronos.sort(key=lambda r: (-r[0], -r[1]))
+            pronos.append((pi, m["match"], issue))
+        pronos.sort(key=lambda r: -r[0])
         if pronos:
-            st.markdown("### 🔮 Mes prédictions du round — de la plus sûre à la moins sûre")
-            pi, _, name, issue, sc = pronos[0]
-            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%){sc}")
-            for pi, _, name, issue, sc in pronos[1:]:
-                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%){sc}")
-            st.caption("Issue = 1X2 le plus probable (calibré) · score = Top-1 du consensus "
-                       "V2/V5/marché. Repères honnêtes : issue ~55% de réussite, score exact ~13%.")
+            st.markdown("### 🔮 Mes prédictions du round — qui gagne")
+            pi, name, issue = pronos[0]
+            st.success(f"⭐ **{name}** → **{issue}** ({pi*100:.0f}%)")
+            for pi, name, issue in pronos[1:]:
+                st.markdown(f"• **{name}** → **{issue}** ({pi*100:.0f}%)")
+            st.caption("Le vainqueur le plus probable de chaque match (probas calibrées), "
+                       "du plus sûr au moins sûr.")
         else:
             st.warning("Aucun match à prédire sur ce round.")
+
+        # Grosses cotes du round : la selection >=5 (sinon >=3) la plus probable
+        # de chaque match ; cotes cap (>=90) exclues (pire pari prouve, -57%).
+        gros = []
+        for m in shown:
+            sels = [(mkt, s, p, o) for mkt, rows in (m.get("board") or {}).items()
+                    for s, p, o in rows if o < 90.0]
+            cand = [x for x in sels if x[3] >= 5.0] or [x for x in sels if x[3] >= 3.0]
+            if cand:
+                mkt, s, p, o = max(cand, key=lambda x: x[2])
+                gros.append((p, o, mkt, s, m["match"]))
+        gros.sort(key=lambda r: -r[0])
+        if gros:
+            st.markdown("**🔦 Grosses cotes à tenter (2 max)**")
+            for p, o, mkt, s, name in gros[:2]:
+                st.markdown(f"• **{name}** → **{s}** [{mkt}] — cote **{o:g}** · {p*100:.1f}%")
+            st.caption("Les plus probables parmi les grosses cotes du round. "
+                       "Rare par nature — mise petite.")
 
 
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
