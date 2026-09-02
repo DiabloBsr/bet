@@ -459,6 +459,16 @@ def main():
             t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
             pronos.append({"pi": pi, "name": m["match"], "issue": issue, "ci": ci,
                            "conf": m.get("confidence") or 0, "t1": t1})
+        # Pari suggere (demande user) : pas le favori ecrase a petite cote --
+        # le vainqueur predit le PLUS PROBABLE parmi ceux payes a cote >= 2.0
+        # (repli 1.8) : cote elevee mais sure.
+        cand = ([r for r in pronos if r["issue"] != "Nul" and r["ci"] >= 2.0]
+                or [r for r in pronos if r["issue"] != "Nul" and r["ci"] >= 1.8])
+        if cand:
+            s = max(cand, key=lambda r: r["pi"])
+            st.markdown("### 🎯 Mon pari suggéré du round — cote élevée mais sûre")
+            st.success(f"**{s['name']}** → **{s['issue']} gagne** — "
+                       f"cote **{s['ci']:g}** · {s['pi']*100:.0f}%")
         top3 = sorted(pronos, key=lambda r: -r["conf"])[:3]
         top3_names = {r["name"] for r in top3}
         if top3:
@@ -466,9 +476,8 @@ def main():
             for i, r in enumerate(top3, 1):
                 sc = (f" · score **{r['t1'][0]}** ({r['t1'][1]*100:.0f}%)"
                       if r["t1"] and r["t1"][0] else "")
-                line = (f"**{i}. {r['name']}** → **{r['issue']}** ({r['pi']*100:.0f}%) "
-                        f"· cote **{r['ci']:g}**{sc}")
-                (st.success if i == 1 else st.markdown)(line)
+                st.markdown(f"**{i}. {r['name']}** → **{r['issue']}** ({r['pi']*100:.0f}%) "
+                            f"· cote **{r['ci']:g}**{sc}")
         reste = sorted((r for r in pronos if r["name"] not in top3_names),
                        key=lambda r: -r["pi"])
         if reste:
