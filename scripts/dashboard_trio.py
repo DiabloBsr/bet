@@ -491,6 +491,37 @@ def main():
         if not pronos:
             st.warning("Aucun match à prédire sur ce round.")
 
+        # Matchs pieges (demande user) : favori fragile, nul menacant, match
+        # chaotique ou moteurs en desaccord -- a eviter ; affiche quand il y en a.
+        pieges = []
+        for m in shown:
+            oh, od, oa = m["cotes"]
+            ph, pd_, pa = m["x12"]
+            inv = 1 / oh + 1 / od + 1 / oa
+            if oh <= oa:
+                fav, o_fav, p_fav, pm_fav = m.get("team_a") or "1", oh, ph, (1 / oh) / inv
+            else:
+                fav, o_fav, p_fav, pm_fav = m.get("team_b") or "2", oa, pa, (1 / oa) / inv
+            raisons = []
+            if o_fav <= 1.7 and p_fav < pm_fav - 0.05:
+                raisons.append(f"favori fragile ({pm_fav*100:.0f}% marché vs "
+                               f"{p_fav*100:.0f}% moteur)")
+            if pd_ >= 0.30 and o_fav <= 2.2:
+                raisons.append(f"nul menaçant ({pd_*100:.0f}%)")
+            conf = m.get("confidence") or 0
+            if 0 < conf < 0.28:
+                raisons.append(f"match chaotique (Top-3 {conf*100:.0f}%)")
+            if str(m.get("accord", "")).startswith("1/"):
+                raisons.append("moteurs en désaccord")
+            if raisons:
+                pieges.append((m["match"], fav, o_fav, " · ".join(raisons)))
+        if pieges:
+            st.markdown("**⚠️ Matchs pièges du round — à éviter**")
+            for name, fav, o_fav, why in pieges:
+                st.markdown(f"• **{name}** (favori {fav} à {o_fav:g}) — {why}")
+            st.caption("Piège = le favori paraît sûr mais le moteur voit un risque élevé "
+                       "de nul/surprise, ou le match est illisible.")
+
         # Grosses cotes value (demande user) : SUGGEREES uniquement quand le
         # moteur estime une victoire d'outsider payee au-dessus de sa proba
         # (p x cote >= 1, cote >= 5) -- donc pas a chaque round -- et sans
