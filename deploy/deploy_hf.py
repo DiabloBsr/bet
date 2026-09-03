@@ -45,6 +45,7 @@ DEFAULT_FILES = [
     # fichier, l'app en ligne afficherait des probas fausses hors anglaise.
     "config/score_calibration.json",
     "config/over25_calibration.json",
+    "config/totals_calibration.json",
 ]
 BUILD_WAIT = 240      # laisser le temps au rebuild Docker + boot
 PROBES = 5            # nb de requêtes de contrôle

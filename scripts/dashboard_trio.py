@@ -463,6 +463,66 @@ def main():
                            "pour l'ensemble des Over 2.5 à cote ≥2 — le tri marche. "
                            "Mais le ROI reste **−8%** : plus sûr ≠ gagnant, mise petite.")
 
+    # ---- 🥅 TOTAL DE BUTS — MON TOP 3 (analyse propre, ligues au choix) ----
+    with st.expander("🥅 Total de buts — mon top 3 le plus sûr (analyse propre)"):
+        import predict_trio as _pttg
+        engT = st.cache_resource(_engine)()
+        st.caption("Je prédis le NOMBRE EXACT de buts de chaque match à venir "
+                   "(Poisson sur la forme Bet261, cotes non utilisées) et je garde "
+                   "les matchs où je suis le plus sûr.")
+        t_lgs = st.multiselect("Ligues à analyser (vide = les 9)", list(LEAGUES),
+                               default=[], key="tg_lgs",
+                               help="Plus tu ouvres large, meilleur est le tri : "
+                                    "le top se détache d'autant mieux que le vivier est grand.")
+        tg1, tg2 = st.columns(2)
+        t_top = tg1.number_input("Combien de matchs", 1, 10, 3, 1, key="tg_top")
+        t_win = tg2.number_input("Fenêtre (minutes à venir)", 30, 720, 180, 30, key="tg_win")
+        tw1, tw2 = st.columns(2)
+        t_ws = tw1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
+                              key="tg_ws", placeholder="ex: 21:00")
+        t_we = tw2.text_input("À (HH:MM Mada)", value="", key="tg_we", placeholder="ex: 22:00")
+        if st.button("🥅 Prédire les totaux", key="tg_go", type="primary"):
+            sl, el = t_ws.strip(), t_we.strip()
+            valid = re.compile(r"^\d{1,2}:\d{2}$")
+            if (sl and not valid.match(sl)) or (el and not valid.match(el)) or (bool(sl) != bool(el)):
+                st.warning("Heures au format HH:MM, les deux ou aucune.")
+            else:
+                with _db("Analyse du total de buts de chaque match…"):
+                    st.session_state["tg_res"] = _pttg.totals_scan(
+                        engT, leagues=[LEAGUES[k] for k in t_lgs] or None,
+                        minutes=int(t_win),
+                        start_local=sl.zfill(5) if sl else None,
+                        end_local=el.zfill(5) if el else None,
+                        top=int(t_top))
+        t_res = st.session_state.get("tg_res")
+        if t_res is not None:
+            if not t_res:
+                st.info("Aucun match à venir analysable (élargis la fenêtre, ajoute des "
+                        "ligues, ou attends un round).")
+            else:
+                st.markdown(f"### 🎯 Mon top {len(t_res)} — total de buts")
+                for i, m in enumerate(t_res, 1):
+                    ligne = (f"**{i}. `[{m['tag']} {m['local']}]` {m['home']} vs {m['away']}** → "
+                             f"**{m['label']} but{'s' if m['total'] != 1 else ''}** "
+                             f"· cote **{m['odds']:g}** · ma proba **{m['p_mine_cal']*100:.0f}%**")
+                    (st.success if i == 1 else st.markdown)(ligne)
+                    alt = " · ".join(f"{t['total']} ({t['p']*100:.0f}%"
+                                     + (f", cote {t['odds']:g})" if t['odds'] else ")")
+                                     for t in m["top3"])
+                    st.caption(f"Mes 3 totaux les plus probables : {alt}")
+                    emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
+                    fa = " ".join(emo.get(c, "?") for c in (m.get("seq_a") or ""))
+                    fb = " ".join(emo.get(c, "?") for c in (m.get("seq_b") or ""))
+                    st.caption(f"Forme Bet261 — {m['home']} : {fa} · ~{m['lam_a']} buts "
+                               f"| {m['away']} : {fb} · ~{m['lam_b']} "
+                               f"→ **{m['attendus']} buts attendus** au total.")
+                    st.markdown("---")
+                st.caption("Mesuré sur 59 670 matchs (moitié TRAIN / moitié TEST chrono) : "
+                           "le haut de mon classement touche **28%** (pour 27% annoncé) "
+                           "contre **23,5%** pour l'ensemble des matchs — le tri apporte "
+                           "vraiment. Mais le marché « Total de buts » porte ~11% de marge : "
+                           "ROI ≈ −10%, donc mise petite.")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2

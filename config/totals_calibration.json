@@ -1,0 +1,36 @@
+{
+ "note": "total de buts : ma proba brute -> taux reel mesure (isotone), TRAIN chrono",
+ "n_train": 29835,
+ "bins": [
+  {
+   "lo": 0.0,
+   "hi": 0.21,
+   "real": 0.2352,
+   "n_train": 117
+  },
+  {
+   "lo": 0.21,
+   "hi": 0.24,
+   "real": 0.2352,
+   "n_train": 17262
+  },
+  {
+   "lo": 0.24,
+   "hi": 0.27,
+   "real": 0.238,
+   "n_train": 9830
+  },
+  {
+   "lo": 0.27,
+   "hi": 0.31,
+   "real": 0.2683,
+   "n_train": 1301
+  },
+  {
+   "lo": 0.31,
+   "hi": 1.01,
+   "real": 0.2717,
+   "n_train": 1325
+  }
+ ]
+}

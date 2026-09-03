@@ -1234,6 +1234,94 @@ def calib_over25(p_raw: float) -> float:
     return float(np.interp(float(p_raw), xs, ys))
 
 
+
+# Calibration MESUREE du TOTAL DE BUTS predit (analyse propre) -> taux reel.
+# Apprise sur la 1re moitie chronologique, table isotone, verifiee sur la 2e :
+# le brut annonce ~33-38 % la ou le reel fait ~27-29 %. Elle rabat ce biais.
+_TOT_CAL = []
+try:
+    _ptot = Path(__file__).resolve().parents[1] / "config" / "totals_calibration.json"
+    if _ptot.exists():
+        _bt = json.loads(_ptot.read_text(encoding="utf-8")).get("bins") or []
+        _TOT_CAL = sorted(((b["lo"] + b["hi"]) / 2.0, float(b["real"])) for b in _bt)
+except Exception:
+    _TOT_CAL = []
+
+
+def calib_totals(p_raw) -> float:
+    """Proba brute du total predit -> proba CALIBREE (taux reel mesure)."""
+    if not isinstance(p_raw, (int, float)) or p_raw != p_raw:
+        return 0.0
+    if not _TOT_CAL:
+        return float(p_raw)
+    return float(np.interp(float(p_raw), [x for x, _ in _TOT_CAL], [y for _, y in _TOT_CAL]))
+
+
+def totals_scan(engine, leagues=None, minutes: int = 180, start_local=None,
+                end_local=None, top: int = 3) -> list:
+    """TOTAL DE BUTS predit par l'analyse propre (Poisson sur la forme Bet261,
+    cotes NON utilisees), pour les matchs a venir des ligues choisies.
+
+    Renvoie les `top` matchs ou je suis le PLUS SUR de mon total, classes par
+    proba calibree decroissante. Mesure (split chrono, TEST jamais vu) : le haut
+    du classement touche ~28 % contre ~23.5 % pour l'ensemble — le tri apporte
+    vraiment, mais le marche « Total de buts » porte ~10.7 % de marge : aucun
+    de ces paris n'est gagnant sur la duree.
+    """
+    up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
+    out = []
+    if not len(up):
+        return out
+    for r in up.itertuples():
+        xm = r.xm
+        if isinstance(xm, str):
+            try:
+                mk = json.loads(xm)
+            except Exception:
+                continue
+        elif isinstance(xm, dict):
+            mk = xm
+        else:
+            continue                       # NaN (extra_markets NULL) / None
+        if not isinstance(mk, dict):
+            continue
+        tb = mk.get("Total de buts")
+        if not isinstance(tb, dict):
+            continue
+        jn = None
+        _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
+        if _d:
+            jn = int(_d[0])
+        try:
+            own = predict_own(engine, r.team_a, r.team_b, lg=r.c, journee=jn)
+        except Exception:
+            own = None
+        if not own or not own.get("totals"):
+            continue
+        dist = own["totals"]
+        k = max(range(len(dist)), key=lambda i: dist[i])
+        cote = _odd_pos(tb.get(str(k)))
+        if not cote:
+            continue                       # total predit non cote : rien a jouer
+        top3 = sorted(range(len(dist)), key=lambda i: -dist[i])[:3]
+        out.append({
+            "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]), "local": r.local, "es": r.es,
+            "home": r.team_a, "away": r.team_b, "journee": jn,
+            "total": k, "label": f"{k}+" if k >= 6 else str(k),
+            "odds": round(float(cote), 2),
+            "p_mine": round(float(dist[k]), 3),
+            "p_mine_cal": round(calib_totals(dist[k]), 3),
+            "top3": [{"total": f"{i}+" if i >= 6 else str(i),
+                      "p": round(float(dist[i]), 3),
+                      "odds": (round(float(_odd_pos(tb.get(str(i)))), 2)
+                               if _odd_pos(tb.get(str(i))) else None)} for i in top3],
+            "attendus": round(own["lam_a"] + own["lam_b"], 2),
+            "lam_a": own["lam_a"], "lam_b": own["lam_b"],
+            "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", "")})
+    out.sort(key=lambda x: -x["p_mine_cal"])   # le plus SUR d'abord
+    return out[:top]
+
+
 def over25_scan(engine, min_odds: float = 2.0, leagues=None, minutes: int = 180,
                 start_local=None, end_local=None, top: int = 40) -> list:
     """Matchs À VENIR dont l'OVER 2.5 se paie >= `min_odds`, classés par MA proba
@@ -1523,12 +1611,18 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60,
     flat = [(f"{i}-{j}", float(grid[i, j])) for i in range(K) for j in range(K)]
     flat.sort(key=lambda kv: -kv[1])
     p_o25 = float(sum(grid[i, j] for i in range(K) for j in range(K) if i + j >= 3))
+    # distribution des TOTAUX telle que Bet261 la cote : 0..5 exacts, "6" = 6 et plus
+    tot = [0.0] * 7
+    for i in range(K):
+        for j in range(K):
+            tot[min(i + j, 6)] += float(grid[i, j])
     return {"x12": [round(ph, 3), round(pd_, 3), round(pav, 3)],
             "top3": [(s, round(p, 3)) for s, p in flat[:3]],
             "lam_a": round(lam_a, 2), "lam_b": round(lam_b, 2),
             "n_a": len(ha), "n_b": len(hb), "seq_a": seq_a, "seq_b": seq_b,
             "journee": jn, "season_a": season_a, "season_b": season_b,
-            "p_over25": round(p_o25, 3)}
+            "p_over25": round(p_o25, 3),
+            "totals": [round(x, 4) for x in tot]}
 
 
 def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
