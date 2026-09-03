@@ -30,6 +30,7 @@ def _futur(minutes: int = 30) -> str:
 
 def _base(tmp_path: Path, cotes_totaux: dict | None = None, competition: str = LG) -> str:
     """2 équipes avec de l'historique + 1 match à venir portant « Total de buts »."""
+    tmp_path.mkdir(parents=True, exist_ok=True)
     db = tmp_path / "t.db"
     c = sqlite3.connect(db)
     c.executescript("""
@@ -121,10 +122,38 @@ def test_totals_scan_trie_du_plus_sur_au_moins_sur(tmp_path):
     assert ps == sorted(ps, reverse=True)
 
 
-def test_totals_scan_ignore_un_total_non_cote(tmp_path):
-    """Si le total que je prédis n'est pas coté, il n'y a rien à jouer : on saute."""
+def test_totals_scan_predit_meme_si_le_total_nest_pas_cote(tmp_path):
+    """Ma prédiction ne dépend PAS du book : un total non coté sort quand même,
+    simplement sans cote. Le marché ne décide pas quels matchs sont prédits."""
     eng = create_engine(_base(tmp_path, cotes_totaux={"5": 9.0, "6": 12.0}))
-    assert pt.totals_scan(eng) == []
+    res = pt.totals_scan(eng)
+    assert len(res) == 1, "le match doit être prédit malgré l'absence de cote"
+    assert res[0]["odds"] is None
+    assert 0 <= res[0]["total"] <= 6
+    assert 0.0 < res[0]["p_mine_cal"] < 1.0
+
+
+def test_totals_scan_predit_sans_aucun_marche_de_totaux(tmp_path):
+    """Aucun marché « Total de buts » du tout : la prédiction reste possible."""
+    eng = create_engine(_base(tmp_path, cotes_totaux={}))
+    res = pt.totals_scan(eng)
+    assert len(res) == 1 and res[0]["odds"] is None
+
+
+def test_les_cotes_ne_changent_ni_la_prediction_ni_le_classement(tmp_path):
+    """Preuve directe d'indépendance : on retourne complètement le marché
+    (cotes inversées, favori du book déplacé) — mon total prédit et ma
+    probabilité doivent être STRICTEMENT identiques."""
+    normal = {str(k): 5.0 for k in range(7)}
+    retourne = {"0": 1.2, "1": 1.3, "2": 40.0, "3": 35.0, "4": 30.0, "5": 25.0, "6": 20.0}
+    a = pt.totals_scan(create_engine(_base(tmp_path / "a", normal)))
+    b = pt.totals_scan(create_engine(_base(tmp_path / "b", retourne)))
+    assert len(a) == len(b) == 1
+    assert a[0]["total"] == b[0]["total"], "le total prédit a suivi les cotes !"
+    assert a[0]["p_mine"] == b[0]["p_mine"], "ma proba a suivi les cotes !"
+    assert a[0]["p_mine_cal"] == b[0]["p_mine_cal"]
+    assert [t["total"] for t in a[0]["top3"]] == [t["total"] for t in b[0]["top3"]]
+    assert a[0]["odds"] != b[0]["odds"], "seule la cote affichée doit différer"
 
 
 def test_totals_scan_survit_a_un_marche_pourri(tmp_path):

@@ -467,9 +467,10 @@ def main():
     with st.expander("🥅 Total de buts — mon top 3 le plus sûr (analyse propre)"):
         import predict_trio as _pttg
         engT = st.cache_resource(_engine)()
-        st.caption("Je prédis le NOMBRE EXACT de buts de chaque match à venir "
-                   "(Poisson sur la forme Bet261, cotes non utilisées) et je garde "
-                   "les matchs où je suis le plus sûr.")
+        st.caption("Je prédis le NOMBRE EXACT de buts de chaque match à venir à partir "
+                   "de la SEULE forme des équipes dans le virtuel Bet261 (Poisson sur "
+                   "attaque/défense). Les cotes n'entrent ni dans la prédiction ni dans "
+                   "le classement : elles sont affichées après coup, pour information.")
         t_lgs = st.multiselect("Ligues à analyser (vide = les 9)", list(LEAGUES),
                                default=[], key="tg_lgs",
                                help="Plus tu ouvres large, meilleur est le tri : "
@@ -502,9 +503,11 @@ def main():
             else:
                 st.markdown(f"### 🎯 Mon top {len(t_res)} — total de buts")
                 for i, m in enumerate(t_res, 1):
+                    _c = (f"· cote **{m['odds']:g}** " if m.get("odds")
+                          else "· _non coté par le book_ ")
                     ligne = (f"**{i}. `[{m['tag']} {m['local']}]` {m['home']} vs {m['away']}** → "
                              f"**{m['label']} but{'s' if m['total'] != 1 else ''}** "
-                             f"· cote **{m['odds']:g}** · ma proba **{m['p_mine_cal']*100:.0f}%**")
+                             f"{_c}· ma proba **{m['p_mine_cal']*100:.0f}%**")
                     (st.success if i == 1 else st.markdown)(ligne)
                     alt = " · ".join(f"{t['total']} ({t['p']*100:.0f}%"
                                      + (f", cote {t['odds']:g})" if t['odds'] else ")")

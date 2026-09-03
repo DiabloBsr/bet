@@ -1273,21 +1273,22 @@ def totals_scan(engine, leagues=None, minutes: int = 180, start_local=None,
     if not len(up):
         return out
     for r in up.itertuples():
+        # Les cotes ne servent JAMAIS a predire ni a classer : elles sont lues
+        # uniquement pour AFFICHER ce que le book paierait sur MON total. Un
+        # marche absent, illisible ou incomplet ne fait donc plus disparaitre
+        # le match -- il est predit quand meme, simplement sans cote.
         xm = r.xm
+        mk = None
         if isinstance(xm, str):
             try:
                 mk = json.loads(xm)
             except Exception:
-                continue
+                mk = None
         elif isinstance(xm, dict):
             mk = xm
-        else:
-            continue                       # NaN (extra_markets NULL) / None
-        if not isinstance(mk, dict):
-            continue
-        tb = mk.get("Total de buts")
+        tb = mk.get("Total de buts") if isinstance(mk, dict) else None
         if not isinstance(tb, dict):
-            continue
+            tb = None
         jn = None
         _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
         if _d:
@@ -1300,21 +1301,19 @@ def totals_scan(engine, leagues=None, minutes: int = 180, start_local=None,
             continue
         dist = own["totals"]
         k = max(range(len(dist)), key=lambda i: dist[i])
-        cote = _odd_pos(tb.get(str(k)))
-        if not cote:
-            continue                       # total predit non cote : rien a jouer
+        cote = _odd_pos(tb.get(str(k))) if tb else None
         top3 = sorted(range(len(dist)), key=lambda i: -dist[i])[:3]
         out.append({
             "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]), "local": r.local, "es": r.es,
             "home": r.team_a, "away": r.team_b, "journee": jn,
             "total": k, "label": f"{k}+" if k >= 6 else str(k),
-            "odds": round(float(cote), 2),
+            "odds": round(float(cote), 2) if cote else None,
             "p_mine": round(float(dist[k]), 3),
             "p_mine_cal": round(calib_totals(dist[k]), 3),
             "top3": [{"total": f"{i}+" if i >= 6 else str(i),
                       "p": round(float(dist[i]), 3),
                       "odds": (round(float(_odd_pos(tb.get(str(i)))), 2)
-                               if _odd_pos(tb.get(str(i))) else None)} for i in top3],
+                               if tb and _odd_pos(tb.get(str(i))) else None)} for i in top3],
             "attendus": round(own["lam_a"] + own["lam_b"], 2),
             "lam_a": own["lam_a"], "lam_b": own["lam_b"],
             "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", "")})
