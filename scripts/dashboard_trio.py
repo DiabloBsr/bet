@@ -266,6 +266,7 @@ def main():
             with _db("Chargement des rencontres…"):
                 _now = datetime.now(timezone.utc)
                 fx = pd.read_sql(f"""SELECT e.team_a,e.team_b,e.expected_start,
+                    e.round_info rd,
                     o.odds_home oh,o.odds_draw od,o.odds_away oa,o.extra_markets xm
                     FROM events e
                     JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots
@@ -279,10 +280,12 @@ def main():
                     fx = fx[fx.es > _now - pd.Timedelta(minutes=3)].sort_values("es").head(80)
                     for r in fx.itertuples():
                         loc = (r.es + pd.Timedelta(hours=3)).strftime("%H:%M")
+                        _rdd = re.findall(r"\d+", str(r.rd or ""))
                         rows.append({"label": f"{loc} — {r.team_a} v {r.team_b}",
                                      "team_a": r.team_a, "team_b": r.team_b,
                                      "oh": float(r.oh), "od": float(r.od),
-                                     "oa": float(r.oa), "xm": r.xm})
+                                     "oa": float(r.oa), "xm": r.xm,
+                                     "rd": int(_rdd[0]) if _rdd else None})
                 st.session_state["sp_fx"] = rows
                 st.session_state.pop("sp_res", None)
         fxs = st.session_state.get("sp_fx")
@@ -313,7 +316,8 @@ def main():
                                     _m = {"err": str(exc)}
                                 try:
                                     _m["own"] = _ptd.predict_own(
-                                        engD, f["team_a"], f["team_b"], lg=sp_comp)
+                                        engD, f["team_a"], f["team_b"], lg=sp_comp,
+                                        journee=f.get("rd"))
                                 except Exception:
                                     _m["own"] = None
                                 outs.append((f, _m))
@@ -345,6 +349,14 @@ def main():
                            f"| {f['team_b']} : {fb} · ~{own['lam_b']} "
                            f"({own['n_a']}/{own['n_b']} matchs virtuels, les récents pèsent plus). "
                            f"Cotes non utilisées.")
+                se_a, se_b = own.get("season_a"), own.get("season_b")
+                if se_a and se_b:
+                    st.caption(f"📅 Saison en cours (J{own['journee']}) — "
+                               f"{f['team_a']} : {se_a['v']}V {se_a['n']}N {se_a['d']}D, "
+                               f"{se_a['bp']}-{se_a['bc']} buts, {se_a['pts']} pts | "
+                               f"{f['team_b']} : {se_b['v']}V {se_b['n']}N {se_b['d']}D, "
+                               f"{se_b['bp']}-{se_b['bc']} buts, {se_b['pts']} pts — "
+                               f"fusionnée 50/50 dans le pronostic.")
             else:
                 st.warning("🧠 Pas assez d'historique en base pour une analyse propre de ce duo.")
             ph, pd_, pa = m["x12"]

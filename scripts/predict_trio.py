@@ -1359,10 +1359,13 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
             "accord": accord}
 
 
-def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60) -> dict | None:
+def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60,
+                journee=None) -> dict | None:
     """Analyse PROPRE, sans regarder les cotes : Poisson attaque/défense sur la
-    forme réelle des deux équipes (n derniers matchs de chacune dans la ligue).
-    Retour {x12, top3, lam_a, lam_b, n_a, n_b} ou None si historique insuffisant."""
+    forme Bet261 des deux équipes (n derniers matchs virtuels, récents pondérés).
+    Si `journee` est fournie (round_info du match à venir), la forme de la SAISON
+    en cours (les journee-1 derniers matchs = le cycle actuel) est calculée et
+    fusionnée 50/50 dans les taux de buts. Retour None si historique insuffisant."""
     def _hist(team):
         t = team.replace("'", "''")
         return pd.read_sql(f"""SELECT e.team_a ta, r.score_a sa, r.score_b sb
@@ -1384,6 +1387,29 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60) -> dict | Non
         return atk, dfc, seq
     atk_a, def_a, seq_a = _rates(ha, team_a)
     atk_b, def_b, seq_b = _rates(hb, team_b)
+    # forme de la SAISON en cours : chaque equipe joue 1 match/journee, donc le
+    # cycle actuel = les (journee-1) derniers matchs. Fusion 50/50 des taux.
+    season_a = season_b = None
+    try:
+        jn = int(journee) if journee is not None else None
+    except (TypeError, ValueError):
+        jn = None
+
+    def _rec(df, team, k):
+        d = df.head(k)
+        mine = np.where(d.ta == team, d.sa, d.sb).astype(int)
+        opp = np.where(d.ta == team, d.sb, d.sa).astype(int)
+        v = int((mine > opp).sum()); nl = int((mine == opp).sum())
+        return {"v": v, "n": nl, "d": int((mine < opp).sum()),
+                "bp": int(mine.sum()), "bc": int(opp.sum()),
+                "pts": 3 * v + nl, "k": len(d)}
+    if jn and jn >= 5:
+        k = min(jn - 1, len(ha), len(hb))
+        sa_atk, sa_def, _ = _rates(ha.head(k), team_a)
+        sb_atk, sb_def, _ = _rates(hb.head(k), team_b)
+        atk_a, def_a = (atk_a + sa_atk) / 2, (def_a + sa_def) / 2
+        atk_b, def_b = (atk_b + sb_atk) / 2, (def_b + sb_def) / 2
+        season_a, season_b = _rec(ha, team_a, k), _rec(hb, team_b, k)
     mu = max((atk_a + def_a + atk_b + def_b) / 4.0, 0.2)   # niveau moyen local
     lam_a = min(max(atk_a * def_b / mu, 0.15), 6.0)
     lam_b = min(max(atk_b * def_a / mu, 0.15), 6.0)
@@ -1401,7 +1427,8 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60) -> dict | Non
     return {"x12": [round(ph, 3), round(pd_, 3), round(pav, 3)],
             "top3": [(s, round(p, 3)) for s, p in flat[:3]],
             "lam_a": round(lam_a, 2), "lam_b": round(lam_b, 2),
-            "n_a": len(ha), "n_b": len(hb), "seq_a": seq_a, "seq_b": seq_b}
+            "n_a": len(ha), "n_b": len(hb), "seq_a": seq_a, "seq_b": seq_b,
+            "journee": jn, "season_a": season_a, "season_b": season_b}
 
 
 def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
