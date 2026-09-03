@@ -1376,9 +1376,14 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60) -> dict | Non
     def _rates(df, team):
         mine = np.where(df.ta == team, df.sa, df.sb).astype(float)
         opp = np.where(df.ta == team, df.sb, df.sa).astype(float)
-        return mine.mean(), opp.mean()
-    atk_a, def_a = _rates(ha, team_a)
-    atk_b, def_b = _rates(hb, team_b)
+        w = 0.5 ** (np.arange(len(mine)) / 20.0)   # forme : le recent pese plus (demi-vie 20)
+        atk = float((mine * w).sum() / w.sum())
+        dfc = float((opp * w).sum() / w.sum())
+        seq = "".join("V" if a > b else ("N" if a == b else "D")
+                      for a, b in zip(mine[:5], opp[:5]))
+        return atk, dfc, seq
+    atk_a, def_a, seq_a = _rates(ha, team_a)
+    atk_b, def_b, seq_b = _rates(hb, team_b)
     mu = max((atk_a + def_a + atk_b + def_b) / 4.0, 0.2)   # niveau moyen local
     lam_a = min(max(atk_a * def_b / mu, 0.15), 6.0)
     lam_b = min(max(atk_b * def_a / mu, 0.15), 6.0)
@@ -1396,7 +1401,7 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60) -> dict | Non
     return {"x12": [round(ph, 3), round(pd_, 3), round(pav, 3)],
             "top3": [(s, round(p, 3)) for s, p in flat[:3]],
             "lam_a": round(lam_a, 2), "lam_b": round(lam_b, 2),
-            "n_a": len(ha), "n_b": len(hb)}
+            "n_a": len(ha), "n_b": len(hb), "seq_a": seq_a, "seq_b": seq_b}
 
 
 def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:

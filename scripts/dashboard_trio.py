@@ -335,12 +335,16 @@ def main():
                 else:
                     o_issue, o_pi = "Nul", opd
                 o_top3 = " · ".join(f"{s} ({p*100:.0f}%)" for s, p in own["top3"])
-                st.success(f"🧠 Mon analyse : **{o_issue}"
+                st.success(f"🧠 Mon analyse (forme virtuel Bet261) : **{o_issue}"
                            f"{' gagne' if o_issue != 'Nul' else ''}** ({o_pi*100:.0f}%) "
                            f"· score **{own['top3'][0][0]}** — Top-3 : {o_top3}")
-                st.caption(f"Forme réelle : {f['team_a']} ~{own['lam_a']} buts attendus · "
-                           f"{f['team_b']} ~{own['lam_b']} "
-                           f"(sur {own['n_a']}/{own['n_b']} matchs). Cotes non utilisées.")
+                emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
+                fa = " ".join(emo.get(c, "?") for c in own.get("seq_a", ""))
+                fb = " ".join(emo.get(c, "?") for c in own.get("seq_b", ""))
+                st.caption(f"Forme Bet261 — {f['team_a']} : {fa} · ~{own['lam_a']} buts attendus "
+                           f"| {f['team_b']} : {fb} · ~{own['lam_b']} "
+                           f"({own['n_a']}/{own['n_b']} matchs virtuels, les récents pèsent plus). "
+                           f"Cotes non utilisées.")
             else:
                 st.warning("🧠 Pas assez d'historique en base pour une analyse propre de ce duo.")
             ph, pd_, pa = m["x12"]
