@@ -252,65 +252,106 @@ def main():
 
 
 
-    # ---- 🔦 DÉBUSQUEUR GROSSES CÔTES + HISTORIQUE ----
-    with st.expander("🔦 Débusqueur grosses cotes + historique (9 ligues)"):
+    # ---- 🔮 PRÉDIRE MES RENCONTRES (je choisis, il prédit — 9 ligues) ----
+    with st.expander("🔮 Prédire mes rencontres — je choisis, il prédit (9 ligues)"):
         import predict_trio as _ptd
         engD = st.cache_resource(_engine)()
-        st.caption("Trouve les matchs à venir avec une sélection à GROSSE COTE (n'importe quel marché), triés par chance réelle.")
-        db1, db2, db3 = st.columns([3, 2, 2])
+        st.caption("Choisis une ligue, charge les rencontres à venir, coche celles qui "
+                   "t'intéressent → vainqueur, score exact, piège et value éventuels.")
         _lgn = list(LEAGUES)
         _dfi = next((i for i, k in enumerate(_lgn) if LEAGUES[k] == "InstantLeague-8060"), 0)
-        db_lg = db1.selectbox("Ligue", _lgn, index=_dfi, key="db_lg")
-        db_comp = LEAGUES[db_lg]
-        db_lo = db2.number_input("Cote min", 2.0, 100.0, 8.0, 0.5, key="db_lo")
-        db_hi = db3.number_input("Cote max", 2.0, 200.0, 50.0, 1.0, key="db_hi")
-        db_mkts = st.multiselect("Marchés à scanner", _ptd.BIG_ODDS_MARKETS,
-                                 default=["1X2", "Total de buts", "+/-", "G/NG"], key="db_mkts")
-        dbt1, dbt2 = st.columns(2)
-        db_ws = dbt1.text_input("De (HH:MM Mada — vide = maintenant)", value="", key="db_ws", placeholder="ex: 21:00")
-        db_we = dbt2.text_input("À (HH:MM Mada)", value="", key="db_we", placeholder="ex: 22:00")
-        if st.button("🔦 Débusquer", key="db_go", type="primary"):
-            sl, el = db_ws.strip(), db_we.strip()
-            valid = re.compile(r"^\d{1,2}:\d{2}$")
-            if (sl and not valid.match(sl)) or (el and not valid.match(el)) or (bool(sl) != bool(el)):
-                st.warning("Heures au format HH:MM, les deux ou aucune.")
+        sp_lg = st.selectbox("Ligue", _lgn, index=_dfi, key="sp_lg")
+        sp_comp = LEAGUES[sp_lg]
+        if st.button("📥 Charger les rencontres à venir", key="sp_load"):
+            with _db("Chargement des rencontres…"):
+                _now = datetime.now(timezone.utc)
+                fx = pd.read_sql(f"""SELECT e.team_a,e.team_b,e.expected_start,
+                    o.odds_home oh,o.odds_draw od,o.odds_away oa,o.extra_markets xm
+                    FROM events e
+                    JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots
+                                                   WHERE event_id=e.id)
+                    LEFT JOIN results r ON r.event_id=e.id
+                    WHERE r.id IS NULL AND e.expected_start IS NOT NULL
+                      AND e.competition='{sp_comp}'""", engD)
+                rows = []
+                if len(fx):
+                    fx["es"] = pd.to_datetime(fx.expected_start, utc=True)
+                    fx = fx[fx.es > _now - pd.Timedelta(minutes=3)].sort_values("es").head(80)
+                    for r in fx.itertuples():
+                        loc = (r.es + pd.Timedelta(hours=3)).strftime("%H:%M")
+                        rows.append({"label": f"{loc} — {r.team_a} v {r.team_b}",
+                                     "team_a": r.team_a, "team_b": r.team_b,
+                                     "oh": float(r.oh), "od": float(r.od),
+                                     "oa": float(r.oa), "xm": r.xm})
+                st.session_state["sp_fx"] = rows
+                st.session_state.pop("sp_res", None)
+        fxs = st.session_state.get("sp_fx")
+        if fxs is not None:
+            if not fxs:
+                st.info("Aucune rencontre à venir captée pour cette ligue (attends un round).")
             else:
-                sl2 = sl.zfill(5) if sl else None
-                el2 = el.zfill(5) if el else None
-                with _db("Scan des grosses cotes + historiques…"):
-                    st.session_state["db_res"] = _ptd.big_odds_fixtures(
-                        engD, [db_comp], min_odds=float(db_lo), max_odds=float(db_hi),
-                        markets=db_mkts or None, start_local=sl2, end_local=el2,
-                        top=15, with_context=True, ctx_n=5)
-        res = st.session_state.get("db_res")
-        if res is not None:
-            if not res:
-                st.info("Aucune grosse cote dans ces critères (élargis la bande/les marchés ou attends un round).")
+                chos = st.multiselect(f"Tes rencontres ({len(fxs)} à venir)",
+                                      [f["label"] for f in fxs], key="sp_sel")
+                if st.button("🔮 Prédire ma sélection", key="sp_go", type="primary") and chos:
+                    _m5 = _v2 = None
+                    try:
+                        with st.spinner("Fit V5+V2 (1er appel ~60-90s, puis instantané)…"):
+                            _eng, _m5, _v2, _n = st.cache_resource(_fit)()
+                    except Exception as exc:
+                        st.error(f"Fit impossible : {exc}")
+                    if _m5 is not None:
+                        outs = []
+                        with _db("Prédiction de ta sélection…"):
+                            for f in fxs:
+                                if f["label"] not in chos:
+                                    continue
+                                try:
+                                    outs.append((f, _ptd.predict_one(
+                                        engD, _m5, _v2, f["team_a"], f["team_b"],
+                                        f["oh"], f["od"], f["oa"], f["xm"], lg=sp_comp)))
+                                except Exception as exc:
+                                    outs.append((f, {"err": str(exc)}))
+                        st.session_state["sp_res"] = outs
+        for f, m in st.session_state.get("sp_res") or []:
+            st.markdown(f"#### 🕐 {f['label']}  \n`{f['oh']:g}/{f['od']:g}/{f['oa']:g}`")
+            if m.get("err"):
+                st.warning(f"Prédiction impossible : {m['err']}")
+                continue
+            ph, pd_, pa = m["x12"]
+            if ph >= pd_ and ph >= pa:
+                issue, pi, ci = f["team_a"], ph, f["oh"]
+            elif pa >= pd_:
+                issue, pi, ci = f["team_b"], pa, f["oa"]
             else:
-                st.success(f"{len(res)} grosses cotes — forme des équipes + face-à-face à côté, la + probable d'abord :")
-
-                def _forme(hist):
-                    if not hist:
-                        return "_(pas d'historique)_"
-                    emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
-                    seq = " ".join(emo.get(m["res"], "?") for m in hist)
-                    sco = " · ".join(f"{m['gf']}-{m['ga']}" for m in hist)
-                    return f"{seq}  ({sco})"
-                for m in res:
-                    st.markdown(f"#### 🎲 {m['local']} · {m['home']} vs {m['away']}")
-                    st.markdown(f"**{m['sel']}** `[{m['market']}]` — cote **{m['odds']:g}** · "
-                                f"**{m['p']*100:.0f}%** de chance")
-                    st.markdown(f"　🏠 **{m['home']}** : {_forme(m.get('home_hist'))}")
-                    st.markdown(f"　✈️ **{m['away']}** : {_forme(m.get('away_hist'))}")
-                    if m.get("h2h_n"):
-                        rec = " · ".join(f"{x['sa']}-{x['sb']}" for x in m.get("h2h_recent", []))
-                        st.markdown(f"　⚔️ **Face-à-face** : {m['h2h_n']} matchs · "
-                                    f"{m['h2h_zeros']}× 0-0 ({100*m['h2h_zeros']/m['h2h_n']:.0f}%) · "
-                                    f"{m['h2h_avg']} buts/m · récents : {rec}")
-                    else:
-                        st.markdown("　⚔️ Face-à-face : aucun en base")
-                    st.markdown("---")
-                st.caption('🟢 victoire · ⚪ nul · 🔴 défaite (du + récent à gauche).')
+                issue, pi, ci = "Nul", pd_, f["od"]
+            cs = m.get("consensus_top3") or []
+            t1 = m.get("top1_calibre") or (cs[0] if cs else None)
+            sc = f" · score **{t1[0]}** ({t1[1]*100:.0f}%)" if t1 and t1[0] else ""
+            top3 = " · ".join(s for s, _ in cs[:3])
+            st.success(f"→ **{issue}{' gagne' if issue != 'Nul' else ''}** ({pi*100:.0f}%) · "
+                       f"cote **{ci:g}**{sc}" + (f" — Top-3 : {top3}" if top3 else ""))
+            # signaux piege + value : memes regles que la vue du round
+            raisons = []
+            inv = 1 / f["oh"] + 1 / f["od"] + 1 / f["oa"]
+            if f["oh"] <= f["oa"]:
+                o_fav, p_fav, pm_fav = f["oh"], ph, (1 / f["oh"]) / inv
+            else:
+                o_fav, p_fav, pm_fav = f["oa"], pa, (1 / f["oa"]) / inv
+            if o_fav <= 1.7 and p_fav < pm_fav - 0.05:
+                raisons.append("favori fragile")
+            if pd_ >= 0.30 and o_fav <= 2.2:
+                raisons.append(f"nul menaçant ({pd_*100:.0f}%)")
+            conf = m.get("confidence") or 0
+            if 0 < conf < 0.28:
+                raisons.append("match chaotique")
+            if str(m.get("accord", "")).startswith("1/"):
+                raisons.append("moteurs en désaccord")
+            if raisons:
+                st.warning("⚠️ Piège possible : " + " · ".join(raisons))
+            for team, p, o in ((f["team_a"], ph, f["oh"]), (f["team_b"], pa, f["oa"])):
+                if o >= 5.0 and p * o >= 1.0:
+                    st.info(f"🔦 Value repérée : **{team} gagne** — cote **{o:g}** · {p*100:.0f}%")
+            st.markdown("---")
 
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
