@@ -401,6 +401,9 @@ def main():
         engO = st.cache_resource(_engine)()
         st.caption("Matchs à venir dont l'Over 2.5 se paie au moins la cote choisie, "
                    "classés par MA probabilité (forme Bet261, cotes non utilisées).")
+        o_lgs = st.multiselect("Ligues à analyser (vide = les 9)", list(LEAGUES),
+                               default=[], key="o25_lgs",
+                               help="Choisis une ou plusieurs ligues ; vide = toutes.")
         o1, o2 = st.columns(2)
         o_min = o1.number_input("Cote Over 2.5 minimum", 1.5, 20.0, 2.0, 0.1, key="o25_min")
         o_top = o2.number_input("Nombre de matchs affichés", 1, 30, 8, 1, key="o25_top")
@@ -417,6 +420,7 @@ def main():
                 with _db("Analyse Over 2.5 de chaque match…"):
                     st.session_state["o25_res"] = _pto25.over25_scan(
                         engO, min_odds=float(o_min),
+                        leagues=[LEAGUES[k] for k in o_lgs] or None,
                         start_local=sl.zfill(5) if sl else None,
                         end_local=el.zfill(5) if el else None,
                         top=int(o_top))
@@ -426,7 +430,17 @@ def main():
                 st.info("Aucun match à venir avec un Over 2.5 à cette cote "
                         "(baisse la cote minimum ou attends un round).")
             else:
-                st.success(f"{len(o_res)} matchs — le plus sûr selon mon analyse d'abord :")
+                # MON pronostic : le plus sur de la selection, mis en avant.
+                b = o_res[0]
+                st.markdown("### 🎯 Mon pronostic Over 2.5 — le plus sûr")
+                st.success(f"**`[{b['tag']} {b['local']}]` {b['home']} vs {b['away']}** → "
+                           f"**Over 2.5** — cote **{b['odds_over25']:g}** · "
+                           f"ma proba **{b['p_mine_cal']*100:.0f}%**")
+                st.caption(f"{b['lam_a'] + b['lam_b']:.1f} buts attendus au total "
+                           f"({b['home']} ~{b['lam_a']} · {b['away']} ~{b['lam_b']}) — "
+                           f"le marché en implique {b['p_market']*100:.0f}%.")
+                st.markdown(f"**Le détail des {len(o_res)} matchs** (du plus sûr au moins sûr, "
+                            "avec la répartition de mise pour jouer l'Over 2.5) :")
                 for i, m in enumerate(o_res, 1):
                     st.markdown(f"#### {i}. `[{m['tag']} {m['local']}]` {m['home']} vs {m['away']}")
                     st.markdown(f"→ **Over 2.5** — cote **{m['odds_over25']:g}** · "

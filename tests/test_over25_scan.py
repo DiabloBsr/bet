@@ -156,3 +156,11 @@ def test_over25_scan_base_vide_ne_plante_pas(tmp_path):
     """)
     c.commit(); c.close()
     assert pt.over25_scan(create_engine(f"sqlite:///{db}"), min_odds=2.0) == []
+
+
+def test_over25_scan_filtre_par_ligue(tmp_path):
+    """Le choix de ligues doit être respecté : la bonne ligue sort, une autre non."""
+    eng = create_engine(_base_synthetique(tmp_path, 2.5))
+    assert len(pt.over25_scan(eng, min_odds=2.0, leagues=["InstantLeague-8035"])) == 1
+    assert pt.over25_scan(eng, min_odds=2.0, leagues=["InstantLeague-8060"]) == []
+    assert len(pt.over25_scan(eng, min_odds=2.0, leagues=None)) == 1, "None = toutes les ligues"
