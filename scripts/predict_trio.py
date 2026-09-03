@@ -10,7 +10,7 @@ N'utilise QUE des moteurs honnêtes (au plafond). PAS V6/V7/V8/V10 (faux edges r
 CLI : ./.venv/Scripts/python.exe scripts/predict_trio.py [HH:MM]  (heure Mada)
 """
 from __future__ import annotations
-import sys, json
+import sys, json, re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -689,7 +689,9 @@ def _ou25(mk):
     Renvoie (None, None) si la somme des probas sort d'une bande plausible :
     marché tronqué ou cotes verrouillées, mieux vaut ne rien afficher.
     """
-    tb = mk.get("Total de buts") if mk else None
+    if not isinstance(mk, dict):        # NaN (NULL SQL lu par pandas = float truthy),
+        return None, None               # str, int... : jamais de .get sur autre chose
+    tb = mk.get("Total de buts")
     if not isinstance(tb, dict):
         return None, None
     p_under = p_over = 0.0
@@ -828,6 +830,7 @@ def recent_matches(engine, leagues: list | None = None, n: int = 30) -> list:
 def _upcoming_df(engine, leagues=None, minutes=120, start_local=None, end_local=None):
     now = datetime.now(timezone.utc)
     up = pd.read_sql("""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        e.round_info rd,
         o.odds_home oh, o.odds_draw od, o.odds_away oa, o.extra_markets xm FROM events e
         JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots WHERE event_id=e.id)
         LEFT JOIN results r ON r.event_id=e.id
@@ -1205,6 +1208,101 @@ def _devig_btts(xm) -> float | None:
     return (1 / oui) / s if s > 0 else None
 
 
+
+
+# Calibration MESUREE de p_over25 (analyse propre) -> taux reel, population cote>=2.
+# Apprise sur la 1re moitie chronologique, verifiee sur la 2e (ecarts < 1pp) :
+# le brut est surconfiant (~50% annonce pour ~37% reel), la table corrige ce biais.
+_O25_CAL = []
+try:
+    _p25 = Path(__file__).resolve().parents[1] / "config" / "over25_calibration.json"
+    if _p25.exists():
+        _b = json.loads(_p25.read_text(encoding="utf-8")).get("bins") or []
+        _O25_CAL = sorted(((b["lo"] + b["hi"]) / 2.0, float(b["real"])) for b in _b)
+except Exception:
+    _O25_CAL = []
+
+
+def calib_over25(p_raw: float) -> float:
+    """p_over25 brute -> proba CALIBREE (taux reel mesure). Identite si table absente."""
+    if not isinstance(p_raw, (int, float)) or p_raw != p_raw:   # non numerique ou NaN
+        return 0.0
+    if not _O25_CAL:
+        return float(p_raw)
+    xs = [x for x, _ in _O25_CAL]
+    ys = [y for _, y in _O25_CAL]
+    return float(np.interp(float(p_raw), xs, ys))
+
+
+def over25_scan(engine, min_odds: float = 2.0, leagues=None, minutes: int = 180,
+                start_local=None, end_local=None, top: int = 40) -> list:
+    """Matchs À VENIR dont l'OVER 2.5 se paie >= `min_odds`, classés par MA proba
+    (analyse Poisson de la forme Bet261 : cotes NON utilisées) — le plus sûr d'abord.
+
+    Bet261 ne cote pas la ligne 2.5 (seul le 3.5 existe sur « +/- ») : elle est
+    RECONSTITUÉE depuis « Total de buts » (cellules 3,4,5,6 = plus de 2.5 buts),
+    marge du book incluse — c'est la cote qu'il afficherait. Le pari s'exécute
+    en misant ces 4 cellules au prorata de 1/cote : la répartition est donnée
+    dans `cells` (clé `part`, en % de la mise).
+    """
+    up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
+    out = []
+    if not len(up):
+        return out
+    for r in up.itertuples():
+        xm = r.xm
+        if isinstance(xm, str):
+            try:
+                mk = json.loads(xm)
+            except Exception:
+                continue
+        elif isinstance(xm, dict):
+            mk = xm
+        else:
+            continue                          # NaN (extra_markets NULL) / None
+        if not isinstance(mk, dict):
+            continue
+        o_over, o_under = _ou25(mk)
+        if not (isinstance(o_over, (int, float)) and float(o_over) >= float(min_odds)):
+            continue
+        jn = None
+        _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
+        if _d:
+            jn = int(_d[0])
+        try:
+            own = predict_own(engine, r.team_a, r.team_b, lg=r.c, journee=jn)
+        except Exception:
+            own = None
+        if not own or own.get("p_over25") is None:
+            continue
+        tb = mk.get("Total de buts")
+        cells = []
+        if isinstance(tb, dict):
+            for k in ("3", "4", "5", "6"):
+                o = _odd_pos(tb.get(k))
+                if o:
+                    cells.append({"total": k, "odds": round(float(o), 2)})
+        tot_inv = sum(1.0 / c["odds"] for c in cells)
+        for c in cells:
+            c["part"] = round(100.0 * (1.0 / c["odds"]) / tot_inv, 1) if tot_inv else None
+        p = float(own["p_over25"])
+        out.append({
+            "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]), "local": r.local, "es": r.es,
+            "home": r.team_a, "away": r.team_b, "journee": jn,
+            "odds_over25": round(float(o_over), 2),
+            "odds_under25": round(float(o_under), 2) if o_under else None,
+            "p_mine": round(p, 3),
+            "p_mine_cal": round(calib_over25(p), 3),
+            "p_market": round(1.0 / float(o_over), 3),
+            "edge": round(calib_over25(p) * float(o_over) - 1.0, 3),
+            "lam_a": own["lam_a"], "lam_b": own["lam_b"],
+            "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
+            "season_a": own.get("season_a"), "season_b": own.get("season_b"),
+            "cells": cells})
+    out.sort(key=lambda x: -x["p_mine_cal"])       # le plus SÛR d'abord (MA proba)
+    return out[:top]
+
+
 def special_scan(engine, leagues=None, minutes: int = 120, start_local: str | None = None,
                  end_local: str | None = None, n_recent: int = 200) -> list:
     """Scan des ligues CDM / ALL / POR — INDICATEUR D'AFFICHAGE, PAS une reco.
@@ -1424,11 +1522,13 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60,
     pav = float(np.triu(grid, 1).sum())
     flat = [(f"{i}-{j}", float(grid[i, j])) for i in range(K) for j in range(K)]
     flat.sort(key=lambda kv: -kv[1])
+    p_o25 = float(sum(grid[i, j] for i in range(K) for j in range(K) if i + j >= 3))
     return {"x12": [round(ph, 3), round(pd_, 3), round(pav, 3)],
             "top3": [(s, round(p, 3)) for s, p in flat[:3]],
             "lam_a": round(lam_a, 2), "lam_b": round(lam_b, 2),
             "n_a": len(ha), "n_b": len(hb), "seq_a": seq_a, "seq_b": seq_b,
-            "journee": jn, "season_a": season_a, "season_b": season_b}
+            "journee": jn, "season_a": season_a, "season_b": season_b,
+            "p_over25": round(p_o25, 3)}
 
 
 def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:

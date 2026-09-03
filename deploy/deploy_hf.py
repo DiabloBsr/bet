@@ -44,6 +44,7 @@ DEFAULT_FILES = [
     # le recopie au boot vers data/vfoot_ml/ (deployer data/ serait ecrase). Sans ce
     # fichier, l'app en ligne afficherait des probas fausses hors anglaise.
     "config/score_calibration.json",
+    "config/over25_calibration.json",
 ]
 BUILD_WAIT = 240      # laisser le temps au rebuild Docker + boot
 PROBES = 5            # nb de requêtes de contrôle

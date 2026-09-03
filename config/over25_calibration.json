@@ -1,0 +1,48 @@
+{
+ "note": "p_over25 brut -> taux reel mesure (isotone), population cote>=2, TRAIN chrono 1re moitie",
+ "n_train": 6277,
+ "bins": [
+  {
+   "lo": 0.0,
+   "hi": 0.2,
+   "real": 0.169,
+   "n_train": 1018
+  },
+  {
+   "lo": 0.2,
+   "hi": 0.28,
+   "real": 0.2473,
+   "n_train": 849
+  },
+  {
+   "lo": 0.28,
+   "hi": 0.34,
+   "real": 0.2986,
+   "n_train": 653
+  },
+  {
+   "lo": 0.34,
+   "hi": 0.4,
+   "real": 0.3614,
+   "n_train": 1340
+  },
+  {
+   "lo": 0.4,
+   "hi": 0.46,
+   "real": 0.3614,
+   "n_train": 1335
+  },
+  {
+   "lo": 0.46,
+   "hi": 0.55,
+   "real": 0.3614,
+   "n_train": 881
+  },
+  {
+   "lo": 0.55,
+   "hi": 1.01,
+   "real": 0.403,
+   "n_train": 201
+  }
+ ]
+}
