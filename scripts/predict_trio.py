@@ -1359,6 +1359,46 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
             "accord": accord}
 
 
+def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60) -> dict | None:
+    """Analyse PROPRE, sans regarder les cotes : Poisson attaque/défense sur la
+    forme réelle des deux équipes (n derniers matchs de chacune dans la ligue).
+    Retour {x12, top3, lam_a, lam_b, n_a, n_b} ou None si historique insuffisant."""
+    def _hist(team):
+        t = team.replace("'", "''")
+        return pd.read_sql(f"""SELECT e.team_a ta, r.score_a sa, r.score_b sb
+            FROM events e JOIN results r ON r.event_id=e.id
+            WHERE e.competition='{lg}' AND r.score_a IS NOT NULL
+              AND (e.team_a='{t}' OR e.team_b='{t}')
+            ORDER BY e.id DESC LIMIT {int(n)}""", engine)
+    ha, hb = _hist(team_a), _hist(team_b)
+    if len(ha) < 8 or len(hb) < 8:
+        return None
+    def _rates(df, team):
+        mine = np.where(df.ta == team, df.sa, df.sb).astype(float)
+        opp = np.where(df.ta == team, df.sb, df.sa).astype(float)
+        return mine.mean(), opp.mean()
+    atk_a, def_a = _rates(ha, team_a)
+    atk_b, def_b = _rates(hb, team_b)
+    mu = max((atk_a + def_a + atk_b + def_b) / 4.0, 0.2)   # niveau moyen local
+    lam_a = min(max(atk_a * def_b / mu, 0.15), 6.0)
+    lam_b = min(max(atk_b * def_a / mu, 0.15), 6.0)
+    from math import factorial
+    K = 9
+    pa_ = np.exp(-lam_a) * np.array([lam_a**k / factorial(k) for k in range(K)])
+    pb_ = np.exp(-lam_b) * np.array([lam_b**k / factorial(k) for k in range(K)])
+    grid = np.outer(pa_, pb_)
+    grid /= grid.sum()
+    ph = float(np.tril(grid, -1).sum())      # sa > sb
+    pd_ = float(np.trace(grid))
+    pav = float(np.triu(grid, 1).sum())
+    flat = [(f"{i}-{j}", float(grid[i, j])) for i in range(K) for j in range(K)]
+    flat.sort(key=lambda kv: -kv[1])
+    return {"x12": [round(ph, 3), round(pd_, 3), round(pav, 3)],
+            "top3": [(s, round(p, 3)) for s, p in flat[:3]],
+            "lam_a": round(lam_a, 2), "lam_b": round(lam_b, 2),
+            "n_a": len(ha), "n_b": len(hb)}
+
+
 def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
     now = datetime.now(timezone.utc)
     up = pd.read_sql(f"""SELECT e.team_a,e.team_b,e.expected_start,o.odds_home oh,o.odds_draw od,

@@ -306,17 +306,43 @@ def main():
                                 if f["label"] not in chos:
                                     continue
                                 try:
-                                    outs.append((f, _ptd.predict_one(
+                                    _m = _ptd.predict_one(
                                         engD, _m5, _v2, f["team_a"], f["team_b"],
-                                        f["oh"], f["od"], f["oa"], f["xm"], lg=sp_comp)))
+                                        f["oh"], f["od"], f["oa"], f["xm"], lg=sp_comp)
                                 except Exception as exc:
-                                    outs.append((f, {"err": str(exc)}))
+                                    _m = {"err": str(exc)}
+                                try:
+                                    _m["own"] = _ptd.predict_own(
+                                        engD, f["team_a"], f["team_b"], lg=sp_comp)
+                                except Exception:
+                                    _m["own"] = None
+                                outs.append((f, _m))
                         st.session_state["sp_res"] = outs
         for f, m in st.session_state.get("sp_res") or []:
             st.markdown(f"#### 🕐 {f['label']}  \n`{f['oh']:g}/{f['od']:g}/{f['oa']:g}`")
             if m.get("err"):
                 st.warning(f"Prédiction impossible : {m['err']}")
                 continue
+            # MON analyse d'abord (forme reelle, cotes non utilisees) ; le
+            # marche n'est plus qu'une ligne de comparaison en dessous.
+            own = m.get("own")
+            if own:
+                oph, opd, opa = own["x12"]
+                if oph >= opd and oph >= opa:
+                    o_issue, o_pi = f["team_a"], oph
+                elif opa >= opd:
+                    o_issue, o_pi = f["team_b"], opa
+                else:
+                    o_issue, o_pi = "Nul", opd
+                o_top3 = " · ".join(f"{s} ({p*100:.0f}%)" for s, p in own["top3"])
+                st.success(f"🧠 Mon analyse : **{o_issue}"
+                           f"{' gagne' if o_issue != 'Nul' else ''}** ({o_pi*100:.0f}%) "
+                           f"· score **{own['top3'][0][0]}** — Top-3 : {o_top3}")
+                st.caption(f"Forme réelle : {f['team_a']} ~{own['lam_a']} buts attendus · "
+                           f"{f['team_b']} ~{own['lam_b']} "
+                           f"(sur {own['n_a']}/{own['n_b']} matchs). Cotes non utilisées.")
+            else:
+                st.warning("🧠 Pas assez d'historique en base pour une analyse propre de ce duo.")
             ph, pd_, pa = m["x12"]
             if ph >= pd_ and ph >= pa:
                 issue, pi, ci = f["team_a"], ph, f["oh"]
@@ -326,10 +352,10 @@ def main():
                 issue, pi, ci = "Nul", pd_, f["od"]
             cs = m.get("consensus_top3") or []
             t1 = m.get("top1_calibre") or (cs[0] if cs else None)
-            sc = f" · score **{t1[0]}** ({t1[1]*100:.0f}%)" if t1 and t1[0] else ""
-            top3 = " · ".join(s for s, _ in cs[:3])
-            st.success(f"→ **{issue}{' gagne' if issue != 'Nul' else ''}** ({pi*100:.0f}%) · "
-                       f"cote **{ci:g}**{sc}" + (f" — Top-3 : {top3}" if top3 else ""))
+            sc = f" · score {t1[0]} ({t1[1]*100:.0f}%)" if t1 and t1[0] else ""
+            st.caption(f"📊 Le marché, lui, dit : {issue}"
+                       f"{' gagne' if issue != 'Nul' else ''} ({pi*100:.0f}%) "
+                       f"· cote {ci:g}{sc}")
             # signaux piege + value : memes regles que la vue du round
             raisons = []
             inv = 1 / f["oh"] + 1 / f["od"] + 1 / f["oa"]
