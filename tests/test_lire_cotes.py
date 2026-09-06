@@ -202,3 +202,29 @@ def test_round_sans_ocr_annonce_les_lignes_sans_inventer(monkeypatch):
     r = lc.lire_cotes(_octets(_round_complet()))
     assert r["lignes"] == [] and r["cotes"] == []
     assert "9 ligne" in r["message"], f"le compte des lignes doit être annoncé : {r['message']}"
+
+
+# ---------- le depot de fichier doit rester possible en ligne ----------
+
+def test_upload_actif_sur_le_space():
+    """BUG RÉEL : sur Hugging Face l'app tourne derrière un proxy. Avec la
+    protection XSRF de Streamlit active, le POST /_stcore/upload_file échoue et
+    le fichier déposé est marqué en rouge sans jamais atteindre le code —
+    l'onglet paraissait cassé alors que la lecture d'image fonctionnait.
+    Ce flag est donc vital : sans lui, le dépôt de capture est mort en ligne."""
+    start = (Path(__file__).resolve().parents[1] / "deploy" / "start_cloud.sh")
+    src = start.read_text(encoding="utf-8")
+    assert "--server.enableXsrfProtection false" in src, \
+        "sans ce flag, aucun fichier ne peut être déposé sur le Space"
+    assert "--server.maxUploadSize" in src, "taille d'upload à borner explicitement"
+
+
+def test_ocr_installe_dans_l_image_du_space():
+    """Le lecteur de cotes est inerte sans le binaire tesseract ET sans le pont
+    python : les deux doivent voyager avec le déploiement."""
+    racine = Path(__file__).resolve().parents[1]
+    assert "tesseract-ocr" in (racine / "Dockerfile").read_text(encoding="utf-8")
+    assert "pytesseract" in (racine / "requirements.txt").read_text(encoding="utf-8")
+    deploy = (racine / "deploy" / "deploy_hf.py").read_text(encoding="utf-8")
+    for f in ('"Dockerfile"', '"requirements.txt"', '"scripts/lire_cotes.py"'):
+        assert f in deploy, f"{f} doit être poussé, sinon le Space garde l'ancienne image"

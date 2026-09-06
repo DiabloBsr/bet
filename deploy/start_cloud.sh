@@ -83,6 +83,12 @@ else
 fi
 
 # ---- 6. app trio (avant-plan = process principal du conteneur) ----
+# XSRF DESACTIVE volontairement : sur Hugging Face l app tourne derriere un
+# proxy, et la requete du file_uploader (POST /_stcore/upload_file) echoue la
+# validation CSRF -> Streamlit marque le fichier en rouge et il n atteint
+# jamais le code. Sans ce flag, le depot de capture est mort en ligne.
+# Risque accepte : tableau de bord public, sans compte ni action mutante.
 exec streamlit run scripts/dashboard_trio.py \
   --server.headless true --server.port "${PORT:-8080}" --server.address 0.0.0.0 \
-  --browser.gatherUsageStats false
+  --browser.gatherUsageStats false --server.maxUploadSize 25 \
+  --server.enableXsrfProtection false --server.enableCORS false
