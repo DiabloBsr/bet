@@ -673,6 +673,22 @@ def main():
                     st.rerun()
             else:
                 st.warning(lu.get("message", "Aucune cote lue."))
+            # Diagnostic : ce que l'OCR a renvoye AVANT interpretation. Sans cette
+            # trace, une lecture fausse sur une vraie capture est impossible a
+            # comprendre a distance -- on ne verrait que le resultat, pas la cause.
+            # NB : surtout pas un st.expander ici — on est deja dans celui de
+            # l'onglet, et Streamlit interdit de les imbriquer (l'app planterait).
+            if lu.get("brut") and st.checkbox(
+                    "🔍 Voir le détail de lecture (à m'envoyer si les cotes sont fausses)",
+                    value=False, key="rc_diag"):
+                st.caption(f"{lu.get('boites', 0)} pavés verts repérés · "
+                           f"{len(lu['brut'])} ligne(s) de match.")
+                for b in lu["brut"]:
+                    lus = " | ".join(repr(t) for t in b["ocr"])
+                    interp = " / ".join("—" if v is None else f"{v:g}"
+                                        for v in b["interprete"])
+                    st.markdown(f"　**Ligne {b['ligne']}** — OCR brut : `{lus}`　"
+                                f"→ interprété : **{interp}**")
         rc1, rc2, rc3, rc4 = st.columns([1, 1, 1, 1])
         r_1 = rc1.number_input("Cote 1", 1.01, 200.0, 2.05, 0.01, key="rc_1", format="%.2f")
         r_x = rc2.number_input("Cote X", 1.01, 200.0, 3.22, 0.01, key="rc_x", format="%.2f")

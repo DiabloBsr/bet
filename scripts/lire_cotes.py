@@ -185,10 +185,14 @@ def lire_cotes(donnees: bytes) -> dict:
                     message=f"{len(lignes_bx)} ligne(s) de match repérée(s), mais l'OCR "
                             "n'est pas disponible sur ce serveur : saisis les cotes à la main.")
 
-    lignes, incompletes = [], 0
-    for l in lignes_bx:
-        cotes = [c for c in (_en_cote(_texte(img.crop(bx))) for bx in l["boites"])
-                 if c is not None]
+    lignes, incompletes, brut = [], 0, []
+    for i, l in enumerate(lignes_bx, 1):
+        lus = [_texte(img.crop(bx)) for bx in l["boites"]]
+        # Trace de ce que l'OCR a REELLEMENT renvoye, avant interpretation :
+        # sans elle, une lecture fausse est indiagnosticable a distance.
+        brut.append({"ligne": i, "ocr": lus,
+                     "interprete": [_en_cote(t) for t in lus]})
+        cotes = [c for c in (_en_cote(t) for t in lus) if c is not None]
         if len(cotes) != 3:
             # Ligne dont une cote manque ou reste illisible : sur une capture
             # Bet261 c'est typiquement le bouton panier qui recouvre la 3e cote
@@ -201,7 +205,7 @@ def lire_cotes(donnees: bytes) -> dict:
             equipes = _mots(img.crop(l["gauche"]))
         lignes.append({"cotes": cotes, "equipes": equipes})
     if not lignes:
-        return dict(vide, boites=boites, ocr_dispo=True,
+        return dict(vide, boites=boites, ocr_dispo=True, brut=brut,
                     message=f"{len(lignes_bx)} ligne(s) repérée(s) mais aucun chiffre "
                             "lisible — agrandis la capture ou saisis les cotes à la main.")
     msg = f"{len(lignes)} rencontre(s) lue(s)."
@@ -209,5 +213,5 @@ def lire_cotes(donnees: bytes) -> dict:
         msg += (f" {incompletes} ligne(s) ignorée(s) : une cote y est masquée "
                 "(souvent par le bouton panier) ou illisible.")
     return {"lignes": lignes, "cotes": lignes[0]["cotes"], "boites": boites,
-            "incompletes": incompletes, "ocr_dispo": True,
+            "incompletes": incompletes, "ocr_dispo": True, "brut": brut,
             "message": msg + " Vérifie les cotes avant de lancer la recherche."}
