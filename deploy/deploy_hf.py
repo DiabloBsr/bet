@@ -39,6 +39,11 @@ DEFAULT_FILES = [
     "scripts/dashboard_trio.py",
     "scripts/trap_detector.py",
     "scripts/market_ranges.py",
+    "scripts/lire_cotes.py",
+    # L OCR de l onglet a cette cote a besoin du binaire tesseract : sans le
+    # Dockerfile et les deps, le Space garde son image et la lecture est morte.
+    "Dockerfile",
+    "requirements.txt",
     "deploy/start_cloud.sh",
     # Les corrections par ligue. C'est bien config/ qu'il faut pousser : start_cloud.sh
     # le recopie au boot vers data/vfoot_ml/ (deployer data/ serait ecrase). Sans ce

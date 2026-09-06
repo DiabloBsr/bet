@@ -633,9 +633,35 @@ def main():
     with st.expander("💰 Qu'est-ce qui tombe à cette cote ? — relevé historique"):
         import predict_trio as _ptrc
         engR = st.cache_resource(_engine)()
-        st.caption("Saisis les trois cotes que tu vois sur Bet261 : je ressors toutes "
-                   "les rencontres passées qui portaient ces mêmes cotes, et ce qu'elles "
-                   "ont donné. C'est un relevé de faits, pas une prédiction.")
+        st.caption("Dépose la capture du match, ou saisis les trois cotes : je ressors "
+                   "toutes les rencontres passées qui portaient ces mêmes cotes, et ce "
+                   "qu'elles ont donné. C'est un relevé de faits, pas une prédiction.")
+        # Lecture d'une capture d'ecran : elle PRE-REMPLIT les trois champs, sans
+        # jamais lancer la recherche toute seule. Une lecture fausse doit rester
+        # visible et corrigeable -- jamais silencieuse.
+        img = st.file_uploader("📷 Ou dépose la capture d'écran du match "
+                               "(je lis les cotes dessus)",
+                               type=["png", "jpg", "jpeg", "webp"], key="rc_img")
+        if img is not None:
+            import lire_cotes as _lc
+            try:
+                lu = _lc.lire_cotes(img.getvalue())
+            except Exception as exc:
+                lu = {"cotes": [], "message": f"Lecture impossible : {type(exc).__name__}."}
+            st.image(img, caption="Capture déposée", width=380)
+            if lu.get("cotes"):
+                st.success("Cotes lues : " + " · ".join(f"**{c:g}**" for c in lu["cotes"])
+                           + "　—　" + lu["message"])
+                if len(lu["cotes"]) >= 3 and st.button("⬇️ Reprendre ces 3 cotes",
+                                                       key="rc_prendre"):
+                    for k, v in zip(("rc_1", "rc_x", "rc_2"), lu["cotes"][:3]):
+                        st.session_state[k] = float(v)
+                    st.rerun()
+                elif len(lu["cotes"]) < 3:
+                    st.caption("Moins de trois cotes lisibles : complète à la main "
+                               "ci-dessous.")
+            else:
+                st.warning(lu.get("message", "Aucune cote lue."))
         rc1, rc2, rc3, rc4 = st.columns([1, 1, 1, 1])
         r_1 = rc1.number_input("Cote 1", 1.01, 200.0, 2.05, 0.01, key="rc_1", format="%.2f")
         r_x = rc2.number_input("Cote X", 1.01, 200.0, 3.22, 0.01, key="rc_x", format="%.2f")

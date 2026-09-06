@@ -6,3 +6,6 @@ numpy>=1.26.0
 scipy>=1.11.0
 SQLAlchemy>=2.0.0
 python-dotenv>=1.0.0
+# Lecture des cotes sur une capture (onglet a cette cote).
+Pillow>=10.0.0
+pytesseract>=0.3.10
