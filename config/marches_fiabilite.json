@@ -1,0 +1,72 @@
+{
+ "1X2": {
+  "n": 59670,
+  "annonce": 0.5391,
+  "reel": 0.5039,
+  "top10_annonce": 0.7813,
+  "top10_reel": 0.7006
+ },
+ "Double Chance": {
+  "n": 59670,
+  "annonce": 0.7999,
+  "reel": 0.7808,
+  "top10_annonce": 0.9352,
+  "top10_reel": 0.8835
+ },
+ "G/NG": {
+  "n": 59670,
+  "annonce": 0.585,
+  "reel": 0.5881,
+  "top10_annonce": 0.7794,
+  "top10_reel": 0.7775
+ },
+ "Total de buts": {
+  "n": 59670,
+  "annonce": 0.2459,
+  "reel": 0.237,
+  "top10_annonce": 0.3262,
+  "top10_reel": 0.2693
+ },
+ "+/-": {
+  "n": 59670,
+  "annonce": 0.7067,
+  "reel": 0.6818,
+  "top10_annonce": 0.9241,
+  "top10_reel": 0.8982
+ },
+ "Multi-Buts": {
+  "n": 59670,
+  "annonce": 0.6525,
+  "reel": 0.6553,
+  "top10_annonce": 0.7959,
+  "top10_reel": 0.7585
+ },
+ "Pair/Impair": {
+  "n": 59670,
+  "annonce": 0.5232,
+  "reel": 0.5112,
+  "top10_annonce": 0.545,
+  "top10_reel": 0.5255
+ },
+ "Score exact": {
+  "n": 59670,
+  "annonce": 0.1319,
+  "reel": 0.1163,
+  "top10_annonce": 0.2478,
+  "top10_reel": 0.2207
+ },
+ "Minute du premier but": {
+  "n": 59670,
+  "annonce": 0.3121,
+  "reel": 0.3104,
+  "top10_annonce": 0.3393,
+  "top10_reel": 0.3409
+ },
+ "FTTS": {
+  "n": 59670,
+  "annonce": 0.5799,
+  "reel": 0.5716,
+  "top10_annonce": 0.7607,
+  "top10_reel": 0.7274
+ }
+}

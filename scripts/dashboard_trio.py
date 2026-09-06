@@ -556,6 +556,79 @@ def main():
                            "vraiment. Mais le marché « Total de buts » porte ~11% de marge : "
                            "ROI ≈ −10%, donc mise petite.")
 
+    # ---- 🧭 QUE JOUER ? — conseil tous marchés sur une rencontre choisie ----
+    with st.expander("🧭 Que jouer sur ce match ? — mon conseil, tous marchés"):
+        import predict_trio as _ptc2
+        engC = st.cache_resource(_engine)()
+        st.caption("Choisis une rencontre : j'analyse TOUS les marchés (vainqueur, "
+                   "total de buts, over/under, les deux marquent, multi-buts, score "
+                   "exact, minute du 1er but, 1re équipe à marquer) et je te dis quoi "
+                   "jouer. Prédiction issue de la seule forme des équipes.")
+        c_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[], key="cs_lgs")
+        cc1, cc2 = st.columns([1, 2])
+        c_h = cc1.text_input("Heure (HH:MM Mada) — vide = toutes", value="",
+                             key="cs_h", placeholder="ex: 21:03")
+        if cc2.button("📥 Charger les rencontres", key="cs_load"):
+            hh = c_h.strip()
+            if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
+                st.warning("Heure au format HH:MM (ex: 21:03).")
+            else:
+                with _db("Recherche des rencontres à venir…"):
+                    st.session_state["cs_fx"] = _ptc2.rencontres(
+                        engC, leagues=[LEAGUES[k] for k in c_lgs] or None,
+                        minutes=240, heure=hh or None)
+                st.session_state.pop("cs_res", None)
+        fx = st.session_state.get("cs_fx")
+        if fx is not None:
+            if not fx:
+                st.info("Aucune rencontre à venir sur ces critères — élargis les ligues, "
+                        "vide l'heure, ou attends le prochain round.")
+            else:
+                choix = st.selectbox(f"Rencontre ({len(fx)} à venir)",
+                                     [f["label"] for f in fx], key="cs_sel")
+                if st.button("🧭 Que dois-je jouer ?", key="cs_go", type="primary"):
+                    r = next((x for x in fx if x["label"] == choix), None)
+                    if r:
+                        with _db("Analyse de tous les marchés…"):
+                            st.session_state["cs_res"] = _ptc2.conseil(engC, r)
+        res_c = st.session_state.get("cs_res")
+        if res_c is not None:
+            if res_c.get("erreur"):
+                st.warning(res_c["erreur"])
+            else:
+                st.markdown(f"### 🧭 `[{res_c['tag']} {res_c['local']}]` "
+                            f"{res_c['home']} vs {res_c['away']}")
+                s_ = res_c.get("sur")
+                if s_:
+                    cot = f" · cote **{s_['odds']:g}**" if s_.get("odds") else                           " · _non coté par le book_"
+                    st.success(f"**À jouer : « {s_['sel']} »**　_[{s_['marche']}]_"
+                               f"{cot} · ma proba **{s_['p']*100:.0f}%**")
+                emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
+                fa = " ".join(emo.get(x, "?") for x in (res_c.get("seq_a") or ""))
+                fb = " ".join(emo.get(x, "?") for x in (res_c.get("seq_b") or ""))
+                jr = f"J{res_c['journee']} · " if res_c.get("journee") else ""
+                st.caption(f"{jr}**{res_c['attendus']} buts attendus** — "
+                           f"{res_c['home']} : {fa} ~{res_c['lam_a']} · "
+                           f"{res_c['away']} : {fb} ~{res_c['lam_b']}.")
+                st.markdown("**Tous les marchés, du plus sûr au moins sûr :**")
+                for l in res_c["lignes"]:
+                    cot = f"cote **{l['odds']:g}**" if l.get("odds") else "_non coté_"
+                    st.markdown(f"　• _{l['marche']}_ → **{l['sel']}** — "
+                                f"**{l['p']*100:.0f}%** · {cot}")
+                    alt = " · ".join(f"{t['sel']} {t['p']*100:.0f}%"
+                                     + (f" ({t['odds']:g})" if t.get("odds") else "")
+                                     for t in l["top3"][1:])
+                    if alt:
+                        st.caption(f"　　sinon : {alt}")
+                st.caption("Probas calibrées marché par marché sur 59 670 matchs "
+                           "(moitié TRAIN / moitié TEST chronologique). Mon conseil "
+                           "tient : annoncé 79,7% → **touché 80,1%** sur 29 835 matchs "
+                           "jamais vus. Mais le book price tout : ROI ≈ **−7%**. "
+                           "Le pari le plus sûr n'est pas un pari gagnant — mise petite. "
+                           "La règle « proba × cote » a été testée et écartée : elle "
+                           "affiche un gain apparent > 1 quatre fois sur cinq sans "
+                           "améliorer le ROI.")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2

@@ -47,6 +47,8 @@ DEFAULT_FILES = [
     "config/over25_calibration.json",
     "config/totals_calibration.json",
     "config/ou25_calibration.json",
+    "config/marches_calibration.json",
+    "config/minute_table.json",
 ]
 BUILD_WAIT = 240      # laisser le temps au rebuild Docker + boot
 PROBES = 5            # nb de requêtes de contrôle

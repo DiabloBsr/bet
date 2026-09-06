@@ -23,6 +23,7 @@ from scraper.predictor_v5 import fit_model_v5, predict_match_v5
 from scraper.market_inversion import exact_invert_1x2, apply_sim_deviations
 
 MADA = timezone(timedelta(hours=3))
+K_GRID = 9   # taille de la grille Poisson (partagee predict_own / marches_probas)
 LG = "InstantLeague-8035"
 
 _CALIB_BY_LG: dict = {}      # ligue -> matrice 7x7
@@ -1342,6 +1343,198 @@ try:
         _OU25_CAL = sorted(((b["lo"] + b["hi"]) / 2.0, float(b["real"])) for b in _bo)
 except Exception:
     _OU25_CAL = []
+
+
+
+# ---------------------------------------------------------------------------
+# TOUS LES MARCHES depuis MES deux lambdas (aucune cote en entree).
+# Une seule implementation, partagee par le backtest ET le dashboard : c'est ce
+# qui garantit que le taux mesure decrit bien ce qui est affiche.
+MINUTE_BUCKETS = (("1-15", 0, 15), ("16-30", 15, 30), ("31-45", 30, 45),
+                  ("46-60", 45, 60), ("61-75", 60, 75), ("76-90", 75, 90))
+
+# Minute du 1er but : le modele exponentiel (intensite constante) est FAUX sur ce
+# moteur -- mesure sur 207 861 matchs : il annoncait 36 % sur « 1-15 » quand le
+# reel fait 20 %, et ratait le vrai pic (« 16-30 », 30 %). Le jeu a une periode de
+# chauffe. On utilise donc la distribution EMPIRIQUE par bande de buts attendus,
+# apprise sur la 1re moitie chronologique et stable a 1.5pp sur la seconde.
+_MIN_TABLE = []
+try:
+    _pmt = Path(__file__).resolve().parents[1] / "config" / "minute_table.json"
+    if _pmt.exists():
+        _MIN_TABLE = json.loads(_pmt.read_text(encoding="utf-8")).get("bandes") or []
+except Exception:
+    _MIN_TABLE = []
+
+
+def _minute_dist(lam: float):
+    """Distribution empirique du 1er but pour ce niveau de buts attendus.
+    Renvoie None si la table est absente (repli sur l'exponentiel)."""
+    for b in _MIN_TABLE:
+        if float(b["lo"]) <= lam < float(b["hi"]):
+            return b
+    return _MIN_TABLE[-1] if _MIN_TABLE else None
+
+
+def marches_probas(lam_a: float, lam_b: float) -> dict:
+    """Probabilites de CHAQUE marche Bet261, derivees de mes buts attendus.
+
+    Grille Poisson tronquee a K_GRID puis renormalisee (identique a predict_own).
+    Les minutes viennent du meme modele lu comme un processus de Poisson
+    d'intensite constante sur 90 minutes : P(1er but apres t) = exp(-lam*t/90).
+    """
+    from math import exp, factorial
+    la, lb = float(lam_a), float(lam_b)
+    pa = np.exp(-la) * np.array([la ** k / factorial(k) for k in range(K_GRID)])
+    pb = np.exp(-lb) * np.array([lb ** k / factorial(k) for k in range(K_GRID)])
+    g = np.outer(pa, pb)
+    g /= g.sum()
+    idx = np.add.outer(np.arange(K_GRID), np.arange(K_GRID))
+    tot = np.array([g[idx == k].sum() if k < 6 else g[idx >= 6].sum() for k in range(7)])
+    ph = float(np.tril(g, -1).sum()); pn = float(np.trace(g)); pv = float(np.triu(g, 1).sum())
+    p_h0 = float(g[0, :].sum()); p_a0 = float(g[:, 0].sum()); p_00 = float(g[0, 0])
+    btts = 1.0 - p_h0 - p_a0 + p_00
+    lam = max(la + lb, 1e-9)
+    bande = _minute_dist(lam)
+    if bande:
+        dist_min = [(lib, float(bande["dist"].get(lib, 0.0)))
+                    for lib, _, _ in MINUTE_BUCKETS]
+        p_rien = float(bande["dist"].get("Pas de but", exp(-lam)))
+    else:                                   # table absente : repli exponentiel
+        dist_min = [(lib, exp(-lam * t0 / 90.0) - exp(-lam * t1 / 90.0))
+                    for lib, t0, t1 in MINUTE_BUCKETS]
+        p_rien = exp(-lam)
+    out = {
+        "1X2": [("1", ph), ("X", pn), ("2", pv)],
+        "Double Chance": [("1X", ph + pn), ("X2", pn + pv), ("12", ph + pv)],
+        "G/NG": [("Oui", btts), ("Non", 1.0 - btts)],
+        "Total de buts": [(str(k), float(tot[k])) for k in range(7)],
+        "+/-": [("> 3.5", float(tot[4:].sum())), ("< 3.5", float(tot[:4].sum()))],
+        "Multi-Buts": [("Le total de buts est de 0, 1 ou 2", float(tot[0:3].sum())),
+                       ("Le total de buts est de 1, 2 ou 3", float(tot[1:4].sum())),
+                       ("Le total de buts est de 2, 3 ou 4", float(tot[2:5].sum())),
+                       ("Le total de buts est supérieur à 4", float(tot[5:].sum()))],
+        "Pair/Impair": [("Pair", float(tot[0::2].sum())), ("Impair", float(tot[1::2].sum()))],
+        "Score exact": sorted(((f"{i}-{j}", float(g[i, j]))
+                               for i in range(7) for j in range(7)),
+                              key=lambda kv: -kv[1])[:10],
+        "Minute du premier but": dist_min + [("Pas de but", p_rien)],
+        "FTTS": [("1", (la / lam) * (1.0 - p_rien)), ("2", (lb / lam) * (1.0 - p_rien)),
+                 ("Pas de but", p_rien)],
+    }
+    return {m: [(sel, round(float(pr), 4)) for sel, pr in v] for m, v in out.items()}
+
+
+
+# Calibration par marche (isotone, TRAIN chrono, population cotee). Sans elle,
+# comparer les marches entre eux serait biaise : le 1X2 brut sur-promet de 8pp
+# quand le G/NG est juste -- le classement designerait le mauvais pari.
+_MK_CAL = {}
+try:
+    _pmc = Path(__file__).resolve().parents[1] / "config" / "marches_calibration.json"
+    if _pmc.exists():
+        _MK_CAL = json.loads(_pmc.read_text(encoding="utf-8")).get("marches") or {}
+except Exception:
+    _MK_CAL = {}
+
+
+def calib_marche(marche: str, p_raw) -> float:
+    """Proba brute d'un marche -> proba CALIBREE (taux reel mesure)."""
+    if not isinstance(p_raw, (int, float)) or p_raw != p_raw:
+        return 0.0
+    b = (_MK_CAL.get(marche) or {}).get("bins") or []
+    if not b:
+        return float(p_raw)
+    xs = [(x["lo"] + x["hi"]) / 2.0 for x in b]
+    ys = [float(x["real"]) for x in b]
+    return float(np.interp(float(p_raw), xs, ys))
+
+
+def rencontres(engine, leagues=None, minutes: int = 240, heure=None) -> list:
+    """Rencontres a venir, pour le selecteur de l'onglet conseil."""
+    if heure:
+        h = str(heure).strip().zfill(5)
+        up = _upcoming_df(engine, leagues, minutes, h, h)
+    else:
+        up = _upcoming_df(engine, leagues, minutes)
+    out = []
+    for r in getattr(up, "itertuples", list)():
+        tag = LEAGUE_TAGS.get(r.c, str(r.c)[-4:])
+        out.append({"label": f"[{tag} {r.local}] {r.team_a} vs {r.team_b}",
+                    "c": r.c, "tag": tag, "local": r.local,
+                    "home": r.team_a, "away": r.team_b,
+                    "oh": r.oh, "od": r.od, "oa": r.oa, "xm": r.xm,
+                    "rd": getattr(r, "rd", None)})
+    return out
+
+
+def conseil(engine, renc: dict) -> dict:
+    """Analyse TOUS les marches d'une rencontre et dit quoi jouer.
+
+    Les probabilites viennent de MA seule analyse (forme Bet261), calibrees par
+    marche sur l'historique. Les cotes ne servent qu'a chiffrer le gain et a
+    departager a probabilite egale -- jamais a choisir la prediction.
+    """
+    xm = renc.get("xm")
+    mk = None
+    if isinstance(xm, str):
+        try:
+            mk = json.loads(xm)
+        except Exception:
+            mk = None
+    elif isinstance(xm, dict):
+        mk = xm
+    if not isinstance(mk, dict):
+        mk = {}
+    jn = None
+    _d = re.findall(r"\d+", str(renc.get("rd") or ""))
+    if _d:
+        jn = int(_d[0])
+    own = predict_own(engine, renc["home"], renc["away"], lg=renc["c"], journee=jn)
+    if not own:
+        return {"erreur": "Pas assez d'historique en base pour ces deux équipes."}
+    probas = marches_probas(own["lam_a"], own["lam_b"])
+
+    def _cote(marche, sel):
+        if marche == "1X2":
+            return _odd_pos({"1": renc.get("oh"), "X": renc.get("od"),
+                             "2": renc.get("oa")}.get(sel))
+        d = mk.get(marche)
+        return _odd_pos(d.get(sel)) if isinstance(d, dict) else None
+
+    lignes = []
+    for marche, sels in probas.items():
+        sel, p_raw = max(sels, key=lambda x: x[1])
+        p = calib_marche(marche, p_raw)
+        o = _cote(marche, sel)
+        lignes.append({
+            "marche": marche, "sel": sel, "p": round(p, 3), "p_brute": round(p_raw, 3),
+            "odds": round(float(o), 2) if o else None,
+            "fiable": bool((_MK_CAL.get(marche) or {}).get("bins")),
+            "top3": [{"sel": x[0], "p": round(calib_marche(marche, x[1]), 3),
+                      "odds": (round(float(_cote(marche, x[0])), 2)
+                               if _cote(marche, x[0]) else None)}
+                     for x in sorted(sels, key=lambda x: -x[1])[:3]]})
+    lignes.sort(key=lambda x: -x["p"])
+    return {
+        "home": renc["home"], "away": renc["away"], "tag": renc["tag"],
+        "local": renc["local"], "journee": jn,
+        "lam_a": own["lam_a"], "lam_b": own["lam_b"],
+        "attendus": round(own["lam_a"] + own["lam_b"], 2),
+        "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
+        "season_a": own.get("season_a"), "season_b": own.get("season_b"),
+        "lignes": lignes,
+        # LA recommandation : le pari le plus probable, toutes lignes confondues.
+        # Mesure sur 29 835 matchs de TEST : annonce 79.7 % -> touche 80.1 %.
+        #
+        # La regle concurrente « proba x cote » (le pari le moins -EV) a ete
+        # TESTEE puis ECARTEE : meme ROI (-7.10 % contre -7.16 %, indiscernables),
+        # mais elle annonce 44.9 % pour 35.9 % reel et afficherait un gain
+        # apparent > 1.00 dans 80 % des cas. Maximiser proba x cote revient a
+        # selectionner les marches ou MON modele s'ecarte le plus du book en ma
+        # faveur -- c'est-a-dire mes propres erreurs. On ne l'expose pas.
+        "sur": lignes[0] if lignes else None,
+    }
 
 
 def ou25_probas(p_raw_over):
