@@ -151,3 +151,41 @@ def test_n_pour_5pp_est_rappele(tmp_path):
     eng = create_engine(_base(tmp_path, [("A", "B", 2.0, 3.0, 4.0, 1, 0)] * 5))
     R = pt.resultats_a_cette_cote(eng, 2.0, 3.0, 4.0)["resume"]
     assert R["n_pour_5pp"] >= 300, "l'ordre de grandeur requis doit etre rappele"
+
+
+# ---------- lecture d'une capture entiere : le seuil doit suivre le nombre de tests ----------
+
+def test_seuil_selargit_avec_le_nombre_de_tests():
+    """Analyser une capture de round = 3 issues x ~10 rencontres. Sans elargir
+    le seuil, on afficherait plus d'un faux « ecart notable » par capture."""
+    z3, z27 = pt._z_bonferroni(3), pt._z_bonferroni(27)
+    assert z3 < z27, "27 comparaisons doivent exiger un seuil plus severe que 3"
+    assert 2.3 < z3 < 2.5 and 3.0 < z27 < 3.3
+
+
+def test_seuil_supporte_les_valeurs_degenerees():
+    for n in (0, None, 1, -5):
+        z = pt._z_bonferroni(n)
+        assert 1.9 < z < 3.5, f"n_tests={n} donne un seuil aberrant ({z})"
+
+
+def test_meme_donnees_moins_de_notables_quand_on_teste_plus(tmp_path):
+    """A donnees IDENTIQUES, declarer un ecart notable doit devenir plus dur
+    quand on multiplie les rencontres analysees d'un coup."""
+    eng = create_engine(_base(tmp_path, [("A", "B", 2.0, 3.0, 4.0, 1, 0)] * 26
+                                        + [("A", "B", 2.0, 3.0, 4.0, 0, 1)] * 14))
+    peu = pt.resultats_a_cette_cote(eng, 2.0, 3.0, 4.0, n_tests=3)["resume"]["notables"]
+    bcp = pt.resultats_a_cette_cote(eng, 2.0, 3.0, 4.0, n_tests=30)["resume"]["notables"]
+    assert bcp <= peu, "un seuil plus severe ne peut pas produire PLUS de notables"
+
+
+def test_n_tests_est_rappele_dans_le_resume(tmp_path):
+    eng = create_engine(_base(tmp_path, [("A", "B", 2.0, 3.0, 4.0, 1, 0)] * 5))
+    R = pt.resultats_a_cette_cote(eng, 2.0, 3.0, 4.0, n_tests=27)["resume"]
+    assert R["n_tests"] == 27
+
+
+def test_defaut_inchange_pour_une_seule_rencontre(tmp_path):
+    """Le cas « je saisis une cote a la main » ne doit pas devenir plus severe."""
+    eng = create_engine(_base(tmp_path, [("A", "B", 2.0, 3.0, 4.0, 1, 0)] * 10))
+    assert pt.resultats_a_cette_cote(eng, 2.0, 3.0, 4.0)["resume"]["n_tests"] == 3

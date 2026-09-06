@@ -652,24 +652,45 @@ def main():
             if lignes_lues:
                 st.success(lu["message"])
 
-                def _lib(i, ln):
+                # Le releve de CHAQUE rencontre lue est rendu directement : pas
+                # de selection prealable. Le seuil de significativite est elargi
+                # au nombre reel de tests (3 issues x nb de rencontres), sinon
+                # une capture de round entier afficherait des faux positifs.
+                n_tests = 3 * len(lignes_lues)
+                with _db("Relevé historique de chaque rencontre…"):
+                    lots = [(ln, _ptrc.resultats_a_cette_cote(
+                        engR, *ln["cotes"], tol=float(r_tol),
+                        leagues=[LEAGUES[k] for k in r_lgs] or None, n_tests=n_tests))
+                        for ln in lignes_lues]
+                st.markdown("### 📋 Ce qui est tombé à ces cotes")
+                for i, (ln, res) in enumerate(lots, 1):
                     eq = ln.get("equipes") or f"Rencontre {i}"
-                    return f"{eq} — " + " / ".join(f"{c:g}" for c in ln["cotes"])
-                libs = [_lib(i, ln) for i, ln in enumerate(lignes_lues, 1)]
-                # Une capture de round entier porte une dizaine de rencontres :
-                # on laisse choisir laquelle plutot que d'en imposer une.
-                if len(libs) == 1:
-                    st.caption(f"Rencontre lue : **{libs[0]}**")
-                    choisie = 0
+                    cotes = " / ".join(f"{c:g}" for c in ln["cotes"])
+                    st.markdown(f"**{i}. {eq}** — `{cotes}`")
+                    if res.get("erreur") or not res.get("n"):
+                        st.caption("　aucune rencontre passée à ces cotes "
+                                   "(élargis la tolérance ou les ligues).")
+                        continue
+                    R = res["resume"]
+                    iss = " · ".join(
+                        f"**{x['sel']}** {x['reel']:.0f}%" + ("⚠️" if x["notable"] else "")
+                        for x in R["issues"])
+                    st.markdown(f"　**{res['n']} rencontres** → {iss}　|　"
+                                f"{R['buts_moyen']} buts · +2,5 : **{R['over25']:.0f}%** · "
+                                f"les 2 marquent : {R['btts']:.0f}% · 0-0 : {R['zero']:.0f}%")
+                    if R.get("scores"):
+                        st.caption("　scores fréquents : " + " · ".join(
+                            f"{x['score']} {x['pct']:.0f}%" for x in R["scores"][:4]))
+                total_notables = sum(r["resume"]["notables"]
+                                     for _, r in lots if r.get("resume"))
+                if total_notables:
+                    st.warning(f"⚠️ {total_notables} écart(s) hors intervalle sur "
+                               f"{n_tests} tests. Seuil déjà élargi à ce nombre de "
+                               "comparaisons — mais sur ce jeu, tous les écarts "
+                               "examinés jusqu'ici se sont révélés être du bruit.")
                 else:
-                    choisie = libs.index(st.selectbox(
-                        f"Quelle rencontre ? ({len(libs)} lues sur la capture)",
-                        libs, key="rc_ligne"))
-                if st.button("⬇️ Reprendre ces cotes", key="rc_prendre"):
-                    for k, v in zip(("rc_1", "rc_x", "rc_2"),
-                                    lignes_lues[choisie]["cotes"]):
-                        st.session_state[k] = float(v)
-                    st.rerun()
+                    st.caption(f"✅ Aucun écart significatif sur les {n_tests} tests : "
+                               "à ces cotes, le book est juste.")
             else:
                 st.warning(lu.get("message", "Aucune cote lue."))
             # Diagnostic : ce que l'OCR a renvoye AVANT interpretation. Sans cette

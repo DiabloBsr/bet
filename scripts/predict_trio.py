@@ -1538,9 +1538,23 @@ def conseil(engine, renc: dict) -> dict:
 
 
 
+def _z_bonferroni(n_tests: int) -> float:
+    """Seuil normal a 95 % corrige pour `n_tests` comparaisons simultanees.
+
+    Analyser une capture de round entier, c'est tester 3 issues x ~10 rencontres
+    d'un coup : sans elargir le seuil, on afficherait plus d'un faux « ecart
+    notable » par capture. NormalDist vient de la bibliotheque standard, donc
+    pas de dependance ajoutee.
+    """
+    from statistics import NormalDist
+    alpha = 0.05 / max(int(n_tests or 1), 1)
+    return float(NormalDist().inv_cdf(1.0 - alpha / 2.0))
+
+
 def resultats_a_cette_cote(engine, oh: float, od: float, oa: float, tol: float = 0.05,
                            leagues=None, team_a: str | None = None,
-                           team_b: str | None = None, n: int = 200) -> dict:
+                           team_b: str | None = None, n: int = 200,
+                           n_tests: int = 3) -> dict:
     """Ce qui est REELLEMENT tombe, historiquement, a cette cote 1X2.
 
     On cherche les rencontres TERMINEES dont la cote d'ouverture (1er snapshot)
@@ -1600,7 +1614,7 @@ def resultats_a_cette_cote(engine, oh: float, od: float, oa: float, tol: float =
     # par pur hasard (verifie : 2 sur 15 tests) -- exactement le piege de
     # comparaison multiple qui a deja fabrique 3 faux positifs sur 76 500
     # cellules dans ce projet.
-    Z_BONF = 2.394   # bilateral 0.05 / 3
+    Z_BONF = _z_bonferroni(n_tests)
 
     def _wilson(k, n, z=Z_BONF):
         """Intervalle de Wilson a 95 %. L'approximation normale donne une largeur
@@ -1631,6 +1645,7 @@ def resultats_a_cette_cote(engine, oh: float, od: float, oa: float, tol: float =
             "notable": bool(dev < lo_ic or dev > hi_ic),
         })
     resume["notables"] = sum(1 for i in resume["issues"] if i["notable"])
+    resume["n_tests"] = int(n_tests or 3)
     # n minimal pour qu'un ecart de 5 points soit seulement detectable
     resume["n_pour_5pp"] = int(round((1.96 ** 2) * 0.25 / (0.05 ** 2)))
     sc = d.groupby([d.sa, d.sb]).size().sort_values(ascending=False)
