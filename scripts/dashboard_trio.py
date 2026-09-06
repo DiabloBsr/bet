@@ -395,92 +395,76 @@ def main():
                     st.info(f"🔦 Value repérée : **{team} gagne** — cote **{o:g}** · {p*100:.0f}%")
             st.markdown("---")
 
-    # ---- ⚽ OVER 2.5 À COTE >= 2 (mon analyse, le plus sûr d'abord) ----
-    with st.expander("⚽ Over 2.5 à cote ≥ 2 — mon analyse, le plus sûr d'abord"):
+    # ---- ⚽ OVER / UNDER 2,5 : MES DEUX PRONOSTICS LES PLUS SÛRS ----
+    with st.expander("⚽ Over / Under 2,5 — mes deux pronostics les plus sûrs"):
         import predict_trio as _pto25
         engO = st.cache_resource(_engine)()
-        st.caption("Matchs à venir dont l'Over 2.5 se paie au moins la cote choisie, "
-                   "classés par MA probabilité (forme Bet261, cotes non utilisées).")
+        st.caption("Je prédis sur la SEULE forme des équipes dans le virtuel Bet261 "
+                   "(Poisson attaque/défense) et je te donne les deux matchs où je suis "
+                   "le plus sûr : un pour le +2,5, un pour le −2,5. Les cotes affichées "
+                   "sont celles de l'app, à titre d'exécution.")
         o_lgs = st.multiselect("Ligues à analyser (vide = les 9)", list(LEAGUES),
-                               default=[], key="o25_lgs",
-                               help="Choisis une ou plusieurs ligues ; vide = toutes.")
-        o1, o2 = st.columns(2)
-        o_min = o1.number_input("Cote Over 2.5 minimum", 1.5, 20.0, 2.0, 0.1, key="o25_min")
-        o_top = o2.number_input("Nombre de matchs affichés", 1, 30, 8, 1, key="o25_top")
-        ot1, ot2 = st.columns(2)
-        o_ws = ot1.text_input("De (HH:MM Mada — vide = maintenant)", value="",
-                              key="o25_ws", placeholder="ex: 21:00")
-        o_we = ot2.text_input("À (HH:MM Mada)", value="", key="o25_we", placeholder="ex: 22:00")
-        if st.button("⚽ Chercher", key="o25_go", type="primary"):
-            sl, el = o_ws.strip(), o_we.strip()
-            valid = re.compile(r"^\d{1,2}:\d{2}$")
-            if (sl and not valid.match(sl)) or (el and not valid.match(el)) or (bool(sl) != bool(el)):
-                st.warning("Heures au format HH:MM, les deux ou aucune.")
-            else:
-                with _db("Analyse Over 2.5 de chaque match…"):
-                    st.session_state["o25_res"] = _pto25.over25_scan(
-                        engO, min_odds=float(o_min),
-                        leagues=[LEAGUES[k] for k in o_lgs] or None,
-                        start_local=sl.zfill(5) if sl else None,
-                        end_local=el.zfill(5) if el else None,
-                        top=int(o_top))
+                               default=[], key="o25_lgs")
+        if st.button("🔮 Mes deux pronostics", key="o25_go", type="primary"):
+            with _db("Analyse des matchs à venir…"):
+                st.session_state["o25_res"] = _pto25.ou25_picks(
+                    engO, leagues=[LEAGUES[k] for k in o_lgs] or None, minutes=240)
         o_res = st.session_state.get("o25_res")
         if o_res is not None:
-            if not o_res:
-                st.info("Aucun match à venir avec un Over 2.5 à cette cote "
-                        "(baisse la cote minimum ou attends un round).")
+            if not o_res.get("over") and not o_res.get("under"):
+                st.info("Aucun match à venir analysable — ajoute des ligues, "
+                        "ou attends le prochain round.")
             else:
-                # MON pronostic : le plus sur de la selection, mis en avant.
-                # IMPORTANT : Bet261 ne cote AUCUNE ligne 2.5 (verifie sur tout le
-                # flux : seul le 3.5 existe). On affiche donc en premier les cotes
-                # REELLES de l'app, et le chiffre reconstitue est explicitement
-                # presente comme un equivalent, jamais comme une cote de Bet261.
-                b = o_res[0]
-                st.markdown("### 🎯 Mon pronostic Over 2.5 — le plus sûr")
-                st.success(f"**`[{b['tag']} {b['local']}]` {b['home']} vs {b['away']}** → "
-                           f"**plus de 2,5 buts** · ma proba **{b['p_mine_cal']*100:.0f}%**")
-                st.caption(f"{b['lam_a'] + b['lam_b']:.1f} buts attendus au total "
-                           f"({b['home']} ~{b['lam_a']} · {b['away']} ~{b['lam_b']}).")
-                st.markdown(f"**Le détail des {len(o_res)} matchs**, du plus sûr au moins sûr :")
+                emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
 
-                def _bloc_reel(m):
-                    """Les cotes telles qu'elles apparaissent DANS Bet261."""
-                    if m.get("cells"):
-                        st.markdown("**Sur Bet261 — marché « Total de buts »** "
-                                    "(mise à répartir pour couvrir tout le +2,5) :")
-                        for c in m["cells"]:
-                            st.markdown(f"　• **{c['total']}** buts → cote **{c['odds']:g}**"
-                                        f"　({c['part']:.0f}% de la mise)")
-                        st.caption(f"↳ Ces 4 paris réunis équivalent à une cote de "
-                                   f"**{m['odds_over25']:g}** sur le +2,5. Ce chiffre est un "
-                                   f"calcul, il n'apparaît pas tel quel dans Bet261.")
-                    if m.get("reels"):
-                        st.markdown("**Paris voisins, cliquables en un seul clic :**")
-                        for r in m["reels"]:
-                            st.markdown(f"　• « {r['sel']} » _[{r['marche']}]_ → "
-                                        f"cote **{r['odds']:g}**")
-                        st.caption("Repères : ces cotes sont celles de Bet261, mais seul le "
-                                   "+2,5 en tête porte une probabilité calibrée sur les "
-                                   "résultats réels — je n'en affiche pas pour ces paris-là.")
-
-                for i, m in enumerate(o_res, 1):
-                    st.markdown(f"#### {i}. `[{m['tag']} {m['local']}]` {m['home']} vs {m['away']}")
-                    st.markdown(f"→ **plus de 2,5 buts** · ma proba "
-                                f"**{m['p_mine_cal']*100:.0f}%**")
-                    emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
+                def _rendre(m, sens, titre, phrase):
+                    if not m:
+                        st.info(f"Pas de pronostic {sens} disponible pour l'instant.")
+                        return
+                    st.markdown(f"### {titre}")
+                    st.success(f"**`[{m['tag']} {m['local']}]` {m['home']} vs {m['away']}** → "
+                               f"**{phrase}** · ma proba **{m['p_' + sens]*100:.0f}%**")
                     fa = " ".join(emo.get(c, "?") for c in (m.get("seq_a") or ""))
                     fb = " ".join(emo.get(c, "?") for c in (m.get("seq_b") or ""))
-                    st.caption(f"Forme Bet261 — {m['home']} : {fa} · ~{m['lam_a']} buts "
-                               f"| {m['away']} : {fb} · ~{m['lam_b']} "
-                               f"→ {m['lam_a'] + m['lam_b']:.1f} buts attendus au total.")
-                    _bloc_reel(m)
-                    st.markdown("---")
-                st.caption("Bet261 ne propose pas de ligne 2,5 (vérifié sur tout le flux : "
-                           "seul le 3,5 existe) — d'où la répartition sur « Total de buts ». "
-                           "Fiabilité mesurée sur 12 555 matchs (moitié TRAIN / moitié TEST "
-                           "chrono) : mes mieux classés touchent **38%** pour 36% annoncé, "
-                           "contre 31% pour l'ensemble. Le tri marche, mais le ROI reste "
-                           "**−8%** : plus sûr ≠ gagnant, mise petite.")
+                    st.caption(f"**{m['attendus']} buts attendus** — {m['home']} : {fa} "
+                               f"~{m['lam_a']} · {m['away']} : {fb} ~{m['lam_b']}.")
+                    d, eq = m.get("direct"), m.get("equivalent")
+                    if d:
+                        mieux = ""
+                        if eq and d["odds"] > eq:
+                            mieux = (f"　— et c'est mieux que répartir la mise sur "
+                                     f"0/1/2, qui n'équivaut qu'à {eq:g}")
+                        st.info(f"✅ **En un seul clic sur Bet261** : « {d['sel']} » "
+                                f"_[{d['marche']}]_ → cote **{d['odds']:g}**{mieux}")
+                    elif m.get("cellules"):
+                        st.warning("⚠️ Bet261 ne cote pas ce sens directement : il faut "
+                                   "répartir la mise sur « Total de buts ».")
+                    if m.get("cellules"):
+                        lignes = "　·　".join(f"**{c['total']}** → **{c['odds']:g}** "
+                                             f"({c['part']:.0f}%)" for c in m["cellules"])
+                        st.markdown(f"　« Total de buts » : {lignes}")
+                        if eq:
+                            st.caption(f"↳ ces paris réunis équivalent à une cote de **{eq:g}** "
+                                       f"(calcul — ce chiffre n'apparaît pas dans Bet261).")
+                    if m.get("voisins"):
+                        v = "　·　".join(f"« {x['sel']} » _[{x['marche']}]_ **{x['odds']:g}**"
+                                        for x in m["voisins"])
+                        st.caption(f"Paris voisins : {v}")
+
+                _rendre(o_res.get("over"), "over", "🔼 Mon Over 2,5 le plus sûr",
+                        "plus de 2,5 buts")
+                st.markdown("---")
+                _rendre(o_res.get("under"), "under", "🔽 Mon Under 2,5 le plus sûr",
+                        "moins de 2,5 buts")
+                st.caption("Fiabilité mesurée sur 59 670 matchs (moitié TRAIN / moitié TEST "
+                           "chronologique, table isotone) : mes **Over** les plus sûrs "
+                           "touchent ~**75%** (pour 66-68% annoncé) contre 54% en moyenne ; "
+                           "mes **Under** les plus sûrs ~**77%** là où le pari existe "
+                           "vraiment, contre 46% en moyenne. J'annonce volontairement moins "
+                           "que le mesuré. Mais le book price tout : ROI ≈ **−8 à −10%** "
+                           "dans les deux sens — plus sûr ne veut pas dire gagnant, "
+                           "mise petite.")
+
 
     # ---- 🥅 TOTAL DE BUTS — MON TOP 3 (analyse propre, ligues au choix) ----
     with st.expander("🥅 Total de buts — mon top 3 le plus sûr (analyse propre)"):

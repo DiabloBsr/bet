@@ -1321,6 +1321,138 @@ def totals_scan(engine, leagues=None, minutes: int = 180, start_local=None,
     return out[:top]
 
 
+
+# ---------------------------------------------------------------------------
+# OVER / UNDER 2.5 : mes deux pronostics les plus surs.
+# Calibration apprise sur la population COTEE (celle que le dashboard voit),
+# 1re moitie chronologique, table isotone, verifiee sur la 2e (ecarts < 2.5pp).
+# PLAFONDS : sur la queue extreme -- celle qu'on affiche justement en pronostic --
+# le taux REELLEMENT observe plafonne. Mesure sur TEST jamais vu :
+#   Over  : annonce 66-68 %  -> touche 75-76 %  (je sous-promets, OK)
+#   Under : annonce 79-83 %  -> touche 75-77 %  sur le sous-ensemble ou le pari
+#           existe vraiment (Multi-Buts « 0,1,2 ») : la je SUR-promets.
+# On borne donc chaque sens a ce qui a ete constate, plutot que de laisser la
+# table extrapoler au-dela de ce qui est prouve.
+_OU25_OVER_MAX, _OU25_UNDER_MAX = 0.76, 0.78
+_OU25_CAL = []
+try:
+    _pou = Path(__file__).resolve().parents[1] / "config" / "ou25_calibration.json"
+    if _pou.exists():
+        _bo = json.loads(_pou.read_text(encoding="utf-8")).get("bins") or []
+        _OU25_CAL = sorted(((b["lo"] + b["hi"]) / 2.0, float(b["real"])) for b in _bo)
+except Exception:
+    _OU25_CAL = []
+
+
+def ou25_probas(p_raw_over):
+    """P(over 2.5) brute -> (over calibre, under calibre), bornes au mesure."""
+    if not isinstance(p_raw_over, (int, float)) or p_raw_over != p_raw_over:
+        return 0.0, 0.0
+    o = float(p_raw_over)
+    if _OU25_CAL:
+        o = float(np.interp(o, [x for x, _ in _OU25_CAL], [y for _, y in _OU25_CAL]))
+    return min(o, _OU25_OVER_MAX), min(1.0 - o, _OU25_UNDER_MAX)
+
+
+def _paris_reels(mk, sens):
+    """Ce qui est REELLEMENT cliquable dans Bet261 pour ce sens, libelles exacts.
+    Renvoie (direct, cellules, voisins) : `direct` est un pari en un seul clic
+    (il n'existe QUE pour l'under), `cellules` est la mise a repartir."""
+    tb = mk.get("Total de buts") if isinstance(mk, dict) else None
+    mb = mk.get("Multi-Buts") if isinstance(mk, dict) else None
+    pm = mk.get("+/-") if isinstance(mk, dict) else None
+    direct, cellules, voisins = None, [], []
+    if sens == "under":
+        if isinstance(mb, dict):
+            for lib, o in mb.items():
+                if "0, 1 ou 2" in str(lib) and _odd_pos(o):
+                    direct = {"marche": "Multi-Buts", "sel": str(lib),
+                              "odds": round(float(_odd_pos(o)), 2)}
+        totaux = ("0", "1", "2")
+    else:
+        totaux = ("3", "4", "5", "6")
+    if isinstance(tb, dict):
+        for k in totaux:
+            o = _odd_pos(tb.get(k))
+            if o:
+                cellules.append({"total": k, "odds": round(float(o), 2)})
+    inv = sum(1.0 / c["odds"] for c in cellules)
+    for c in cellules:
+        c["part"] = round(100.0 * (1.0 / c["odds"]) / inv, 1) if inv else None
+    equiv = round(1.0 / inv, 2) if inv else None
+    if isinstance(pm, dict):
+        lib = "> 3.5" if sens == "over" else "< 3.5"
+        o = _odd_pos(pm.get(lib))
+        if o:
+            voisins.append({"marche": "+/-", "sel": lib, "odds": round(float(o), 2)})
+    if isinstance(mb, dict):
+        for lib in ("Le total de buts est de 2, 3 ou 4",
+                    "Le total de buts est supérieur à 4" if sens == "over"
+                    else "Le total de buts est de 1, 2 ou 3"):
+            o = _odd_pos(mb.get(lib))
+            if o:
+                voisins.append({"marche": "Multi-Buts", "sel": lib,
+                                "odds": round(float(o), 2)})
+    return direct, cellules, equiv, voisins
+
+
+def ou25_picks(engine, leagues=None, minutes: int = 240, start_local=None,
+               end_local=None) -> dict:
+    """Mes DEUX pronostics les plus surs sur la ligne 2.5 : l'over et l'under.
+
+    La prediction vient de la SEULE forme des equipes dans le virtuel Bet261
+    (Poisson attaque/defense) ; les cotes ne servent qu'a montrer quoi cliquer.
+    Renvoie {"over": {...} | None, "under": {...} | None}.
+    """
+    up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
+    cands = []
+    if not len(up):
+        return {"over": None, "under": None}
+    for r in up.itertuples():
+        xm = r.xm
+        mk = None
+        if isinstance(xm, str):
+            try:
+                mk = json.loads(xm)
+            except Exception:
+                mk = None
+        elif isinstance(xm, dict):
+            mk = xm
+        if not isinstance(mk, dict):
+            mk = {}
+        jn = None
+        _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
+        if _d:
+            jn = int(_d[0])
+        try:
+            own = predict_own(engine, r.team_a, r.team_b, lg=r.c, journee=jn)
+        except Exception:
+            own = None
+        if not own or own.get("p_over25") is None:
+            continue
+        p_o, p_u = ou25_probas(own["p_over25"])
+        cands.append({
+            "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]), "local": r.local, "es": r.es,
+            "home": r.team_a, "away": r.team_b, "journee": jn, "mk": mk,
+            "p_over": round(p_o, 3), "p_under": round(p_u, 3),
+            "attendus": round(own["lam_a"] + own["lam_b"], 2),
+            "lam_a": own["lam_a"], "lam_b": own["lam_b"],
+            "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", "")})
+    if not cands:
+        return {"over": None, "under": None}
+
+    def _monte(c, sens):
+        d, cel, eq, vois = _paris_reels(c.pop("mk") if "mk" in c else {}, sens)
+        c.update({"sens": sens, "direct": d, "cellules": cel,
+                  "equivalent": eq, "voisins": vois})
+        return c
+    best_o = max(cands, key=lambda c: c["p_over"])
+    best_u = max(cands, key=lambda c: c["p_under"])
+    out_o = _monte(dict(best_o), "over")
+    out_u = _monte(dict(best_u), "under")
+    return {"over": out_o, "under": out_u}
+
+
 def over25_scan(engine, min_odds: float = 2.0, leagues=None, minutes: int = 180,
                 start_local=None, end_local=None, top: int = 40) -> list:
     """Matchs À VENIR dont l'OVER 2.5 se paie >= `min_odds`, classés par MA proba

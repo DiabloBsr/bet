@@ -1,0 +1,48 @@
+{
+ "note": "P(over 2.5) brut -> reel (isotone), population COTEE (celle du dashboard), TRAIN = 1re moitie chrono. Under 2.5 = 1 - calibre(over).",
+ "n_train": 29835,
+ "bins": [
+  {
+   "lo": 0.0,
+   "hi": 0.15,
+   "real": 0.1627,
+   "n_train": 295
+  },
+  {
+   "lo": 0.15,
+   "hi": 0.25,
+   "real": 0.2336,
+   "n_train": 1083
+  },
+  {
+   "lo": 0.25,
+   "hi": 0.35,
+   "real": 0.3483,
+   "n_train": 1223
+  },
+  {
+   "lo": 0.35,
+   "hi": 0.45,
+   "real": 0.4498,
+   "n_train": 3857
+  },
+  {
+   "lo": 0.45,
+   "hi": 0.55,
+   "real": 0.5687,
+   "n_train": 9605
+  },
+  {
+   "lo": 0.55,
+   "hi": 0.65,
+   "real": 0.6342,
+   "n_train": 12242
+  },
+  {
+   "lo": 0.65,
+   "hi": 1.01,
+   "real": 0.7046,
+   "n_train": 1530
+  }
+ ]
+}
