@@ -1369,9 +1369,33 @@ def over25_scan(engine, min_odds: float = 2.0, leagues=None, minutes: int = 180,
                 o = _odd_pos(tb.get(k))
                 if o:
                     cells.append({"total": k, "odds": round(float(o), 2)})
+        # Paris REELLEMENT cliquables dans Bet261, avec le libelle exact de l'app
+        # et MA proba brute pour chacun. Sans ca, l'onglet n'affichait qu'une cote
+        # synthetique introuvable dans l'application.
+        dist = own.get("totals") or []
+        def _pdist(lo, hi):
+            return round(sum(dist[k] for k in range(lo, min(hi, 6) + 1)), 3) if dist else None
+        reels = []
+        mb = mk.get("Multi-Buts") if isinstance(mk, dict) else None
+        if isinstance(mb, dict):
+            for lib, pr in (("Le total de buts est de 2, 3 ou 4", _pdist(2, 4)),
+                            ("Le total de buts est de 1, 2 ou 3", _pdist(1, 3)),
+                            ("Le total de buts est supérieur à 4", _pdist(5, 6))):
+                o_mb = _odd_pos(mb.get(lib))
+                if o_mb:
+                    reels.append({"marche": "Multi-Buts", "sel": lib,
+                                  "odds": round(float(o_mb), 2), "p": pr})
+        pm_ = mk.get("+/-") if isinstance(mk, dict) else None
+        if isinstance(pm_, dict):
+            for lib, pr in (("> 3.5", _pdist(4, 6)), ("< 3.5", _pdist(0, 3))):
+                o_pm = _odd_pos(pm_.get(lib))
+                if o_pm:
+                    reels.append({"marche": "+/-", "sel": lib,
+                                  "odds": round(float(o_pm), 2), "p": pr})
         tot_inv = sum(1.0 / c["odds"] for c in cells)
         for c in cells:
             c["part"] = round(100.0 * (1.0 / c["odds"]) / tot_inv, 1) if tot_inv else None
+            c["p"] = round(dist[int(c["total"])], 3) if dist else None
         p = float(own["p_over25"])
         out.append({
             "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]), "local": r.local, "es": r.es,
@@ -1385,7 +1409,7 @@ def over25_scan(engine, min_odds: float = 2.0, leagues=None, minutes: int = 180,
             "lam_a": own["lam_a"], "lam_b": own["lam_b"],
             "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
             "season_a": own.get("season_a"), "season_b": own.get("season_b"),
-            "cells": cells})
+            "cells": cells, "reels": reels})
     out.sort(key=lambda x: -x["p_mine_cal"])       # le plus SÛR d'abord (MA proba)
     return out[:top]
 

@@ -431,37 +431,56 @@ def main():
                         "(baisse la cote minimum ou attends un round).")
             else:
                 # MON pronostic : le plus sur de la selection, mis en avant.
+                # IMPORTANT : Bet261 ne cote AUCUNE ligne 2.5 (verifie sur tout le
+                # flux : seul le 3.5 existe). On affiche donc en premier les cotes
+                # REELLES de l'app, et le chiffre reconstitue est explicitement
+                # presente comme un equivalent, jamais comme une cote de Bet261.
                 b = o_res[0]
                 st.markdown("### 🎯 Mon pronostic Over 2.5 — le plus sûr")
                 st.success(f"**`[{b['tag']} {b['local']}]` {b['home']} vs {b['away']}** → "
-                           f"**Over 2.5** — cote **{b['odds_over25']:g}** · "
-                           f"ma proba **{b['p_mine_cal']*100:.0f}%**")
+                           f"**plus de 2,5 buts** · ma proba **{b['p_mine_cal']*100:.0f}%**")
                 st.caption(f"{b['lam_a'] + b['lam_b']:.1f} buts attendus au total "
-                           f"({b['home']} ~{b['lam_a']} · {b['away']} ~{b['lam_b']}) — "
-                           f"le marché en implique {b['p_market']*100:.0f}%.")
-                st.markdown(f"**Le détail des {len(o_res)} matchs** (du plus sûr au moins sûr, "
-                            "avec la répartition de mise pour jouer l'Over 2.5) :")
+                           f"({b['home']} ~{b['lam_a']} · {b['away']} ~{b['lam_b']}).")
+                st.markdown(f"**Le détail des {len(o_res)} matchs**, du plus sûr au moins sûr :")
+
+                def _bloc_reel(m):
+                    """Les cotes telles qu'elles apparaissent DANS Bet261."""
+                    if m.get("cells"):
+                        st.markdown("**Sur Bet261 — marché « Total de buts »** "
+                                    "(mise à répartir pour couvrir tout le +2,5) :")
+                        for c in m["cells"]:
+                            st.markdown(f"　• **{c['total']}** buts → cote **{c['odds']:g}**"
+                                        f"　({c['part']:.0f}% de la mise)")
+                        st.caption(f"↳ Ces 4 paris réunis équivalent à une cote de "
+                                   f"**{m['odds_over25']:g}** sur le +2,5. Ce chiffre est un "
+                                   f"calcul, il n'apparaît pas tel quel dans Bet261.")
+                    if m.get("reels"):
+                        st.markdown("**Paris voisins, cliquables en un seul clic :**")
+                        for r in m["reels"]:
+                            st.markdown(f"　• « {r['sel']} » _[{r['marche']}]_ → "
+                                        f"cote **{r['odds']:g}**")
+                        st.caption("Repères : ces cotes sont celles de Bet261, mais seul le "
+                                   "+2,5 en tête porte une probabilité calibrée sur les "
+                                   "résultats réels — je n'en affiche pas pour ces paris-là.")
+
                 for i, m in enumerate(o_res, 1):
                     st.markdown(f"#### {i}. `[{m['tag']} {m['local']}]` {m['home']} vs {m['away']}")
-                    st.markdown(f"→ **Over 2.5** — cote **{m['odds_over25']:g}** · "
-                                f"ma proba **{m['p_mine_cal']*100:.0f}%** "
-                                f"(le marché en implique {m['p_market']*100:.0f}%)")
+                    st.markdown(f"→ **plus de 2,5 buts** · ma proba "
+                                f"**{m['p_mine_cal']*100:.0f}%**")
                     emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
                     fa = " ".join(emo.get(c, "?") for c in (m.get("seq_a") or ""))
                     fb = " ".join(emo.get(c, "?") for c in (m.get("seq_b") or ""))
                     st.caption(f"Forme Bet261 — {m['home']} : {fa} · ~{m['lam_a']} buts "
                                f"| {m['away']} : {fb} · ~{m['lam_b']} "
                                f"→ {m['lam_a'] + m['lam_b']:.1f} buts attendus au total.")
-                    if m.get("cells"):
-                        rep = " · ".join(f"**{c['total']}** buts (cote {c['odds']:g}) "
-                                             f"→ {c['part']:.0f}% de la mise" for c in m["cells"])
-                        st.caption(f"⚠️ Bet261 ne cote pas l'Over 2.5 directement : "
-                                   f"joue-le sur « Total de buts » — {rep}")
+                    _bloc_reel(m)
                     st.markdown("---")
-                st.caption("Mesuré sur 12 555 matchs (moitié TRAIN / moitié TEST chrono) : "
-                           "mes mieux classés touchent **38%** (pour 36% annoncé) contre 31% "
-                           "pour l'ensemble des Over 2.5 à cote ≥2 — le tri marche. "
-                           "Mais le ROI reste **−8%** : plus sûr ≠ gagnant, mise petite.")
+                st.caption("Bet261 ne propose pas de ligne 2,5 (vérifié sur tout le flux : "
+                           "seul le 3,5 existe) — d'où la répartition sur « Total de buts ». "
+                           "Fiabilité mesurée sur 12 555 matchs (moitié TRAIN / moitié TEST "
+                           "chrono) : mes mieux classés touchent **38%** pour 36% annoncé, "
+                           "contre 31% pour l'ensemble. Le tri marche, mais le ROI reste "
+                           "**−8%** : plus sûr ≠ gagnant, mise petite.")
 
     # ---- 🥅 TOTAL DE BUTS — MON TOP 3 (analyse propre, ligues au choix) ----
     with st.expander("🥅 Total de buts — mon top 3 le plus sûr (analyse propre)"):
