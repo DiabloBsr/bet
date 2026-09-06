@@ -124,7 +124,7 @@ def _alerts():
     return msgs
 
 
-def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
+def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
     """Composant historique réutilisable : 3 menus (H2H / équipe home / équipe away),
     du + récent au + ancien. Utilisable partout dans l'app sur les 9 ligues."""
     import predict_trio as _pth
@@ -144,7 +144,7 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
 
     t1, t2, t3 = st.tabs([f"⚔️ Face-à-face", f"🏠 {home}", f"✈️ {away}"])
     with t1:
-        h2h = _safe(_pth.head_to_head, engine, home, away, leagues)
+        h2h = _safe(_pth.head_to_head, engine, home, away, leagues, n_h2h)
         if not h2h:
             st.caption("Aucun face-à-face direct en base.")
         else:
@@ -154,7 +154,7 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True):
                        f"total buts moyen {sum(m['tot'] for m in h2h)/len(h2h):.1f}")
             st.caption("📊 O/U 2.5 reconstitué depuis « Total de buts » — Bet261 ne cote que la "
                        "ligne 3.5. Marge du book conservée. ✅ = issue réalisée.")
-            for m in h2h[:30]:
+            for m in h2h[:n_h2h]:
                 mark = " 🥅" if m["tot"] == 0 else ""
                 ch = f" `{m['oh']:g}`" if m.get("oh") else ""
                 ca = f" `{m['oa']:g}`" if m.get("oa") else ""

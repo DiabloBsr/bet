@@ -231,3 +231,23 @@ def test_h2h_includes_and_shows_odds():
     dash = DASH.read_text(encoding="utf-8")
     assert "m['oh']" in dash and "m['oa']" in dash, \
         "l'affichage H2H doit montrer la cote de chaque équipe"
+
+
+def test_face_a_face_remonte_60_rencontres():
+    """L'onglet face-à-face doit afficher les 60 rencontres les plus récentes.
+
+    Deux pièges verrouillés ici : un `n` non transmis au moteur (qui retomberait
+    sur son défaut de 30 malgré un affichage prévu pour 60), et une découpe
+    d'affichage figée en dur qui replafonnerait la liste en silence.
+    """
+    src = DASH.read_text(encoding="utf-8")
+    fn = next(n for n in ast.walk(_tree())
+              if isinstance(n, ast.FunctionDef) and n.name == "_hist_block")
+    defauts = dict(zip([a.arg for a in fn.args.args][-len(fn.args.defaults):],
+                       [getattr(d, "value", None) for d in fn.args.defaults]))
+    assert defauts.get("n_h2h") == 60, f"n_h2h doit valoir 60, vu {defauts.get('n_h2h')}"
+    seg = ast.get_source_segment(src, fn) or ""
+    assert "head_to_head, engine, home, away, leagues, n_h2h" in seg, (
+        "n_h2h doit être transmis à head_to_head, sinon le moteur retombe sur 30")
+    assert "h2h[:n_h2h]" in seg, "la découpe d'affichage doit suivre n_h2h, pas un nombre figé"
+    assert "h2h[:30]" not in seg, "plafond de 30 encore présent"
