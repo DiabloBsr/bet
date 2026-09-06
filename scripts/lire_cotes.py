@@ -114,26 +114,59 @@ def _mots(img_crop) -> str:
     return " / ".join(mots[:2])
 
 
+def _prepare(img_crop, seuil: int, marge: int = 12):
+    """Isole les chiffres blancs et rend une image nette, noir sur blanc.
+
+    Tesseract lit mal des chiffres colles au bord et de petite taille : on
+    agrandit et on ajoute une marge blanche, sans quoi il rate une ligne sur
+    deux sur une capture de telephone.
+    """
+    np = _np()
+    from PIL import Image
+    a = np.asarray(img_crop.convert("RGB")).astype(int)
+    clair = a.min(axis=2) > seuil
+    if clair.sum() < 12:                     # quasi rien de blanc : inutile d'essayer
+        return None
+    net = Image.fromarray(np.where(clair, 0, 255).astype("uint8"), mode="L")
+    net = net.resize((max(net.width * 4, 1), max(net.height * 4, 1)), Image.LANCZOS)
+    fond = Image.new("L", (net.width + 2 * marge, net.height + 2 * marge), 255)
+    fond.paste(net, (marge, marge))
+    return fond
+
+
+# Cascade de reglages : un pave illisible avec l'un passe souvent avec l'autre.
+# psm 7 = une ligne de texte, 8 = un mot, 13 = ligne brute sans segmentation.
+_ESSAIS = ((150, "7"), (150, "8"), (110, "7"), (110, "13"), (190, "8"))
+
+
 def _texte(img_crop) -> str:
-    """OCR d'un pavé, chiffres uniquement. Chaîne vide si l'OCR est indisponible."""
+    """Premier essai concluant de la cascade. Chaine vide si l'OCR est absent."""
+    return (_lire_pave(img_crop) or ("", None))[0]
+
+
+def _lire_pave(img_crop):
+    """(texte brut, cote) du premier reglage qui donne une cote plausible.
+    Renvoie le dernier texte lu si aucun ne se parse — utile au diagnostic."""
     try:
         import pytesseract
     except Exception:
-        return ""
-    np = _np()
-    a = np.asarray(img_crop.convert("RGB")).astype(int)
-    # Le chiffre est BLANC sur le vert : on ne garde que les pixels clairs.
-    clair = (a.min(axis=2) > 150)
-    if not clair.any():
-        return ""
-    from PIL import Image
-    net = Image.fromarray(np.where(clair, 0, 255).astype("uint8"), mode="L")
-    net = net.resize((net.width * 3, net.height * 3), Image.LANCZOS)
-    try:
-        return pytesseract.image_to_string(
-            net, config="--psm 7 -c tessedit_char_whitelist=0123456789.,").strip()
-    except Exception:
-        return ""
+        return "", None
+    dernier = ""
+    for seuil, psm in _ESSAIS:
+        prep = _prepare(img_crop, seuil)
+        if prep is None:
+            continue
+        try:
+            t = pytesseract.image_to_string(
+                prep, config=f"--psm {psm} -c tessedit_char_whitelist=0123456789.,").strip()
+        except Exception:
+            return dernier, None
+        if t:
+            dernier = t
+            v = _en_cote(t)
+            if v is not None:
+                return t, v
+    return dernier, None
 
 
 def _en_cote(txt: str):
@@ -187,12 +220,13 @@ def lire_cotes(donnees: bytes) -> dict:
 
     lignes, incompletes, brut = [], 0, []
     for i, l in enumerate(lignes_bx, 1):
-        lus = [_texte(img.crop(bx)) for bx in l["boites"]]
+        paires = [_lire_pave(img.crop(bx)) for bx in l["boites"]]
+        lus = [t for t, _ in paires]
+        vals = [v for _, v in paires]
         # Trace de ce que l'OCR a REELLEMENT renvoye, avant interpretation :
         # sans elle, une lecture fausse est indiagnosticable a distance.
-        brut.append({"ligne": i, "ocr": lus,
-                     "interprete": [_en_cote(t) for t in lus]})
-        cotes = [c for c in (_en_cote(t) for t in lus) if c is not None]
+        brut.append({"ligne": i, "ocr": lus, "interprete": vals})
+        cotes = [v for v in vals if v is not None]
         if len(cotes) != 3:
             # Ligne dont une cote manque ou reste illisible : sur une capture
             # Bet261 c'est typiquement le bouton panier qui recouvre la 3e cote

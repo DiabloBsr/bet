@@ -228,3 +228,52 @@ def test_ocr_installe_dans_l_image_du_space():
     deploy = (racine / "deploy" / "deploy_hf.py").read_text(encoding="utf-8")
     for f in ('"Dockerfile"', '"requirements.txt"', '"scripts/lire_cotes.py"'):
         assert f in deploy, f"{f} doit être poussé, sinon le Space garde l'ancienne image"
+
+
+# ---------- robustesse de lecture : la cascade de reglages ----------
+
+def test_cascade_essaie_plusieurs_reglages():
+    """Sur une capture de téléphone, un pavé illisible avec un réglage passe
+    souvent avec un autre : 6 lignes lues sur 11 avant la cascade."""
+    assert len(lc._ESSAIS) >= 3, "une seule tentative ne suffit pas"
+    seuils = {s for s, _ in lc._ESSAIS}
+    psms = {p for _, p in lc._ESSAIS}
+    assert len(seuils) >= 2, "il faut varier le seuil de binarisation"
+    assert len(psms) >= 2, "il faut varier le mode de segmentation"
+
+
+def test_preparation_agrandit_et_marge():
+    """Tesseract lit mal des chiffres collés au bord et petits."""
+    im = Image.new("RGB", (40, 20), (76, 175, 80))
+    ImageDraw.Draw(im).text((8, 4), "2,05", fill=(255, 255, 255))
+    prep = lc._prepare(im, 150)
+    assert prep is not None
+    assert prep.width > 40 * 3 and prep.height > 20 * 3, "l'image doit être agrandie"
+    coins = [prep.getpixel((0, 0)), prep.getpixel((prep.width - 1, prep.height - 1))]
+    assert all(c > 200 for c in coins), "il faut une marge blanche autour"
+
+
+def test_preparation_renonce_sur_un_pave_vide():
+    """Pavé sans rien de blanc : inutile de lancer l'OCR dessus."""
+    assert lc._prepare(Image.new("RGB", (60, 30), (76, 175, 80)), 150) is None
+
+
+def test_lire_pave_sans_ocr_ne_plante_pas(monkeypatch):
+    import builtins
+    vrai = builtins.__import__
+
+    def faux(nom, *a, **k):
+        if nom == "pytesseract":
+            raise ImportError("absent")
+        return vrai(nom, *a, **k)
+    monkeypatch.setattr(builtins, "__import__", faux)
+    im = Image.new("RGB", (60, 30), (76, 175, 80))
+    ImageDraw.Draw(im).text((8, 8), "2,05", fill=(255, 255, 255))
+    assert lc._lire_pave(im) == ("", None)
+
+
+def test_trace_conserve_le_dernier_texte_meme_sans_cote():
+    """Si aucun réglage ne donne une cote plausible, on garde quand même ce que
+    tesseract a lu : c'est la seule prise pour diagnostiquer à distance."""
+    texte, cote = lc._lire_pave(Image.new("RGB", (60, 30), (76, 175, 80)))
+    assert cote is None and isinstance(texte, str)

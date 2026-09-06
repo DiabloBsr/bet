@@ -642,6 +642,19 @@ def main():
         img = st.file_uploader("📷 Ou dépose une capture d'écran — un match, ou toute "
                                "la liste d'un round (je lis les cotes dessus)",
                                type=["png", "jpg", "jpeg", "webp"], key="rc_img")
+        rc1, rc2, rc3, rc4 = st.columns([1, 1, 1, 1])
+        r_1 = rc1.number_input("Cote 1", 1.01, 200.0, 2.05, 0.01, key="rc_1", format="%.2f")
+        r_x = rc2.number_input("Cote X", 1.01, 200.0, 3.22, 0.01, key="rc_x", format="%.2f")
+        r_2 = rc3.number_input("Cote 2", 1.01, 200.0, 3.81, 0.01, key="rc_2", format="%.2f")
+        r_tol = rc4.number_input("Tolérance ±", 0.0, 1.0, 0.05, 0.01, key="rc_tol",
+                                 help="0.05 = cotes quasi identiques. Élargis si trop peu "
+                                      "de rencontres ressortent.")
+        r_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[], key="rc_lgs")
+
+        # Le traitement de la capture vit ICI, apres les reglages : en Streamlit
+        # l ordre du code est l ordre d execution, et ce bloc lit r_tol et r_lgs.
+        # Place plus haut, il levait UnboundLocalError des le premier depot --
+        # invisible aux tests, qui n executent jamais le rendu.
         if img is not None:
             import lire_cotes as _lc
             try:
@@ -745,14 +758,6 @@ def main():
                                         for v in b["interprete"])
                     st.markdown(f"　**Ligne {b['ligne']}** — OCR brut : `{lus}`　"
                                 f"→ interprété : **{interp}**")
-        rc1, rc2, rc3, rc4 = st.columns([1, 1, 1, 1])
-        r_1 = rc1.number_input("Cote 1", 1.01, 200.0, 2.05, 0.01, key="rc_1", format="%.2f")
-        r_x = rc2.number_input("Cote X", 1.01, 200.0, 3.22, 0.01, key="rc_x", format="%.2f")
-        r_2 = rc3.number_input("Cote 2", 1.01, 200.0, 3.81, 0.01, key="rc_2", format="%.2f")
-        r_tol = rc4.number_input("Tolérance ±", 0.0, 1.0, 0.05, 0.01, key="rc_tol",
-                                 help="0.05 = cotes quasi identiques. Élargis si trop peu "
-                                      "de rencontres ressortent.")
-        r_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[], key="rc_lgs")
         r_pair = st.checkbox("Limiter à deux équipes précises", value=False, key="rc_pair")
         r_a = r_b = None
         if r_pair:
