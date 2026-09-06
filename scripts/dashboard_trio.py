@@ -639,8 +639,8 @@ def main():
         # Lecture d'une capture d'ecran : elle PRE-REMPLIT les trois champs, sans
         # jamais lancer la recherche toute seule. Une lecture fausse doit rester
         # visible et corrigeable -- jamais silencieuse.
-        img = st.file_uploader("📷 Ou dépose la capture d'écran du match "
-                               "(je lis les cotes dessus)",
+        img = st.file_uploader("📷 Ou dépose une capture d'écran — un match, ou toute "
+                               "la liste d'un round (je lis les cotes dessus)",
                                type=["png", "jpg", "jpeg", "webp"], key="rc_img")
         if img is not None:
             import lire_cotes as _lc
@@ -649,17 +649,28 @@ def main():
             except Exception as exc:
                 lu = {"cotes": [], "message": f"Lecture impossible : {type(exc).__name__}."}
             st.image(img, caption="Capture déposée", width=380)
-            if lu.get("cotes"):
-                st.success("Cotes lues : " + " · ".join(f"**{c:g}**" for c in lu["cotes"])
-                           + "　—　" + lu["message"])
-                if len(lu["cotes"]) >= 3 and st.button("⬇️ Reprendre ces 3 cotes",
-                                                       key="rc_prendre"):
-                    for k, v in zip(("rc_1", "rc_x", "rc_2"), lu["cotes"][:3]):
+            lignes_lues = lu.get("lignes") or []
+            if lignes_lues:
+                st.success(lu["message"])
+
+                def _lib(i, ln):
+                    eq = ln.get("equipes") or f"Rencontre {i}"
+                    return f"{eq} — " + " / ".join(f"{c:g}" for c in ln["cotes"])
+                libs = [_lib(i, ln) for i, ln in enumerate(lignes_lues, 1)]
+                # Une capture de round entier porte une dizaine de rencontres :
+                # on laisse choisir laquelle plutot que d'en imposer une.
+                if len(libs) == 1:
+                    st.caption(f"Rencontre lue : **{libs[0]}**")
+                    choisie = 0
+                else:
+                    choisie = libs.index(st.selectbox(
+                        f"Quelle rencontre ? ({len(libs)} lues sur la capture)",
+                        libs, key="rc_ligne"))
+                if st.button("⬇️ Reprendre ces cotes", key="rc_prendre"):
+                    for k, v in zip(("rc_1", "rc_x", "rc_2"),
+                                    lignes_lues[choisie]["cotes"]):
                         st.session_state[k] = float(v)
                     st.rerun()
-                elif len(lu["cotes"]) < 3:
-                    st.caption("Moins de trois cotes lisibles : complète à la main "
-                               "ci-dessous.")
             else:
                 st.warning(lu.get("message", "Aucune cote lue."))
         rc1, rc2, rc3, rc4 = st.columns([1, 1, 1, 1])

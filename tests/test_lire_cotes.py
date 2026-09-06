@@ -117,3 +117,88 @@ def test_donnees_corrompues_ne_plantent_pas():
 
 def test_octets_vides_ne_plantent_pas():
     assert lc.lire_cotes(b"")["cotes"] == []
+
+
+# ---------- capture d'un ROUND ENTIER (10 matchs + éléments verts parasites) ----------
+
+MATCHS = [("Fulham", "2,10", "3,62", "3,26"), ("Manchester Red", "3,56", "3,48", "2,03"),
+          ("Wolverhampton", "7,09", "4,29", "1,46"), ("Spurs", "1,50", "4,91", "5,24"),
+          ("Bournemouth", "1,80", "3,72", "4,26"), ("Leeds", "3,85", "3,20", "2,05"),
+          ("Burnley", "3,69", "3,89", "1,88"), ("London Blues", "1,62", "4,04", "5,15"),
+          ("Liverpool", "1,39", "4,82", "7,42"), ("West Ham", "2,96", "3,90", "2,40")]
+
+
+def _round_complet(panier=True, banniere=True, bouton=True):
+    """Réplique fidèle d'une capture Bet261 : la liste des matchs d'un round,
+    AVEC les éléments verts qui n'ont rien à voir avec des cotes."""
+    W, H = 1000, 2076
+    im = Image.new("RGB", (W, H), (255, 255, 255))
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 0, W, 60), fill=(0, 0, 0))                        # barre de statut
+    d.rounded_rectangle((505, 88, 765, 175), radius=8, fill=(230, 40, 50))   # bouton rouge
+    if bouton:
+        d.rounded_rectangle((775, 88, 980, 175), radius=8, fill=(76, 175, 80))  # « S'inscrire »
+    y = 230
+    for nom, o1, ox, o2 in MATCHS:
+        d.text((100, y + 10), nom, fill=(20, 20, 20))
+        for i, v in enumerate((o1, ox, o2)):
+            x = 483 + i * 168
+            d.rounded_rectangle((x, y, x + 152, y + 92), radius=10, fill=(76, 175, 80))
+            d.text((x + 60, y + 40), v, fill=(255, 255, 255))
+        y += 140
+    if panier:      # recouvre la 3e cote du DERNIER match, comme dans l'app
+        d.ellipse((823, 1458, 967, 1602), fill=(10, 110, 60))
+    if banniere:
+        d.rectangle((10, 1660, W - 10, 1760), fill=(20, 120, 45))
+    return im
+
+
+def test_round_entier_toutes_les_lignes_completes():
+    """Les 9 lignes entièrement visibles sortent ; la 10e est masquée par le
+    panier dans l'app elle-même, donc elle ne doit PAS être devinée."""
+    lg = lc.lignes_de_match(_round_complet())
+    assert len(lg) == 9, f"9 lignes complètes attendues, {len(lg)} trouvées"
+    ys = [l["boites"][0][1] for l in lg]
+    assert ys == sorted(ys), "les lignes doivent sortir de haut en bas"
+    for l in lg:
+        assert len(l["boites"]) == 3
+        xs = [bx[0] for bx in l["boites"]]
+        assert xs == sorted(xs), "cotes de gauche à droite"
+
+
+def test_sans_panier_les_dix_lignes_sortent():
+    assert len(lc.lignes_de_match(_round_complet(panier=False))) == 10
+
+
+def test_bouton_sinscrire_nest_pas_pris_pour_un_match():
+    """Un pavé vert isolé n'est pas une ligne de cotes : le filtre doit le voir."""
+    avec = len(lc.lignes_de_match(_round_complet(panier=False)))
+    sans = len(lc.lignes_de_match(_round_complet(panier=False, bouton=False)))
+    assert avec == sans == 10, "le bouton vert ne doit rien ajouter ni retirer"
+
+
+def test_banniere_verte_ignoree():
+    avec = len(lc.lignes_de_match(_round_complet(panier=False)))
+    sans = len(lc.lignes_de_match(_round_complet(panier=False, banniere=False)))
+    assert avec == sans == 10, "la bannière large ne doit pas compter comme une ligne"
+
+
+def test_zone_des_noms_est_a_gauche_des_cotes():
+    for l in lc.lignes_de_match(_round_complet()):
+        gx0, gy0, gx1, gy1 = l["gauche"]
+        assert gx1 <= l["boites"][0][0], "la zone des noms doit s'arrêter avant la 1re cote"
+        assert gx1 - gx0 > 100, "elle doit être assez large pour porter un nom d'équipe"
+
+
+def test_round_sans_ocr_annonce_les_lignes_sans_inventer(monkeypatch):
+    import builtins
+    vrai = builtins.__import__
+
+    def faux(nom, *a, **k):
+        if nom == "pytesseract":
+            raise ImportError("absent")
+        return vrai(nom, *a, **k)
+    monkeypatch.setattr(builtins, "__import__", faux)
+    r = lc.lire_cotes(_octets(_round_complet()))
+    assert r["lignes"] == [] and r["cotes"] == []
+    assert "9 ligne" in r["message"], f"le compte des lignes doit être annoncé : {r['message']}"
