@@ -657,16 +657,34 @@ def main():
                 # au nombre reel de tests (3 issues x nb de rencontres), sinon
                 # une capture de round entier afficherait des faux positifs.
                 n_tests = 3 * len(lignes_lues)
+                _lgs = [LEAGUES[k] for k in r_lgs] or None
                 with _db("Relevé historique de chaque rencontre…"):
-                    lots = [(ln, _ptrc.resultats_a_cette_cote(
-                        engR, *ln["cotes"], tol=float(r_tol),
-                        leagues=[LEAGUES[k] for k in r_lgs] or None, n_tests=n_tests))
-                        for ln in lignes_lues]
+                    lots = []
+                    for ln in lignes_lues:
+                        # On n'affiche JAMAIS le texte brut de l'OCR : on le
+                        # rapproche des vrais noms de la base. Cela corrige
+                        # l'orthographe et donne l'identite reelle des equipes,
+                        # sans quoi le face-a-face serait impossible.
+                        eq = _ptrc.associer_equipes(engR, ln.get("equipes") or "", _lgs)
+                        tous = _ptrc.resultats_a_cette_cote(
+                            engR, *ln["cotes"], tol=float(r_tol), leagues=_lgs,
+                            n_tests=n_tests)
+                        duo = None
+                        if eq.get("home") and eq.get("away"):
+                            duo = _ptrc.resultats_a_cette_cote(
+                                engR, *ln["cotes"], tol=float(r_tol), leagues=_lgs,
+                                team_a=eq["home"], team_b=eq["away"], n_tests=n_tests)
+                        lots.append((ln, eq, tous, duo))
                 st.markdown("### 📋 Ce qui est tombé à ces cotes")
-                for i, (ln, res) in enumerate(lots, 1):
-                    eq = ln.get("equipes") or f"Rencontre {i}"
+                for i, (ln, eq, res, duo) in enumerate(lots, 1):
+                    if eq.get("home") and eq.get("away"):
+                        titre = f"{eq['home']} vs {eq['away']}"
+                        if eq["score"] < 0.85:
+                            titre += f"　_(lu « {ln.get('equipes', '')} »)_"
+                    else:
+                        titre = ln.get("equipes") or f"Rencontre {i}"
                     cotes = " / ".join(f"{c:g}" for c in ln["cotes"])
-                    st.markdown(f"**{i}. {eq}** — `{cotes}`")
+                    st.markdown(f"**{i}. {titre}** — `{cotes}`")
                     if res.get("erreur") or not res.get("n"):
                         st.caption("　aucune rencontre passée à ces cotes "
                                    "(élargis la tolérance ou les ligues).")
@@ -681,8 +699,26 @@ def main():
                     if R.get("scores"):
                         st.caption("　scores fréquents : " + " · ".join(
                             f"{x['score']} {x['pct']:.0f}%" for x in R["scores"][:4]))
+                    # Face-a-face du duo AUX MEMES COTES : la question la plus
+                    # precise qu'on puisse poser, et souvent un tout petit
+                    # echantillon -- on l'affiche en faits, sans statistique.
+                    if duo is None:
+                        st.caption("　⚔️ équipes non identifiées : pas de face-à-face.")
+                    elif not duo.get("n"):
+                        st.caption("　⚔️ aucun face-à-face direct à cette cote "
+                                   "(leurs rencontres ont été cotées autrement).")
+                    else:
+                        st.markdown(f"　⚔️ **Face-à-face à cette cote : "
+                                    f"{duo['n']} rencontre(s)**")
+                        for m in duo["matchs"][:10]:
+                            jr = f"`J{m['journee']}` " if m.get("journee") else ""
+                            st.markdown(f"　　{jr}`{m['date']}` {m['home']} "
+                                        f"**{m['sa']}-{m['sb']}** {m['away']} → "
+                                        f"**{m['issue']}**")
+                        if duo["n"] > 10:
+                            st.caption(f"　　({duo['n'] - 10} plus anciennes non affichées.)")
                 total_notables = sum(r["resume"]["notables"]
-                                     for _, r in lots if r.get("resume"))
+                                     for _, _, r, _ in lots if r.get("resume"))
                 if total_notables:
                     st.warning(f"⚠️ {total_notables} écart(s) hors intervalle sur "
                                f"{n_tests} tests. Seuil déjà élargi à ce nombre de "

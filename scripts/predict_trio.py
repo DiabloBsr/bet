@@ -1551,6 +1551,61 @@ def _z_bonferroni(n_tests: int) -> float:
     return float(NormalDist().inv_cdf(1.0 - alpha / 2.0))
 
 
+
+_ACCENTS = str.maketrans("àâäáãçéèêëíìîïñóòôöõúùûüýÿ", "aaaaaceeeeiiiinooooouuuuyy")
+
+
+def _norme(t: str) -> str:
+    """Forme comparable : minuscules, sans accent ni ponctuation, espaces reduits."""
+    t = str(t or "").lower().translate(_ACCENTS)
+    return " ".join("".join(c if c.isalnum() else " " for c in t).split())
+
+
+def associer_equipes(engine, texte: str, leagues=None, seuil: float = 0.55) -> dict:
+    """Rapproche un texte OCR des VRAIS noms d'equipes de la base.
+
+    L'OCR ecrit « Fulharn » ou « Manchesler Red » : on n'affiche donc jamais ce
+    qu'il rend, on affiche le nom de la base le plus proche. Cela corrige
+    l'orthographe ET donne l'identite reelle des equipes, ce qui permet ensuite
+    d'aller chercher leur face-a-face.
+
+    Retour {home, away, score, ligue} ; les noms valent None si rien ne colle.
+    """
+    from difflib import SequenceMatcher
+    sep = chr(10)
+    lignes = [l for l in str(texte or "").replace("/", sep).splitlines() if l.strip()]
+    if not lignes:
+        return {"home": None, "away": None, "score": 0.0, "ligue": None}
+    comps = list(leagues) if leagues else list(LEAGUE_TAGS)
+    connues = []
+    for c in comps:
+        for nom in league_teams(engine, c):
+            connues.append((nom, c, _norme(nom)))
+    if not connues:
+        return {"home": None, "away": None, "score": 0.0, "ligue": None}
+
+    def _meilleur(txt):
+        n = _norme(txt)
+        if not n:
+            return None, None, 0.0
+        best, bestc, bests = None, None, 0.0
+        for nom, comp, ref in connues:
+            r = SequenceMatcher(None, n, ref).ratio()
+            if r > bests:
+                best, bestc, bests = nom, comp, r
+        return best, bestc, bests
+
+    trouves = [_meilleur(l) for l in lignes[:3]]
+    trouves = [t for t in trouves if t[0] and t[2] >= seuil]
+    if len(trouves) < 2:
+        seul = trouves[0] if trouves else (None, None, 0.0)
+        return {"home": seul[0], "away": None, "score": round(seul[2], 2),
+                "ligue": seul[1]}
+    (ha, ca, sa_), (ab, cb, sb_) = trouves[0], trouves[1]
+    return {"home": ha, "away": ab, "score": round(min(sa_, sb_), 2),
+            "ligue": ca if ca == cb else None}
+
+
 def resultats_a_cette_cote(engine, oh: float, od: float, oa: float, tol: float = 0.05,
                            leagues=None, team_a: str | None = None,
                            team_b: str | None = None, n: int = 200,
