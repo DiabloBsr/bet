@@ -192,3 +192,93 @@ def test_base_vide_ne_plante_pas(tmp_path):
     """)
     c.commit(); c.close()
     assert pt.ou25_picks(create_engine(f"sqlite:///{db}")) == {"over": None, "under": None}
+
+
+# ---------- ciblage d'un match precis : heure + cote ----------
+
+def _base_ciblage(tmp_path: Path) -> tuple:
+    """Deux matchs a des HEURES et des COTES differentes, pour tester le ciblage."""
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    db = tmp_path / "cib.db"
+    c = sqlite3.connect(db)
+    c.executescript("""
+        CREATE TABLE events (id INTEGER PRIMARY KEY, competition TEXT, team_a TEXT,
+          team_b TEXT, round_info TEXT, expected_start TEXT);
+        CREATE TABLE odds_snapshots (id INTEGER PRIMARY KEY, event_id INTEGER,
+          odds_home REAL, odds_draw REAL, odds_away REAL, extra_markets TEXT);
+        CREATE TABLE results (id INTEGER PRIMARY KEY, event_id INTEGER,
+          score_a INTEGER, score_b INTEGER);
+    """)
+    for i in range(40):
+        for base, a, b, sa, sb in ((0, "Foot", "Ball", 3, 2), (200, "Mur", "Beton", 0, 0)):
+            c.execute("INSERT INTO events (id, competition, team_a, team_b, expected_start) "
+                      "VALUES (?,?,?,?,?)", (base + i + 1, LG, a, b, "2026-01-01 10:00:00"))
+            c.execute("INSERT INTO results (event_id, score_a, score_b) VALUES (?,?,?)",
+                      (base + i + 1, sa, sb))
+    # deux rencontres a venir, 40 et 90 minutes plus tard, cotes 1X2 distinctes
+    t1 = datetime.now(timezone.utc) + timedelta(minutes=40)
+    t2 = datetime.now(timezone.utc) + timedelta(minutes=90)
+    h1 = (t1 + timedelta(hours=3)).strftime("%H:%M")
+    h2 = (t2 + timedelta(hours=3)).strftime("%H:%M")
+    for eid, a, b, t, oh in ((900, "Foot", "Ball", t1, 2.25), (901, "Mur", "Beton", t2, 7.77)):
+        c.execute("INSERT INTO events (id, competition, team_a, team_b, round_info, "
+                  "expected_start) VALUES (?,?,?,?,?,?)",
+                  (eid, LG, a, b, "Journee 9", t.strftime("%Y-%m-%d %H:%M:%S")))
+        c.execute("INSERT INTO odds_snapshots (event_id, odds_home, odds_draw, odds_away, "
+                  "extra_markets) VALUES (?,?,?,?,?)",
+                  (eid, oh, 3.0, 4.0, json.dumps(MARCHE)))
+    c.commit(); c.close()
+    return f"sqlite:///{db}", h1, h2
+
+
+def test_ciblage_par_heure_isole_le_bon_match(tmp_path):
+    url, h1, h2 = _base_ciblage(tmp_path)
+    eng = create_engine(url)
+    r1 = pt.ou25_picks(eng, heure=h1)
+    assert r1["over"]["home"] == "Foot" and r1["under"]["home"] == "Foot", (
+        "a cette heure il n'y a QUE Foot vs Ball : les deux sens doivent le designer")
+    r2 = pt.ou25_picks(eng, heure=h2)
+    assert r2["over"]["home"] == "Mur" and r2["under"]["home"] == "Mur"
+
+
+def test_ciblage_par_heure_inexistante_ne_rend_rien(tmp_path):
+    url, _, _ = _base_ciblage(tmp_path)
+    assert pt.ou25_picks(create_engine(url), heure="03:07") == {"over": None, "under": None}
+
+
+def test_ciblage_par_cote_retrouve_le_match(tmp_path):
+    """La cote 1X2 vue dans l'app doit suffire a isoler le match."""
+    url, _, _ = _base_ciblage(tmp_path)
+    eng = create_engine(url)
+    assert pt.ou25_picks(eng, cote=2.25)["over"]["home"] == "Foot"
+    assert pt.ou25_picks(eng, cote=7.77)["over"]["home"] == "Mur"
+
+
+def test_ciblage_par_cote_tolerance(tmp_path):
+    """Une cote lue a 0.03 pres doit encore retrouver le match ; 0.5 non."""
+    url, _, _ = _base_ciblage(tmp_path)
+    eng = create_engine(url)
+    assert pt.ou25_picks(eng, cote=2.28)["over"] is not None
+    assert pt.ou25_picks(eng, cote=2.90) == {"over": None, "under": None}
+
+
+def test_ciblage_cote_de_marche_secondaire(tmp_path):
+    """Une cote de « Total de buts » ou de Multi-Buts marche aussi."""
+    url, _, _ = _base_ciblage(tmp_path)
+    eng = create_engine(url)
+    assert pt.ou25_picks(eng, cote=4.33)["over"] is not None   # « Total de buts » 3
+    assert pt.ou25_picks(eng, cote=1.41)["under"] is not None  # Multi-Buts 0/1/2
+
+
+def test_ciblage_heure_et_cote_combines(tmp_path):
+    url, h1, h2 = _base_ciblage(tmp_path)
+    eng = create_engine(url)
+    assert pt.ou25_picks(eng, heure=h1, cote=2.25)["over"]["home"] == "Foot"
+    # bonne heure mais cote de l'AUTRE match : rien
+    assert pt.ou25_picks(eng, heure=h1, cote=7.77) == {"over": None, "under": None}
+
+
+def test_ciblage_cote_invalide_est_ignoree(tmp_path):
+    """Une cote non numerique ne doit pas faire planter ni tout filtrer."""
+    url, _, _ = _base_ciblage(tmp_path)
+    assert pt.ou25_picks(create_engine(url), cote="abc")["over"] is not None

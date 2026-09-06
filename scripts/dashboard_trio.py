@@ -405,15 +405,42 @@ def main():
                    "sont celles de l'app, à titre d'exécution.")
         o_lgs = st.multiselect("Ligues à analyser (vide = les 9)", list(LEAGUES),
                                default=[], key="o25_lgs")
+        oc1, oc2 = st.columns(2)
+        o_h = oc1.text_input("Heure du match (HH:MM Mada) — vide = tous",
+                             value="", key="o25_h", placeholder="ex: 21:03")
+        o_c = oc2.text_input("Cote du match — vide = toutes", value="", key="o25_c",
+                             placeholder="ex: 1.41",
+                             help="Une cote que tu vois sur le match dans Bet261 "
+                                  "(1X2, Total de buts, Multi-Buts, +/-) : elle sert "
+                                  "à retrouver ce match précis.")
         if st.button("🔮 Mes deux pronostics", key="o25_go", type="primary"):
-            with _db("Analyse des matchs à venir…"):
-                st.session_state["o25_res"] = _pto25.ou25_picks(
-                    engO, leagues=[LEAGUES[k] for k in o_lgs] or None, minutes=240)
+            hh, cc = o_h.strip(), o_c.replace(",", ".").strip()
+            if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
+                st.warning("Heure au format HH:MM (ex: 21:03).")
+            elif cc and not re.match(r"^\d+(\.\d+)?$", cc):
+                st.warning("Cote au format numérique (ex: 1.41).")
+            else:
+                with _db("Analyse des matchs à venir…"):
+                    st.session_state["o25_res"] = _pto25.ou25_picks(
+                        engO, leagues=[LEAGUES[k] for k in o_lgs] or None, minutes=240,
+                        heure=hh or None, cote=float(cc) if cc else None)
+                st.session_state["o25_crit"] = (hh, cc)
         o_res = st.session_state.get("o25_res")
         if o_res is not None:
             if not o_res.get("over") and not o_res.get("under"):
-                st.info("Aucun match à venir analysable — ajoute des ligues, "
-                        "ou attends le prochain round.")
+                hh, cc = st.session_state.get("o25_crit", ("", ""))
+                crit = []
+                if hh:
+                    crit.append(f"à **{hh}**")
+                if cc:
+                    crit.append(f"portant la cote **{cc}**")
+                if crit:
+                    st.info("Aucun match " + " et ".join(crit) + " parmi les prochaines "
+                            "heures. Vérifie l'heure Mada du round, élargis les ligues, "
+                            "ou vide ces deux champs pour voir tous les matchs.")
+                else:
+                    st.info("Aucun match à venir analysable — ajoute des ligues, "
+                            "ou attends le prochain round.")
             else:
                 emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
 

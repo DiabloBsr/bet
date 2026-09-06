@@ -1396,14 +1396,36 @@ def _paris_reels(mk, sens):
     return direct, cellules, equiv, voisins
 
 
+def _toutes_cotes(mk, oh=None, od=None, oa=None):
+    """Toutes les cotes lisibles du match — sert a RETROUVER un match a partir
+    d'une cote vue dans l'application (1X2, totaux, Multi-Buts, +/-)."""
+    out = []
+    for v in (oh, od, oa):
+        o = _odd_pos(v)
+        if o:
+            out.append(round(float(o), 2))
+    for nom in ("Total de buts", "Multi-Buts", "+/-", "Double Chance", "G/NG"):
+        d = mk.get(nom) if isinstance(mk, dict) else None
+        if isinstance(d, dict):
+            for v in d.values():
+                o = _odd_pos(v)
+                if o:
+                    out.append(round(float(o), 2))
+    return out
+
+
 def ou25_picks(engine, leagues=None, minutes: int = 240, start_local=None,
-               end_local=None) -> dict:
+               end_local=None, heure=None, cote=None, tol: float = 0.05) -> dict:
     """Mes DEUX pronostics les plus surs sur la ligne 2.5 : l'over et l'under.
 
     La prediction vient de la SEULE forme des equipes dans le virtuel Bet261
     (Poisson attaque/defense) ; les cotes ne servent qu'a montrer quoi cliquer.
     Renvoie {"over": {...} | None, "under": {...} | None}.
     """
+    # Heure ciblee : on borne la fenetre a cette minute exacte (bornes inclusives),
+    # ce qui isole le round demande sans que l'utilisateur ait a saisir un creneau.
+    if heure:
+        start_local = end_local = str(heure).strip().zfill(5)
     up = _upcoming_df(engine, leagues, minutes, start_local, end_local)
     cands = []
     if not len(up):
@@ -1420,6 +1442,18 @@ def ou25_picks(engine, leagues=None, minutes: int = 240, start_local=None,
             mk = xm
         if not isinstance(mk, dict):
             mk = {}
+        # Cote ciblee : on ne garde que les matchs ou cette cote existe vraiment,
+        # tous marches confondus. C'est ainsi qu'on retrouve LE match vu dans l'app.
+        if cote:
+            try:
+                cible = float(cote)
+            except (TypeError, ValueError):
+                cible = None
+            if cible:
+                vues = _toutes_cotes(mk, getattr(r, "oh", None), getattr(r, "od", None),
+                                     getattr(r, "oa", None))
+                if not any(abs(o - cible) <= tol for o in vues):
+                    continue
         jn = None
         _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
         if _d:
