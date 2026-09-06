@@ -1537,6 +1537,110 @@ def conseil(engine, renc: dict) -> dict:
     }
 
 
+
+def resultats_a_cette_cote(engine, oh: float, od: float, oa: float, tol: float = 0.05,
+                           leagues=None, team_a: str | None = None,
+                           team_b: str | None = None, n: int = 200) -> dict:
+    """Ce qui est REELLEMENT tombe, historiquement, a cette cote 1X2.
+
+    On cherche les rencontres TERMINEES dont la cote d'ouverture (1er snapshot)
+    vaut 1/X/2 a `tol` pres, puis on montre les resultats et ce qu'ils donnent.
+    Deux equipes peuvent etre precisees pour ne garder que leurs face-a-face.
+
+    Rien n'est predit ici : c'est un releve. La comparaison « taux reel vs
+    probabilite implicite de la cote » dit seulement si le book etait juste sur
+    ce prix -- jusqu'ici il l'a toujours ete, a la marge pres.
+    """
+    try:
+        oh, od, oa, tol = float(oh), float(od), float(oa), abs(float(tol))
+    except (TypeError, ValueError):
+        return {"erreur": "Cotes invalides."}
+    if min(oh, od, oa) <= 1.0:
+        return {"erreur": "Une cote doit être supérieure à 1."}
+    where = [f"o.odds_home BETWEEN {oh - tol} AND {oh + tol}",
+             f"o.odds_draw BETWEEN {od - tol} AND {od + tol}",
+             f"o.odds_away BETWEEN {oa - tol} AND {oa + tol}"]
+    if team_a and team_b:
+        a = str(team_a).replace("'", "''"); b = str(team_b).replace("'", "''")
+        where.append(f"((e.team_a='{a}' AND e.team_b='{b}') OR "
+                     f"(e.team_a='{b}' AND e.team_b='{a}'))")
+    d = pd.read_sql(f"""SELECT e.competition c, e.team_a, e.team_b, e.expected_start,
+        e.round_info rd, o.odds_home oh, o.odds_draw od, o.odds_away oa,
+        r.score_a sa, r.score_b sb
+        FROM events e JOIN results r ON r.event_id=e.id
+        JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
+        WHERE r.score_a IS NOT NULL {_lg_clause(leagues)} AND {' AND '.join(where)}
+        ORDER BY e.expected_start DESC LIMIT {int(n)}""", engine)
+    if not len(d):
+        return {"matchs": [], "n": 0}
+    d["tot"] = d.sa.astype(int) + d.sb.astype(int)
+    d["issue"] = np.where(d.sa > d.sb, "1", np.where(d.sa == d.sb, "X", "2"))
+    matchs = [{
+        "date": pd.to_datetime(r.expected_start, utc=True).tz_convert(MADA).strftime("%d/%m %H:%M"),
+        "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]),
+        "journee": (int(re.findall(r"\d+", str(r.rd))[0])
+                    if r.rd and re.findall(r"\d+", str(r.rd)) else None),
+        "home": r.team_a, "away": r.team_b, "sa": int(r.sa), "sb": int(r.sb),
+        "tot": int(r.tot), "issue": r.issue,
+        "cotes": [round(float(r.oh), 2), round(float(r.od), 2), round(float(r.oa), 2)],
+    } for r in d.itertuples()]
+    nb = len(d)
+    inv = 1 / oh + 1 / od + 1 / oa
+    resume = {"n": nb, "buts_moyen": round(float(d.tot.mean()), 2),
+              "over25": round(100.0 * float((d.tot >= 3).mean()), 1),
+              "over35": round(100.0 * float((d.tot >= 4).mean()), 1),
+              "btts": round(100.0 * float(((d.sa > 0) & (d.sb > 0)).mean()), 1),
+              "zero": round(100.0 * float((d.tot == 0).mean()), 1),
+              "marge": round(100.0 * (inv - 1.0), 1), "issues": []}
+    # Un releve sur quelques dizaines de matchs produit MECANIQUEMENT des ecarts
+    # de plusieurs points. Sans intervalle de confiance, cet onglet ferait voir
+    # un signal a chaque requete. On tranche donc explicitement bruit / notable.
+    # z corrige de Bonferroni : les TROIS issues sont testees a chaque requete.
+    # A 95 % non corrige, une requete sur sept afficherait un « ecart notable »
+    # par pur hasard (verifie : 2 sur 15 tests) -- exactement le piege de
+    # comparaison multiple qui a deja fabrique 3 faux positifs sur 76 500
+    # cellules dans ce projet.
+    Z_BONF = 2.394   # bilateral 0.05 / 3
+
+    def _wilson(k, n, z=Z_BONF):
+        """Intervalle de Wilson a 95 %. L'approximation normale donne une largeur
+        NULLE quand k vaut 0 ou n -- elle declarerait alors n'importe quel ecart
+        significatif sur un petit echantillon, ce qui est le cas d'usage courant
+        ici (une paire precise + une cote precise = quelques dizaines de matchs)."""
+        if n <= 0:
+            return 0.0, 1.0
+        pr = k / n
+        den = 1.0 + z * z / n
+        centre = (pr + z * z / (2 * n)) / den
+        demi = (z / den) * ((pr * (1 - pr) / n + z * z / (4 * n * n)) ** 0.5)
+        return max(0.0, centre - demi), min(1.0, centre + demi)
+
+    for lib, cote in (("1", oh), ("X", od), ("2", oa)):
+        k = int((d.issue == lib).sum())
+        pr = k / nb
+        lo_ic, hi_ic = _wilson(k, nb)
+        dev = 1.0 / cote / inv
+        resume["issues"].append({
+            "sel": lib, "cote": round(cote, 2), "n": k,
+            "reel": round(100.0 * pr, 1),
+            "ic_bas": round(100.0 * lo_ic, 1), "ic_haut": round(100.0 * hi_ic, 1),
+            "implicite": round(100.0 / cote, 1),
+            "devigue": round(100.0 * dev, 1),
+            "ecart": round(100.0 * (pr - dev), 1),
+            # « notable » = le prix devigue tombe HORS de l'intervalle a 95 %.
+            "notable": bool(dev < lo_ic or dev > hi_ic),
+        })
+    resume["notables"] = sum(1 for i in resume["issues"] if i["notable"])
+    # n minimal pour qu'un ecart de 5 points soit seulement detectable
+    resume["n_pour_5pp"] = int(round((1.96 ** 2) * 0.25 / (0.05 ** 2)))
+    sc = d.groupby([d.sa, d.sb]).size().sort_values(ascending=False)
+    resume["scores"] = [{"score": f"{int(a)}-{int(b)}", "n": int(k),
+                         "pct": round(100.0 * int(k) / nb, 1)}
+                        for (a, b), k in list(sc.items())[:6]]
+    return {"matchs": matchs, "n": nb, "resume": resume,
+            "cible": [round(oh, 2), round(od, 2), round(oa, 2)], "tol": tol}
+
+
 def ou25_probas(p_raw_over):
     """P(over 2.5) brute -> (over calibre, under calibre), bornes au mesure."""
     if not isinstance(p_raw_over, (int, float)) or p_raw_over != p_raw_over:

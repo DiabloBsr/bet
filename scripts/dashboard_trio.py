@@ -629,6 +629,86 @@ def main():
                            "affiche un gain apparent > 1 quatre fois sur cinq sans "
                            "améliorer le ROI.")
 
+    # ---- 💰 QU'EST-CE QUI TOMBE À CETTE COTE ? (relevé historique 1X2) ----
+    with st.expander("💰 Qu'est-ce qui tombe à cette cote ? — relevé historique"):
+        import predict_trio as _ptrc
+        engR = st.cache_resource(_engine)()
+        st.caption("Saisis les trois cotes que tu vois sur Bet261 : je ressors toutes "
+                   "les rencontres passées qui portaient ces mêmes cotes, et ce qu'elles "
+                   "ont donné. C'est un relevé de faits, pas une prédiction.")
+        rc1, rc2, rc3, rc4 = st.columns([1, 1, 1, 1])
+        r_1 = rc1.number_input("Cote 1", 1.01, 200.0, 2.05, 0.01, key="rc_1", format="%.2f")
+        r_x = rc2.number_input("Cote X", 1.01, 200.0, 3.22, 0.01, key="rc_x", format="%.2f")
+        r_2 = rc3.number_input("Cote 2", 1.01, 200.0, 3.81, 0.01, key="rc_2", format="%.2f")
+        r_tol = rc4.number_input("Tolérance ±", 0.0, 1.0, 0.05, 0.01, key="rc_tol",
+                                 help="0.05 = cotes quasi identiques. Élargis si trop peu "
+                                      "de rencontres ressortent.")
+        r_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[], key="rc_lgs")
+        r_pair = st.checkbox("Limiter à deux équipes précises", value=False, key="rc_pair")
+        r_a = r_b = None
+        if r_pair:
+            _comp = LEAGUES[r_lgs[0]] if len(r_lgs) == 1 else None
+            if not _comp:
+                st.caption("Choisis UNE seule ligue ci-dessus pour pouvoir nommer les équipes.")
+            else:
+                _tm = _ptrc.league_teams(engR, _comp)
+                if _tm:
+                    pa, pb = st.columns(2)
+                    r_a = pa.selectbox("Équipe A", _tm, index=0, key="rc_a")
+                    r_b = pb.selectbox("Équipe B", _tm, index=min(1, len(_tm) - 1), key="rc_b")
+        if st.button("💰 Voir ce qui est tombé", key="rc_go", type="primary"):
+            with _db("Recherche des rencontres à cette cote…"):
+                st.session_state["rc_res"] = _ptrc.resultats_a_cette_cote(
+                    engR, r_1, r_x, r_2, tol=float(r_tol),
+                    leagues=[LEAGUES[k] for k in r_lgs] or None,
+                    team_a=r_a, team_b=r_b)
+        rr = st.session_state.get("rc_res")
+        if rr is not None:
+            if rr.get("erreur"):
+                st.warning(rr["erreur"])
+            elif not rr.get("n"):
+                st.info("Aucune rencontre passée à ces cotes. Élargis la tolérance, "
+                        "ajoute des ligues, ou décoche la limite aux deux équipes.")
+            else:
+                R = rr["resume"]
+                st.success(f"**{rr['n']} rencontres** ont porté les cotes "
+                           f"`{rr['cible'][0]:g} / {rr['cible'][1]:g} / {rr['cible'][2]:g}` "
+                           f"(± {rr['tol']:g}) — marge du book : {R['marge']}%")
+                st.markdown("**Ce qui est sorti :**")
+                for i in R["issues"]:
+                    flag = "　⚠️ écart notable" if i["notable"] else ""
+                    st.markdown(f"　• **{i['sel']}** (cote {i['cote']:g}) → sorti "
+                                f"**{i['n']} fois = {i['reel']:.1f}%**  "
+                                f"_[{i['ic_bas']:.0f}–{i['ic_haut']:.0f}%]_  ·  "
+                                f"le prix dit {i['devigue']:.1f}%{flag}")
+                if R["notables"] == 0:
+                    st.caption("✅ Aucun écart significatif : à cette cote, le book est juste. "
+                               "Les différences visibles tiennent dans le hasard de "
+                               f"{rr['n']} rencontres.")
+                else:
+                    st.warning(f"{R['notables']} écart(s) hors intervalle — à confirmer sur "
+                               "un autre échantillon avant d'en tirer quoi que ce soit. "
+                               "Sur ce jeu, tous les écarts testés jusqu'ici se sont "
+                               "révélés être du bruit.")
+                st.markdown(f"**Les buts** : {R['buts_moyen']} en moyenne · "
+                            f"plus de 2,5 : **{R['over25']}%** · plus de 3,5 : {R['over35']}% · "
+                            f"les deux marquent : {R['btts']}% · 0-0 : {R['zero']}%")
+                if R.get("scores"):
+                    st.markdown("**Scores les plus fréquents** : " + " · ".join(
+                        f"**{x['score']}** {x['pct']:.0f}%" for x in R["scores"]))
+                st.markdown("**Les rencontres, de la plus récente à la plus ancienne :**")
+                for m in rr["matchs"][:60]:
+                    jr = f"`J{m['journee']}` " if m.get("journee") else ""
+                    st.markdown(f"　{jr}`{m['date']}` `[{m['tag']}]` {m['home']} "
+                                f"**{m['sa']}-{m['sb']}** {m['away']}　→ **{m['issue']}**")
+                if rr["n"] > 60:
+                    st.caption(f"({rr['n'] - 60} rencontres plus anciennes non affichées.)")
+                st.caption(f"Intervalles à 95% corrigés pour les 3 issues testées à la fois "
+                           f"(Bonferroni) : sans cette correction, environ une requête sur "
+                           f"sept afficherait un faux « écart notable ». Il faut ~"
+                           f"{R['n_pour_5pp']} rencontres pour qu'un écart de 5 points "
+                           f"soit seulement détectable.")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2
