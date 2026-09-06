@@ -648,7 +648,6 @@ def main():
                 lu = _lc.lire_cotes(img.getvalue())
             except Exception as exc:
                 lu = {"cotes": [], "message": f"Lecture impossible : {type(exc).__name__}."}
-            st.image(img, caption="Capture déposée", width=380)
             lignes_lues = lu.get("lignes") or []
             if lignes_lues:
                 st.success(lu["message"])
