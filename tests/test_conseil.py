@@ -283,3 +283,44 @@ def test_htft_dans_le_conseil_avec_sa_vraie_cote(tmp_path):
     assert ht["sel"] in MARCHE["HT/FT"]
     assert ht["odds"] == MARCHE["HT/FT"][ht["sel"]]
     assert 0.0 < ht["p"] < 1.0
+
+
+# ---------- la calibration ne doit pas inventer hors de sa plage ----------
+
+def test_calibration_ancree_a_zero_et_a_un():
+    """BUG RÉEL : les tables sont apprises sur les probas du TOP PICK (HT/FT :
+    20 à 75 %). Sans ancres, np.interp extrapole à PLAT — une entrée de 2 %
+    ressortait à 21,3 %, et une sélection G/NG à 1 % à 52 %. Les alternatives
+    affichées sous la recommandation étaient gonflées, au point de pouvoir
+    s'ordonner à l'envers. Les deux ancres sont vraies par construction."""
+    for m in pt._MK_CAL:
+        assert pt.calib_marche(m, 0.0) < 0.02, f"{m} : une proba nulle doit rester nulle"
+        assert pt.calib_marche(m, 0.01) < 0.05, f"{m} : 1 % ne doit pas devenir 50 %"
+        assert pt.calib_marche(m, 1.0) > 0.95, f"{m} : une certitude doit le rester"
+
+
+def test_calibration_monotone_sur_tout_lintervalle():
+    xs = [i / 200 for i in range(201)]
+    for m in pt._MK_CAL:
+        ys = [pt.calib_marche(m, x) for x in xs]
+        assert all(ys[i] <= ys[i + 1] + 1e-9 for i in range(len(ys) - 1)), \
+            f"{m} : calibration non monotone"
+
+
+def test_calibration_inchangee_dans_la_plage_apprise():
+    """L'ancrage ne doit RIEN changer là où la table a été mesurée — sinon les
+    taux de réussite annoncés ne décriraient plus ce qui a été backtesté."""
+    b = pt._MK_CAL["HT/FT"]["bins"]
+    for x in b:
+        centre = (x["lo"] + x["hi"]) / 2.0
+        assert abs(pt.calib_marche("HT/FT", centre) - x["real"]) < 1e-6
+
+
+def test_les_alternatives_restent_bien_ordonnees(tmp_path):
+    """Conséquence directe du bug : une alternative peu probable pouvait
+    s'afficher au-dessus d'une plus probable."""
+    eng = create_engine(_base(tmp_path))
+    r = pt.conseil(eng, pt.rencontres(eng)[0])
+    for l in r["lignes"]:
+        ps = [t["p"] for t in l["top3"]]
+        assert ps == sorted(ps, reverse=True), f"{l['marche']} : alternatives mal ordonnées"

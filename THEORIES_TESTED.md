@@ -72,3 +72,42 @@ mirages de perception (patterns vus dans du bruit) ou des conseils de gestion.
 Alerte automatique si l'un franchit la marge.
 
 *Registre vivant : toute nouvelle théorie croisée est testée et ajoutée ici.*
+
+## Renversements HT/FT « sur-cotés » — RÉFUTÉ, et le signal est INVERSÉ (2026-09-15)
+
+**Hypothèse** : quand mon modèle donne un 2/1 (ou 1/2) nettement au-dessus de ce
+que le book implique, l'écart signale un mauvais prix à exploiter.
+
+**Mesure** : 119 340 observations (59 670 matchs × 2 renversements), cotes
+d'ouverture dévigées sur les 9 issues, split chronologique, TEST jamais vu.
+
+Taux de base — le book est **meilleur que moi** :
+
+| | réel | mon modèle | book dévigé |
+|---|---|---|---|
+| 2/1 | 2.18 % | 1.94 % | **2.15 %** |
+| 1/2 | 1.55 % | 1.96 % | **1.71 %** |
+
+La règle « parier quand ma proba dépasse celle du book d'un facteur k », sur TEST :
+
+| seuil | paris | touche | j'annonce | ROI |
+|---|---|---|---|---|
+| ×1.0 | 30 034 | 1.66 % | 2.25 % | −16.7 % |
+| ×1.2 | 16 688 | 1.41 % | 2.21 % | −17.6 % |
+| ×1.5 | 7 577 | 1.08 % | 2.25 % | −22.4 % |
+| ×2.0 | 2 180 | 0.83 % | 2.45 % | −26.4 % |
+| ×3.0 | 204 | 0.49 % | 2.96 % | −51.0 % |
+| *tous* | 59 670 | *1.83 %* | *1.91 %* | *−16.8 %* |
+
+**Verdict** : le signal n'est pas neutre, il est **inversé et monotone**. Plus mon
+modèle dépasse le book, moins ça tombe (1.83 % → 0.49 %) et plus le ROI se
+dégrade (−16.8 % → −51.0 %). À ×1.5, 1.08 % ± 0.24 contre 1.83 % de référence :
+l'écart est significatif, ce n'est pas du bruit d'échantillon.
+
+**Mécanisme** : maximiser « ma proba ÷ proba du book » sélectionne mécaniquement
+les matchs où mon modèle s'écarte le plus du prix **en ma faveur** — c'est-à-dire
+mes propres erreurs. Même mécanisme que la règle « proba × cote » écartée le
+2026-09-03 (annonçait 44.9 % pour 35.9 % réel).
+
+**Décision** : aucun signal construit. Un affichage « renversement sur-coté »
+aurait été un bouton systématiquement perdant.

@@ -78,7 +78,14 @@ def test_distribution_suit_le_niveau_des_equipes(tmp_path):
 def test_calib_totals_monotone_et_bornee():
     ys = [pt.calib_totals(i / 100) for i in range(0, 101, 5)]
     assert all(ys[i] <= ys[i + 1] + 1e-9 for i in range(len(ys) - 1)), "table non monotone"
-    assert 0.0 < min(ys) and max(ys) < 1.0
+    # La table est ANCREE en (0,0) et (1,1) : une proba nulle reste nulle. Cette
+    # assertion exigeait autrefois min(ys) > 0, ce qui n'etait vrai QUE parce que
+    # la table extrapolait a plat hors de sa plage -- le bug qui faisait afficher
+    # 21 % pour une entree de 2 %. On verifie donc les bornes, puis la stricte
+    # positivite sur une entree strictement positive.
+    assert 0.0 <= min(ys) and max(ys) <= 1.0
+    assert pt.calib_totals(0.0) == 0.0, "une proba nulle doit rester nulle"
+    assert pt.calib_totals(0.30) > 0.0, "une proba non nulle ne doit pas s'annuler"
 
 
 def test_calib_totals_rabat_la_surconfiance():

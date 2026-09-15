@@ -1230,9 +1230,7 @@ def calib_over25(p_raw: float) -> float:
         return 0.0
     if not _O25_CAL:
         return float(p_raw)
-    xs = [x for x, _ in _O25_CAL]
-    ys = [y for _, y in _O25_CAL]
-    return float(np.interp(float(p_raw), xs, ys))
+    return _interp_calib([x for x, _ in _O25_CAL], [y for _, y in _O25_CAL], p_raw)
 
 
 
@@ -1255,7 +1253,7 @@ def calib_totals(p_raw) -> float:
         return 0.0
     if not _TOT_CAL:
         return float(p_raw)
-    return float(np.interp(float(p_raw), [x for x, _ in _TOT_CAL], [y for _, y in _TOT_CAL]))
+    return _interp_calib([x for x, _ in _TOT_CAL], [y for _, y in _TOT_CAL], p_raw)
 
 
 def totals_scan(engine, leagues=None, minutes: int = 180, start_local=None,
@@ -1493,6 +1491,24 @@ except Exception:
     _MK_CAL = {}
 
 
+
+def _interp_calib(xs, ys, p_raw: float) -> float:
+    """Interpolation d'une table de calibration, ANCREE en (0,0) et (1,1).
+
+    Sans ces ancres, np.interp extrapole a PLAT hors de la plage apprise : une
+    table HT/FT apprise sur des probas de 20 a 75 % rendait 21.3 % pour une
+    entree de 2 %. Les alternatives affichees sous la recommandation etaient
+    donc gonflees, et pouvaient meme s'ordonner a l'envers. Les deux ancres
+    sont vraies par construction : une proba nulle reste nulle, une certitude
+    reste une certitude.
+    """
+    if not xs:
+        return float(p_raw)
+    xs2 = [0.0] + list(xs) + [1.0]
+    ys2 = [0.0] + list(ys) + [1.0]
+    return float(np.interp(float(p_raw), xs2, ys2))
+
+
 def calib_marche(marche: str, p_raw) -> float:
     """Proba brute d'un marche -> proba CALIBREE (taux reel mesure)."""
     if not isinstance(p_raw, (int, float)) or p_raw != p_raw:
@@ -1502,7 +1518,7 @@ def calib_marche(marche: str, p_raw) -> float:
         return float(p_raw)
     xs = [(x["lo"] + x["hi"]) / 2.0 for x in b]
     ys = [float(x["real"]) for x in b]
-    return float(np.interp(float(p_raw), xs, ys))
+    return _interp_calib(xs, ys, p_raw)
 
 
 def rencontres(engine, leagues=None, minutes: int = 240, heure=None) -> list:
@@ -1772,7 +1788,7 @@ def ou25_probas(p_raw_over):
         return 0.0, 0.0
     o = float(p_raw_over)
     if _OU25_CAL:
-        o = float(np.interp(o, [x for x, _ in _OU25_CAL], [y for _, y in _OU25_CAL]))
+        o = _interp_calib([x for x, _ in _OU25_CAL], [y for _, y in _OU25_CAL], o)
     return min(o, _OU25_OVER_MAX), min(1.0 - o, _OU25_UNDER_MAX)
 
 
