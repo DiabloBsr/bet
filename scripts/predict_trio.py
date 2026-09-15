@@ -1376,6 +1376,60 @@ def _minute_dist(lam: float):
     return _MIN_TABLE[-1] if _MIN_TABLE else None
 
 
+# HT/FT : part des buts marquee en 1re mi-temps, MESUREE sur 208 425 matchs.
+# Remarquablement stable : 45.04 % sur la 1re moitie chronologique contre 44.98 %
+# sur la seconde, et identique a domicile (45.08 %) et a l'exterieur (44.91 %) --
+# aucun ajustement par camp n'est justifie. Variation par ligue : 43.5 a 46.1 %.
+PART_MT1 = 0.45
+KH = 7                      # buts par equipe et par mi-temps (0..6) : largement suffisant
+HTFT_LABELS = ("1/1", "1/X", "1/2", "X/1", "X/X", "X/2", "2/1", "2/X", "2/2")
+
+
+def _masques_htft():
+    """Masques (9, KH*KH, KH*KH) : pour chaque issue HT/FT, les combinaisons
+    (buts 1re MT) x (buts 2e MT) qui la realisent. Calcules une seule fois."""
+    i, j = np.meshgrid(np.arange(KH), np.arange(KH), indexing="ij")
+    k, l = i.copy(), j.copy()
+    ht = np.sign(i - j).ravel()                       # issue a la mi-temps
+    a1, b1 = i.ravel(), j.ravel()
+    a2, b2 = k.ravel(), l.ravel()
+    ft = np.sign((a1[:, None] + a2[None, :]) - (b1[:, None] + b2[None, :]))
+    code = {1: "1", 0: "X", -1: "2"}
+    M = np.zeros((9, KH * KH, KH * KH))
+    for g, lib in enumerate(HTFT_LABELS):
+        h, f = lib.split("/")
+        M[g] = ((np.array([code[x] for x in ht])[:, None] == h) &
+                (np.vectorize(code.get)(ft) == f)).astype(float)
+    return M
+
+
+_HTFT_M = _masques_htft()
+
+
+def _poisson(lam: float, k: int):
+    from math import exp, factorial
+    return np.exp(-lam) * np.array([lam ** n / factorial(n) for n in range(k)])
+
+
+
+def _htft(la: float, lb: float):
+    """Les 9 issues mi-temps/fin de match.
+
+    Chaque mi-temps est un Poisson independant, l'intensite etant repartie selon
+    PART_MT1 (mesure). On croise ensuite la grille de la 1re mi-temps avec celle
+    de la 2e : l'issue a la pause vient de la premiere, l'issue finale de la
+    somme des deux -- c'est ce croisement qui distingue HT/FT d'un simple 1X2.
+    """
+    p1a = _poisson(max(la * PART_MT1, 1e-9), KH)
+    p1b = _poisson(max(lb * PART_MT1, 1e-9), KH)
+    p2a = _poisson(max(la * (1.0 - PART_MT1), 1e-9), KH)
+    p2b = _poisson(max(lb * (1.0 - PART_MT1), 1e-9), KH)
+    g1 = np.outer(p1a, p1b).ravel(); g1 /= g1.sum()
+    g2 = np.outer(p2a, p2b).ravel(); g2 /= g2.sum()
+    v = np.einsum("a,gab,b->g", g1, _HTFT_M, g2)
+    return [float(x) for x in v]
+
+
 def marches_probas(lam_a: float, lam_b: float) -> dict:
     """Probabilites de CHAQUE marche Bet261, derivees de mes buts attendus.
 
@@ -1421,6 +1475,7 @@ def marches_probas(lam_a: float, lam_b: float) -> dict:
         "Minute du premier but": dist_min + [("Pas de but", p_rien)],
         "FTTS": [("1", (la / lam) * (1.0 - p_rien)), ("2", (lb / lam) * (1.0 - p_rien)),
                  ("Pas de but", p_rien)],
+        "HT/FT": list(zip(HTFT_LABELS, _htft(la, lb))),
     }
     return {m: [(sel, round(float(pr), 4)) for sel, pr in v] for m, v in out.items()}
 

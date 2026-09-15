@@ -39,6 +39,8 @@ MARCHE = {
                               "46-60": 6.62, "61-75": 10.84, "76-90": 11.84,
                               "Pas de but": 6.12},
     "Score exact": {"0-0": 6.12, "1-1": 6.74, "2-0": 8.08, "2-1": 7.5, "1-0": 5.84},
+    "HT/FT": {"1/1": 3.04, "1/X": 28.64, "1/2": 100.0, "X/1": 4.4, "X/X": 3.54,
+               "X/2": 10.54, "2/1": 58.47, "2/X": 31.95, "2/2": 10.54},
 }
 
 
@@ -216,3 +218,68 @@ def test_rencontres_filtre_ligue_et_heure(tmp_path):
     assert len(pt.rencontres(eng, leagues=[LG])) == 1
     assert pt.rencontres(eng, leagues=["InstantLeague-8060"]) == []
     assert pt.rencontres(eng, heure="03:07") == []
+
+
+# ---------- HT/FT : mi-temps ET fin de match ----------
+
+def test_htft_neuf_issues_qui_somment_a_un():
+    d = pt.marches_probas(1.6, 1.1)["HT/FT"]
+    assert len(d) == 9
+    assert abs(sum(p for _, p in d) - 1.0) < 0.01
+
+
+def test_htft_libelles_identiques_a_bet261():
+    """Un libellé qui dérive = cote introuvable = conseil inutilisable."""
+    assert {s for s, _ in pt.marches_probas(1.6, 1.1)["HT/FT"]} == {
+        "1/1", "1/X", "1/2", "X/1", "X/X", "X/2", "2/1", "2/X", "2/2"}
+
+
+def test_htft_retombe_sur_le_1x2():
+    """Invariant fort : en sommant les 9 issues par leur RÉSULTAT FINAL, on doit
+    retrouver le 1X2. Les deux viennent de calculs indépendants — une grille 9x9
+    d'un côté, deux demi-grilles 7x7 croisées de l'autre. S'ils divergent, l'un
+    des deux est faux."""
+    for la, lb in ((1.6, 1.1), (2.4, 0.6), (0.5, 0.4), (3.0, 2.8), (0.2, 3.0)):
+        m = pt.marches_probas(la, lb)
+        x12, ht = dict(m["1X2"]), dict(m["HT/FT"])
+        for issue in ("1", "X", "2"):
+            via = sum(p for lib, p in ht.items() if lib.endswith("/" + issue))
+            assert abs(x12[issue] - via) < 0.005, (
+                f"lam {la}/{lb}, issue {issue} : 1X2 dit {x12[issue]:.4f}, "
+                f"HT/FT dit {via:.4f}")
+
+
+def test_htft_favori_net_donne_un_sur_un():
+    d = dict(pt.marches_probas(2.6, 0.5)["HT/FT"])
+    assert max(d, key=d.get) == "1/1"
+
+
+def test_htft_match_ferme_donne_nul_nul():
+    d = dict(pt.marches_probas(0.45, 0.4)["HT/FT"])
+    assert max(d, key=d.get) == "X/X"
+
+
+def test_htft_renversements_restent_rares():
+    """Mener à la pause puis perdre est rare — le book le cote 100 et 58."""
+    d = dict(pt.marches_probas(1.6, 1.1)["HT/FT"])
+    assert d["1/2"] < 0.06 and d["2/1"] < 0.06
+    assert d["1/2"] < d["1/1"] and d["2/1"] < d["2/2"]
+
+
+def test_part_premiere_mi_temps_est_la_valeur_mesuree():
+    """45 % mesuré sur 208 425 matchs (45,04 % TRAIN / 44,98 % TEST)."""
+    assert 0.43 <= pt.PART_MT1 <= 0.47
+
+
+def test_htft_est_calibre():
+    assert (pt._MK_CAL.get("HT/FT") or {}).get("bins"), "HT/FT non calibré"
+    assert pt.calib_marche("HT/FT", 0.56) < 0.56, "le brut sur-promet, la table doit rabattre"
+
+
+def test_htft_dans_le_conseil_avec_sa_vraie_cote(tmp_path):
+    eng = create_engine(_base(tmp_path))
+    r = pt.conseil(eng, pt.rencontres(eng)[0])
+    ht = next(l for l in r["lignes"] if l["marche"] == "HT/FT")
+    assert ht["sel"] in MARCHE["HT/FT"]
+    assert ht["odds"] == MARCHE["HT/FT"][ht["sel"]]
+    assert 0.0 < ht["p"] < 1.0
