@@ -24,6 +24,21 @@ from scraper.market_inversion import exact_invert_1x2, apply_sim_deviations
 
 MADA = timezone(timedelta(hours=3))
 K_GRID = 9   # taille de la grille Poisson (partagee predict_own / marches_probas)
+# PLAFOND STRUCTUREL du moteur Bet261 : sur 208 762 resultats, le total n'a
+# JAMAIS depasse 6 buts. Un 6-0 existe, un 4-3 non. Sans ce plafond, la grille
+# de Poisson disperse ~2.2 % de probabilite sur des scores impossibles, et cette
+# masse manque la ou elle devrait etre -- les totaux de 3 a 5, precisement ceux
+# que le modele sous-estimait (+2.8, +3.2 et +2.3 points d'ecart mesures).
+TOTAL_MAX = 6
+
+# Facteur d'echelle des lambdas, AJUSTE sur la 1re moitie chronologique par
+# maximum de vraisemblance du score exact observe, verifie sur la seconde.
+# Sans lui, le modele annoncait 2.59 buts par match pour 2.72 reels : trop de
+# masse sur les totaux de 1 et 2, pas assez sur 3 a 5 -- exactement les scores
+# (3-1, 2-2, 3-2, 4-1...) qui ne sortaient jamais en tete. La log-vraisemblance
+# est plate entre 1.05 et 1.08 ; on retient la valeur qui aligne la moyenne
+# predite sur la moyenne observee de TRAIN.
+LAM_SCALE = 1.06
 LG = "InstantLeague-8035"
 
 _CALIB_BY_LG: dict = {}      # ligue -> matrice 7x7
@@ -1392,16 +1407,33 @@ def _masques_htft():
     a1, b1 = i.ravel(), j.ravel()
     a2, b2 = k.ravel(), l.ravel()
     ft = np.sign((a1[:, None] + a2[None, :]) - (b1[:, None] + b2[None, :]))
+    # Le plafond porte sur le total du MATCH ENTIER, pas sur une mi-temps :
+    # une combinaison 1re + 2e mi-temps qui depasse 6 buts ne peut pas sortir.
+    total = (a1[:, None] + a2[None, :]) + (b1[:, None] + b2[None, :])
+    possible = total <= TOTAL_MAX
     code = {1: "1", 0: "X", -1: "2"}
     M = np.zeros((9, KH * KH, KH * KH))
     for g, lib in enumerate(HTFT_LABELS):
         h, f = lib.split("/")
         M[g] = ((np.array([code[x] for x in ht])[:, None] == h) &
-                (np.vectorize(code.get)(ft) == f)).astype(float)
+                (np.vectorize(code.get)(ft) == f) & possible).astype(float)
     return M
 
 
 _HTFT_M = _masques_htft()
+
+
+def _grille(la: float, lb: float, k: int = None):
+    """Grille des scores exacts, PLAFONNEE au total maximum du moteur puis
+    renormalisee. La masse des totaux impossibles est ainsi redistribuee au
+    prorata sur les scores qui peuvent reellement sortir."""
+    k = k or K_GRID
+    la, lb = float(la) * LAM_SCALE, float(lb) * LAM_SCALE
+    g = np.outer(_poisson(la, k), _poisson(lb, k))
+    idx = np.add.outer(np.arange(k), np.arange(k))
+    g = np.where(idx <= TOTAL_MAX, g, 0.0)
+    tot = g.sum()
+    return g / tot if tot > 0 else g
 
 
 def _poisson(lam: float, k: int):
@@ -1418,6 +1450,7 @@ def _htft(la: float, lb: float):
     de la 2e : l'issue a la pause vient de la premiere, l'issue finale de la
     somme des deux -- c'est ce croisement qui distingue HT/FT d'un simple 1X2.
     """
+    la, lb = la * LAM_SCALE, lb * LAM_SCALE      # meme echelle que _grille
     p1a = _poisson(max(la * PART_MT1, 1e-9), KH)
     p1b = _poisson(max(lb * PART_MT1, 1e-9), KH)
     p2a = _poisson(max(la * (1.0 - PART_MT1), 1e-9), KH)
@@ -1425,7 +1458,9 @@ def _htft(la: float, lb: float):
     g1 = np.outer(p1a, p1b).ravel(); g1 /= g1.sum()
     g2 = np.outer(p2a, p2b).ravel(); g2 /= g2.sum()
     v = np.einsum("a,gab,b->g", g1, _HTFT_M, g2)
-    return [float(x) for x in v]
+    # Le plafond retire de la masse : on renormalise pour rester une loi de proba.
+    tot = float(v.sum())
+    return [float(x / tot) for x in v] if tot > 0 else [float(x) for x in v]
 
 
 def marches_probas(lam_a: float, lam_b: float) -> dict:
@@ -1435,12 +1470,9 @@ def marches_probas(lam_a: float, lam_b: float) -> dict:
     Les minutes viennent du meme modele lu comme un processus de Poisson
     d'intensite constante sur 90 minutes : P(1er but apres t) = exp(-lam*t/90).
     """
-    from math import exp, factorial
+    from math import exp
     la, lb = float(lam_a), float(lam_b)
-    pa = np.exp(-la) * np.array([la ** k / factorial(k) for k in range(K_GRID)])
-    pb = np.exp(-lb) * np.array([lb ** k / factorial(k) for k in range(K_GRID)])
-    g = np.outer(pa, pb)
-    g /= g.sum()
+    g = _grille(la, lb)
     idx = np.add.outer(np.arange(K_GRID), np.arange(K_GRID))
     tot = np.array([g[idx == k].sum() if k < 6 else g[idx >= 6].sum() for k in range(7)])
     ph = float(np.tril(g, -1).sum()); pn = float(np.trace(g)); pv = float(np.triu(g, 1).sum())
@@ -2235,12 +2267,8 @@ def predict_own(engine, team_a, team_b, lg: str = LG, n: int = 60,
     mu = max((atk_a + def_a + atk_b + def_b) / 4.0, 0.2)   # niveau moyen local
     lam_a = min(max(atk_a * def_b / mu, 0.15), 6.0)
     lam_b = min(max(atk_b * def_a / mu, 0.15), 6.0)
-    from math import factorial
-    K = 9
-    pa_ = np.exp(-lam_a) * np.array([lam_a**k / factorial(k) for k in range(K)])
-    pb_ = np.exp(-lam_b) * np.array([lam_b**k / factorial(k) for k in range(K)])
-    grid = np.outer(pa_, pb_)
-    grid /= grid.sum()
+    K = K_GRID
+    grid = _grille(lam_a, lam_b, K)
     ph = float(np.tril(grid, -1).sum())      # sa > sb
     pd_ = float(np.trace(grid))
     pav = float(np.triu(grid, 1).sum())

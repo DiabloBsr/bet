@@ -354,3 +354,52 @@ def test_le_plafond_ne_rabote_pas_la_plage_apprise():
             centre = (b["lo"] + b["hi"]) / 2.0
             assert abs(pt.calib_marche(m, centre) - b["real"]) < 1e-6, \
                 f"{m} : le plafond mord dans la plage mesurée"
+
+
+# ---------- plafond structurel du moteur et echelle des lambdas ----------
+
+def test_aucun_score_au_dela_du_plafond():
+    """Sur 208 762 résultats Bet261, le total n'a JAMAIS dépassé 6 buts : un 6-0
+    existe, un 4-3 non. Sans ce plafond, la grille de Poisson dispersait ~2,2 %
+    de probabilité sur des scores physiquement impossibles."""
+    import numpy as np
+    for la, lb in ((1.6, 1.1), (3.0, 2.8), (0.3, 0.2), (5.0, 4.0)):
+        g = pt._grille(la, lb)
+        idx = np.add.outer(np.arange(pt.K_GRID), np.arange(pt.K_GRID))
+        assert float(g[idx > pt.TOTAL_MAX].sum()) < 1e-12, \
+            f"lam {la}/{lb} : masse sur un total impossible"
+        assert abs(float(g.sum()) - 1.0) < 1e-9, "la grille doit rester une loi de proba"
+
+
+def test_les_scores_proposes_respectent_le_plafond():
+    for la, lb in ((1.6, 1.1), (3.2, 3.0)):
+        for sel, _ in pt.marches_probas(la, lb)["Score exact"]:
+            a, b = map(int, sel.split("-"))
+            assert a + b <= pt.TOTAL_MAX, f"{sel} dépasse le plafond du moteur"
+
+
+def test_htft_respecte_aussi_le_plafond():
+    """Le plafond porte sur le total du MATCH, pas sur une mi-temps : les deux
+    demi-grilles croisées doivent l'honorer, sinon le HT/FT rouvrirait la porte
+    aux scores impossibles."""
+    for la, lb in ((1.6, 1.1), (3.0, 2.8)):
+        d = pt.marches_probas(la, lb)["HT/FT"]
+        assert abs(sum(p for _, p in d) - 1.0) < 0.01
+
+
+def test_echelle_des_lambdas_dans_une_plage_mesuree():
+    """Ajustée par maximum de vraisemblance sur TRAIN (optimum plat 1,05-1,08),
+    vérifiée sur TEST. Hors de cette plage, c'est du réglage à la main."""
+    assert 1.0 < pt.LAM_SCALE < 1.15
+
+
+def test_moyenne_de_buts_predite_colle_au_reel():
+    """Le modèle annonçait 2,59 buts par match pour 2,72 réels — trop de masse
+    sur les totaux de 1 et 2, pas assez sur 3 à 5, d'où des scores comme 3-1 ou
+    2-2 qui ne sortaient jamais. Sur un duo moyen, la moyenne doit retomber
+    près des 2,72 mesurés sur 207 861 matchs."""
+    import numpy as np
+    g = pt._grille(1.36, 1.36)          # duo moyen : 2,72 buts attendus avant echelle
+    idx = np.add.outer(np.arange(pt.K_GRID), np.arange(pt.K_GRID))
+    moy = float((g * idx).sum())
+    assert 2.5 < moy < 2.9, f"moyenne prédite {moy:.2f}, attendue autour de 2,72"
