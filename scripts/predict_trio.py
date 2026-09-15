@@ -1495,18 +1495,27 @@ except Exception:
 def _interp_calib(xs, ys, p_raw: float) -> float:
     """Interpolation d'une table de calibration, ANCREE en (0,0) et (1,1).
 
-    Sans ces ancres, np.interp extrapole a PLAT hors de la plage apprise : une
-    table HT/FT apprise sur des probas de 20 a 75 % rendait 21.3 % pour une
-    entree de 2 %. Les alternatives affichees sous la recommandation etaient
-    donc gonflees, et pouvaient meme s'ordonner a l'envers. Les deux ancres
-    sont vraies par construction : une proba nulle reste nulle, une certitude
-    reste une certitude.
+    Traitement ASYMETRIQUE des deux bouts, et c'est deliberе :
+
+    - EN BAS, ancrage en (0,0). Sans lui, np.interp extrapole a plat : une table
+      HT/FT apprise sur des probas de 20 a 75 % rendait 21.3 % pour une entree
+      de 2 %. Les alternatives affichees sous la recommandation etaient gonflees
+      et pouvaient s'ordonner a l'envers. Une proba nulle doit rester nulle.
+
+    - EN HAUT, PLAFOND au dernier taux MESURE, pas d'ancre en (1,1). La table ne
+      sait rien au-dela de ce qu'elle a observe : sur « Total de buts » le
+      meilleur taux jamais constate est 26.7 %, et une ancre en (1,1) faisait
+      annoncer 99.9 %. Un « + / - » a 100 % est apparu ainsi en test.
+
+    L'asymetrie tient a la DIRECTION de l'erreur : extrapoler a plat gonfle en
+    bas (dangereux) et rabote en haut (prudent). On ne promet jamais mieux que
+    ce qui a ete observe.
     """
     if not xs:
         return float(p_raw)
-    xs2 = [0.0] + list(xs) + [1.0]
-    ys2 = [0.0] + list(ys) + [1.0]
-    return float(np.interp(float(p_raw), xs2, ys2))
+    xs2 = [0.0] + list(xs)
+    ys2 = [0.0] + list(ys)
+    return float(min(np.interp(float(p_raw), xs2, ys2), ys2[-1]))
 
 
 def calib_marche(marche: str, p_raw) -> float:

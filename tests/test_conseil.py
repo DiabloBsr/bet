@@ -296,7 +296,12 @@ def test_calibration_ancree_a_zero_et_a_un():
     for m in pt._MK_CAL:
         assert pt.calib_marche(m, 0.0) < 0.02, f"{m} : une proba nulle doit rester nulle"
         assert pt.calib_marche(m, 0.01) < 0.05, f"{m} : 1 % ne doit pas devenir 50 %"
-        assert pt.calib_marche(m, 1.0) > 0.95, f"{m} : une certitude doit le rester"
+        # En haut, PAS d'ancre en (1,1) : on plafonne au dernier taux MESURE.
+        # Une ancre a 1 faisait annoncer 99.9 % sur « Total de buts », dont le
+        # meilleur taux jamais observe est 26.7 %.
+        plafond = pt._MK_CAL[m]["bins"][-1]["real"]
+        assert abs(pt.calib_marche(m, 1.0) - plafond) < 1e-6, (
+            f"{m} : doit plafonner a {100*plafond:.1f} %, le maximum mesure")
 
 
 def test_calibration_monotone_sur_tout_lintervalle():
@@ -324,3 +329,28 @@ def test_les_alternatives_restent_bien_ordonnees(tmp_path):
     for l in r["lignes"]:
         ps = [t["p"] for t in l["top3"]]
         assert ps == sorted(ps, reverse=True), f"{l['marche']} : alternatives mal ordonnées"
+
+
+def test_aucune_proba_affichee_a_cent_pour_cent(tmp_path):
+    """Cas extrême (40 matchs 0-0) : le modèle brut donne 100 % sur « < 3.5 ».
+    Aucun pari n'est certain — et le maximum jamais MESURÉ sur ce marché est
+    86,7 %. Annoncer 100 % serait une promesse que rien n'appuie."""
+    eng = create_engine(_base(tmp_path, sa=0, sb=0))
+    r = pt.conseil(eng, pt.rencontres(eng)[0])
+    for l in r["lignes"]:
+        plafond = pt._MK_CAL[l["marche"]]["bins"][-1]["real"]
+        # conseil() arrondit a 3 decimales : tolerance d'un demi-millieme.
+        assert l["p"] <= plafond + 5e-4, (
+            f"{l['marche']} affiche {100*l['p']:.1f} % alors que le maximum "
+            f"mesuré est {100*plafond:.1f} %")
+        assert l["p"] < 0.995, f"{l['marche']} affiche une quasi-certitude"
+
+
+def test_le_plafond_ne_rabote_pas_la_plage_apprise():
+    """Le plafond ne doit mordre QU'AU-DESSUS du dernier bin : sinon les taux
+    backtestés ne décriraient plus ce qui est affiché."""
+    for m, v in pt._MK_CAL.items():
+        for b in v["bins"]:
+            centre = (b["lo"] + b["hi"]) / 2.0
+            assert abs(pt.calib_marche(m, centre) - b["real"]) < 1e-6, \
+                f"{m} : le plafond mord dans la plage mesurée"
