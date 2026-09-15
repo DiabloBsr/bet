@@ -572,10 +572,6 @@ def main():
         c_max = cc2.number_input("Rencontres max", 1, 30, 12, 1, key="cs_max",
                                  help="Garde-fou : chaque rencontre demande une "
                                       "analyse complète de ses 11 marchés.")
-        c_tout = st.checkbox("Détailler les 11 marchés de chaque rencontre",
-                             value=False, key="cs_tout",
-                             help="Décoché : le pari conseillé et les 3 marchés les "
-                                  "plus sûrs. Coché : tout, mais la page devient longue.")
         if st.button("🧭 Que dois-je jouer ?", key="cs_go", type="primary"):
             hh = c_h.strip()
             if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
@@ -619,14 +615,18 @@ def main():
                     st.caption(f"{jr}**{res_c['attendus']} buts attendus** — "
                                f"{res_c['home']} : {fa} ~{res_c['lam_a']} · "
                                f"{res_c['away']} : {fb} ~{res_c['lam_b']}.")
-                    lignes = res_c["lignes"] if c_tout else res_c["lignes"][:3]
-                    for l in lignes:
+                    # Detail COMPLET pour chaque rencontre : les 11 marches et,
+                    # sous chacun, ses deux meilleures alternatives avec leur cote.
+                    for l in res_c["lignes"]:
                         cot = f"cote **{l['odds']:g}**" if l.get("odds") else "_non coté_"
                         st.markdown(f"　• _{l['marche']}_ → **{l['sel']}** — "
                                     f"**{l['p']*100:.0f}%** · {cot}")
-                    if not c_tout and len(res_c["lignes"]) > 3:
-                        st.caption(f"　({len(res_c['lignes']) - 3} autres marchés — coche "
-                                   "« Détailler » pour les voir.)")
+                        alt = " · ".join(
+                            f"{t['sel']} {t['p']*100:.0f}%"
+                            + (f" ({t['odds']:g})" if t.get("odds") else "")
+                            for t in l["top3"][1:])
+                        if alt:
+                            st.caption(f"　　sinon : {alt}")
                     st.markdown("---")
                 st.caption("Probas calibrées marché par marché sur 59 670 matchs "
                            "(moitié TRAIN / moitié TEST chronologique). Mon conseil "
