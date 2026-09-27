@@ -1747,6 +1747,72 @@ def filtrer_equilibres(rencontres, cote_min: float = COTE_EQUILIBRE) -> tuple:
     return gardees, ecartees, sans_cote
 
 
+CIBLE_TROIS_COTES = (2.0, 2.0, 2.0)
+
+
+def ecart_aux_cibles(cotes, cibles=CIBLE_TROIS_COTES):
+    """Ecart total entre les trois cotes d'une rencontre et une cible.
+
+    Rend `None` des qu'une des trois manque : sans elle, la distance serait
+    calculee sur deux cotes et paraitrait meilleure qu'une rencontre complete.
+    """
+    c = cotes or {}
+    trois = [_odd_pos(c.get(k)) for k in ("1", "X", "2")]
+    if not all(trois):
+        return None
+    return float(sum(abs(o - float(t)) for o, t in zip(trois, cibles)))
+
+
+def debusquer_cotes(rencontres, cibles=CIBLE_TROIS_COTES, tol: float = 0.05,
+                    proches: int = 5) -> dict:
+    """Cherche les rencontres dont les TROIS cotes valent la cible, a `tol` pres.
+
+    Rend {"trouvees": [...], "proches": [...], "sans_cote": n, "examinees": n}.
+
+    ── CE QUE LA MESURE DIT DE LA CIBLE (2,00 / 2,00 / 2,00) ────────────────────
+
+    Elle n'existe pas, et ce n'est pas une question de chance. Sur les 184 105
+    releves de cotes en base : AUCUN n'a ses trois cotes a 2,00, meme avec une
+    tolerance de +/- 0,80. Les plus proches tournent autour de 2,80 / 2,85 /
+    2,82, soit un ecart total de 2,48.
+
+    La raison est arithmetique : trois cotes a 2,00 donnent une somme
+    d'inverses de 1,500, c'est-a-dire 50 % de marge pour l'operateur. Le book
+    mesure 1,060 ici, soit ~6 %. Sous cette marge, la rencontre la plus
+    equilibree possible porte trois cotes voisines de 2,83 -- et c'est
+    exactement ce qu'on observe.
+
+    ── POURQUOI « PROCHES » EXISTE ──────────────────────────────────────────────
+
+    Un ecran qui ne rend jamais rien n'apprend rien. Quand la cible n'est
+    atteinte par personne, les rencontres les plus proches sont rendues, avec
+    leur ecart, pour que la reponse soit lisible plutot qu'absente.
+    """
+    tol = float(tol)
+    trouvees, tous, sans_cote, vus = [], [], 0, 0
+    for r in rencontres or []:
+        if not isinstance(r, dict) or r.get("erreur"):
+            continue
+        vus += 1
+        c = r.get("cotes") or {}
+        trois = [_odd_pos(c.get(k)) for k in ("1", "X", "2")]
+        if not all(trois):
+            sans_cote += 1
+            continue
+        d = ecart_aux_cibles(c, cibles)
+        enrichie = dict(r, ecart=round(d, 2))
+        tous.append(enrichie)
+        # La tolerance porte sur CHAQUE cote, pas sur la somme : trois ecarts
+        # de 0,04 feraient 0,12 au total et passeraient a tort un seuil global.
+        if all(abs(o - float(t)) <= tol + 1e-9 for o, t in zip(trois, cibles)):
+            trouvees.append(enrichie)
+    tous.sort(key=lambda x: x["ecart"])
+    noms = {id(x) for x in trouvees}
+    return {"trouvees": trouvees,
+            "proches": [x for x in tous if id(x) not in noms][:int(proches)],
+            "sans_cote": sans_cote, "examinees": vus}
+
+
 def signaux_1x2(p1, pn, p2, oh, od, oa, home="1", away="2") -> tuple:
     """Pieges et grosses cotes d'une rencontre, a partir des seules probas et cotes.
 

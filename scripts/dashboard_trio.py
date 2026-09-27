@@ -428,28 +428,45 @@ def main():
                            "Le pari le plus sûr n'est pas un pari gagnant — mise petite.")
 
 
-    # ---- ⚖️ RENCONTRES SANS FAVORI — les trois cotes a 2,00 ou plus ----
-    with st.expander("⚖️ 1X2 à cote 2 — les rencontres sans favori"):
+    # ---- 🔎 DEBUSQUEUR 1X2 A COTE CIBLE (2,00 / 2,00 / 2,00 par defaut) ----
+    with st.expander("🔎 Débusqueur 1X2 à cote 2 — 1 = 2, X = 2, 2 = 2"):
         import predict_trio as _pte
         engE = st.cache_resource(_engine)()
-        st.caption("Les rencontres dont les TROIS issues paient au moins 2,00 : "
-                   "aucun favori court, le match est ouvert. Mon pronostic 1X2 "
-                   "vient de ma seule analyse de la forme Bet261, jamais de la cote.")
-        # ⚠️ « au moins », pas « égal ». Trois cotes EXACTEMENT à 2,00
-        # exigeraient une somme d'inverses de 1,500, soit 50 % de marge ; mesure
-        # sur 155 298 rencontres : le book tourne à 1,060, et la rencontre la
-        # plus équilibrée possible porte trois cotes voisines de 2,83. Aucune
-        # n'a ses trois cotes au-dessus de 3,00.
-        eq1, eq2 = st.columns([2, 1])
-        e_lg = eq1.selectbox("Ligue", list(LEAGUES), index=0, key="eq_lg")
-        e_min = eq2.number_input("Cote minimale des 3 issues", 1.50, 3.00, 2.00, 0.05,
-                                 key="eq_min", format="%.2f",
-                                 help="2,00 retient 34 % des rencontres · "
-                                      "2,20 en retient 21 % · 2,50 en retient 5 %.")
+        st.caption("Je cherche les rencontres dont les TROIS cotes valent la "
+                   "cible. Mon pronostic 1X2 vient de ma seule analyse de la "
+                   "forme Bet261, jamais de la cote.")
+        # ⚠️ CE QUE LA BASE DIT DE LA CIBLE (2,00 / 2,00 / 2,00), mesure du
+        # 27/09 : AUCUN des 184 105 releves ne l'atteint, meme a +/- 0,80. Les
+        # plus proches tournent autour de 2,80 / 2,85 / 2,82.
+        #
+        # C'est arithmetique : trois cotes a 2,00 font une somme d'inverses de
+        # 1,500, soit 50 % de marge. Le book mesure 1,060 ici, ~6 %. Sous cette
+        # marge, le maximum d'equilibre possible est voisin de 2,83 chacune.
+        #
+        # L'avertissement est AFFICHE plutot que la cible corrigee en douce :
+        # c'est bien la recherche demandee qui tourne, et l'ecran dit pourquoi
+        # elle ne rend rien.
+        st.info("ℹ️ Mesuré sur les **184 105** relevés en base : **aucune** "
+                "rencontre n'a ses trois cotes à 2,00, même à ±0,80 près. "
+                "Trois cotes à 2,00 supposeraient **50 % de marge** pour le "
+                "book, qui tourne ici à **6 %** — le maximum d'équilibre "
+                "possible est **2,83** chacune. La recherche tourne quand "
+                "même, et à défaut je montre les plus proches.")
+        ec1, ec2, ec3, ec4 = st.columns([1, 1, 1, 1])
+        e_c1 = ec1.number_input("Cote 1", 1.01, 20.0, 2.00, 0.01, key="eq_c1",
+                                format="%.2f")
+        e_cx = ec2.number_input("Cote X", 1.01, 20.0, 2.00, 0.01, key="eq_cx",
+                                format="%.2f")
+        e_c2 = ec3.number_input("Cote 2", 1.01, 20.0, 2.00, 0.01, key="eq_c2",
+                                format="%.2f")
+        e_tol = ec4.number_input("Tolérance ±", 0.0, 2.0, 0.05, 0.01,
+                                 key="eq_tol", format="%.2f",
+                                 help="Porte sur CHACUNE des trois cotes, "
+                                      "pas sur leur somme.")
+        e_lg = st.selectbox("Ligue", list(LEAGUES), index=0, key="eq_lg")
         e_h = st.text_input("Heure Mada du round (ex: 21:03) — vide = prochain",
                             value="", key="eq_h")
-        if st.button("⚖️ Trouver les rencontres sans favori", key="eq_go",
-                     type="primary"):
+        if st.button("🔎 Débusquer", key="eq_go", type="primary"):
             hh = e_h.strip()
             if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
                 st.warning("Heure au format HH:MM (ex: 21:03).")
@@ -463,30 +480,33 @@ def main():
                 st.info("Aucune rencontre sur ces critères — change d'heure, de "
                         "ligue, ou attends le prochain round.")
             else:
-                # Le tri se fait À L'AFFICHAGE : bouger le seuil réaffiche
-                # aussitôt, sans relancer l'analyse de tout le round.
-                gard, ecart, sans = _pte.filtrer_equilibres(e_res, e_min)
-                vrais = [g for g in gard if not g.get("erreur")]
-                if not vrais:
-                    st.info(f"Aucune des {len(e_res)} rencontre(s) du round n'a ses "
-                            f"trois cotes à **≥ {e_min:g}**"
-                            + (f" — {ecart} ont un favori plus court." if ecart else "")
-                            + (f" {sans} sans cote complète." if sans else "")
-                            + " Baisse le seuil.")
+                # Le tri se fait À L'AFFICHAGE : bouger la cible ou la tolérance
+                # réaffiche aussitôt, sans relancer l'analyse du round.
+                res = _pte.debusquer_cotes(e_res, (e_c1, e_cx, e_c2), e_tol)
+                cible = f"{e_c1:g} / {e_cx:g} / {e_c2:g}"
+                if res["trouvees"]:
+                    st.success(f"**{len(res['trouvees'])} rencontre(s)** à "
+                               f"**{cible}** (±{e_tol:g}) sur "
+                               f"{res['examinees']} examinée(s).")
+                    liste, titre = res["trouvees"], None
                 else:
-                    st.success(f"**{len(vrais)} rencontre(s) sans favori** sur "
-                               f"{len(e_res)} — trois cotes **≥ {e_min:g}**."
-                               + (f" {ecart} écartée(s), favori trop court."
-                                  if ecart else "")
-                               + (f" {sans} écartée(s), cotes incomplètes."
-                                  if sans else ""))
+                    st.warning(f"**Aucune** des {res['examinees']} rencontre(s) "
+                               f"n'est à **{cible}** (±{e_tol:g})"
+                               + (f" — {res['sans_cote']} sans cote complète."
+                                  if res["sans_cote"] else ".")
+                               + " Voici les plus proches.")
+                    liste, titre = res["proches"], "Les plus proches de la cible"
+                if titre:
+                    st.markdown(f"**{titre} :**")
                 emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
-                for m in gard:
-                    if m.get("erreur"):
-                        st.caption(f"⚠️ {m['home']} vs {m['away']} — {m['erreur']}")
-                        continue
+                for m in liste:
                     jr = f"J{m['journee']} · " if m.get("journee") else ""
                     st.markdown(f"#### `[{jr}{m['local']}]` {m['home']} vs {m['away']}")
+                    tri = " · ".join(
+                        f"**{k} = {m['cotes'][k]:g}**" if m["cotes"].get(k) else f"{k} = ?"
+                        for k in ("1", "X", "2"))
+                    st.markdown(f"　{tri}　—　écart à la cible : "
+                                f"**{m['ecart']:g}**")
                     cot = (f" · cote **{m['odds']:g}**" if m.get("odds")
                            else " · _non coté_")
                     st.success(f"**Mon pronostic : {m['equipe']}** _(« {m['sel']} »)_"
@@ -494,19 +514,17 @@ def main():
                     if m["pieges"]:
                         st.warning("⚠️ **Rencontre piégeuse** — "
                                    + " · ".join(m["pieges"]))
-                    tri = " · ".join(
-                        f"{k} **{m['probas'][k]*100:.0f}%**"
-                        + (f" ({m['cotes'][k]:g})" if m["cotes"].get(k) else "")
-                        for k in ("1", "X", "2"))
+                    pr = " · ".join(f"{k} **{m['probas'][k]*100:.0f}%**"
+                                      for k in ("1", "X", "2"))
                     fa = " ".join(emo.get(x, "?") for x in (m.get("seq_a") or ""))
                     fb = " ".join(emo.get(x, "?") for x in (m.get("seq_b") or ""))
-                    st.caption(f"{tri}　—　{m['attendus']} buts attendus　·　"
+                    st.caption(f"{pr}　—　{m['attendus']} buts attendus　·　"
                                f"{m['home']} : {fa} · {m['away']} : {fb}")
                     st.markdown("---")
                 st.caption("Pronostic issu de MA seule analyse de la forme Bet261, "
                            "calibré sur 59 670 matchs — ce marché touche **50,4%**. "
-                           "Trois cotes hautes veut dire match ouvert, pas match "
-                           "rentable : la marge du book reste de **6%**.")
+                           "Des cotes proches ne veut pas dire match rentable : la "
+                           "marge du book reste de **6%**.")
 
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
