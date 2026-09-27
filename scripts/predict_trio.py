@@ -1464,6 +1464,96 @@ def _htft(la: float, lb: float):
     return [float(x / tot) for x in v] if tot > 0 else [float(x) for x in v]
 
 
+# PLAFOND PAR MI-TEMPS — mesure du 27/09 sur 208 331 resultats propres.
+#
+# La 1re mi-temps ne depasse JAMAIS 3 buts : 0 (31,35 %), 1 (27,87 %),
+# 2 (27,23 %), 3 (13,55 %). Pas une seule exception sur 208 331 matchs. La 2e
+# non plus, a 47 matchs pres (0,02 %) -- assez rare pour etre traite comme du
+# bruit, trop rare pour justifier d'ouvrir la grille.
+#
+# C'est la VRAIE contrainte du moteur, et elle explique celle qu'on avait
+# trouvee sur le plein-temps : TOTAL_MAX = 6, c'est 3 + 3. Plafonner par
+# mi-temps est donc plus strict que plafonner le total -- un 4-0 a la pause
+# suivi d'un 0-2 ferait bien 6 au total, mais ne peut pas se produire.
+HALF_MAX = 3
+
+# ECHELLE DE LAMBDA PAR MI-TEMPS — ajustee par maximum de vraisemblance sur le
+# TRAIN (1re moitie chronologique, 103 714 matchs), verifiee sur le TEST.
+#
+# Pourquoi elle ne vaut pas 1 : plafonner a HALF_MAX puis renormaliser DEPLACE
+# la masse des totaux impossibles vers les petits scores, ce qui abaisse la
+# moyenne. Il faut donc entrer une intensite plus forte pour que la grille
+# plafonnee retrouve les 1,2303 buts reels de la 1re mi-temps et les 1,5031 de
+# la seconde. La seconde corrige plus (1,19 contre 1,09) parce qu'elle porte
+# plus de buts : le plafond y mord davantage.
+#
+# Optimums PLATS (1,04-1,14 et 1,14-1,24), et gain confirme HORS echantillon :
+# log-vraisemblance TEST -1,9629 -> -1,9595 et -2,1284 -> -2,1135. Une echelle
+# qui n'ameliorerait que le TRAIN serait du surapprentissage, pas un reglage.
+HALF_SCALE = {"1re mi-temps": 1.09, "2e mi-temps": 1.19}
+
+
+def _grille_mt(la: float, lb: float, part: float, echelle: float = 1.0):
+    """Grille des scores exacts d'UNE mi-temps, plafonnee a HALF_MAX.
+
+    Meme mecanique que `_grille` : echelle LAM_SCALE, Poisson independants,
+    plafond, puis renormalisation -- la masse des totaux impossibles est
+    redistribuee au prorata sur les scores qui peuvent reellement sortir.
+
+    `part` est la fraction d'intensite de la mi-temps : PART_MT1 pour la
+    premiere, son complement pour la seconde. La meme repartition que `_htft`,
+    et elle est juste : la part REELLE mesuree vaut 0,4501 pour un PART_MT1 de
+    0,45.
+    """
+    ech = float(echelle)
+    la = max(float(la) * LAM_SCALE * part * ech, 1e-9)
+    lb = max(float(lb) * LAM_SCALE * part * ech, 1e-9)
+    g = np.outer(_poisson(la, KH), _poisson(lb, KH))
+    idx = np.add.outer(np.arange(KH), np.arange(KH))
+    g = np.where(idx <= HALF_MAX, g, 0.0)
+    tot = g.sum()
+    return g / tot if tot > 0 else g
+
+
+def marches_mi_temps(lam_a: float, lam_b: float, top: int = 4) -> dict:
+    """1X2 et score exact, pour CHACUNE des deux mi-temps.
+
+    Rendu : {"1re mi-temps": {"x12": [...], "scores": [...]}, "2e mi-temps": ...}
+
+    Le 1X2 d'une mi-temps n'est PAS celui du match : il porte sur les buts
+    marques DANS cette periode seulement. Un « X » en 2e mi-temps veut dire
+    « aucune des deux equipes ne prend l'avantage sur la periode », pas
+    « match nul ».
+
+    Aucune de ces probabilites n'est calibree : la calibration isotone du depot
+    a ete etablie sur les onze marches plein-temps cotes par le book, et aucun
+    marche de mi-temps n'y figure. Ce sont donc des sorties de modele brutes,
+    et l'interface doit le dire.
+    """
+    out = {}
+    for nom, part in (("1re mi-temps", PART_MT1), ("2e mi-temps", 1.0 - PART_MT1)):
+        g = _grille_mt(lam_a, lam_b, part, HALF_SCALE.get(nom, 1.0))
+        ph = float(np.tril(g, -1).sum())     # domicile devant sur la periode
+        pn = float(np.trace(g))              # aucune des deux ne prend l'avantage
+        pv = float(np.triu(g, 1).sum())      # exterieur devant sur la periode
+        scores = sorted(((f"{i}-{j}", float(g[i, j]))
+                         for i in range(KH) for j in range(KH) if g[i, j] > 0),
+                        key=lambda kv: -kv[1])[:int(top)]
+        # CALIBREES, comme tous les autres marches du tableau de bord. Mesure
+        # sur 103 715 matchs de TEST jamais vus : le 1X2 de 2e mi-temps annoncait
+        # 46,9 % pour 42,1 % touches ; apres correction, 42,2 % pour 42,1 %.
+        out[nom] = {
+            "x12": [(k, round(calib_mi_temps(f"{nom} 1X2", v), 4))
+                    for k, v in (("1", ph), ("X", pn), ("2", pv))],
+            "scores": [(sc, round(calib_mi_temps(f"{nom} Score exact", pr), 4))
+                       for sc, pr in scores],
+            "calibre": mi_temps_calibre(),
+            "attendus": round(float(np.sum(
+                np.add.outer(np.arange(KH), np.arange(KH)) * g)), 2),
+        }
+    return out
+
+
 def marches_probas(lam_a: float, lam_b: float) -> dict:
     """Probabilites de CHAQUE marche Bet261, derivees de mes buts attendus.
 
@@ -1522,6 +1612,40 @@ try:
         _MK_CAL = json.loads(_pmc.read_text(encoding="utf-8")).get("marches") or {}
 except Exception:
     _MK_CAL = {}
+
+# Calibration des marches de MI-TEMPS. Fichier SEPARE, et pas une entree de plus
+# dans `marches_calibration.json` : celui-ci porte la mention « population cotee »,
+# or aucun marche de mi-temps n'est cote par le book. Les deux tables n'ont donc
+# pas la meme population de reference, et les melanger rendrait cette note fausse.
+_MT_CAL = {}
+try:
+    _pmt = Path(__file__).resolve().parents[1] / "config" / "mitemps_calibration.json"
+    if _pmt.exists():
+        _MT_CAL = json.loads(_pmt.read_text(encoding="utf-8")).get("marches") or {}
+except Exception:
+    _MT_CAL = {}
+
+
+def calib_mi_temps(cle: str, p_raw) -> float:
+    """Proba brute d'un marche de mi-temps -> proba calibree.
+
+    Meme mecanique que `calib_marche`, table differente. Sans table, la valeur
+    brute ressort telle quelle : mieux vaut une sortie non corrigee qu'un
+    silence, et l'interface dit laquelle des deux elle affiche.
+    """
+    if not isinstance(p_raw, (int, float)) or p_raw != p_raw:
+        return 0.0
+    b = (_MT_CAL.get(cle) or {}).get("bins") or []
+    if not b:
+        return float(p_raw)
+    xs = [(x["lo"] + x["hi"]) / 2.0 for x in b]
+    ys = [float(x["real"]) for x in b]
+    return _interp_calib(xs, ys, p_raw)
+
+
+def mi_temps_calibre() -> bool:
+    """La table de mi-temps est-elle chargee ? L'interface doit pouvoir le dire."""
+    return bool(_MT_CAL)
 
 
 
@@ -1637,6 +1761,12 @@ def conseil(engine, renc: dict) -> dict:
         "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
         "season_a": own.get("season_a"), "season_b": own.get("season_b"),
         "lignes": lignes,
+        # Les deux mi-temps, demandees le 27/09. Elles ne rejoignent PAS
+        # `lignes` : ce ne sont pas des marches cotes par le book, elles n'ont
+        # donc ni cote ni place dans le classement par probabilite qui designe
+        # le conseil. Les melanger ferait recommander « a jouer » un pari qui
+        # n'existe pas sur Bet261.
+        "mi_temps": marches_mi_temps(own["lam_a"], own["lam_b"]),
         # LA recommandation : le pari le plus probable, toutes lignes confondues.
         # Mesure sur 29 835 matchs de TEST : annonce 79.7 % -> touche 80.1 %.
         #

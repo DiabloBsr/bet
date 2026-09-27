@@ -369,6 +369,30 @@ def main():
                     st.caption(f"{jr}**{res_c['attendus']} buts attendus** — "
                                f"{res_c['home']} : {fa} ~{res_c['lam_a']} · "
                                f"{res_c['away']} : {fb} ~{res_c['lam_b']}.")
+                    # ---- LES DEUX MI-TEMPS (demande du 27/09) ----
+                    # Affichees AVANT le detail des marches cotes, et clairement
+                    # separees : ce ne sont pas des paris disponibles sur Bet261,
+                    # c'est mon pronostic de periode. Melanger les deux ferait
+                    # croire qu'on peut les jouer.
+                    mt_ = res_c.get("mi_temps") or {}
+                    if mt_:
+                        mc1, mc2 = st.columns([1, 1])
+                        for col, nom in ((mc1, "1re mi-temps"), (mc2, "2e mi-temps")):
+                            d_ = mt_.get(nom) or {}
+                            x_ = d_.get("x12") or []
+                            if not x_:
+                                continue
+                            sel_, p_ = max(x_, key=lambda kv: kv[1])
+                            # « 1 / X / 2 » de PERIODE : qui marque le plus DANS
+                            # cette mi-temps. Un « X » ne veut pas dire match nul.
+                            quoi = {"1": res_c["home"], "2": res_c["away"]}.get(
+                                sel_, "aucun des deux ne prend l'avantage")
+                            col.markdown(f"　**{nom}** — **{quoi}** "
+                                         f"(**{p_*100:.0f}%**)")
+                            sc_ = " · ".join(f"**{sc}** {pr*100:.0f}%"
+                                             for sc, pr in (d_.get("scores") or [])[:3])
+                            col.caption(f"　score : {sc_}　·　"
+                                        f"{d_.get('attendus')} buts attendus")
                     # Detail COMPLET pour chaque rencontre : les 11 marches et,
                     # sous chacun, ses deux meilleures alternatives avec leur cote.
                     for l in res_c["lignes"]:
@@ -382,6 +406,12 @@ def main():
                         if alt:
                             st.caption(f"　　sinon : {alt}")
                     st.markdown("---")
+                st.caption("Mi-temps : mon pronostic de période, **pas un pari "
+                           "Bet261** — le book ne cote ni le 1X2 ni le score "
+                           "exact d'une mi-temps. Calibré à part sur 103 714 "
+                           "matchs (moitié TRAIN chronologique) et vérifié sur "
+                           "103 715 jamais vus : écarts annoncé/touché ramenés "
+                           "de +4,8 à **+0,1 point** sur le 1X2 de 2e période.")
                 st.caption("Probas calibrées marché par marché sur 59 670 matchs "
                            "(moitié TRAIN / moitié TEST chronologique). Mon conseil "
                            "tient : annoncé 79,7% → **touché 80,1%** sur 29 835 matchs "

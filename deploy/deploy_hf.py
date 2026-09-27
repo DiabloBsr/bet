@@ -53,6 +53,9 @@ DEFAULT_FILES = [
     "config/totals_calibration.json",
     "config/ou25_calibration.json",
     "config/marches_calibration.json",
+    # Sans ce fichier, l'onglet « Que jouer ? » afficherait les mi-temps en
+    # BRUT : 46,9 % annonces pour 42,1 % touches sur le 1X2 de 2e periode.
+    "config/mitemps_calibration.json",
     "config/minute_table.json",
 ]
 BUILD_WAIT = 240      # laisser le temps au rebuild Docker + boot
