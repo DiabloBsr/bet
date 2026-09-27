@@ -164,12 +164,23 @@ def test_le_pronostic_ne_vient_pas_de_la_cote():
     assert 'calib_marche("1X2"' in bloc, "et passer par la calibration du marche"
 
 
-def test_l_onglet_existe_avec_les_controles_demandes():
+def test_le_moteur_reste_disponible_sans_son_onglet():
+    """⚠️ L'onglet « Mon 1X2 du round » a été retiré le 27/09, la section
+    de prédiction du round restaurée couvrant le même besoin.
+
+    Ce test affirmait sa présence à l'écran. Il vérifie désormais que le
+    MOTEUR reste entier : `round_1x2` et `signaux_1x2` ne coûtent rien tant
+    que rien ne les appelle, et remettre un écran ne demandera alors que son
+    affichage. C'est le même parti que pour les quatre onglets coupés la
+    veille.
+    """
+    assert callable(pt.round_1x2) and callable(pt.signaux_1x2)
+    # Les seuils aussi : ce sont eux qui seraient perdus en premier.
+    for nom in ("PIEGE_COTE_FAVORI", "PIEGE_ECART", "PIEGE_NUL",
+                "PIEGE_NUL_COTE", "PIEGE_SANS_FAVORI", "GROSSE_COTE"):
+        assert isinstance(getattr(pt, nom), (int, float)), nom
     src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
-    assert "Mon 1X2 du round" in src
-    assert "Heure Mada du round" in src
-    assert 'selectbox("Ligue", list(LEAGUES), index=0, key="rd_lg")' in src
-    assert "round_1x2(" in src
+    assert "Mon 1X2 du round" not in src, "l'onglet est censé avoir été retiré"
 
 
 # --------------------------------------------------------------------------
