@@ -562,22 +562,41 @@ def main():
             st.success(f"**{sg['name']}** → **{sg['issue']} gagne** — "
                        f"cote **{sg['ci']:g}** · {sg['pi']*100:.0f}%"
                        + (f"  \nTop-3 scores : {sc3}" if sc3 else ""))
+        # ⚠️ UNE SEULE ECRITURE DU SCORE, pour les deux listes (27/09,
+        # « affiche aussi les scores exacts de tous les matchs »). Le score
+        # n'etait rendu que sur le Top 3 alors qu'il est calcule pour CHAQUE
+        # rencontre. Le recopier dans la seconde liste aurait fait deux formats
+        # a tenir a jour — ils auraient diverge au premier ajustement.
+        def _score(r):
+            t = r.get("t1")
+            return (f" · score **{t[0]}** ({t[1]*100:.0f}%)"
+                    if t and t[0] else "")
+
+        def _autres_scores(r):
+            """Les deux scores suivants. Sur un marche touche a 11,8 %, donner
+            UN score sans ses suivants laisse croire a une precision qu'il
+            n'a pas."""
+            return " · ".join(f"**{sc}** {pr*100:.0f}%"
+                               for sc, pr in (r.get("cs") or [])[1:3] if sc)
+
         top3 = sorted(pronos, key=lambda r: -r["conf"])[:3]
         top3_names = {r["name"] for r in top3}
         if top3:
             st.markdown("### 🏆 Top 3 du round — avec score exact")
             for i, r in enumerate(top3, 1):
-                sc = (f" · score **{r['t1'][0]}** ({r['t1'][1]*100:.0f}%)"
-                      if r["t1"] and r["t1"][0] else "")
                 st.markdown(f"**{i}. {r['name']}** → **{r['issue']}** ({r['pi']*100:.0f}%) "
-                            f"· cote **{r['ci']:g}**{sc}")
+                            f"· cote **{r['ci']:g}**{_score(r)}")
+                if _autres_scores(r):
+                    st.caption(f"　sinon : {_autres_scores(r)}")
         reste = sorted((r for r in pronos if r["name"] not in top3_names),
                        key=lambda r: -r["pi"])
         if reste:
-            st.markdown("**Les autres matchs :**")
+            st.markdown("**Les autres matchs — avec score exact :**")
             for r in reste:
                 st.markdown(f"• **{r['name']}** → **{r['issue']}** "
-                            f"({r['pi']*100:.0f}%) · cote **{r['ci']:g}**")
+                            f"({r['pi']*100:.0f}%) · cote **{r['ci']:g}**{_score(r)}")
+                if _autres_scores(r):
+                    st.caption(f"　sinon : {_autres_scores(r)}")
         if not pronos:
             st.warning("Aucun match à prédire sur ce round.")
 
