@@ -1852,100 +1852,134 @@ def signaux_1x2(p1, pn, p2, oh, od, oa, home="1", away="2") -> tuple:
     return raisons, grosses
 
 
+def _analyse_1x2(engine, r, lg_defaut=None) -> dict:
+    """Mon 1X2 sur UNE rencontre, avec ses pieges et ses grosses cotes.
+
+    Extraite de `round_1x2` pour etre partagee avec le debusqueur : deux
+    ecritures du meme pronostic divergeraient au premier reglage de l'une.
+    """
+    jn = None
+    _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
+    if _d:
+        jn = int(_d[0])
+    # ⚠️ La ligue de CETTE rencontre, pas celle demandee : sur un balayage
+    # multi-ligues, passer la ligue demandee ferait chercher la forme des
+    # equipes dans la mauvaise competition -- `predict_own` rendrait None, et
+    # toutes les rencontres sortiraient en « historique insuffisant ».
+    lg_r = getattr(r, "c", None) or lg_defaut
+    own = predict_own(engine, r.team_a, r.team_b, lg=lg_r, journee=jn)
+    if not own:
+        return {"home": r.team_a, "away": r.team_b, "local": r.local,
+                "ligue": lg_r, "erreur": "historique insuffisant"}
+    # ⚠️ `x12` est une LISTE de trois nombres, pas des paires. La TAILLE ne
+    # suffit pas a la valider : une chaine de trois caracteres la passerait et
+    # ressortirait en trois probas nulles, donc en faux « aucun favori net ».
+    bruts = list(own.get("x12") or [])
+    if len(bruts) != 3 or not all(
+            isinstance(v, (int, float)) and v == v for v in bruts):
+        return {"home": r.team_a, "away": r.team_b, "local": r.local,
+                "ligue": lg_r, "erreur": "analyse 1X2 indisponible"}
+    p1, pn, p2 = (calib_marche("1X2", v) for v in bruts)
+    sel, p_sel = max((("1", p1), ("X", pn), ("2", p2)), key=lambda kv: kv[1])
+    oh, od, oa = _odd_pos(r.oh), _odd_pos(r.od), _odd_pos(r.oa)
+    cotes = {"1": oh, "X": od, "2": oa}
+    raisons, grosses = signaux_1x2(p1, pn, p2, oh, od, oa, r.team_a, r.team_b)
+    return {
+        "home": r.team_a, "away": r.team_b, "local": r.local, "journee": jn,
+        "ligue": lg_r, "tag": getattr(r, "tag", None),
+        "sel": sel, "p": round(p_sel, 4),
+        "equipe": {"1": r.team_a, "2": r.team_b}.get(sel, "Nul"),
+        "odds": round(float(cotes[sel]), 2) if cotes.get(sel) else None,
+        "probas": {"1": round(p1, 4), "X": round(pn, 4), "2": round(p2, 4)},
+        "cotes": {k: (round(float(v), 2) if v else None) for k, v in cotes.items()},
+        "pieges": raisons, "grosses_cotes": grosses,
+        "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
+        "attendus": round(own["lam_a"] + own["lam_b"], 2),
+    }
+
+
 def round_1x2(engine, lg, heure=None, limite: int = 30) -> list:
     """Mon 1X2 sur tout un round, avec les pieges et les grosses cotes.
 
     Le pronostic vient de MA SEULE analyse (`predict_own` : forme Bet261), puis
     de la calibration du marche 1X2. Les cotes ne servent qu'a deux choses :
-    chiffrer le gain, et reperer les DESACCORDS entre le book et moi -- jamais
-    a choisir l'issue.
+    chiffrer le gain, et reperer les DESACCORDS avec le book -- jamais a
+    choisir l'issue. Le detail de chaque rencontre vit dans `_analyse_1x2`.
 
-    ── LES TROIS SIGNAUX DE PIEGE ───────────────────────────────────────────────
-
-    « favori fragile » : le book donne un favori a 1,70 ou moins, et je lui
-    accorde au moins 5 points de moins que la proba impliquee par sa cote.
-    C'est le seul cas ou un desaccord avec le book merite d'etre signale : un
-    favori tres court se joue les yeux fermes, et c'est la que se perd le plus.
-
-    « nul menacant » : je donne au moins 30 % au nul alors que le favori est a
-    2,20 ou moins. Le nul est l'issue qu'on oublie de couvrir.
-
-    « aucun favori net » : ma meilleure des trois issues reste sous 40 %. Ce
-    signal REMPLACE les deux anciens (« match chaotique » et « moteurs en
-    desaccord »), qui lisaient la confiance du modele V2/V5 et son accord avec
-    V2 -- deux choses qui n'existent plus depuis que cet ecran ne fait plus
-    tourner ce modele. Je prefere un signal different et dit comme tel a un
-    signal qui aurait garde le meme nom en mesurant autre chose.
-
-    ── LES GROSSES COTES NE SONT PAS UNE VALUE ──────────────────────────────────
-
-    Une issue a 5,00 ou plus est signalee comme un FAIT, avec ma probabilite a
-    cote. Rien de plus. La regle « proba x cote >= 1 » a ete testee deux fois
-    dans ce depot et s'est revelee un signal INVERSE : elle selectionne les
-    matchs ou mon modele s'ecarte le plus du book, c'est-a-dire mes propres
-    erreurs. Elle n'est donc pas rejouee ici, et le mot « value » n'apparait
-    pas.
+    `lg` accepte UNE ligue ou plusieurs. Une chaine reste une chaine :
+    `list("Instant...")` en ferait une liste de caracteres, et le filtre ne
+    retiendrait plus rien.
     """
-    # `lg` accepte UNE ligue ou plusieurs (27/09, « debusque dans toutes les
-    # ligues »). Une chaine reste une chaine : `list("Instant...")` en ferait
-    # une liste de caracteres, et le filtre ne retiendrait plus rien.
     ligues = [lg] if isinstance(lg, str) else [x for x in (lg or []) if x]
     up = _upcoming_df(engine, ligues or None, 1440,
-                      *( (str(heure).strip().zfill(5),) * 2 if heure else ()))
+                      *((str(heure).strip().zfill(5),) * 2 if heure else ()))
     if not len(up):
         return []
     out = []
     for r in up.itertuples():
-        jn = None
-        _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
-        if _d:
-            jn = int(_d[0])
-        # ⚠️ La ligue de CETTE rencontre, pas celle demandee : sur un balayage
-        # multi-ligues, passer `lg` ferait chercher la forme des equipes dans
-        # la mauvaise competition -- `predict_own` rendrait None, et toutes les
-        # rencontres sortiraient en « historique insuffisant ».
-        own = predict_own(engine, r.team_a, r.team_b,
-                          lg=getattr(r, "c", None) or ligues[0], journee=jn)
-        if not own:
-            out.append({"home": r.team_a, "away": r.team_b, "local": r.local,
-                        "erreur": "historique insuffisant"})
-            continue
-        # ⚠️ `x12` est une LISTE de trois nombres [p1, pnul, p2], pas des
-        # paires : `dict()` dessus leve. Bug trouve au premier appel reel le
-        # 27/09 -- les tests ne l'avaient pas vu parce qu'aucune rencontre a
-        # venir n'existait en base, et que la fonction sort avant d'y arriver.
-        bruts = list(own.get("x12") or [])
-        # La TAILLE ne suffit pas : une chaine de trois caracteres passe le
-        # test de longueur et ressort en trois probas nulles, donc en « aucun
-        # favori net » -- un faux signal, pire qu'une erreur affichee.
-        if len(bruts) != 3 or not all(
-                isinstance(v, (int, float)) and v == v for v in bruts):
-            out.append({"home": r.team_a, "away": r.team_b, "local": r.local,
-                        "erreur": "analyse 1X2 indisponible"})
-            continue
-        p1, pn, p2 = (calib_marche("1X2", v) for v in bruts)
-        sel, p_sel = max((("1", p1), ("X", pn), ("2", p2)), key=lambda kv: kv[1])
-        oh, od, oa = _odd_pos(r.oh), _odd_pos(r.od), _odd_pos(r.oa)
-        cotes = {"1": oh, "X": od, "2": oa}
-
-        raisons, grosses = signaux_1x2(p1, pn, p2, oh, od, oa,
-                                       r.team_a, r.team_b)
-
-        out.append({
-            "home": r.team_a, "away": r.team_b, "local": r.local, "journee": jn,
-            "ligue": getattr(r, "c", None), "tag": getattr(r, "tag", None),
-            "sel": sel, "p": round(p_sel, 4),
-            "equipe": {"1": r.team_a, "2": r.team_b}.get(sel, "Nul"),
-            "odds": round(float(cotes[sel]), 2) if cotes.get(sel) else None,
-            "probas": {"1": round(p1, 4), "X": round(pn, 4), "2": round(p2, 4)},
-            "cotes": {k: (round(float(v), 2) if v else None) for k, v in cotes.items()},
-            "pieges": raisons, "grosses_cotes": grosses,
-            "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
-            "attendus": round(own["lam_a"] + own["lam_b"], 2),
-        })
+        out.append(_analyse_1x2(engine, r, ligues[0] if ligues else None))
         if len(out) >= int(limite):
             break
     return out
+
+
+def _partie_entiere(o) -> int | None:
+    """Partie entiere d'une cote lisible : 2,87 -> 2. None si illisible."""
+    v = _odd_pos(o)
+    return int(v) if v else None
+
+
+def debusquer_rounds(engine, ligues=None, n_rounds: int = 5, entier: int = 2,
+                     limite: int = 60) -> dict:
+    """Les rencontres des `n_rounds` prochains rounds dont les TROIS cotes 1X2
+    ont `entier` pour partie entiere -- 2 signifie « 2,00 a 2,99 ».
+
+    Rend {"trouvees": [...], "examinees": n, "rounds": n, "ligues": n}.
+
+    ── POURQUOI LE FILTRE SUR LES COTES PASSE EN PREMIER ────────────────────────
+
+    Cinq rounds sur neuf ligues, c'est de l'ordre de 450 rencontres. Analyser
+    chacune demande deux requetes de forme, soit ~900 requetes -- pour ne
+    retenir que 0,58 % d'entre elles (mesure : 1 060 releves sur 184 105).
+
+    Le tri sur les cotes ne coute RIEN : il lit trois nombres deja charges. On
+    le fait donc avant, et `predict_own` ne tourne que sur les survivantes.
+    L'ecran passe de dizaines de secondes a une reponse immediate.
+
+    ── CE QU'EST UN ROUND ICI ───────────────────────────────────────────────────
+
+    Toutes les rencontres d'une ligue partageant la meme heure de coup d'envoi
+    (9 a 18 selon la ligue). « Les 5 prochains rounds » se lit donc PAR LIGUE :
+    les cinq prochaines heures de chacune, et non les cinq prochaines heures
+    toutes ligues confondues -- sans quoi une ligue rapide mangerait la place
+    des autres.
+    """
+    lgs = [ligues] if isinstance(ligues, str) else [x for x in (ligues or []) if x]
+    up = _upcoming_df(engine, lgs or None, 1440)
+    if not len(up):
+        return {"trouvees": [], "examinees": 0, "rounds": 0, "ligues": 0}
+
+    # Les n premieres heures de chaque ligue.
+    gardees, par_ligue = [], {}
+    for r in up.itertuples():
+        c = getattr(r, "c", None)
+        heures = par_ligue.setdefault(c, [])
+        h = getattr(r, "expected_start", None)
+        if h not in heures:
+            if len(heures) >= int(n_rounds):
+                continue
+            heures.append(h)
+        gardees.append(r)
+
+    ent = int(entier)
+    retenues = [r for r in gardees
+                if all(_partie_entiere(o) == ent for o in (r.oh, r.od, r.oa))]
+    out = []
+    for r in retenues[:int(limite)]:
+        out.append(_analyse_1x2(engine, r, getattr(r, "c", None)))
+    return {"trouvees": out, "examinees": len(gardees),
+            "rounds": int(n_rounds),
+            "ligues": len({getattr(r, "c", None) for r in gardees})}
 
 
 def fiabilite_marche(marche: str) -> dict | None:

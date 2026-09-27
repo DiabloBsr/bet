@@ -166,10 +166,17 @@ def test_aucune_regle_proba_fois_cote():
 # --------------------------------------------------------------------------
 
 def test_le_pronostic_ne_vient_pas_de_la_cote():
+    """L'analyse d'une rencontre vit dans `_analyse_1x2` depuis le 27/09 :
+    `round_1x2` et le débusqueur des 5 rounds la partagent, deux écritures du
+    même pronostic divergeraient au premier réglage de l'une."""
     src = (RACINE / "scripts" / "predict_trio.py").read_text(encoding="utf-8")
-    bloc = src[src.index("def round_1x2("):src.index("def fiabilite_marche(")]
+    bloc = src[src.index("def _analyse_1x2("):src.index("def round_1x2(")]
     assert "predict_own(" in bloc, "le pronostic doit venir de ma propre analyse"
     assert 'calib_marche("1X2"' in bloc, "et passer par la calibration du marche"
+    # Et les deux appelants passent bien par elle, sans refaire le calcul.
+    aval = src[src.index("def round_1x2("):src.index("def fiabilite_marche(")]
+    assert aval.count("_analyse_1x2(") == 2
+    assert "predict_own(" not in aval, "le pronostic est recopie quelque part"
 
 
 def test_le_moteur_reste_disponible_sans_son_onglet():
@@ -394,3 +401,107 @@ def test_la_cible_a_deux_ne_les_trouve_pas():
     exemples = [m(2.87, 2.79, 2.82), m(2.81, 2.84, 2.83), m(2.83, 2.87, 2.78)]
     r = pt.debusquer_cotes(exemples, cibles=(2.0, 2.0, 2.0), tol=0.10)
     assert r["trouvees"] == [] and len(r["proches"]) == 3
+
+
+# --------------------------------------------------------------------------
+# DEBUSQUEUR DES 5 PROCHAINS ROUNDS (27/09)
+#
+# « Je n'ai pas besoin d'indicateur d'heure, mais je veux que tu debusques
+#   toutes les cotes dans les 5 rounds a venir du 1X2 a une cote 2, peu
+#   importe l'apres-virgule. »
+#
+# « Cote 2 peu importe l'apres-virgule » = partie entiere 2, soit 2,00 a 2,99.
+# Mesure : 1 060 releves sur 184 105 (0,58 %), sur 8 ligues.
+# --------------------------------------------------------------------------
+
+def test_partie_entiere():
+    assert pt._partie_entiere(2.87) == 2
+    assert pt._partie_entiere(2.00) == 2
+    assert pt._partie_entiere(2.99) == 2
+    assert pt._partie_entiere(3.00) == 3
+    assert pt._partie_entiere(1.99) == 1
+    for mauvais in (None, "", "n/a", 0, -1, float("nan")):
+        assert pt._partie_entiere(mauvais) is None, mauvais
+
+
+@pytest.fixture
+def cinq_rounds(monkeypatch):
+    """Trois heures dans une ligue, deux dans une autre ; cotes variees."""
+    def rc(ta, h, c, oh, od, oa):
+        return _Renc(team_a=ta, team_b=ta + "b", local="21:03", rd="Journee 7",
+                     oh=oh, od=od, oa=oa, c=c, expected_start=h)
+    frame = _Frame([
+        rc("A1", "h1", "LG1", 2.87, 2.79, 2.82),   # retenue
+        rc("A2", "h1", "LG1", 1.40, 4.50, 7.00),   # ecartee
+        rc("A3", "h2", "LG1", 2.05, 2.95, 2.50),   # retenue
+        rc("A4", "h3", "LG1", 3.00, 2.50, 2.50),   # ecartee : une cote a 3,00
+        rc("B1", "h9", "LG2", 2.10, 2.20, 2.30),   # retenue
+    ])
+    monkeypatch.setattr(pt, "_upcoming_df", lambda *a, **k: frame)
+    monkeypatch.setattr(pt, "predict_own",
+                        lambda *a, **k: {"x12": [0.34, 0.33, 0.33],
+                                         "lam_a": 1.3, "lam_b": 1.3})
+    return frame
+
+
+def test_ne_garde_que_les_trois_cotes_commencant_par_deux(cinq_rounds):
+    r = pt.debusquer_rounds(object(), n_rounds=5, entier=2)
+    assert [m["home"] for m in r["trouvees"]] == ["A1", "A3", "B1"]
+    assert r["examinees"] == 5 and r["ligues"] == 2
+
+
+def test_une_cote_a_trois_pile_disqualifie(cinq_rounds):
+    """2,99 passe, 3,00 non : « peu importe l'apres-virgule » porte bien sur
+    la PARTIE ENTIERE, et la borne haute est exclusive."""
+    r = pt.debusquer_rounds(object(), n_rounds=5, entier=2)
+    assert "A4" not in [m["home"] for m in r["trouvees"]]
+
+
+def test_le_nombre_de_rounds_se_compte_PAR_LIGUE(cinq_rounds):
+    """Sans cela, une ligue rapide mangerait la place des autres."""
+    r = pt.debusquer_rounds(object(), n_rounds=1, entier=2)
+    # LG1 ne garde que « h1 », LG2 garde « h9 » : A3 disparait, B1 reste.
+    assert [m["home"] for m in r["trouvees"]] == ["A1", "B1"]
+
+
+def test_la_partie_entiere_est_reglable(cinq_rounds):
+    r = pt.debusquer_rounds(object(), n_rounds=5, entier=1)
+    assert r["trouvees"] == []
+
+
+def test_aucune_rencontre_a_venir(monkeypatch):
+    monkeypatch.setattr(pt, "_upcoming_df", lambda *a, **k: _Frame())
+    r = pt.debusquer_rounds(object())
+    assert r == {"trouvees": [], "examinees": 0, "rounds": 0, "ligues": 0}
+
+
+def test_l_analyse_ne_tourne_que_sur_les_survivantes(cinq_rounds, monkeypatch):
+    """⚠️ C'EST LA RAISON D'ETRE DU TRI EN DEUX TEMPS. Cinq rounds sur neuf
+    ligues font ~450 rencontres ; les analyser toutes demanderait ~900
+    requetes de forme pour n'en retenir que 0,58 %."""
+    appels = []
+    monkeypatch.setattr(pt, "predict_own",
+                        lambda e, a, b, **k: (appels.append(a) or
+                                              {"x12": [0.34, 0.33, 0.33],
+                                               "lam_a": 1.3, "lam_b": 1.3}))
+    pt.debusquer_rounds(object(), n_rounds=5, entier=2)
+    assert appels == ["A1", "A3", "B1"], "l'analyse a tourne sur des ecartees"
+
+
+def test_le_plafond_de_rencontres_est_respecte(monkeypatch):
+    frame = _Frame([_Renc(team_a=f"T{i}", team_b="X", local="21:03", rd="J1",
+                          oh=2.1, od=2.2, oa=2.3, c="LG1",
+                          expected_start="h1") for i in range(40)])
+    monkeypatch.setattr(pt, "_upcoming_df", lambda *a, **k: frame)
+    monkeypatch.setattr(pt, "predict_own",
+                        lambda *a, **k: {"x12": [0.34, 0.33, 0.33],
+                                         "lam_a": 1.3, "lam_b": 1.3})
+    assert len(pt.debusquer_rounds(object(), limite=12)["trouvees"]) == 12
+
+
+def test_l_onglet_ne_demande_plus_l_heure():
+    src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
+    bloc = src[src.index("Débusqueur 1X2 à cote 2"):src.index("HISTORIQUE & FACE")]
+    assert "Heure Mada" not in bloc, "l'indicateur d'heure devait disparaître"
+    assert "debusquer_rounds(" in bloc
+    assert "Rounds à venir" in bloc

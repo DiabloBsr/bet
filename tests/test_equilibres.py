@@ -126,13 +126,25 @@ def test_le_filtre_par_seuil_reste_disponible():
     assert callable(pt.filtrer_equilibres) and pt.COTE_EQUILIBRE == 2.0
 
 
+def test_le_debusqueur_par_cible_reste_disponible():
+    """⚠️ `debusquer_cotes` (cible + tolérance) n'est plus câblée à l'écran
+    depuis la précision du 27/09 : « cote 2 peu importe l'après-virgule »
+    désigne une PARTIE ENTIÈRE, pas une cible à tolérance. L'onglet utilise
+    donc `debusquer_rounds`.
+
+    La fonction est conservée avec ses tests : elle ne coûte rien tant que
+    rien ne l'appelle, et répondre un jour à « les trois cotes à 2,83 près »
+    ne demandera que son affichage. Même parti que pour `round_1x2` et
+    `filtrer_equilibres`."""
+    assert callable(pt.debusquer_cotes) and pt.CIBLE_TROIS_COTES == (2.0, 2.0, 2.0)
+
+
 def test_l_onglet_reutilise_le_moteur_existant():
-    """`round_1x2` avait ete conservee apres le retrait de son onglet,
-    precisement pour qu'un nouvel ecran n'ait que son affichage a ecrire."""
     src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
     assert "Débusqueur 1X2 à cote 2" in src
-    assert "round_1x2(" in src, "l'onglet doit reutiliser le moteur, pas le refaire"
-    assert "debusquer_cotes(" in src
+    assert "debusquer_rounds(" in src, "l'onglet doit réutiliser le moteur"
+    # Le pronostic n'est pas recopie dans l'interface.
+    assert "predict_own(" not in src
 
 
 # --------------------------------------------------------------------------
