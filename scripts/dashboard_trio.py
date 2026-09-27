@@ -566,12 +566,31 @@ def main():
                    "mi-temps/fin de match) de CHAQUE rencontre, et je dis quoi jouer. "
                    "Prédiction issue de la seule forme des équipes.")
         c_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[], key="cs_lgs")
-        cc1, cc2 = st.columns([1, 1])
+        cc1, cc2, cc3 = st.columns([1, 1, 1])
         c_h = cc1.text_input("Heure (HH:MM Mada) — vide = les prochaines heures",
                              value="", key="cs_h", placeholder="ex: 21:03")
         c_max = cc2.number_input("Rencontres max", 1, 30, 12, 1, key="cs_max",
                                  help="Garde-fou : chaque rencontre demande une "
                                       "analyse complète de ses 11 marchés.")
+        # SEUIL SUR LA COTE DU CONSEIL, demande du 27/09 : « affiche juste ceux de
+        # ton pronostic >= 1,2 ».
+        #
+        # POURQUOI CE FILTRE A UN SENS ICI, et pourquoi il porte sur la RENCONTRE
+        # et non sur les lignes de détail. Mesure sur les 12 dernières rencontres
+        # en base : le conseil de tête est TOUJOURS un double chance (1X / X2 / 12)
+        # — c'est mécanique, `sur` = la ligne la plus probable des 11 marchés, et
+        # le double chance est structurellement le plus probable de tous. Ses cotes
+        # s'étalent de 1,00 à 1,29 : cinq rencontres sur douze payaient moins de
+        # 1,20 (jusqu'à 1,00, soit rien du tout). Le seuil sépare donc vraiment.
+        #
+        # Sur les lignes de détail, au contraire, 125 des 132 mesurées sont déjà
+        # au-dessus de 1,20 : y appliquer le seuil n'aurait écarté que 7 lignes sur
+        # 132. Le détail des 11 marchés reste donc ENTIER — « garder tout ».
+        c_min = cc3.number_input("Cote min. du conseil", 1.00, 5.00, 1.20, 0.01,
+                                 key="cs_min", format="%.2f",
+                                 help="N'affiche que les rencontres dont le conseil "
+                                      "de tête paie au moins ça. À 1,00 tout "
+                                      "s'affiche, comme avant.")
         if st.button("🧭 Que dois-je jouer ?", key="cs_go", type="primary"):
             hh = c_h.strip()
             if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
@@ -594,10 +613,26 @@ def main():
                 st.info("Aucune rencontre à venir sur ces critères — élargis les ligues, "
                         "vide l'heure, ou attends le prochain round.")
             else:
-                st.success(f"**{len(res_l)} rencontre(s) analysée(s)**"
-                           + (f" sur {total} à venir." if total > len(res_l) else "."))
+                # Le tri se fait À L'AFFICHAGE et non au calcul : bouger le seuil
+                # réaffiche aussitôt, sans relancer onze analyses par rencontre.
+                gardees, trop_bas, sans_cote = _ptc2.filtrer_conseils(
+                    res_l, c_min)
+                n_vraies = sum(1 for r_c in gardees if not r_c.get("erreur"))
+                if not n_vraies:
+                    st.info(f"Les {len(res_l)} rencontre(s) analysée(s) ont toutes un "
+                            f"conseil sous **{c_min:g}** — baisse le seuil pour les "
+                            f"voir. C'est le cas normal quand le favori écrase : le "
+                            f"pari le plus sûr paie alors presque rien.")
+                else:
+                    st.success(
+                        f"**{n_vraies} rencontre(s) retenue(s)** sur {len(res_l)} "
+                        f"analysée(s)"
+                        + (f" — {total} à venir en tout" if total > len(res_l) else "")
+                        + f" — conseil à cote **≥ {c_min:g}**."
+                        + (f" {trop_bas} écartée(s), conseil trop bas." if trop_bas else "")
+                        + (f" {sans_cote} écartée(s), conseil non coté." if sans_cote else ""))
                 emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
-                for res_c in res_l:
+                for res_c in gardees:
                     if res_c.get("erreur"):
                         st.caption(f"⚠️ {res_c['erreur']}")
                         continue

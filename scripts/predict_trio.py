@@ -1650,6 +1650,47 @@ def conseil(engine, renc: dict) -> dict:
 
 
 
+def filtrer_conseils(resultats, cote_min: float):
+    """Ne garde que les conseils dont la cote de tete atteint `cote_min`.
+
+    Rend `(gardees, trop_bas, sans_cote)` : la liste a afficher, puis le compte
+    des deux motifs d'ecart. Les comptes sont rendus pour etre AFFICHES -- une
+    rencontre qui disparait sans etre annoncee est un bug d'interface.
+
+    POURQUOI CE FILTRE EXISTE (27/09). Le conseil de tete est `lignes[0]`, la
+    ligne la plus probable des onze marches ; c'est donc structurellement un
+    double chance (1X / X2 / 12), et sa cote mesuree va de 1,00 a 1,29. A 1,00
+    le pari ne rapporte rien : l'afficher comme « a jouer » est trompeur.
+
+    Une erreur d'analyse est GARDEE : elle n'a pas de cote a comparer, et la
+    masquer ferait croire que la rencontre n'existe pas plutot que qu'elle n'a
+    pas pu etre analysee.
+
+    Un conseil sans cote est ecarte mais COMPTE : faute de prix, on ne peut pas
+    affirmer qu'il passe le seuil, et on ne peut pas non plus le taire.
+    """
+    seuil = float(cote_min)
+    gardees, trop_bas, sans_cote = [], 0, 0
+    for r in resultats or []:
+        if not isinstance(r, dict):
+            continue
+        if r.get("erreur"):
+            gardees.append(r)
+            continue
+        o = (r.get("sur") or {}).get("odds")
+        try:
+            o = float(o)
+        except (TypeError, ValueError):
+            o = None
+        if o is None or o != o:          # absente, ou NaN
+            sans_cote += 1
+        elif o + 1e-9 < seuil:
+            trop_bas += 1
+        else:
+            gardees.append(r)
+    return gardees, trop_bas, sans_cote
+
+
 def _z_bonferroni(n_tests: int) -> float:
     """Seuil normal a 95 % corrige pour `n_tests` comparaisons simultanees.
 
