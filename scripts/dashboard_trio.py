@@ -534,6 +534,192 @@ def main():
         else:
             st.info("Pas d'équipes trouvées pour cette ligue.")
 
+    # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
+    # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
+    cached_fit = st.cache_resource(_fit)
+
+    # Panneau reduit a l'essentiel (demande user) : ligue + heure du round.
+    # Les reglages retires sont FIGES sur la valeur qui etait deja proposee par
+    # defaut, celle que l'app recommandait :
+    #   - seuil de confiance 70 % : c'etait la position initiale du curseur ;
+    #   - "haute confiance seulement" desactive : sinon ~90 % des matchs du round
+    #     disparaissent (les rounds concentres sont rares, ~10 %) ;
+    #   - suivi auto desactive : il relancait un rerun toutes les 45 s.
+    # Un seul bouton au lieu de deux : le champ heure fait deja la distinction,
+    # vide = prochain round. Et on garde le declenchement au clic — le fit prend
+    # 60-90 s au premier appel, le lancer au chargement figerait la page.
+    CONF_RECO = 0.70
+    want_conf, hi_only = CONF_RECO, False
+
+    lg_name = st.selectbox("Ligue", list(LEAGUES), index=0)
+    lg = LEAGUES[lg_name]
+    if lg != "InstantLeague-8035":
+        st.caption("ℹ️ Ligue en mode MARCHÉ pur (probas dévigées, calibrées) — V2/V5 sont "
+                   "entraînés sur l'anglaise.")
+
+    t_str = st.text_input("Heure Mada du round (ex: 21:03) — vide = prochain", value="", key="rt")
+    go_h = st.button("🔮 Prédire", type="primary")
+
+    if go_h:
+        target = None
+        if go_h and t_str.strip():
+            d = re.findall(r"\d+", t_str)
+            if len(d) >= 2:
+                target = f"{int(d[0]) % 24:02d}:{int(d[1]) % 60:02d}"
+        try:
+            with st.spinner("Fit V5+V2 (1er appel ~60-90s, puis instantané)…"):
+                models = cached_fit()
+        except Exception as exc:
+            st.error(f"Fit impossible : {exc}"); return
+        with _db("Calcul du trio…"):
+            res_new = _round(models, target, lg)
+        if target and res_new.get("rounds") and target not in res_new["rounds"]:
+            st.warning(f"Round {target} non dispo. Rounds : {res_new['rounds'][:10]}")
+        st.session_state["pred_res"] = res_new
+
+    res = st.session_state.get("pred_res")
+    if res is not None and not res.get("matches"):
+        st.info("Aucun match à venir capté (le scraper doit tourner).")
+    if res and res.get("matches"):
+        import predict_trio as _ptc
+        _pt = _ptc
+        try:
+            hh, mm = map(int, res["target"].split(":"))
+            nm = datetime.now(timezone.utc) + timedelta(hours=3)
+            ko = nm.replace(hour=hh, minute=mm, second=0)
+            if ko < nm - timedelta(minutes=2):
+                ko += timedelta(days=1)
+            left = int((ko - nm).total_seconds())
+            cd = f"⏳ coup d'envoi dans {max(left,0)//60}:{max(left,0)%60:02d}" if left > 0 else "🔴 en cours"
+        except Exception:
+            cd = ""
+        st.success(f"Round {res['target']} Mada — {len(res['matches'])} matchs   {cd}")
+        matches_all = res["matches"]
+        HI = 0.32
+        shown = [m for m in matches_all if (m.get("confidence") or 0) >= HI] if hi_only else matches_all
+        if hi_only and not shown:
+            st.info("Aucun match assez concentré dans ce round — normal, ils sont rares (~10%).")
+
+        # Vue pronostics seuls (demande user) : QUI GAGNE, tout simplement --
+        # une ligne par match, triee de la plus sure a la moins sure. Pas de
+        # double chance ni d'over/under. + les grosses cotes value du round.
+        # Vue simple (demande user) : Top 3 du round AVEC score exact, puis le
+        # vainqueur pronostique des autres matchs, avec proba et cote.
+        pronos = []
+        for m in shown:
+            oh, od, oa = m["cotes"]
+            ph, pd_, pa = m["x12"]
+            if ph >= pd_ and ph >= pa:
+                issue, pi, ci = m.get("team_a") or "1", ph, oh
+            elif pa >= pd_:
+                issue, pi, ci = m.get("team_b") or "2", pa, oa
+            else:
+                issue, pi, ci = "Nul", pd_, od
+            t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
+            pronos.append({"pi": pi, "name": m["match"], "issue": issue, "ci": ci,
+                           "conf": m.get("confidence") or 0, "t1": t1,
+                           "cs": m.get("consensus_top3") or []})
+        # Pari suggere (demande user) : pas le favori ecrase a petite cote --
+        # le vainqueur predit le PLUS PROBABLE parmi ceux payes a cote >= 2.0
+        # (repli 1.8) : cote elevee mais sure.
+        cand = ([r for r in pronos if r["issue"] != "Nul" and r["ci"] >= 2.0]
+                or [r for r in pronos if r["issue"] != "Nul" and r["ci"] >= 1.8])
+        if cand:
+            sg = max(cand, key=lambda r: r["pi"])
+            sc3 = " · ".join(f"**{s}** ({p*100:.0f}%)" for s, p in sg["cs"][:3])
+            st.markdown("### 🎯 Mon pari suggéré du round — cote élevée mais sûre")
+            st.success(f"**{sg['name']}** → **{sg['issue']} gagne** — "
+                       f"cote **{sg['ci']:g}** · {sg['pi']*100:.0f}%"
+                       + (f"  \nTop-3 scores : {sc3}" if sc3 else ""))
+        top3 = sorted(pronos, key=lambda r: -r["conf"])[:3]
+        top3_names = {r["name"] for r in top3}
+        if top3:
+            st.markdown("### 🏆 Top 3 du round — avec score exact")
+            for i, r in enumerate(top3, 1):
+                sc = (f" · score **{r['t1'][0]}** ({r['t1'][1]*100:.0f}%)"
+                      if r["t1"] and r["t1"][0] else "")
+                st.markdown(f"**{i}. {r['name']}** → **{r['issue']}** ({r['pi']*100:.0f}%) "
+                            f"· cote **{r['ci']:g}**{sc}")
+        reste = sorted((r for r in pronos if r["name"] not in top3_names),
+                       key=lambda r: -r["pi"])
+        if reste:
+            st.markdown("**Les autres matchs :**")
+            for r in reste:
+                st.markdown(f"• **{r['name']}** → **{r['issue']}** "
+                            f"({r['pi']*100:.0f}%) · cote **{r['ci']:g}**")
+        if not pronos:
+            st.warning("Aucun match à prédire sur ce round.")
+
+        # Matchs pieges (demande user) : favori fragile, nul menacant, match
+        # chaotique ou moteurs en desaccord -- a eviter ; affiche quand il y en a.
+        pieges = []
+        for m in shown:
+            oh, od, oa = m["cotes"]
+            ph, pd_, pa = m["x12"]
+            inv = 1 / oh + 1 / od + 1 / oa
+            if oh <= oa:
+                fav, o_fav, p_fav, pm_fav = m.get("team_a") or "1", oh, ph, (1 / oh) / inv
+            else:
+                fav, o_fav, p_fav, pm_fav = m.get("team_b") or "2", oa, pa, (1 / oa) / inv
+            raisons = []
+            if o_fav <= 1.7 and p_fav < pm_fav - 0.05:
+                raisons.append(f"favori fragile ({pm_fav*100:.0f}% marché vs "
+                               f"{p_fav*100:.0f}% moteur)")
+            if pd_ >= 0.30 and o_fav <= 2.2:
+                raisons.append(f"nul menaçant ({pd_*100:.0f}%)")
+            conf = m.get("confidence") or 0
+            if 0 < conf < 0.28:
+                raisons.append(f"match chaotique (Top-3 {conf*100:.0f}%)")
+            if str(m.get("accord", "")).startswith("1/"):
+                raisons.append("moteurs en désaccord")
+            if raisons:
+                pieges.append((m["match"], fav, o_fav, " · ".join(raisons)))
+        if pieges:
+            st.markdown("**⚠️ Matchs pièges du round — à éviter**")
+            for name, fav, o_fav, why in pieges:
+                st.markdown(f"• **{name}** (favori {fav} à {o_fav:g}) — {why}")
+            st.caption("Piège = le favori paraît sûr mais le moteur voit un risque élevé "
+                       "de nul/surprise, ou le match est illisible.")
+
+        # Grosses cotes (demande user) : signalees quand le moteur estime une
+        # victoire d'outsider payee au-dessus de sa proba (p x cote >= 1,
+        # cote >= 5) -- donc pas a chaque round -- et sans limite de nombre.
+        #
+        # ⚠️ LE MOT « VALUE » A ETE RETIRE LE 27/09, ET RIEN D'AUTRE.
+        #
+        # La selection, le tri et le nombre affiche sont INCHANGES : c'est bien
+        # le bloc d'origine, restaure a l'identique. Seul le libelle bouge.
+        #
+        # La regle « p x cote >= 1 » a ete testee DEUX fois dans ce depot sur
+        # l'historique complet, et s'est revelee un signal INVERSE : elle
+        # selectionne les matchs ou le modele s'ecarte le plus du book en sa
+        # faveur, c'est-a-dire ses propres erreurs d'estimation. Les paniers
+        # qu'elle designait ont fait MOINS bien que le tirage au sort.
+        #
+        # Continuer a ecrire « value reperee » affirmerait l'inverse de ce qui
+        # a ete mesure. Le nombre reste affiche, sous son vrai nom, et la
+        # mention dit ce qu'on en sait.
+        gros = []
+        for m in shown:
+            oh, od, oa = m["cotes"]
+            ph, pd_, pa = m["x12"]
+            for team, p, o in ((m.get("team_a") or "1", ph, oh),
+                               (m.get("team_b") or "2", pa, oa)):
+                if o >= 5.0 and p * o >= 1.0:
+                    gros.append((p * o, p, o, team, m["match"]))
+        gros.sort(key=lambda r: -r[0])
+        if gros:
+            st.markdown("**🔦 Grosses cotes de ce round**")
+            for v, p, o, team, name in gros:
+                st.markdown(f"• **{name}** → **{team} gagne** — cote **{o:g}** · "
+                            f"{p*100:.0f}% (proba × cote = {v:.2f})")
+            st.caption("⚠️ Ce n'est PAS une value. La règle qui sélectionne ces "
+                       "lignes — proba × cote ≥ 1, cote ≥ 5 — a été testée deux "
+                       "fois sur l'historique complet et s'est révélée un signal "
+                       "**inversé** : elle retient les matchs où le modèle "
+                       "s'écarte le plus du book, donc ses propres erreurs. "
+                       "À lire comme un repère de grosses cotes, rien de plus.")
+
     # ---- SUIVI FORWARD RÉEL (rempli par scripts/trio_tracker.py) ----
     st.divider()
     st.subheader("📈 Suivi réel (forward)")
