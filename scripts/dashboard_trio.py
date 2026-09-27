@@ -591,6 +591,21 @@ def main():
                                  help="N'affiche que les rencontres dont le conseil "
                                       "de tête paie au moins ça. À 1,00 tout "
                                       "s'affiche, comme avant.")
+        # QUEL conseil, demande du 27/09 : « afficher les rencontres où les
+        # prédictions X2 à une cote supérieure 1,20, et les autres enlève ».
+        #
+        # Deux critères et non un. Sur les douze rencontres mesurées, sept
+        # passent le seuil de 1,20 — mais deux seulement sont des X2 : le
+        # conseil de tête est aussi souvent un 1X ou un 12, selon lequel des
+        # deux camps le modèle voit le mieux tenir.
+        #
+        # Vide = tous les conseils, ce qui rend l'onglet à son comportement
+        # d'avant sans toucher au code.
+        c_sel = st.multiselect("Conseil retenu (vide = tous)",
+                               ["X2", "1X", "12"], default=["X2"], key="cs_sel",
+                               help="X2 = nul ou victoire extérieure. "
+                                    "1X = nul ou victoire domicile. "
+                                    "12 = pas de nul.")
         if st.button("🧭 Que dois-je jouer ?", key="cs_go", type="primary"):
             hh = c_h.strip()
             if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
@@ -615,22 +630,30 @@ def main():
             else:
                 # Le tri se fait À L'AFFICHAGE et non au calcul : bouger le seuil
                 # réaffiche aussitôt, sans relancer onze analyses par rencontre.
-                gardees, trop_bas, sans_cote = _ptc2.filtrer_conseils(
-                    res_l, c_min)
+                tri = _ptc2.filtrer_conseils(res_l, c_min, c_sel)
+                gardees = tri.gardees
                 n_vraies = sum(1 for r_c in gardees if not r_c.get("erreur"))
+                quoi = " ou ".join(c_sel) if c_sel else "tous conseils"
                 if not n_vraies:
-                    st.info(f"Les {len(res_l)} rencontre(s) analysée(s) ont toutes un "
-                            f"conseil sous **{c_min:g}** — baisse le seuil pour les "
-                            f"voir. C'est le cas normal quand le favori écrase : le "
-                            f"pari le plus sûr paie alors presque rien.")
+                    st.info(f"Aucune des {len(res_l)} rencontre(s) analysée(s) ne "
+                            f"porte un conseil **{quoi}** à **≥ {c_min:g}**."
+                            + (f" {tri.hors_selection} conseillent autre chose."
+                               if tri.hors_selection else "")
+                            + (f" {tri.trop_bas} le conseillent mais sous {c_min:g}."
+                               if tri.trop_bas else "")
+                            + " Élargis le conseil retenu, ou baisse le seuil.")
                 else:
                     st.success(
                         f"**{n_vraies} rencontre(s) retenue(s)** sur {len(res_l)} "
                         f"analysée(s)"
                         + (f" — {total} à venir en tout" if total > len(res_l) else "")
-                        + f" — conseil à cote **≥ {c_min:g}**."
-                        + (f" {trop_bas} écartée(s), conseil trop bas." if trop_bas else "")
-                        + (f" {sans_cote} écartée(s), conseil non coté." if sans_cote else ""))
+                        + f" — conseil **{quoi}** à cote **≥ {c_min:g}**."
+                        + (f" {tri.hors_selection} écartée(s), autre conseil."
+                           if tri.hors_selection else "")
+                        + (f" {tri.trop_bas} écartée(s), conseil sous le seuil."
+                           if tri.trop_bas else "")
+                        + (f" {tri.sans_cote} écartée(s), conseil non coté."
+                           if tri.sans_cote else ""))
                 emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
                 for res_c in gardees:
                     if res_c.get("erreur"):

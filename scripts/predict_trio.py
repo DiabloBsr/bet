@@ -15,6 +15,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import numpy as np, pandas as pd
+from typing import NamedTuple
 from sqlalchemy import create_engine
 from scraper.config import load_settings
 from scraper.predictor_v2 import (fit_model_v2, predict_match_v2, blended_score_grid,
@@ -1650,34 +1651,66 @@ def conseil(engine, renc: dict) -> dict:
 
 
 
-def filtrer_conseils(resultats, cote_min: float):
-    """Ne garde que les conseils dont la cote de tete atteint `cote_min`.
+class TriConseils(NamedTuple):
+    """Resultat d'un tri : ce qui reste, et pourquoi le reste est parti.
 
-    Rend `(gardees, trop_bas, sans_cote)` : la liste a afficher, puis le compte
-    des deux motifs d'ecart. Les comptes sont rendus pour etre AFFICHES -- une
-    rencontre qui disparait sans etre annoncee est un bug d'interface.
+    Les trois compteurs existent pour etre AFFICHES. Une rencontre qui
+    disparait sans etre annoncee est un bug d'interface, pas un filtre.
+    """
+    gardees: list
+    hors_selection: int
+    trop_bas: int
+    sans_cote: int
 
-    POURQUOI CE FILTRE EXISTE (27/09). Le conseil de tete est `lignes[0]`, la
-    ligne la plus probable des onze marches ; c'est donc structurellement un
-    double chance (1X / X2 / 12), et sa cote mesuree va de 1,00 a 1,29. A 1,00
-    le pari ne rapporte rien : l'afficher comme « a jouer » est trompeur.
 
-    Une erreur d'analyse est GARDEE : elle n'a pas de cote a comparer, et la
-    masquer ferait croire que la rencontre n'existe pas plutot que qu'elle n'a
-    pas pu etre analysee.
+def filtrer_conseils(resultats, cote_min: float, selections=None) -> TriConseils:
+    """Ne garde que les conseils voulus, au-dessus de `cote_min`.
 
-    Un conseil sans cote est ecarte mais COMPTE : faute de prix, on ne peut pas
-    affirmer qu'il passe le seuil, et on ne peut pas non plus le taire.
+    `selections` : les libelles de conseil acceptes -- {"X2"} pour ne voir que
+    les X2, None ou vide pour tous les accepter.
+
+    ── POURQUOI CE TRI EXISTE (27/09) ───────────────────────────────────────────
+
+    « Afficher les rencontres ou les predictions X2 a une cote superieure 1,20
+    et les autres enleve. »
+
+    Le conseil de tete est `lignes[0]`, la ligne la plus probable des onze
+    marches ; c'est donc structurellement un double chance (1X / X2 / 12) --
+    douze rencontres sur douze a la mesure. Deux criteres, donc, et non un :
+    QUEL double chance, et a QUELLE cote. Mesure sur ces douze rencontres :
+    sept passent le seuil de 1,20, mais deux seulement sont des X2.
+
+    ── L'ORDRE DES DEUX CRITERES N'EST PAS INDIFFERENT ──────────────────────────
+
+    La selection est verifiee EN PREMIER. Une rencontre conseillee « 1X » a
+    1,05 echoue aux deux criteres ; la compter deux fois gonflerait le total et
+    ferait mentir le bandeau. Elle est donc comptee « hors selection », et
+    `trop_bas` ne parle que des conseils VOULUS mais trop peu payes -- ce qui
+    est la seule information actionnable des deux.
+
+    ── CE QUI N'EST JAMAIS MASQUE ───────────────────────────────────────────────
+
+    Une erreur d'analyse est GARDEE : elle n'a pas de conseil a trier, et la
+    masquer ferait croire que la rencontre n'existe pas plutot qu'elle n'a pas
+    pu etre analysee.
+
+    Un conseil sans cote lisible est ecarte mais COMPTE : faute de prix on ne
+    peut ni affirmer qu'il passe le seuil, ni le taire.
     """
     seuil = float(cote_min)
-    gardees, trop_bas, sans_cote = [], 0, 0
+    voulues = {str(x) for x in (selections or ())}
+    gardees, hors, trop_bas, sans_cote = [], 0, 0, 0
     for r in resultats or []:
         if not isinstance(r, dict):
             continue
         if r.get("erreur"):
             gardees.append(r)
             continue
-        o = (r.get("sur") or {}).get("odds")
+        sur = r.get("sur") or {}
+        if voulues and str(sur.get("sel")) not in voulues:
+            hors += 1
+            continue
+        o = sur.get("odds")
         try:
             o = float(o)
         except (TypeError, ValueError):
@@ -1688,7 +1721,7 @@ def filtrer_conseils(resultats, cote_min: float):
             trop_bas += 1
         else:
             gardees.append(r)
-    return gardees, trop_bas, sans_cote
+    return TriConseils(gardees, hors, trop_bas, sans_cote)
 
 
 def _z_bonferroni(n_tests: int) -> float:
