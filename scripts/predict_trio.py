@@ -1687,6 +1687,142 @@ def calib_marche(marche: str, p_raw) -> float:
     return _interp_calib(xs, ys, p_raw)
 
 
+# Seuils des signaux du round. Ils viennent de la version du 09/09 de cet
+# ecran, conservee telle quelle : les rejouer a l'identique evite de faire
+# passer pour une amelioration ce qui ne serait qu'un reglage different.
+PIEGE_COTE_FAVORI = 1.7      # en dessous, le favori est cense etre solide
+PIEGE_ECART = 0.05           # ecart a la proba du book qui rend ce favori suspect
+PIEGE_NUL = 0.30             # part de nul qui menace un favori
+PIEGE_NUL_COTE = 2.2
+PIEGE_SANS_FAVORI = 0.40     # sous ce seuil, aucune issue ne se detache
+GROSSE_COTE = 5.0
+
+
+def signaux_1x2(p1, pn, p2, oh, od, oa, home="1", away="2") -> tuple:
+    """Pieges et grosses cotes d'une rencontre, a partir des seules probas et cotes.
+
+    Extraite de `round_1x2` pour etre eprouvee sans base : c'est ici que vivent
+    les seuils, donc c'est ici que se logeraient les erreurs. Rend
+    `(pieges, grosses_cotes)`.
+
+    Sans cote 1 ou 2, les deux pieges qui comparent au book sont IMPOSSIBLES a
+    evaluer -- on ne les invente pas. Seul « aucun favori net », qui ne depend
+    que de moi, reste rendu.
+    """
+    p1, pn, p2 = (float(x or 0.0) for x in (p1, pn, p2))
+    oh, od, oa = (_odd_pos(x) for x in (oh, od, oa))
+    p_sel = max(p1, pn, p2)
+    raisons = []
+    if oh and oa:
+        inv = (1.0 / oh) + (1.0 / oa) + (1.0 / od if od else 0.0)
+        if inv > 0:
+            if oh <= oa:
+                o_fav, p_fav, pm_fav = oh, p1, (1.0 / oh) / inv
+            else:
+                o_fav, p_fav, pm_fav = oa, p2, (1.0 / oa) / inv
+            if o_fav <= PIEGE_COTE_FAVORI and p_fav < pm_fav - PIEGE_ECART:
+                raisons.append(f"favori fragile (book {pm_fav*100:.0f}%, "
+                               f"moi {p_fav*100:.0f}%)")
+            if pn >= PIEGE_NUL and o_fav <= PIEGE_NUL_COTE:
+                raisons.append(f"nul menaçant ({pn*100:.0f}%)")
+    if p_sel < PIEGE_SANS_FAVORI:
+        raisons.append(f"aucun favori net (au mieux {p_sel*100:.0f}%)")
+
+    noms = {"1": home, "X": "Nul", "2": away}
+    probas = {"1": p1, "X": pn, "2": p2}
+    grosses = [{"sel": k, "equipe": noms[k], "odds": round(float(c), 2),
+                "p": round(probas[k], 4)}
+               for k, c in (("1", oh), ("X", od), ("2", oa))
+               if c and float(c) >= GROSSE_COTE]
+    return raisons, grosses
+
+
+def round_1x2(engine, lg: str, heure=None, limite: int = 30) -> list:
+    """Mon 1X2 sur tout un round, avec les pieges et les grosses cotes.
+
+    Le pronostic vient de MA SEULE analyse (`predict_own` : forme Bet261), puis
+    de la calibration du marche 1X2. Les cotes ne servent qu'a deux choses :
+    chiffrer le gain, et reperer les DESACCORDS entre le book et moi -- jamais
+    a choisir l'issue.
+
+    ── LES TROIS SIGNAUX DE PIEGE ───────────────────────────────────────────────
+
+    « favori fragile » : le book donne un favori a 1,70 ou moins, et je lui
+    accorde au moins 5 points de moins que la proba impliquee par sa cote.
+    C'est le seul cas ou un desaccord avec le book merite d'etre signale : un
+    favori tres court se joue les yeux fermes, et c'est la que se perd le plus.
+
+    « nul menacant » : je donne au moins 30 % au nul alors que le favori est a
+    2,20 ou moins. Le nul est l'issue qu'on oublie de couvrir.
+
+    « aucun favori net » : ma meilleure des trois issues reste sous 40 %. Ce
+    signal REMPLACE les deux anciens (« match chaotique » et « moteurs en
+    desaccord »), qui lisaient la confiance du modele V2/V5 et son accord avec
+    V2 -- deux choses qui n'existent plus depuis que cet ecran ne fait plus
+    tourner ce modele. Je prefere un signal different et dit comme tel a un
+    signal qui aurait garde le meme nom en mesurant autre chose.
+
+    ── LES GROSSES COTES NE SONT PAS UNE VALUE ──────────────────────────────────
+
+    Une issue a 5,00 ou plus est signalee comme un FAIT, avec ma probabilite a
+    cote. Rien de plus. La regle « proba x cote >= 1 » a ete testee deux fois
+    dans ce depot et s'est revelee un signal INVERSE : elle selectionne les
+    matchs ou mon modele s'ecarte le plus du book, c'est-a-dire mes propres
+    erreurs. Elle n'est donc pas rejouee ici, et le mot « value » n'apparait
+    pas.
+    """
+    up = _upcoming_df(engine, [lg], 1440,
+                      *( (str(heure).strip().zfill(5),) * 2 if heure else ()))
+    if not len(up):
+        return []
+    out = []
+    for r in up.itertuples():
+        jn = None
+        _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
+        if _d:
+            jn = int(_d[0])
+        own = predict_own(engine, r.team_a, r.team_b, lg=lg, journee=jn)
+        if not own:
+            out.append({"home": r.team_a, "away": r.team_b, "local": r.local,
+                        "erreur": "historique insuffisant"})
+            continue
+        # ⚠️ `x12` est une LISTE de trois nombres [p1, pnul, p2], pas des
+        # paires : `dict()` dessus leve. Bug trouve au premier appel reel le
+        # 27/09 -- les tests ne l'avaient pas vu parce qu'aucune rencontre a
+        # venir n'existait en base, et que la fonction sort avant d'y arriver.
+        bruts = list(own.get("x12") or [])
+        # La TAILLE ne suffit pas : une chaine de trois caracteres passe le
+        # test de longueur et ressort en trois probas nulles, donc en « aucun
+        # favori net » -- un faux signal, pire qu'une erreur affichee.
+        if len(bruts) != 3 or not all(
+                isinstance(v, (int, float)) and v == v for v in bruts):
+            out.append({"home": r.team_a, "away": r.team_b, "local": r.local,
+                        "erreur": "analyse 1X2 indisponible"})
+            continue
+        p1, pn, p2 = (calib_marche("1X2", v) for v in bruts)
+        sel, p_sel = max((("1", p1), ("X", pn), ("2", p2)), key=lambda kv: kv[1])
+        oh, od, oa = _odd_pos(r.oh), _odd_pos(r.od), _odd_pos(r.oa)
+        cotes = {"1": oh, "X": od, "2": oa}
+
+        raisons, grosses = signaux_1x2(p1, pn, p2, oh, od, oa,
+                                       r.team_a, r.team_b)
+
+        out.append({
+            "home": r.team_a, "away": r.team_b, "local": r.local, "journee": jn,
+            "sel": sel, "p": round(p_sel, 4),
+            "equipe": {"1": r.team_a, "2": r.team_b}.get(sel, "Nul"),
+            "odds": round(float(cotes[sel]), 2) if cotes.get(sel) else None,
+            "probas": {"1": round(p1, 4), "X": round(pn, 4), "2": round(p2, 4)},
+            "cotes": {k: (round(float(v), 2) if v else None) for k, v in cotes.items()},
+            "pieges": raisons, "grosses_cotes": grosses,
+            "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
+            "attendus": round(own["lam_a"] + own["lam_b"], 2),
+        })
+        if len(out) >= int(limite):
+            break
+    return out
+
+
 def fiabilite_marche(marche: str) -> dict | None:
     """Ce que ce marche TOUCHE reellement, mesure sur l'historique.
 
