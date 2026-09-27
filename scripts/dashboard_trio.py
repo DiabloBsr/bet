@@ -252,149 +252,6 @@ def main():
 
 
 
-    # ---- 🔮 PRÉDIRE MES RENCONTRES (je choisis, il prédit — 9 ligues) ----
-    with st.expander("🔮 Prédire mes rencontres — je choisis, il prédit (9 ligues)"):
-        import predict_trio as _ptd
-        engD = st.cache_resource(_engine)()
-        st.caption("Choisis une ligue, charge les rencontres à venir, coche celles qui "
-                   "t'intéressent → vainqueur, score exact, piège et value éventuels.")
-        _lgn = list(LEAGUES)
-        _dfi = next((i for i, k in enumerate(_lgn) if LEAGUES[k] == "InstantLeague-8060"), 0)
-        sp_lg = st.selectbox("Ligue", _lgn, index=_dfi, key="sp_lg")
-        sp_comp = LEAGUES[sp_lg]
-        if st.button("📥 Charger les rencontres à venir", key="sp_load"):
-            with _db("Chargement des rencontres…"):
-                _now = datetime.now(timezone.utc)
-                fx = pd.read_sql(f"""SELECT e.team_a,e.team_b,e.expected_start,
-                    e.round_info rd,
-                    o.odds_home oh,o.odds_draw od,o.odds_away oa,o.extra_markets xm
-                    FROM events e
-                    JOIN odds_snapshots o ON o.id=(SELECT MAX(id) FROM odds_snapshots
-                                                   WHERE event_id=e.id)
-                    LEFT JOIN results r ON r.event_id=e.id
-                    WHERE r.id IS NULL AND e.expected_start IS NOT NULL
-                      AND e.competition='{sp_comp}'""", engD)
-                rows = []
-                if len(fx):
-                    fx["es"] = pd.to_datetime(fx.expected_start, utc=True)
-                    fx = fx[fx.es > _now - pd.Timedelta(minutes=3)].sort_values("es").head(80)
-                    for r in fx.itertuples():
-                        loc = (r.es + pd.Timedelta(hours=3)).strftime("%H:%M")
-                        _rdd = re.findall(r"\d+", str(r.rd or ""))
-                        rows.append({"label": f"{loc} — {r.team_a} v {r.team_b}",
-                                     "team_a": r.team_a, "team_b": r.team_b,
-                                     "oh": float(r.oh), "od": float(r.od),
-                                     "oa": float(r.oa), "xm": r.xm,
-                                     "rd": int(_rdd[0]) if _rdd else None})
-                st.session_state["sp_fx"] = rows
-                st.session_state.pop("sp_res", None)
-        fxs = st.session_state.get("sp_fx")
-        if fxs is not None:
-            if not fxs:
-                st.info("Aucune rencontre à venir captée pour cette ligue (attends un round).")
-            else:
-                chos = st.multiselect(f"Tes rencontres ({len(fxs)} à venir)",
-                                      [f["label"] for f in fxs], key="sp_sel")
-                if st.button("🔮 Prédire ma sélection", key="sp_go", type="primary") and chos:
-                    _m5 = _v2 = None
-                    try:
-                        with st.spinner("Fit V5+V2 (1er appel ~60-90s, puis instantané)…"):
-                            _eng, _m5, _v2, _n = st.cache_resource(_fit)()
-                    except Exception as exc:
-                        st.error(f"Fit impossible : {exc}")
-                    if _m5 is not None:
-                        outs = []
-                        with _db("Prédiction de ta sélection…"):
-                            for f in fxs:
-                                if f["label"] not in chos:
-                                    continue
-                                try:
-                                    _m = _ptd.predict_one(
-                                        engD, _m5, _v2, f["team_a"], f["team_b"],
-                                        f["oh"], f["od"], f["oa"], f["xm"], lg=sp_comp)
-                                except Exception as exc:
-                                    _m = {"err": str(exc)}
-                                try:
-                                    _m["own"] = _ptd.predict_own(
-                                        engD, f["team_a"], f["team_b"], lg=sp_comp,
-                                        journee=f.get("rd"))
-                                except Exception:
-                                    _m["own"] = None
-                                outs.append((f, _m))
-                        st.session_state["sp_res"] = outs
-        for f, m in st.session_state.get("sp_res") or []:
-            st.markdown(f"#### 🕐 {f['label']}  \n`{f['oh']:g}/{f['od']:g}/{f['oa']:g}`")
-            if m.get("err"):
-                st.warning(f"Prédiction impossible : {m['err']}")
-                continue
-            # MON analyse d'abord (forme reelle, cotes non utilisees) ; le
-            # marche n'est plus qu'une ligne de comparaison en dessous.
-            own = m.get("own")
-            if own:
-                oph, opd, opa = own["x12"]
-                if oph >= opd and oph >= opa:
-                    o_issue, o_pi = f["team_a"], oph
-                elif opa >= opd:
-                    o_issue, o_pi = f["team_b"], opa
-                else:
-                    o_issue, o_pi = "Nul", opd
-                o_top3 = " · ".join(f"{s} ({p*100:.0f}%)" for s, p in own["top3"])
-                st.success(f"🧠 Mon analyse (forme virtuel Bet261) : **{o_issue}"
-                           f"{' gagne' if o_issue != 'Nul' else ''}** ({o_pi*100:.0f}%) "
-                           f"· score **{own['top3'][0][0]}** — Top-3 : {o_top3}")
-                emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
-                fa = " ".join(emo.get(c, "?") for c in own.get("seq_a", ""))
-                fb = " ".join(emo.get(c, "?") for c in own.get("seq_b", ""))
-                st.caption(f"Forme Bet261 — {f['team_a']} : {fa} · ~{own['lam_a']} buts attendus "
-                           f"| {f['team_b']} : {fb} · ~{own['lam_b']} "
-                           f"({own['n_a']}/{own['n_b']} matchs virtuels, les récents pèsent plus). "
-                           f"Cotes non utilisées.")
-                se_a, se_b = own.get("season_a"), own.get("season_b")
-                if se_a and se_b:
-                    st.caption(f"📅 Saison en cours (J{own['journee']}) — "
-                               f"{f['team_a']} : {se_a['v']}V {se_a['n']}N {se_a['d']}D, "
-                               f"{se_a['bp']}-{se_a['bc']} buts, {se_a['pts']} pts | "
-                               f"{f['team_b']} : {se_b['v']}V {se_b['n']}N {se_b['d']}D, "
-                               f"{se_b['bp']}-{se_b['bc']} buts, {se_b['pts']} pts — "
-                               f"fusionnée 50/50 dans le pronostic.")
-            else:
-                st.warning("🧠 Pas assez d'historique en base pour une analyse propre de ce duo.")
-            ph, pd_, pa = m["x12"]
-            if ph >= pd_ and ph >= pa:
-                issue, pi, ci = f["team_a"], ph, f["oh"]
-            elif pa >= pd_:
-                issue, pi, ci = f["team_b"], pa, f["oa"]
-            else:
-                issue, pi, ci = "Nul", pd_, f["od"]
-            cs = m.get("consensus_top3") or []
-            t1 = m.get("top1_calibre") or (cs[0] if cs else None)
-            sc = f" · score {t1[0]} ({t1[1]*100:.0f}%)" if t1 and t1[0] else ""
-            st.caption(f"📊 Le marché, lui, dit : {issue}"
-                       f"{' gagne' if issue != 'Nul' else ''} ({pi*100:.0f}%) "
-                       f"· cote {ci:g}{sc}")
-            # signaux piege + value : memes regles que la vue du round
-            raisons = []
-            inv = 1 / f["oh"] + 1 / f["od"] + 1 / f["oa"]
-            if f["oh"] <= f["oa"]:
-                o_fav, p_fav, pm_fav = f["oh"], ph, (1 / f["oh"]) / inv
-            else:
-                o_fav, p_fav, pm_fav = f["oa"], pa, (1 / f["oa"]) / inv
-            if o_fav <= 1.7 and p_fav < pm_fav - 0.05:
-                raisons.append("favori fragile")
-            if pd_ >= 0.30 and o_fav <= 2.2:
-                raisons.append(f"nul menaçant ({pd_*100:.0f}%)")
-            conf = m.get("confidence") or 0
-            if 0 < conf < 0.28:
-                raisons.append("match chaotique")
-            if str(m.get("accord", "")).startswith("1/"):
-                raisons.append("moteurs en désaccord")
-            if raisons:
-                st.warning("⚠️ Piège possible : " + " · ".join(raisons))
-            for team, p, o in ((f["team_a"], ph, f["oh"]), (f["team_b"], pa, f["oa"])):
-                if o >= 5.0 and p * o >= 1.0:
-                    st.info(f"🔦 Value repérée : **{team} gagne** — cote **{o:g}** · {p*100:.0f}%")
-            st.markdown("---")
-
     # ---- 🧭 QUE JOUER ? — conseil tous marchés, TOUTES les rencontres ----
     with st.expander("🧭 Que jouer ? — mon conseil sur toutes les rencontres"):
         import predict_trio as _ptc2
@@ -538,9 +395,22 @@ def main():
         engH = st.cache_resource(_engine)()
         st.caption('Choisis une ligue et deux équipes → face-à-face direct + 5 derniers matchs de chacune (du + récent au + ancien).')
         hl1, hl2, hl3 = st.columns([2, 2, 2])
-        h_lg = hl1.selectbox("Ligue", list(LEAGUES), index=_dfi, key="h_lg")
+        # ⚠️ `_dfi` etait calcule par l'onglet de prediction, supprime le 27/09 :
+        # ce bloc lisait donc un nom qui n'existait plus. Il est desormais calcule
+        # ICI, ou il sert. Une valeur par defaut n'a pas a voyager entre deux
+        # ecrans independants.
+        _lgn = list(LEAGUES)
+        _dfi = next((i for i, k in enumerate(_lgn)
+                     if LEAGUES[k] == "InstantLeague-8060"), 0)
+        h_lg = hl1.selectbox("Ligue", _lgn, index=_dfi, key="h_lg")
         h_comp = LEAGUES[h_lg]
-        _hteams = _pth2.league_teams(engH, h_comp)
+        # ⚠️ DERRIERE `_db` depuis le 27/09. Cette lecture n'a jamais ete gardee,
+        # mais d'autres onglets l'etaient : le defaut restait marginal. Avec deux
+        # ecrans au total, c'est la moitie de l'app qui affichait une trace Python
+        # quand le scraper tenait un verrou -- la classe de bug qui avait mis le
+        # Space en boucle de crash.
+        with _db("Chargement des équipes…"):
+            _hteams = _pth2.league_teams(engH, h_comp)
         if _hteams:
             h_home = hl2.selectbox("Équipe A (domicile)", _hteams, index=0, key="h_home")
             h_away = hl3.selectbox("Équipe B (extérieur)", _hteams,
@@ -550,7 +420,9 @@ def main():
                 if h_home == h_away:
                     st.warning("Choisis deux équipes différentes.")
                 else:
-                    _hist_block(st, engH, h_home, h_away, [h_comp], n=5, show_ou35=h_ou35)
+                    with _db("Lecture de l'historique…"):
+                        _hist_block(st, engH, h_home, h_away, [h_comp], n=5,
+                                    show_ou35=h_ou35)
         else:
             st.info("Pas d'équipes trouvées pour cette ligue.")
 

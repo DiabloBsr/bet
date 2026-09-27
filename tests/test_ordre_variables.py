@@ -14,11 +14,15 @@ exactement ce qui s'est produit à la première écriture de ce garde-fou.
 from __future__ import annotations
 
 import ast
+import builtins
 from pathlib import Path
 
 DASH = Path(__file__).resolve().parents[1] / "scripts" / "dashboard_trio.py"
 
 MAUVAIS = '''
+from outil import depose, calcul, widget_nombre, widget_liste, choisir, afficher
+D = {}
+
 def main():
     img = depose()
     if img is not None:
@@ -28,7 +32,24 @@ def main():
     r_lgs = widget_liste()
 '''
 
+# ⚠️ Ajoute le 27/09. `fautes()` ne voyait QUE les noms affectes plus bas
+# (`l < e`). Un nom jamais affecte du tout passait au travers -- et c'est
+# exactement ce qui est arrive : en supprimant l'onglet de prediction, `_dfi`
+# a disparu alors que l'onglet historique le lisait encore. La suite est restee
+# verte sur un NameError certain.
+JAMAIS_AFFECTE = '''
+from outil import depose, calcul, widget_nombre, widget_liste, choisir, afficher
+D = {}
+
+def main():
+    lg = choisir(index=_dfi)
+    afficher(lg)
+'''
+
 BON = '''
+from outil import depose, calcul, widget_nombre, widget_liste, choisir, afficher
+D = {}
+
 def main():
     img = depose()
     r_tol = widget_nombre()
@@ -75,7 +96,10 @@ def fautes(src: str, fonction: str = "main") -> list:
     # Uniquement le niveau MODULE : parcourir tout l'arbre y ferait entrer les
     # affectations internes a main(), qui sont precisement celles a controler.
     # C'est cette erreur qui rendait le garde-fou aveugle a sa premiere ecriture.
-    connus = set()
+    # Les builtins ne sont jamais « affectes » : sans eux, `len`, `next` ou
+    # `Exception` ressortiraient comme des NameError des qu'on a commence a
+    # signaler les noms jamais affectes (27/09).
+    connus = set(dir(builtins))
     for x in tree.body:
         if isinstance(x, ast.Assign):
             connus |= {n.id for n in x.targets if isinstance(n, ast.Name)}
@@ -98,8 +122,14 @@ def fautes(src: str, fonction: str = "main") -> list:
             cible[n.id] = min(cible.get(n.id, 10 ** 9), n.lineno)
     out = []
     for nom, l in lu.items():
+        if nom in hors or nom in connus:
+            continue
         e = ecrit.get(nom)
-        if e is not None and l < e and nom not in hors and nom not in connus:
+        if e is None:
+            # Jamais affecte : NameError garanti des que la ligne s'execute.
+            # Aussi grave que l'affectation trop tardive, et plus silencieux.
+            out.append(f"{nom} : lu ligne {l}, jamais affecté")
+        elif l < e:
             out.append(f"{nom} : lu ligne {l}, affecté seulement ligne {e}")
     return sorted(out)
 
@@ -111,6 +141,13 @@ def test_analyseur_detecte_le_cas_connu_mauvais():
     f = fautes(MAUVAIS)
     noms = " ".join(f)
     assert "r_lgs" in noms and "r_tol" in noms, f"cas fautif non détecté : {f}"
+
+
+def test_analyseur_detecte_le_nom_jamais_affecte():
+    """Un nom jamais affecte est un NameError certain, et plus discret qu'une
+    affectation trop tardive : rien dans le fichier ne le rappelle."""
+    f = fautes(JAMAIS_AFFECTE)
+    assert any("_dfi" in x and "jamais" in x for x in f),         f"nom jamais affecte non detecte : {f}"
 
 
 def test_analyseur_ne_crie_pas_sur_du_code_correct():

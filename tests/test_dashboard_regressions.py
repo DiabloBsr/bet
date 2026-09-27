@@ -105,10 +105,14 @@ def test_db_calls_are_guarded():
     assert not nus, f"accès base non gardé (utiliser _db) : {nus}"
     src = DASH.read_text(encoding="utf-8")
     assert "def _db(" in src, "le garde-fou _db() a disparu"
-    # app réduite (Débusqueur + Historique + prédiction) : 2 accès passent par _db
-    # (Débusqueur, calcul trio) ; le scan grosses cotes du haut dégrade en try/except
-    # exprès (un verrou ne doit pas tuer toute la page). L'invariant réel = pas de
-    # spinner base nu hors _db, vérifié par AST ci-dessus.
+    # ⚠️ MIS A JOUR le 27/09. L'app est reduite a DEUX ecrans : « Que jouer ? »
+    # et « Historique & face-a-face ». Les deux passent par `_db` -- l'historique
+    # ne le faisait pas, et ce comptage l'a revele : il etait le seul ecran non
+    # garde, ce qui restait marginal tant que cinq autres l'etaient.
+    #
+    # Le scan grosses cotes du haut degrade en try/except expres : un verrou ne
+    # doit pas tuer toute la page. L'invariant reel reste « pas de spinner base
+    # nu hors _db », verifie par AST ci-dessus ; ce comptage n'est qu'un filet.
     assert src.count("with _db(") >= 2, "des accès base ne passent plus par _db()"
 
 
