@@ -1852,7 +1852,7 @@ def signaux_1x2(p1, pn, p2, oh, od, oa, home="1", away="2") -> tuple:
     return raisons, grosses
 
 
-def round_1x2(engine, lg: str, heure=None, limite: int = 30) -> list:
+def round_1x2(engine, lg, heure=None, limite: int = 30) -> list:
     """Mon 1X2 sur tout un round, avec les pieges et les grosses cotes.
 
     Le pronostic vient de MA SEULE analyse (`predict_own` : forme Bet261), puis
@@ -1886,7 +1886,11 @@ def round_1x2(engine, lg: str, heure=None, limite: int = 30) -> list:
     erreurs. Elle n'est donc pas rejouee ici, et le mot « value » n'apparait
     pas.
     """
-    up = _upcoming_df(engine, [lg], 1440,
+    # `lg` accepte UNE ligue ou plusieurs (27/09, « debusque dans toutes les
+    # ligues »). Une chaine reste une chaine : `list("Instant...")` en ferait
+    # une liste de caracteres, et le filtre ne retiendrait plus rien.
+    ligues = [lg] if isinstance(lg, str) else [x for x in (lg or []) if x]
+    up = _upcoming_df(engine, ligues or None, 1440,
                       *( (str(heure).strip().zfill(5),) * 2 if heure else ()))
     if not len(up):
         return []
@@ -1896,7 +1900,12 @@ def round_1x2(engine, lg: str, heure=None, limite: int = 30) -> list:
         _d = re.findall(r"\d+", str(getattr(r, "rd", "") or ""))
         if _d:
             jn = int(_d[0])
-        own = predict_own(engine, r.team_a, r.team_b, lg=lg, journee=jn)
+        # ⚠️ La ligue de CETTE rencontre, pas celle demandee : sur un balayage
+        # multi-ligues, passer `lg` ferait chercher la forme des equipes dans
+        # la mauvaise competition -- `predict_own` rendrait None, et toutes les
+        # rencontres sortiraient en « historique insuffisant ».
+        own = predict_own(engine, r.team_a, r.team_b,
+                          lg=getattr(r, "c", None) or ligues[0], journee=jn)
         if not own:
             out.append({"home": r.team_a, "away": r.team_b, "local": r.local,
                         "erreur": "historique insuffisant"})
@@ -1924,6 +1933,7 @@ def round_1x2(engine, lg: str, heure=None, limite: int = 30) -> list:
 
         out.append({
             "home": r.team_a, "away": r.team_b, "local": r.local, "journee": jn,
+            "ligue": getattr(r, "c", None), "tag": getattr(r, "tag", None),
             "sel": sel, "p": round(p_sel, 4),
             "equipe": {"1": r.team_a, "2": r.team_b}.get(sel, "Nul"),
             "odds": round(float(cotes[sel]), 2) if cotes.get(sel) else None,

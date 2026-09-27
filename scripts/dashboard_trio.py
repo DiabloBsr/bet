@@ -446,24 +446,30 @@ def main():
         # L'avertissement est AFFICHE plutot que la cible corrigee en douce :
         # c'est bien la recherche demandee qui tourne, et l'ecran dit pourquoi
         # elle ne rend rien.
-        st.info("ℹ️ Mesuré sur les **184 105** relevés en base : **aucune** "
-                "rencontre n'a ses trois cotes à 2,00, même à ±0,80 près. "
-                "Trois cotes à 2,00 supposeraient **50 % de marge** pour le "
-                "book, qui tourne ici à **6 %** — le maximum d'équilibre "
-                "possible est **2,83** chacune. La recherche tourne quand "
-                "même, et à défaut je montre les plus proches.")
+        st.info("ℹ️ **2,83 est le vrai « cote 2 partout » de Bet261.** Trois "
+                "cotes à 2,00 supposeraient 50 % de marge pour le book, qui "
+                "tourne ici à 6 % : sur les **184 105** relevés en base, "
+                "aucune rencontre n'y arrive, même à ±0,80 près. Le maximum "
+                "d'équilibre possible est **2,83 chacune** — la cible est "
+                "donc réglée là, où **290** relevés répondent à ±0,10 près, "
+                "sur 7 ligues. Baisse à 2,00 si tu veux le vérifier.")
         ec1, ec2, ec3, ec4 = st.columns([1, 1, 1, 1])
-        e_c1 = ec1.number_input("Cote 1", 1.01, 20.0, 2.00, 0.01, key="eq_c1",
+        e_c1 = ec1.number_input("Cote 1", 1.01, 20.0, 2.83, 0.01, key="eq_c1",
                                 format="%.2f")
-        e_cx = ec2.number_input("Cote X", 1.01, 20.0, 2.00, 0.01, key="eq_cx",
+        e_cx = ec2.number_input("Cote X", 1.01, 20.0, 2.83, 0.01, key="eq_cx",
                                 format="%.2f")
-        e_c2 = ec3.number_input("Cote 2", 1.01, 20.0, 2.00, 0.01, key="eq_c2",
+        e_c2 = ec3.number_input("Cote 2", 1.01, 20.0, 2.83, 0.01, key="eq_c2",
                                 format="%.2f")
-        e_tol = ec4.number_input("Tolérance ±", 0.0, 2.0, 0.05, 0.01,
+        e_tol = ec4.number_input("Tolérance ±", 0.0, 2.0, 0.10, 0.01,
                                  key="eq_tol", format="%.2f",
-                                 help="Porte sur CHACUNE des trois cotes, "
-                                      "pas sur leur somme.")
-        e_lg = st.selectbox("Ligue", list(LEAGUES), index=0, key="eq_lg")
+                                 help="Porte sur CHACUNE des trois cotes, pas sur "
+                                      "leur somme. ±0,10 autour de 2,83 retient "
+                                      "290 relevés ; ±0,05 en retient 100.")
+        # Multi-ligues (27/09, « debusque dans toutes les ligues ») : la cible
+        # est rare — 290 releves sur 184 105 — et la restreindre a une seule
+        # ligue rendrait l'ecran vide presque a chaque round. Vide = les 9.
+        e_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES),
+                               default=[], key="eq_lgs")
         e_h = st.text_input("Heure Mada du round (ex: 21:03) — vide = prochain",
                             value="", key="eq_h")
         if st.button("🔎 Débusquer", key="eq_go", type="primary"):
@@ -473,7 +479,8 @@ def main():
             else:
                 with _db("Analyse du round…"):
                     st.session_state["eq_res"] = _pte.round_1x2(
-                        engE, LEAGUES[e_lg], heure=hh or None)
+                        engE, [LEAGUES[k] for k in e_lgs] or list(LEAGUES.values()),
+                        heure=hh or None, limite=90)
         e_res = st.session_state.get("eq_res")
         if e_res is not None:
             if not e_res:
@@ -501,7 +508,10 @@ def main():
                 emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
                 for m in liste:
                     jr = f"J{m['journee']} · " if m.get("journee") else ""
-                    st.markdown(f"#### `[{jr}{m['local']}]` {m['home']} vs {m['away']}")
+                    lgn = next((n for n, c in LEAGUES.items()
+                                if c == m.get("ligue")), "")
+                    st.markdown(f"#### `[{lgn} · {jr}{m['local']}]` "
+                                f"{m['home']} vs {m['away']}")
                     tri = " · ".join(
                         f"**{k} = {m['cotes'][k]:g}**" if m["cotes"].get(k) else f"{k} = ?"
                         for k in ("1", "X", "2"))

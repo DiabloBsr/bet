@@ -12,6 +12,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import predict_trio as pt  # noqa: E402
 
+
+def m(a, x, b, **kw):
+    """Une rencontre reduite a ce que le debusqueur regarde."""
+    d = {"home": "Dom", "away": "Ext",
+         "cotes": {"1": a, "X": x, "2": b}}
+    d.update(kw)
+    return d
+
 RACINE = Path(__file__).resolve().parents[1]
 
 
@@ -289,3 +297,100 @@ def test_le_plafond_de_rencontres_est_respecte(monkeypatch):
 def test_aucune_rencontre_rend_une_liste_vide(monkeypatch):
     monkeypatch.setattr(pt, "_upcoming_df", lambda *a, **k: _Frame())
     assert pt.round_1x2(object(), "lg") == []
+
+
+# --------------------------------------------------------------------------
+# BALAYAGE MULTI-LIGUES (27/09) — « debusque dans toutes les ligues »
+# --------------------------------------------------------------------------
+
+def _renc(**kw):
+    d = dict(team_a="Dom", team_b="Ext", local="21:03", rd="Journee 7",
+             oh=2.83, od=2.79, oa=2.87, c="InstantLeague-8035")
+    d.update(kw)
+    return _Renc(**d)
+
+
+@pytest.fixture
+def deux_ligues(monkeypatch):
+    """Deux rencontres, dans DEUX competitions differentes."""
+    frame = _Frame([
+        _renc(team_a="Benin", team_b="Mozambique", c="InstantLeague-8060"),
+        _renc(team_a="Tondela", team_b="Moreirense", c="InstantLeague-8044"),
+    ])
+    monkeypatch.setattr(pt, "_upcoming_df", lambda *a, **k: frame)
+    vues = []
+
+    def faux_own(engine, a, b, lg=None, n=60, journee=None):
+        vues.append(lg)
+        return {"x12": [0.34, 0.33, 0.33], "lam_a": 1.3, "lam_b": 1.3}
+    monkeypatch.setattr(pt, "predict_own", faux_own)
+    return vues
+
+
+def test_chaque_rencontre_est_analysee_dans_SA_ligue(deux_ligues):
+    """⚠️ LE PIEGE DU MULTI-LIGUES. La fonction passait la ligue DEMANDEE a
+    `predict_own`. Sur un balayage, la forme des equipes aurait ete cherchee
+    dans la mauvaise competition : `predict_own` rend None, et toutes les
+    rencontres seraient sorties en « historique insuffisant » — un ecran vide
+    sans message d'erreur."""
+    pt.round_1x2(object(), ["InstantLeague-8060", "InstantLeague-8044"])
+    assert deux_ligues == ["InstantLeague-8060", "InstantLeague-8044"]
+
+
+def test_la_ligue_voyage_avec_la_rencontre(deux_ligues):
+    # Sur neuf ligues, l'heure seule ne situe plus rien : l'ecran doit
+    # pouvoir nommer la competition.
+    res = pt.round_1x2(object(), ["InstantLeague-8060", "InstantLeague-8044"])
+    assert [m["ligue"] for m in res] == ["InstantLeague-8060", "InstantLeague-8044"]
+
+
+def _espion(monkeypatch):
+    """Enregistre les ligues reçues par `_upcoming_df` et rend un cadre vide.
+
+    ⚠️ Pas de `setdefault(...) or cadre` : `setdefault` rend la valeur
+    enregistrée, qui est véridique, donc le `or` court-circuite et la fonction
+    renvoie la LISTE au lieu du cadre. C'est ce qui a fait tomber ce test à
+    l'écriture.
+    """
+    recu = {}
+
+    def faux(engine, lgs, *a, **k):
+        recu["lgs"] = lgs
+        return _Frame()
+    monkeypatch.setattr(pt, "_upcoming_df", faux)
+    return recu
+
+
+def test_une_chaine_reste_une_seule_ligue(monkeypatch):
+    """`list("InstantLeague-8035")` en ferait une liste de caracteres, et le
+    filtre ne retiendrait plus aucune rencontre."""
+    recu = _espion(monkeypatch)
+    pt.round_1x2(object(), "InstantLeague-8035")
+    assert recu["lgs"] == ["InstantLeague-8035"]
+
+
+def test_liste_vide_balaie_tout(monkeypatch):
+    recu = _espion(monkeypatch)
+    pt.round_1x2(object(), [])
+    assert recu["lgs"] is None, "None = aucune restriction de ligue"
+
+
+def test_les_ligues_vides_sont_ignorees(monkeypatch):
+    recu = _espion(monkeypatch)
+    pt.round_1x2(object(), ["InstantLeague-8060", None, "", "InstantLeague-8044"])
+    assert recu["lgs"] == ["InstantLeague-8060", "InstantLeague-8044"]
+
+
+def test_le_debusqueur_trouve_les_exemples_du_cabinet():
+    """Les trois releves cites : cible 2,83, tolerance 0,10."""
+    exemples = [m(2.87, 2.79, 2.82), m(2.81, 2.84, 2.83), m(2.83, 2.87, 2.78)]
+    r = pt.debusquer_cotes(exemples, cibles=(2.83, 2.83, 2.83), tol=0.10)
+    assert len(r["trouvees"]) == 3, "les trois exemples doivent sortir"
+
+
+def test_la_cible_a_deux_ne_les_trouve_pas():
+    """Meme lot, cible 2,00 : aucun. C'est ce qui justifie d'avoir cale la
+    valeur par defaut sur 2,83."""
+    exemples = [m(2.87, 2.79, 2.82), m(2.81, 2.84, 2.83), m(2.83, 2.87, 2.78)]
+    r = pt.debusquer_cotes(exemples, cibles=(2.0, 2.0, 2.0), tol=0.10)
+    assert r["trouvees"] == [] and len(r["proches"]) == 3
