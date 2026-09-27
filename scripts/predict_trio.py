@@ -1687,6 +1687,32 @@ def calib_marche(marche: str, p_raw) -> float:
     return _interp_calib(xs, ys, p_raw)
 
 
+def fiabilite_marche(marche: str) -> dict | None:
+    """Ce que ce marche TOUCHE reellement, mesure sur l'historique.
+
+    Rend {"reel": 0.781, "n": 59670} ou None si le marche n'a pas ete mesure.
+
+    ── POURQUOI CETTE INFORMATION EST A COTE DE CHAQUE PRONOSTIC (27/09) ────────
+
+    La probabilite affichee repond a « quelles chances pour CE match ». Elle ne
+    dit rien de « a quel point ce marche-la est previsible ». Or l'ecart est
+    enorme d'un marche a l'autre : la Double Chance sort juste dans 78,1 % des
+    cas, le Score exact dans 11,8 %. Lire « Score exact -> 2-1, 14 % » sans
+    savoir que ce marche n'est touche qu'une fois sur huit donne une confiance
+    que le chiffre seul ne justifie pas.
+
+    Les deux nombres viennent de la MEME table de calibration qui corrige deja
+    les probabilites : rien n'est recalcule ici, et rien ne peut donc diverger.
+    """
+    v = _MK_CAL.get(marche) or _MT_CAL.get(marche)
+    if not isinstance(v, dict):
+        return None
+    r, n = v.get("global_reel"), v.get("n")
+    if not isinstance(r, (int, float)) or r != r:
+        return None
+    return {"reel": float(r), "n": int(n or 0)}
+
+
 def rencontres(engine, leagues=None, minutes: int = 240, heure=None) -> list:
     """Rencontres a venir, pour le selecteur de l'onglet conseil."""
     if heure:

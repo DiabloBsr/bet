@@ -385,9 +385,9 @@ def main():
                             sel_, p_ = max(x_, key=lambda kv: kv[1])
                             # « 1 / X / 2 » de PERIODE : qui marque le plus DANS
                             # cette mi-temps. Un « X » ne veut pas dire match nul.
-                            quoi = {"1": res_c["home"], "2": res_c["away"]}.get(
+                            qui_ = {"1": res_c["home"], "2": res_c["away"]}.get(
                                 sel_, "aucun des deux ne prend l'avantage")
-                            col.markdown(f"　**{nom}** — **{quoi}** "
+                            col.markdown(f"　**{nom}** — **{qui_}** "
                                          f"(**{p_*100:.0f}%**)")
                             sc_ = " · ".join(f"**{sc}** {pr*100:.0f}%"
                                              for sc, pr in (d_.get("scores") or [])[:3])
@@ -397,8 +397,17 @@ def main():
                     # sous chacun, ses deux meilleures alternatives avec leur cote.
                     for l in res_c["lignes"]:
                         cot = f"cote **{l['odds']:g}**" if l.get("odds") else "_non coté_"
+                        # ⚠️ LA FIABILITE DU MARCHE, a cote de la proba du match.
+                        # Les deux nombres ne disent pas la meme chose : « 14 % »
+                        # repond pour CE match, « touche 11,8 % » dit a quel point
+                        # ce marche-la est previsible en general. Sans le second,
+                        # un score exact a 14 % se lit comme un 1X2 a 14 %, alors
+                        # que l'un sort une fois sur huit et l'autre une sur deux.
+                        fi = _ptc2.fiabilite_marche(l["marche"])
+                        rep = (f" · _ce marché touche **{fi['reel']*100:.0f}%**_"
+                               if fi else "")
                         st.markdown(f"　• _{l['marche']}_ → **{l['sel']}** — "
-                                    f"**{l['p']*100:.0f}%** · {cot}")
+                                    f"**{l['p']*100:.0f}%** · {cot}{rep}")
                         alt = " · ".join(
                             f"{t['sel']} {t['p']*100:.0f}%"
                             + (f" ({t['odds']:g})" if t.get("odds") else "")
