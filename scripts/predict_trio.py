@@ -1698,6 +1698,55 @@ PIEGE_SANS_FAVORI = 0.40     # sous ce seuil, aucune issue ne se detache
 GROSSE_COTE = 5.0
 
 
+# Seuil par defaut des rencontres « sans favori court » : les TROIS issues
+# payees au moins autant.
+#
+# ── POURQUOI 2,00, ET POURQUOI PAS « EGAL A 2,00 » ───────────────────────────
+#
+# Mesure du 27/09 sur les 155 298 rencontres cotees en base : la somme des
+# inverses des trois cotes vaut 1,060 en moyenne (min 1,055, max 1,070), soit
+# une marge de book d'environ 6 %. Trois cotes EGALES a 2,00 exigeraient une
+# somme de 1,500 -- une marge de 50 %. Cela n'existe pas, et pas seulement
+# ici : aucun operateur ne cote ainsi.
+#
+# Le match le plus equilibre possible sous cette marge porte trois cotes
+# voisines de 2,83. C'est ce que montre la mesure : 62 rencontres seulement
+# ont leurs trois cotes au-dessus de 2,80, et AUCUNE au-dessus de 3,00.
+#
+# Le seuil se lit donc « au moins », pas « egal ». A 2,00 il retient 34,3 % des
+# rencontres ; a 2,20, 20,9 % ; a 2,50, 4,8 %.
+COTE_EQUILIBRE = 2.0
+
+
+def filtrer_equilibres(rencontres, cote_min: float = COTE_EQUILIBRE) -> tuple:
+    """Ne garde que les rencontres dont les TROIS cotes 1X2 atteignent le seuil.
+
+    Rend `(gardees, ecartees, sans_cote)`. Les deux comptes sont rendus pour
+    etre AFFICHES : une rencontre qui disparait sans etre annoncee est un bug
+    d'interface.
+
+    Une rencontre a qui il manque une des trois cotes est ECARTEE mais COMPTEE
+    -- on ne peut ni affirmer qu'elle passe le seuil, ni la taire.
+    """
+    seuil = float(cote_min)
+    gardees, ecartees, sans_cote = [], 0, 0
+    for r in rencontres or []:
+        if not isinstance(r, dict):
+            continue
+        if r.get("erreur"):
+            gardees.append(r)
+            continue
+        c = r.get("cotes") or {}
+        trois = [_odd_pos(c.get(k)) for k in ("1", "X", "2")]
+        if not all(trois):
+            sans_cote += 1
+        elif min(trois) + 1e-9 < seuil:
+            ecartees += 1
+        else:
+            gardees.append(r)
+    return gardees, ecartees, sans_cote
+
+
 def signaux_1x2(p1, pn, p2, oh, od, oa, home="1", away="2") -> tuple:
     """Pieges et grosses cotes d'une rencontre, a partir des seules probas et cotes.
 
