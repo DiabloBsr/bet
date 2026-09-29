@@ -793,7 +793,13 @@ def _match_rows(d) -> list:
         tot_reel = int(r.sa + r.sb)
         totals = _total_lines(mk, tot_reel)
         hm, am = _goals(r.gj)
-        out.append({"date": es.strftime("%d/%m %H:%M"), "home": r.team_a, "away": r.team_b,
+        out.append({"date": es.strftime("%d/%m %H:%M"),
+                    # ⚠️ La date AFFICHEE est « 05/07 21:03 » : sans annee, elle ne
+                    # peut pas servir a ordonner ni a couper un historique. La date
+                    # brute part donc avec la ligne, pour que l'appelant puisse
+                    # demander « ce qui precede CE match » sans re-interroger la base.
+                    "es": r.expected_start,
+                    "home": r.team_a, "away": r.team_b,
                     "comp": r.c, "tag": LEAGUE_TAGS.get(r.c, str(r.c)[-4:]),
                     "journee": str(r.rd) if r.rd not in (None, "") else None,
                     "sa": int(r.sa), "sb": int(r.sb), "tot": int(r.sa + r.sb),
@@ -822,6 +828,60 @@ def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, 
         ORDER BY e.expected_start DESC LIMIT {int(n)}""", engine)
 
     return _match_rows(d)
+
+
+def formes_avant_h2h(engine, team_a: str, team_b: str, leagues: list | None = None,
+                     h2h: list | None = None, n: int = 5) -> dict:
+    """Pour CHAQUE face-a-face, la forme des deux equipes JUSTE AVANT ce match.
+
+    Rend {es_du_match: {"a": "VNDVV", "b": "DDNVD"}}, du plus recent au plus
+    ancien dans chaque chaine -- meme sens de lecture que le reste de l'app.
+
+    ── POURQUOI « AVANT », ET PAS LA FORME ACTUELLE ─────────────────────────────
+
+    Regarder un face-a-face de la saison passee avec la forme d'aujourd'hui ne
+    dit rien : on saurait comment les equipes vont, pas comment elles allaient
+    en y entrant. La coupure se fait donc a la date du match lui-meme, et ce
+    match-la est EXCLU de sa propre forme.
+
+    ── DEUX REQUETES, PAS DEUX PAR RENCONTRE ────────────────────────────────────
+
+    L'historique complet de chaque equipe est charge UNE fois, puis decoupe en
+    memoire pour chacun des face-a-face. Une requete par rencontre ferait
+    soixante allers-retours sur une base que le collecteur ecrit en parallele.
+    """
+    lignes = list(h2h or [])
+    if not lignes:
+        return {}
+
+    def _hist(team):
+        t = str(team).replace("'", "''")
+        d = pd.read_sql(f"""SELECT e.expected_start es, e.team_a ta,
+            r.score_a sa, r.score_b sb
+            FROM events e JOIN results r ON r.event_id=e.id
+            WHERE r.score_a IS NOT NULL {_lg_clause(leagues)}
+              AND (e.team_a='{t}' OR e.team_b='{t}')
+            ORDER BY e.expected_start DESC""", engine)
+        # (date, resultat) du point de vue de CETTE equipe.
+        out = []
+        for r in d.itertuples():
+            mine, opp = (r.sa, r.sb) if r.ta == team else (r.sb, r.sa)
+            out.append((r.es, "V" if mine > opp else ("N" if mine == opp else "D")))
+        return out
+
+    ha, hb = _hist(team_a), _hist(team_b)
+
+    def _avant(hist, borne):
+        # STRICTEMENT avant : un match ne fait pas partie de sa propre forme.
+        return "".join(res for es, res in hist if es < borne)[:int(n)]
+
+    formes = {}
+    for m in lignes:
+        borne = m.get("es")
+        if borne is None:
+            continue
+        formes[borne] = {"a": _avant(ha, borne), "b": _avant(hb, borne)}
+    return formes
 
 
 def recent_matches(engine, leagues: list | None = None, n: int = 30) -> list:

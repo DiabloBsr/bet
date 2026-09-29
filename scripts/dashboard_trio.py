@@ -124,6 +124,12 @@ def _alerts():
     return msgs
 
 
+# Les pastilles de forme vivent dans `forme_pastilles`, SANS Streamlit : ce
+# n'est que de la construction de chaine, et les garder ici obligeait les tests
+# a importer Streamlit — ce qui fait tomber pytest sur cette machine.
+from forme_pastilles import pastilles as _pastilles  # noqa: E402
+
+
 def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
     """Composant historique réutilisable : 3 menus (H2H / équipe home / équipe away),
     du + récent au + ancien. Utilisable partout dans l'app sur les 9 ligues."""
@@ -154,6 +160,18 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
                        f"total buts moyen {sum(m['tot'] for m in h2h)/len(h2h):.1f}")
             st.caption("📊 O/U 2.5 reconstitué depuis « Total de buts » — Bet261 ne cote que la "
                        "ligne 3.5. Marge du book conservée. ✅ = issue réalisée.")
+            # ⚠️ La forme des deux equipes AVANT chaque rencontre (29/09).
+            # Chargee EN UNE FOIS pour tous les face-a-face : une requete par
+            # rencontre ferait soixante allers-retours sur une base que le
+            # collecteur ecrit en parallele. Et `_safe` parce que cette lecture
+            # ne doit pas priver l'utilisateur du face-a-face lui-meme.
+            formes = _safe(_pth.formes_avant_h2h, engine, home, away, leagues,
+                           h2h[:n_h2h], n) or {}
+            st.markdown(
+                f"　{_pastilles('VND')} — les **{n} dernières** de chaque "
+                f"équipe **avant** la rencontre, de la plus récente à la plus "
+                f"ancienne · victoire, nul, défaite.",
+                unsafe_allow_html=True)
             for m in h2h[:n_h2h]:
                 mark = " 🥅" if m["tot"] == 0 else ""
                 ch = f" `{m['oh']:g}`" if m.get("oh") else ""
@@ -211,6 +229,20 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
                 od25 = "".join("  " + chr(10) + l for l in lignes)
                 st.markdown(f"{jr}`{m['date']}` — {m['home']}{ch} **{m['sa']}-{m['sb']}** "
                             f"{ca}{m['away']}{cx}{mark}{ou}{od25}{gm}")
+                # Les 5 resultats de CHAQUE equipe avant CETTE rencontre. Rendu
+                # a part : les pastilles sont du HTML, la ligne au-dessus est du
+                # markdown -- les melanger obligerait a passer TOUT le bloc en
+                # `unsafe_allow_html`, y compris les noms d'equipes qui viennent
+                # de la base.
+                fr = formes.get(m.get("es")) or {}
+                if fr.get("a") or fr.get("b"):
+                    # Le nom de la marque ORIENTE la lecture : `home`/`away` sont
+                    # les equipes CHOISIES, alors que cette rencontre-la a pu se
+                    # jouer dans l'autre sens. On nomme donc explicitement.
+                    st.markdown(
+                        f"　{_pastilles(fr.get('a', ''), 16)} _{home}_"
+                        f"  {_pastilles(fr.get('b', ''), 16)} _{away}_",
+                        unsafe_allow_html=True)
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)
         if not hh:
