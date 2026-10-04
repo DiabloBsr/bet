@@ -2149,7 +2149,14 @@ def issue_round(m) -> tuple:
 
 # Colonnes du tableau de la prediction du round (04/10), dans l'ordre.
 ROUND_COLONNES = ("Top 3", "Match", "Pronostic", "1", "X", "2", "Cote",
-                  "Score exact", "Sinon", "Over 2,5", "Under 2,5")
+                  "Score exact", "Sinon", "Over 2,5", "Under 2,5", "Moteurs O/U")
+
+
+def _accord_lisible(mo) -> str:
+    """« 3/3 Over », « 2/3 Under » : combien de moteurs portent le sens retenu."""
+    if not mo or not mo.get("sens"):
+        return ""
+    return f"{mo['accord']} {mo['sens']}"
 
 
 def tableau_round(matches) -> dict:
@@ -2163,10 +2170,10 @@ def tableau_round(matches) -> dict:
     concentre, marque 🏆), puis les autres du plus sur au moins sur -- et,
     pour chacune, les cases de MON pronostic a colorer.
 
-    Rien de neuf dans les chiffres : 1X2, score exact et confiance sortent du
-    trio deja affiche ; l'over 2,5 est `over25_pct`, que `predict_one`
-    calculait deja sans que l'ecran ne le montre (cotes du book devigees,
-    calibrees par ligue). L'under est son complement.
+    1X2, score exact et confiance sortent du trio deja affiche. L'over 2,5
+    est la recommandation DES MOTEURS (`ou25_moteurs` : V2, V5 et le marche
+    a poids egaux, 04/10), et « Moteurs O/U » dit combien la portent.
+    L'under est son complement.
     """
     brut = []
     for m in matches or []:
@@ -2175,8 +2182,14 @@ def tableau_round(matches) -> dict:
         t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
         sinon = " · ".join(f"{sc} {pr * 100:.0f} %"
                            for sc, pr in (m.get("consensus_top3") or [])[1:3] if sc)
-        o25 = m.get("over25_pct")
-        o25 = float(o25) if isinstance(o25, (int, float)) and o25 == o25 else None
+        # Over 2,5 = ce que RECOMMANDENT les moteurs (V2, V5, marche a poids
+        # egaux, 04/10) ; repli sur le marche seul pour un resultat ancien.
+        mo = m.get("ou25_moteurs") or {}
+        if isinstance(mo.get("over"), (int, float)):
+            o25 = 100.0 * mo["over"]
+        else:
+            o25 = m.get("over25_pct")
+            o25 = float(o25) if isinstance(o25, (int, float)) and o25 == o25 else None
         brut.append({
             "_pi": pi, "_conf": m.get("confidence") or 0, "_sel": sel, "_o25": o25,
             "Match": f"{m.get('team_a', '?')} – {m.get('team_b', '?')}",
@@ -2189,6 +2202,7 @@ def tableau_round(matches) -> dict:
             "Sinon": sinon,
             "Over 2,5": int(round(o25)) if o25 is not None else None,
             "Under 2,5": int(round(100 - o25)) if o25 is not None else None,
+            "Moteurs O/U": _accord_lisible(mo),
         })
     top3 = sorted(brut, key=lambda r: -r["_conf"])[:3]
     ids = {id(r) for r in top3}
@@ -2953,6 +2967,50 @@ def upcoming_all(engine, minutes: int = 6) -> list:
     return out
 
 
+def _p_over25_grille(g) -> float | None:
+    """P(3 buts ou plus) lue sur une grille de scores, renormalisee."""
+    try:
+        g = np.asarray(g, float)
+        idx = np.add.outer(np.arange(g.shape[0]), np.arange(g.shape[1]))
+        tot = float(g.sum())
+        return float(g[idx >= 3].sum() / tot) if tot > 0 else None
+    except Exception:
+        return None
+
+
+def _pct_en_proba(v) -> float | None:
+    return float(v) / 100.0 if isinstance(v, (int, float)) and v == v else None
+
+
+def ou25_moteurs(v2, v5, marche) -> dict | None:
+    """L'over/under 2,5 que recommandent les moteurs du trio (Olivio, 04/10).
+
+    Chaque moteur donne sa P(over 2,5) : V2 sur sa grille de scores (Poisson
+    + Dixon-Coles + marche du score exact), V5 sur la sienne (multi-marches),
+    le marche sur les cotes devigees et calibrees par ligue. La
+    recommandation est leur moyenne a POIDS EGAUX entre les moteurs PRESENTS
+    -- la regle que le trio applique deja au score exact. Hors anglaise, V2
+    et V5 n'ont pas les equipes : le marche reste seul, et l'accord le dit.
+
+    Rend {"over": p, "sens": "Over"|"Under"|None, "accord": "2/3",
+    "detail": {"V2": p, "V5": p, "Marché": p}} ou None sans aucun moteur.
+
+    ⚠️ Le taux de reussite de cette moyenne n'est PAS mesure : seul le
+    marche, pris seul, l'a ete. L'ecran doit le dire.
+    """
+    detail = {k: float(v) for k, v in (("V2", v2), ("V5", v5), ("Marché", marche))
+              if isinstance(v, (int, float)) and v == v and 0.0 <= v <= 1.0}
+    if not detail:
+        return None
+    over = sum(detail.values()) / len(detail)
+    sens = "Over" if over > 0.5 else ("Under" if over < 0.5 else None)
+    pour = sum(1 for v in detail.values()
+               if (v > 0.5 if sens == "Over" else v < 0.5)) if sens else 0
+    return {"over": round(over, 4), "sens": sens,
+            "accord": f"{pour}/{len(detail)}",
+            "detail": {k: round(v, 4) for k, v in detail.items()}}
+
+
 def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=None,
                 lg: str = None) -> dict:
     oh, od, oa = float(oh), float(od), float(oa)
@@ -2960,12 +3018,14 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
     # --- V2 (grille blendée) ---
     v2top = []
     ph = pd_ = pa = None
+    v2_o25 = v5_o25 = None
     try:
         p2 = predict_match_v2(v2model, team_a, team_b, oh, od, oa, sem)
         lh, la = p2.get("lam_h"), p2.get("lam_a")
         if lh:
             g2 = blended_score_grid(lh, la, v2model.rho, sem, v2model.score_market_weight)
             v2top = [(s, float(p)) for s, p in grid_top_k_scores(g2, 8)]
+            v2_o25 = _p_over25_grille(g2)
         ph = p2.get("p_h_bl", p2.get("p_h_pois")); pd_ = p2.get("p_d_bl", p2.get("p_d_pois"))
         pa = p2.get("p_a_bl", p2.get("p_a_pois"))
     except Exception:
@@ -2975,6 +3035,7 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
     try:
         p5 = predict_match_v5(m5, team_a, team_b, oh, od, oa, extra_markets=extra_markets)
         v5top = [(s, float(p)) for s, p in (p5.get("top5_scores_enriched") or [])]
+        v5_o25 = p5.get("p_over_25_blend")
         if ph is None:
             ph = p5.get("p_h_blend"); pd_ = p5.get("p_d_blend"); pa = p5.get("p_a_blend")
     except Exception:
@@ -3008,9 +3069,13 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
     if ph is None:                    # ligues sans modèle d'équipes -> 1X2 dévigé (calibré)
         inv = 1/oh + 1/od + 1/oa
         ph, pd_, pa = (1/oh)/inv, (1/od)/inv, (1/oa)/inv
+    o25_pct = _over25_calib(oh, od, oa, lg)
     return {"match": f"{team_a} v {team_b}", "team_a": team_a, "team_b": team_b,
             "cotes": [oh, od, oa], "x12": [round(ph, 3), round(pd_, 3), round(pa, 3)],
-            "over25_pct": _over25_calib(oh, od, oa, lg),
+            "over25_pct": o25_pct,
+            # La recommandation over/under 2,5 DES MOTEURS (04/10) : V2, V5 et
+            # le marche, a poids egaux -- la regle du trio pour le score.
+            "ou25_moteurs": ou25_moteurs(v2_o25, v5_o25, _pct_en_proba(o25_pct)),
             "v2_top3": [(s, round(p, 3)) for s, p in v2top[:3]],
             "v5_top3": [(s, round(p, 3)) for s, p in v5top[:3]],
             "market_top3": [(s, round(p, 3)) for s, p in mkttop[:3]],

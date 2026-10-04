@@ -95,3 +95,61 @@ def test_les_cases_colorees_sont_des_colonnes():
 def test_un_round_vide():
     assert pt.tableau_round([]) == {"lignes": [], "reco": []}
     assert pt.tableau_round(None) == {"lignes": [], "reco": []}
+
+
+# --------------------------------------------------------------------------
+# L'OVER/UNDER 2,5 RECOMMANDE PAR LES MOTEURS (04/10)
+# --------------------------------------------------------------------------
+
+def test_les_moteurs_pesent_a_poids_egaux():
+    r = pt.ou25_moteurs(0.60, 0.50, 0.40)
+    assert r["over"] == 0.5 and r["sens"] is None and r["accord"] == "0/3"
+    r = pt.ou25_moteurs(0.62, 0.58, 0.44)
+    assert abs(r["over"] - (0.62 + 0.58 + 0.44) / 3) < 1e-4
+    assert r["sens"] == "Over" and r["accord"] == "2/3"
+
+
+def test_seuls_les_moteurs_presents_votent():
+    """Hors anglaise, V2 et V5 n'ont pas les equipes : le marche est seul."""
+    r = pt.ou25_moteurs(None, None, 0.41)
+    assert r == {"over": 0.41, "sens": "Under", "accord": "1/1",
+                 "detail": {"Marché": 0.41}}
+    assert pt.ou25_moteurs(None, None, None) is None
+    assert pt.ou25_moteurs(float("nan"), 1.7, None) is None, "valeurs hors probas"
+
+
+def test_la_grille_v2_donne_son_over_2_5():
+    import numpy as np
+    g = np.zeros((7, 7))
+    g[1, 1] = 0.3          # 2 buts
+    g[2, 1] = 0.5          # 3 buts
+    g[3, 3] = 0.2          # 6 buts
+    assert abs(pt._p_over25_grille(g) - 0.7) < 1e-9
+    assert abs(pt._p_over25_grille(g * 4) - 0.7) < 1e-9, "renormalisee"
+    assert pt._p_over25_grille(np.zeros((7, 7))) is None
+    assert pt._p_over25_grille("pas une grille") is None
+
+
+def test_le_tableau_montre_la_recommandation_des_moteurs():
+    m = _m("A", "B", (0.5, 0.3, 0.2), o25=40.0)          # le marche dit Under
+    m["ou25_moteurs"] = pt.ou25_moteurs(0.66, 0.60, 0.40)  # les moteurs, Over
+    t = pt.tableau_round([m])
+    l = t["lignes"][0]
+    assert (l["Over 2,5"], l["Under 2,5"]) == (55, 45)
+    assert l["Moteurs O/U"] == "2/3 Over"
+    assert "Over 2,5" in t["reco"][0]
+
+
+def test_sans_les_moteurs_le_marche_seul_reste_affiche():
+    """Un resultat calcule avant le 04/10 n'a pas `ou25_moteurs`."""
+    l = pt.tableau_round([_m("A", "B", (0.5, 0.3, 0.2), o25=62.4)])["lignes"][0]
+    assert (l["Over 2,5"], l["Moteurs O/U"]) == (62, "")
+
+
+def test_predict_one_porte_la_recommandation_des_moteurs():
+    """Lu dans la source : `predict_one` exige les modeles entraines."""
+    src = (RACINE / "scripts" / "predict_trio.py").read_text(encoding="utf-8")
+    bloc = src[src.index("def predict_one("):src.index("def predict_own(")]
+    assert '"ou25_moteurs": ou25_moteurs(v2_o25, v5_o25' in bloc
+    assert "v2_o25 = _p_over25_grille(g2)" in bloc
+    assert 'v5_o25 = p5.get("p_over_25_blend")' in bloc

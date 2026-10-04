@@ -725,9 +725,12 @@ def main():
             st.caption("**En vert, mon pronostic** : l'issue 1X2 choisie et le "
                        "côté le plus probable de l'over/under 2,5. 🏆 = les 3 "
                        "matchs du round dont le score exact est le plus "
-                       "concentré. L'over/under 2,5 est lu sur les cotes du "
-                       "book, dévigées et calibrées par ligue. Le score exact "
-                       "ne sort juste qu'environ une fois sur huit.")
+                       "concentré. L'over/under 2,5 est la recommandation des "
+                       "moteurs — V2, V5 et le marché à poids égaux ; « Moteurs "
+                       "O/U » dit combien d'entre eux la portent (hors anglaise, "
+                       "le marché est seul). Son taux de réussite n'est pas "
+                       "encore mesuré. Le score exact ne sort juste qu'environ "
+                       "une fois sur huit.")
         if not pronos:
             st.warning("Aucun match à prédire sur ce round.")
 
