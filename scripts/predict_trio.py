@@ -1955,6 +1955,10 @@ def _analyse_1x2(engine, r, lg_defaut=None) -> dict:
         "pieges": raisons, "grosses_cotes": grosses,
         "seq_a": own.get("seq_a", ""), "seq_b": own.get("seq_b", ""),
         "attendus": round(own["lam_a"] + own["lam_b"], 2),
+        # Pour l'over/under du tableau a l'heure (04/10) : sans eux, il
+        # faudrait rejouer `predict_own`, soit deux requetes de plus par match.
+        "lam_a": own["lam_a"], "lam_b": own["lam_b"],
+        "p_over25": own.get("p_over25"), "x12": [float(v) for v in bruts],
     }
 
 
@@ -1980,6 +1984,119 @@ def round_1x2(engine, lg, heure=None, limite: int = 30) -> list:
         out.append(_analyse_1x2(engine, r, ligues[0] if ligues else None))
         if len(out) >= int(limite):
             break
+    return out
+
+
+def tableau_heure(engine, leagues=None, heure=None, limite: int = 40) -> dict:
+    """Le tableau d'UNE heure de coup d'envoi (demande du 04/10) : pour chaque
+    rencontre, mes chances de 1, de nul, de 2, et d'over/under 2,5 et 3,5.
+
+    Rend {"heure": "HH:MM" | None, "lignes": [...], "total": n}. Heure vide =
+    la prochaine heure de coup d'envoi des ligues choisies.
+
+    ── AUCUN CHIFFRE NEUF, ET C'EST VOULU ───────────────────────────────────────
+
+    - 1X2 : `_analyse_1x2`, la meme analyse que le debusqueur. Une rencontre
+      affiche donc les memes pourcentages dans les deux ecrans.
+    - O/U 2,5 : `ou25_probas`, calibree sur 29 835 matchs et bornee au mesure.
+    - O/U 3,5, la ligne que Bet261 cote (« +/- ») : `calib_marche`, comme le
+      detail des marches de « Que jouer ? ».
+
+    ⚠️ Les trois chances du 1X2 font 100 % ici, et c'est le seul ecart avec le
+    debusqueur : voir `_1x2_somme_100`. Le pronostic et sa chance, eux, sont
+    les memes dans les deux ecrans.
+    """
+    lgs = [leagues] if isinstance(leagues, str) else [x for x in (leagues or []) if x]
+    h = str(heure).strip().zfill(5) if heure else None
+    if h:
+        up = _upcoming_df(engine, lgs or None, 1440, h, h)
+    else:
+        up = _upcoming_df(engine, lgs or None, 240)
+        if len(up):
+            h = str(up["local"].iloc[0])      # trie par coup d'envoi
+            up = up[up["local"] == h]
+    if not len(up):
+        return {"heure": h, "lignes": [], "total": 0}
+    lignes = []
+    for r in up.itertuples():
+        if len(lignes) >= int(limite):
+            break
+        a = _analyse_1x2(engine, r, getattr(r, "c", None))
+        a["tag"] = LEAGUE_TAGS.get(getattr(r, "c", None), str(getattr(r, "c", ""))[-4:])
+        if not a.get("erreur"):
+            a["probas_100"] = _1x2_somme_100(a.get("x12"))
+            o25, u25 = ou25_probas(a.get("p_over25"))
+            pm = dict(marches_probas(a["lam_a"], a["lam_b"])["+/-"])
+            a["over25"], a["under25"] = round(o25, 4), round(u25, 4)
+            a["over35"] = round(calib_marche("+/-", pm["> 3.5"]), 4)
+            a["under35"] = round(calib_marche("+/-", pm["< 3.5"]), 4)
+        lignes.append(a)
+    # Groupees par ligue : a une meme minute, plusieurs ligues s'entremelent
+    # au gre des secondes du coup d'envoi (mesure : 57 rencontres, 5 ligues).
+    lignes.sort(key=lambda a: a.get("tag") or "")
+    return {"heure": h, "lignes": lignes, "total": len(up)}
+
+
+def _1x2_somme_100(bruts) -> dict:
+    """1, X, 2 qui font 100 %, sans toucher a la seule valeur MESUREE.
+
+    ── POURQUOI PAS LA CALIBRATION ISSUE PAR ISSUE DU DEBUSQUEUR ────────────────
+
+    La table du 1X2 a ete apprise sur l'issue la PLUS PROBABLE de chaque match
+    (ses paliers commencent a 33 %). Elle rabote le favori -- le modele brut
+    sur-promet -- mais ne rend ces points a personne : sur le round du 05/07 a
+    10:47, la somme descendait jusqu'a 80 %, et un tableau qui affiche 8 / 13 /
+    67 % laisse le lecteur chercher les 12 % manquants.
+
+    Ici : l'issue de tete garde sa chance calibree (taux reel mesure), et les
+    deux autres se partagent le reste au prorata de mon analyse brute. Leur
+    partage n'est pas mesure -- il ne l'etait pas davantage dans l'autre ecran,
+    ou la table etait extrapolee sous son premier palier.
+    """
+    if not bruts or len(bruts) != 3:
+        return {}
+    b = [float(v) for v in bruts]
+    i = max(range(3), key=lambda k: b[k])
+    tete = calib_marche("1X2", b[i])
+    autres = sum(b) - b[i]
+    out = [((1.0 - tete) * v / autres) if autres > 0 else (1.0 - tete) / 2
+           for v in b]
+    out[i] = tete
+    return {k: round(v, 4) for k, v in zip("1X2", out)}
+
+
+# Colonnes du tableau, dans l'ordre d'affichage. Les pourcentages sont des
+# entiers de 0 a 100 : l'ecran n'a plus qu'a ajouter « % ».
+TABLEAU_COLONNES = ("Ligue", "Match", "Pronostic", "1", "X", "2",
+                    "Over 2,5", "Under 2,5", "Over 3,5", "Under 3,5")
+
+
+def tableau_affichage(lignes) -> list:
+    """Les lignes de `tableau_heure`, pretes pour un tableau. Sans Streamlit.
+
+    Une rencontre sans historique suffisant reste dans le tableau, cases
+    vides et raison ecrite : la faire disparaitre ferait croire qu'elle
+    n'existe pas a cette heure.
+    """
+    def _pc(v):
+        return int(round(float(v) * 100)) if isinstance(v, (int, float)) and v == v else None
+    out = []
+    for a in lignes or []:
+        ligne = {"Ligue": a.get("tag") or "",
+                 "Match": f"{a.get('home', '?')} – {a.get('away', '?')}"}
+        if a.get("erreur"):
+            ligne["Pronostic"] = f"— {a['erreur']}"
+            ligne.update({k: None for k in TABLEAU_COLONNES[3:]})
+        else:
+            pr = a.get("probas_100") or a.get("probas") or {}
+            ligne["Pronostic"] = a.get("equipe") or ""
+            ligne.update({"1": _pc(pr.get("1")), "X": _pc(pr.get("X")),
+                          "2": _pc(pr.get("2")),
+                          "Over 2,5": _pc(a.get("over25")),
+                          "Under 2,5": _pc(a.get("under25")),
+                          "Over 3,5": _pc(a.get("over35")),
+                          "Under 3,5": _pc(a.get("under35"))})
+        out.append({k: ligne.get(k) for k in TABLEAU_COLONNES})
     return out
 
 

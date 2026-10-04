@@ -173,9 +173,10 @@ def test_le_pronostic_ne_vient_pas_de_la_cote():
     bloc = src[src.index("def _analyse_1x2("):src.index("def round_1x2(")]
     assert "predict_own(" in bloc, "le pronostic doit venir de ma propre analyse"
     assert 'calib_marche("1X2"' in bloc, "et passer par la calibration du marche"
-    # Et les deux appelants passent bien par elle, sans refaire le calcul.
+    # Et les appelants passent bien par elle, sans refaire le calcul : le
+    # round, le debusqueur, et depuis le 04/10 le tableau a l'heure choisie.
     aval = src[src.index("def round_1x2("):src.index("def fiabilite_marche(")]
-    assert aval.count("_analyse_1x2(") == 2
+    assert aval.count("_analyse_1x2(") == 3
     assert "predict_own(" not in aval, "le pronostic est recopie quelque part"
 
 

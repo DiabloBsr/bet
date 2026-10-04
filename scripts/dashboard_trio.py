@@ -560,6 +560,74 @@ def main():
                            "Trois cotes voisines veut dire match ouvert, pas match "
                            "rentable : la marge du book reste de **6%**.")
 
+    # ---- 📋 TABLEAU A L'HEURE CHOISIE (demande du 04/10) ----
+    # Un onglet A PART : « Que jouer ? » ne bouge pas (Olivio, 04/10). Une
+    # ligne par rencontre, mes chances de 1 / nul / 2 et d'over/under. Aucun
+    # chiffre neuf : `tableau_heure` reprend le 1X2 du debusqueur et les O/U
+    # deja calibres, donc un match dit la meme chose dans chaque ecran.
+    with st.expander("📋 Tableau des prédictions — à l'heure de ton choix"):
+        import predict_trio as _ptt
+        engT = st.cache_resource(_engine)()
+        st.caption("Choisis l'heure : pour chaque rencontre, mes chances de victoire "
+                   "à domicile (1), de nul (X), de victoire à l'extérieur (2), et "
+                   "d'over / under 2,5 et 3,5 buts. Prédiction issue de la seule "
+                   "forme des équipes.")
+        t_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[],
+                               key="tb_lgs")
+        tc1, tc2 = st.columns([1, 1])
+        t_h = tc1.text_input("Heure (HH:MM Mada) — vide = la prochaine", value="",
+                             key="tb_h", placeholder="ex: 21:03")
+        # 120 par defaut : une seule minute peut reunir 57 rencontres sur cinq
+        # ligues (mesure du 05/07, 10:47), calculees en 1,2 s.
+        t_max = tc2.number_input("Rencontres max", 1, 200, 120, 1, key="tb_max",
+                                 help="Garde-fou : chaque rencontre demande deux "
+                                      "lectures de forme en base.")
+        if st.button("📋 Afficher le tableau", key="tb_go", type="primary"):
+            hh = t_h.strip()
+            if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
+                st.warning("Heure au format HH:MM (ex: 21:03).")
+            else:
+                with _db("Analyse des rencontres…"):
+                    st.session_state["tb_res"] = _ptt.tableau_heure(
+                        engT, [LEAGUES[k] for k in t_lgs] or None, hh or None,
+                        int(t_max))
+        res_t = st.session_state.get("tb_res")
+        if res_t is not None:
+            if not res_t["lignes"]:
+                quand = f" à **{res_t['heure']}**" if res_t.get("heure") else ""
+                st.info(f"Aucune rencontre à venir{quand} sur ces ligues — choisis "
+                        "une autre heure, ou vide-la pour prendre la prochaine.")
+            else:
+                n_t = len(res_t["lignes"])
+                st.success(f"**{n_t} rencontre(s) à {res_t['heure']}** (heure de Mada)"
+                           + (f" — {res_t['total']} en tout, coupé à {n_t} par le "
+                              "plafond." if res_t["total"] > n_t else "."))
+                pc = st.column_config.NumberColumn(format="%d %%")
+                lignes_t = _ptt.tableau_affichage(res_t["lignes"])
+                # Toutes les lignes d'un coup, sans ascenseur interne : le
+                # tableau sert a parcourir l'heure entiere.
+                # « Match » epinglee : sur telephone le tableau defile en
+                # largeur, et les pourcentages perdaient leur rencontre de vue.
+                st.dataframe(pd.DataFrame(lignes_t), hide_index=True,
+                             height=35 * (len(lignes_t) + 1) + 3,
+                             column_config={
+                                 "Match": st.column_config.TextColumn(pinned=True),
+                                 **{k: pc for k in _ptt.TABLEAU_COLONNES[3:]}})
+                f1 = _ptt.fiabilite_marche("1X2") or {}
+                f35 = _ptt.fiabilite_marche("+/-") or {}
+
+                def _fr(v):
+                    return f"{100 * v:.1f}".replace(".", ",") + " %" if v else "?"
+                st.caption(
+                    "Le pronostic porte sa chance calibrée sur l'historique ; "
+                    "les deux autres issues se partagent le reste, au prorata de "
+                    "mon analyse. Ce que ces marchés touchent réellement en "
+                    "jouant l'issue la plus "
+                    f"probable : 1X2 **{_fr(f1.get('reel'))}**, over/under 3,5 "
+                    f"**{_fr(f35.get('reel'))}**. Un pourcentage élevé n'est pas "
+                    "un gain : le book l'intègre déjà dans ses cotes (rendement "
+                    "mesuré ≈ −7 % sur chaque marché).")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2
