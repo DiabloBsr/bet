@@ -2129,6 +2129,83 @@ def tableau_affichage(lignes) -> list:
     return out
 
 
+def issue_round(m) -> tuple:
+    """Le pronostic 1X2 d'une rencontre de la prediction du round.
+
+    Rend (sel, issue, proba, cote) : sel en 1 / X / 2, issue = nom de
+    l'equipe ou « Nul ». Meme regle que la vue en listes qu'elle remplace :
+    le 1 l'emporte sur une egalite, puis le 2, le nul seulement s'il est
+    strictement devant. Une seule ecriture, partagee par le tableau et le
+    pari suggere.
+    """
+    oh, od, oa = m["cotes"]
+    ph, pd_, pa = m["x12"]
+    if ph >= pd_ and ph >= pa:
+        return "1", m.get("team_a") or "1", ph, oh
+    if pa >= pd_:
+        return "2", m.get("team_b") or "2", pa, oa
+    return "X", "Nul", pd_, od
+
+
+# Colonnes du tableau de la prediction du round (04/10), dans l'ordre.
+ROUND_COLONNES = ("Top 3", "Match", "Pronostic", "1", "X", "2", "Cote",
+                  "Score exact", "Sinon", "Over 2,5", "Under 2,5")
+
+
+def tableau_round(matches) -> dict:
+    """La prediction du round en TABLEAU, avec l'over/under 2,5 (04/10).
+
+    « Affiche le resultat de prediction de cette ligne sous forme tableau, et
+    ajoute aussi des pronostics over/under 2,5. »
+
+    Rend {"lignes": [...], "reco": [...]} : les lignes dans l'ordre de la vue
+    qu'il remplace -- le Top 3 du round d'abord (score exact le plus
+    concentre, marque 🏆), puis les autres du plus sur au moins sur -- et,
+    pour chacune, les cases de MON pronostic a colorer.
+
+    Rien de neuf dans les chiffres : 1X2, score exact et confiance sortent du
+    trio deja affiche ; l'over 2,5 est `over25_pct`, que `predict_one`
+    calculait deja sans que l'ecran ne le montre (cotes du book devigees,
+    calibrees par ligue). L'under est son complement.
+    """
+    brut = []
+    for m in matches or []:
+        sel, issue, pi, ci = issue_round(m)
+        ph, pd_, pa = m["x12"]
+        t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
+        sinon = " · ".join(f"{sc} {pr * 100:.0f} %"
+                           for sc, pr in (m.get("consensus_top3") or [])[1:3] if sc)
+        o25 = m.get("over25_pct")
+        o25 = float(o25) if isinstance(o25, (int, float)) and o25 == o25 else None
+        brut.append({
+            "_pi": pi, "_conf": m.get("confidence") or 0, "_sel": sel, "_o25": o25,
+            "Match": f"{m.get('team_a', '?')} – {m.get('team_b', '?')}",
+            "Pronostic": issue,
+            "1": int(round(ph * 100)), "X": int(round(pd_ * 100)),
+            "2": int(round(pa * 100)),
+            "Cote": round(float(ci), 2) if ci else None,
+            "Score exact": (f"{t1[0]} · {t1[1] * 100:.0f} %"
+                            if t1 and t1[0] else ""),
+            "Sinon": sinon,
+            "Over 2,5": int(round(o25)) if o25 is not None else None,
+            "Under 2,5": int(round(100 - o25)) if o25 is not None else None,
+        })
+    top3 = sorted(brut, key=lambda r: -r["_conf"])[:3]
+    ids = {id(r) for r in top3}
+    ordre = top3 + sorted((r for r in brut if id(r) not in ids),
+                          key=lambda r: -r["_pi"])
+    lignes, reco = [], []
+    for r in ordre:
+        r["Top 3"] = "🏆" if id(r) in ids else ""
+        lignes.append({k: r[k] for k in ROUND_COLONNES})
+        cases = {r["_sel"]}
+        # Sur la valeur EXACTE : arrondies, 50,4 / 49,6 feraient 50 / 50.
+        if r["_o25"] is not None and r["_o25"] != 50:
+            cases.add("Over 2,5" if r["_o25"] > 50 else "Under 2,5")
+        reco.append(cases)
+    return {"lignes": lignes, "reco": reco}
+
+
 def _partie_entiere(o) -> int | None:
     """Partie entiere d'une cote lisible : 2,87 -> 2. None si illisible."""
     v = _odd_pos(o)

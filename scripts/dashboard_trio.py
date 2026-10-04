@@ -128,6 +128,7 @@ def _alerts():
 # n'est que de la construction de chaine, et les garder ici obligeait les tests
 # a importer Streamlit — ce qui fait tomber pytest sur cette machine.
 from forme_pastilles import pastilles as _pastilles  # noqa: E402
+from forme_pastilles import FORME_STYLES as _FORME  # noqa: E402
 from html import escape as _esc  # noqa: E402
 
 
@@ -142,6 +143,29 @@ def _legende_html(st, texte: str) -> None:
     st.markdown('<span style="font-size:0.875rem;color:color-mix(in srgb, '
                 f'currentColor 60%, transparent)">{texte}</span>',
                 unsafe_allow_html=True)
+
+
+def _tableau_vert(st, lignes: list, reco: list, pourcents) -> None:
+    """Un tableau dont les cases de MON pronostic sont en vert (04/10).
+
+    Le vert de la photo, celui des pastilles. `reco[i]` liste les colonnes a
+    colorer sur la ligne i ; `pourcents` les colonnes affichees en « % ».
+    Toutes les lignes d'un coup, sans ascenseur interne, et « Match »
+    epinglee : sur telephone le tableau defile en largeur, et les chiffres
+    perdaient leur rencontre de vue.
+    """
+    vert = (f"background-color: {_FORME['V'][0]}; color: #ffffff; "
+            "font-weight: 700")
+
+    def _colore(ligne):
+        return [vert if c in reco[ligne.name] else "" for c in ligne.index]
+    df = pd.DataFrame(lignes)
+    fmt = {k: "{:.0f} %" for k in pourcents if k in df}
+    if "Cote" in df:
+        fmt["Cote"] = "{:g}"
+    sty = df.style.apply(_colore, axis=1).format(fmt, na_rep="")
+    st.dataframe(sty, hide_index=True, height=35 * (len(lignes) + 1) + 3,
+                 column_config={"Match": st.column_config.TextColumn(pinned=True)})
 
 
 def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
@@ -670,14 +694,8 @@ def main():
         # vainqueur pronostique des autres matchs, avec proba et cote.
         pronos = []
         for m in shown:
-            oh, od, oa = m["cotes"]
-            ph, pd_, pa = m["x12"]
-            if ph >= pd_ and ph >= pa:
-                issue, pi, ci = m.get("team_a") or "1", ph, oh
-            elif pa >= pd_:
-                issue, pi, ci = m.get("team_b") or "2", pa, oa
-            else:
-                issue, pi, ci = "Nul", pd_, od
+            # Meme regle que le tableau ci-dessous : une seule ecriture.
+            _, issue, pi, ci = _pt.issue_round(m)
             t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
             pronos.append({"pi": pi, "name": m["match"], "issue": issue, "ci": ci,
                            "conf": m.get("confidence") or 0, "t1": t1,
@@ -694,41 +712,22 @@ def main():
             st.success(f"**{sg['name']}** → **{sg['issue']} gagne** — "
                        f"cote **{sg['ci']:g}** · {sg['pi']*100:.0f}%"
                        + (f"  \nTop-3 scores : {sc3}" if sc3 else ""))
-        # ⚠️ UNE SEULE ECRITURE DU SCORE, pour les deux listes (27/09,
-        # « affiche aussi les scores exacts de tous les matchs »). Le score
-        # n'etait rendu que sur le Top 3 alors qu'il est calcule pour CHAQUE
-        # rencontre. Le recopier dans la seconde liste aurait fait deux formats
-        # a tenir a jour — ils auraient diverge au premier ajustement.
-        def _score(r):
-            t = r.get("t1")
-            return (f" · score **{t[0]}** ({t[1]*100:.0f}%)"
-                    if t and t[0] else "")
-
-        def _autres_scores(r):
-            """Les deux scores suivants. Sur un marche touche a 11,8 %, donner
-            UN score sans ses suivants laisse croire a une precision qu'il
-            n'a pas."""
-            return " · ".join(f"**{sc}** {pr*100:.0f}%"
-                               for sc, pr in (r.get("cs") or [])[1:3] if sc)
-
-        top3 = sorted(pronos, key=lambda r: -r["conf"])[:3]
-        top3_names = {r["name"] for r in top3}
-        if top3:
-            st.markdown("### 🏆 Top 3 du round — avec score exact")
-            for i, r in enumerate(top3, 1):
-                st.markdown(f"**{i}. {r['name']}** → **{r['issue']}** ({r['pi']*100:.0f}%) "
-                            f"· cote **{r['ci']:g}**{_score(r)}")
-                if _autres_scores(r):
-                    st.caption(f"　sinon : {_autres_scores(r)}")
-        reste = sorted((r for r in pronos if r["name"] not in top3_names),
-                       key=lambda r: -r["pi"])
-        if reste:
-            st.markdown("**Les autres matchs — avec score exact :**")
-            for r in reste:
-                st.markdown(f"• **{r['name']}** → **{r['issue']}** "
-                            f"({r['pi']*100:.0f}%) · cote **{r['ci']:g}**{_score(r)}")
-                if _autres_scores(r):
-                    st.caption(f"　sinon : {_autres_scores(r)}")
+        # ⚠️ LA PREDICTION DU ROUND EN TABLEAU (04/10), avec l'over/under 2,5.
+        # Il remplace les deux listes (le Top 3, puis les autres), dans le
+        # meme ordre, et garde le score exact de CHAQUE rencontre avec ses
+        # deux suivants (27/09) : `tableau_round` est la seule ecriture du
+        # format -- deux ecritures divergeraient a la premiere retouche.
+        tab = _pt.tableau_round(shown)
+        if tab["lignes"]:
+            st.markdown("### 📋 Pronostics du round")
+            _tableau_vert(st, tab["lignes"], tab["reco"],
+                          ("1", "X", "2", "Over 2,5", "Under 2,5"))
+            st.caption("**En vert, mon pronostic** : l'issue 1X2 choisie et le "
+                       "côté le plus probable de l'over/under 2,5. 🏆 = les 3 "
+                       "matchs du round dont le score exact est le plus "
+                       "concentré. L'over/under 2,5 est lu sur les cotes du "
+                       "book, dévigées et calibrées par ligue. Le score exact "
+                       "ne sort juste qu'environ une fois sur huit.")
         if not pronos:
             st.warning("Aucun match à prédire sur ce round.")
 
