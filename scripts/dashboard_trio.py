@@ -128,6 +128,7 @@ def _alerts():
 # n'est que de la construction de chaine, et les garder ici obligeait les tests
 # a importer Streamlit — ce qui fait tomber pytest sur cette machine.
 from forme_pastilles import pastilles as _pastilles  # noqa: E402
+from html import escape as _esc  # noqa: E402
 
 
 def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
@@ -239,9 +240,11 @@ def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
                     # Le nom de la marque ORIENTE la lecture : `home`/`away` sont
                     # les equipes CHOISIES, alors que cette rencontre-la a pu se
                     # jouer dans l'autre sens. On nomme donc explicitement.
+                    # Les noms viennent de la base et cette ligne passe en
+                    # HTML : echappes, ils ne peuvent rien y injecter.
                     st.markdown(
-                        f"　{_pastilles(fr.get('a', ''), 16)} _{home}_"
-                        f"  {_pastilles(fr.get('b', ''), 16)} _{away}_",
+                        f"　{_pastilles(fr.get('a', ''))} _{_esc(home)}_"
+                        f"  {_pastilles(fr.get('b', ''))} _{_esc(away)}_",
                         unsafe_allow_html=True)
     with t2:
         hh = _safe(_pth.match_history, engine, home, n, leagues)

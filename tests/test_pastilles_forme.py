@@ -38,9 +38,24 @@ def test_l_ordre_est_conserve():
 
 
 def test_les_glyphes_correspondent_a_la_maquette():
-    assert FORME_STYLES["V"][1] == "✓"   # coche
-    assert FORME_STYLES["D"][1] == "✕"   # croix
-    assert FORME_STYLES["N"][1] == "−"   # tiret
+    """Coche = une ligne brisee, croix = deux traits, tiret = un trait
+    horizontal. Dessines, car les caracteres sortaient trop fins (04/10)."""
+    assert "<polyline" in FORME_STYLES["V"][1]                 # coche
+    assert FORME_STYLES["D"][1].count("M") == 2                # croix
+    assert FORME_STYLES["N"][1] == '<path d="M7 12H17"/>'      # tiret
+    assert [FORME_STYLES[k][2] for k in "VND"] == ["victoire", "nul", "défaite"]
+
+
+def test_les_couleurs_sont_celles_de_la_photo():
+    """Relevees sur la photo d'Olivio (mediane des pixels), pas a l'oeil."""
+    assert FORME_STYLES["V"][0] == "#039e52"
+    assert FORME_STYLES["D"][0] == "#d96161"
+    assert FORME_STYLES["N"][0] == "#bfbfbf"
+
+
+def test_le_trait_est_blanc_et_epais():
+    html = pastilles("V")
+    assert 'stroke="#fff"' in html and 'stroke-width="3"' in html
 
 
 def test_rien_d_autre_que_VND_ne_passe():
