@@ -2152,6 +2152,44 @@ ROUND_COLONNES = ("Top 3", "Match", "Pronostic", "1", "X", "2", "Cote",
                   "Score exact", "Sinon", "Over 2,5", "Under 2,5", "Moteurs O/U")
 
 
+def libelle_jambe(match: str, marche: str, sel: str) -> str:
+    """« Leeds – London Reds → 1X2 : London Reds » : une jambe lisible.
+
+    En 1X2 et en double chance, 1 et 2 deviennent le nom des equipes : sous
+    un tableau de vingt rencontres, « 2 » seul oblige a remonter la ligne.
+    """
+    a, _, b = str(match).partition(" v ")
+    noms = {"1": a or "1", "2": b or "2", "X": "Nul"}
+    if marche == "1X2":
+        lisible = noms.get(sel, sel)
+    elif marche == "Double Chance" and len(sel) == 2:
+        lisible = f"{sel} ({noms.get(sel[0], sel[0])} ou {noms.get(sel[1], sel[1])})"
+    else:
+        lisible = sel
+    return f"{a} – {b} → {marche} : {lisible}" if b else f"{match} → {marche} : {lisible}"
+
+
+def combines_round(matches, top: int = 3) -> list:
+    """Les combines que proposent les moteurs pour ce round (Olivio, 04/10).
+
+    Rien de neuf : `build_combos`, le constructeur de combines de l'app, avec
+    les reglages de la famille « surs » du tracker (`trio_tracker.FAMILIES`) --
+    2 ou 3 matchs, une jambe par match, cote totale >= 3, jambes a 45 % au
+    moins, marches a marge fine (`COMBO_MARKETS`). Ce sont ces combines-la que
+    le suivi reel mesure deja, annonce contre reel.
+
+    Rend [{"jambes": [{"libelle", "p", "o"}...], "cote", "p"}...], du plus
+    probable au moins probable, sur des ensembles de matchs distincts. Les
+    chances des jambes sont celles du marche devige (l'arbitre du trio) ; celle
+    du combine est leur produit, les matchs etant independants.
+    """
+    combos = build_combos(list(matches or []), 3.0, 3, top=top,
+                          markets=COMBO_MARKETS, min_legs=2, p_min=0.45)
+    return [{"jambes": [{"libelle": libelle_jambe(mn, mkt, s), "p": p, "o": o}
+                        for mn, mkt, s, p, o in c["legs"]],
+             "cote": c["odds"], "p": c["p"]} for c in combos]
+
+
 def _accord_lisible(mo) -> str:
     """« 3/3 Over », « 2/3 Under » : combien de moteurs portent le sens retenu."""
     if not mo or not mo.get("sens"):
@@ -3026,8 +3064,13 @@ def predict_one(engine, m5, v2model, team_a, team_b, oh, od, oa, extra_markets=N
             g2 = blended_score_grid(lh, la, v2model.rho, sem, v2model.score_market_weight)
             v2top = [(s, float(p)) for s, p in grid_top_k_scores(g2, 8)]
             v2_o25 = _p_over25_grille(g2)
-        ph = p2.get("p_h_bl", p2.get("p_h_pois")); pd_ = p2.get("p_d_bl", p2.get("p_d_pois"))
-        pa = p2.get("p_a_bl", p2.get("p_a_pois"))
+        # ⚠️ CORRIGE LE 04/10 : ce code lisait `p_h_bl` / `p_d_bl` / `p_a_bl`,
+        # cles que `predict_match_v2` n'a jamais rendues (les siennes sont
+        # `p_h_blend`...). Le repli prenait donc TOUJOURS le Poisson pur : le
+        # 1X2 « V2 » du round ignorait le melange avec le marche du score.
+        ph = p2.get("p_h_blend", p2.get("p_h_pois"))
+        pd_ = p2.get("p_d_blend", p2.get("p_d_pois"))
+        pa = p2.get("p_a_blend", p2.get("p_a_pois"))
     except Exception:
         pass
     # --- V5 ---
