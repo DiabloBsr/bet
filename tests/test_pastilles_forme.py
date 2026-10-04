@@ -53,6 +53,20 @@ def test_les_couleurs_sont_celles_de_la_photo():
     assert FORME_STYLES["N"][0] == "#bfbfbf"
 
 
+def test_que_jouer_et_le_debusqueur_montrent_la_forme_en_pastilles():
+    """Les autres onglets parlent avec les trois couleurs de la photo
+    (Olivio, 04/10) : plus de dictionnaire d'emojis 🟢 ⚪ 🔴 pour la forme."""
+    src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
+    assert '"V": "🟢"' not in src
+    assert src.count('_pastilles(res_c.get("seq_a"), 16)') == 1   # Que jouer ?
+    assert src.count('_pastilles(m.get("seq_a"), 16)') == 1       # debusqueur
+    # ⚠️ Jamais dans `st.caption` : son conteneur est a 60 % d'opacite et les
+    # pastilles y perdaient les couleurs de la photo (mesure le 04/10).
+    assert src.count("_legende_html(st, f") == 2
+    deb = src.index("def _legende_html(")
+    assert "st.caption(" not in src[deb:src.index("def _hist_block(")]
+
+
 def test_le_trait_est_blanc_et_epais():
     html = pastilles("V")
     assert 'stroke="#fff"' in html and 'stroke-width="3"' in html

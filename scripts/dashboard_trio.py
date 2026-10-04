@@ -131,6 +131,19 @@ from forme_pastilles import pastilles as _pastilles  # noqa: E402
 from html import escape as _esc  # noqa: E402
 
 
+def _legende_html(st, texte: str) -> None:
+    """Une ligne au look de `st.caption`, mais qui laisse les pastilles intactes.
+
+    ⚠️ `st.caption` pose `opacity: 0.6` sur tout son conteneur (mesure le
+    04/10) : les pastilles y sortaient ternies, plus aux couleurs de la photo,
+    et aucun style pose sur elles ne peut annuler l'opacite d'un parent. Ici,
+    seul le TEXTE est attenue, a la meme teinte qu'une legende.
+    """
+    st.markdown('<span style="font-size:0.875rem;color:color-mix(in srgb, '
+                f'currentColor 60%, transparent)">{texte}</span>',
+                unsafe_allow_html=True)
+
+
 def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
     """Composant historique réutilisable : 3 menus (H2H / équipe home / équipe away),
     du + récent au + ancien. Utilisable partout dans l'app sur les 9 ligues."""
@@ -385,7 +398,6 @@ def main():
                            if tri.trop_bas else "")
                         + (f" {tri.sans_cote} écartée(s), conseil non coté."
                            if tri.sans_cote else ""))
-                emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
                 for res_c in gardees:
                     if res_c.get("erreur"):
                         st.caption(f"⚠️ {res_c['erreur']}")
@@ -398,12 +410,15 @@ def main():
                                else " · _non coté_")
                         st.success(f"**À jouer : « {s_['sel']} »**　_[{s_['marche']}]_"
                                    f"{cot} · ma proba **{s_['p']*100:.0f}%**")
-                    fa = " ".join(emo.get(x, "?") for x in (res_c.get("seq_a") or ""))
-                    fb = " ".join(emo.get(x, "?") for x in (res_c.get("seq_b") or ""))
+                    # Les pastilles de la photo, comme sous les face-a-face : un
+                    # seul code couleur dans l'app (Olivio, 04/10). La ligne passe
+                    # donc en HTML, et les noms venus de la base y sont echappes.
+                    fa = _pastilles(res_c.get("seq_a"), 16)
+                    fb = _pastilles(res_c.get("seq_b"), 16)
                     jr = f"J{res_c['journee']} · " if res_c.get("journee") else ""
-                    st.caption(f"{jr}**{res_c['attendus']} buts attendus** — "
-                               f"{res_c['home']} : {fa} ~{res_c['lam_a']} · "
-                               f"{res_c['away']} : {fb} ~{res_c['lam_b']}.")
+                    _legende_html(st, f"{jr}**{res_c['attendus']} buts attendus** — "
+                                  f"{_esc(res_c['home'])} : {fa} ~{res_c['lam_a']} · "
+                                  f"{_esc(res_c['away'])} : {fb} ~{res_c['lam_b']}.")
                     # ---- LES DEUX MI-TEMPS (demande du 27/09) ----
                     # Affichees AVANT le detail des marches cotes, et clairement
                     # separees : ce ne sont pas des paris disponibles sur Bet261,
@@ -512,7 +527,6 @@ def main():
                 st.success(f"**{len(trouvees)} rencontre(s)** avec les trois cotes "
                            f"entre **{borne}**, sur {res['examinees']} examinée(s) "
                            f"({res['rounds']} rounds · {res['ligues']} ligue(s)).")
-            emo = {"V": "🟢", "N": "⚪", "D": "🔴"}
             for m in trouvees:
                 lgn = next((n for n, c in LEAGUES.items() if c == m.get("ligue")), "")
                 jr = f"J{m['journee']} · " if m.get("journee") else ""
@@ -534,10 +548,11 @@ def main():
                                + " · ".join(m["pieges"]))
                 pr = " · ".join(f"{k} **{m['probas'][k]*100:.0f}%**"
                                   for k in ("1", "X", "2"))
-                fa = " ".join(emo.get(x, "?") for x in (m.get("seq_a") or ""))
-                fb = " ".join(emo.get(x, "?") for x in (m.get("seq_b") or ""))
-                st.caption(f"{pr}　—　{m['attendus']} buts attendus　·　"
-                           f"{m['home']} : {fa} · {m['away']} : {fb}")
+                # Memes pastilles que « Que jouer ? » ; noms echappes (HTML).
+                fa = _pastilles(m.get("seq_a"), 16)
+                fb = _pastilles(m.get("seq_b"), 16)
+                _legende_html(st, f"{pr}　—　{m['attendus']} buts attendus　·　"
+                           f"{_esc(m['home'])} : {fa} · {_esc(m['away'])} : {fb}")
                 st.markdown("---")
             if trouvees:
                 st.caption("Pronostic issu de MA seule analyse de la forme Bet261, "
