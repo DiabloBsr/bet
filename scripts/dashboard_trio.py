@@ -128,6 +128,7 @@ def _alerts():
 # n'est que de la construction de chaine, et les garder ici obligeait les tests
 # a importer Streamlit — ce qui fait tomber pytest sur cette machine.
 from forme_pastilles import pastilles as _pastilles  # noqa: E402
+from forme_pastilles import FORME_STYLES as _FORME  # noqa: E402
 from html import escape as _esc  # noqa: E402
 
 
@@ -602,23 +603,37 @@ def main():
                 st.success(f"**{n_t} rencontre(s) à {res_t['heure']}** (heure de Mada)"
                            + (f" — {res_t['total']} en tout, coupé à {n_t} par le "
                               "plafond." if res_t["total"] > n_t else "."))
-                pc = st.column_config.NumberColumn(format="%d %%")
                 lignes_t = _ptt.tableau_affichage(res_t["lignes"])
+                # EN VERT, mon pronostic de chaque ligne (Olivio, 04/10) : la
+                # case 1X2 choisie et le cote le plus probable de chaque
+                # over/under. Le vert de la photo, celui des pastilles.
+                reco = _ptt.tableau_reco(res_t["lignes"])
+                vert = (f"background-color: {_FORME['V'][0]}; color: #ffffff; "
+                        "font-weight: 700")
+
+                def _colore(ligne):
+                    return [vert if c in reco[ligne.name] else ""
+                            for c in ligne.index]
+                pcs = list(_ptt.TABLEAU_COLONNES[3:])
+                sty = (pd.DataFrame(lignes_t).style.apply(_colore, axis=1)
+                       .format({k: "{:.0f} %" for k in pcs}, na_rep=""))
                 # Toutes les lignes d'un coup, sans ascenseur interne : le
                 # tableau sert a parcourir l'heure entiere.
                 # « Match » epinglee : sur telephone le tableau defile en
                 # largeur, et les pourcentages perdaient leur rencontre de vue.
-                st.dataframe(pd.DataFrame(lignes_t), hide_index=True,
+                st.dataframe(sty, hide_index=True,
                              height=35 * (len(lignes_t) + 1) + 3,
                              column_config={
-                                 "Match": st.column_config.TextColumn(pinned=True),
-                                 **{k: pc for k in _ptt.TABLEAU_COLONNES[3:]}})
+                                 "Match": st.column_config.TextColumn(pinned=True)})
                 f1 = _ptt.fiabilite_marche("1X2") or {}
                 f35 = _ptt.fiabilite_marche("+/-") or {}
 
                 def _fr(v):
                     return f"{100 * v:.1f}".replace(".", ",") + " %" if v else "?"
                 st.caption(
+                    "**En vert, mon pronostic** de chaque match : l'issue "
+                    "1X2 choisie et le côté le plus probable de chaque "
+                    "over/under. "
                     "Le pronostic porte sa chance calibrée sur l'historique ; "
                     "les deux autres issues se partagent le reste, au prorata de "
                     "mon analyse. Ce que ces marchés touchent réellement en "

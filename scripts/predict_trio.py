@@ -2071,6 +2071,35 @@ TABLEAU_COLONNES = ("Ligue", "Match", "Pronostic", "1", "X", "2",
                     "Over 2,5", "Under 2,5", "Over 3,5", "Under 3,5")
 
 
+def tableau_reco(lignes) -> list:
+    """Les cases a colorer dans le tableau, ligne par ligne (Olivio, 04/10).
+
+    Pour chaque rencontre : la colonne de MON pronostic 1X2 (`sel`, le meme
+    que le debusqueur, pas un nouveau calcul), et le cote le plus probable de
+    chaque over/under. Une egalite ne colore rien : il n'y a pas de pronostic
+    a montrer. Une ligne en erreur non plus.
+
+    Rend une liste d'ensembles de noms de colonnes, dans l'ordre des lignes --
+    celui de `tableau_affichage`.
+    """
+    out = []
+    for a in lignes or []:
+        cases = set()
+        if not a.get("erreur"):
+            if a.get("sel") in ("1", "X", "2"):
+                cases.add(a["sel"])
+            for o, u, co, cu in (("over25", "under25", "Over 2,5", "Under 2,5"),
+                                 ("over35", "under35", "Over 3,5", "Under 3,5")):
+                vo, vu = a.get(o), a.get(u)
+                if isinstance(vo, (int, float)) and isinstance(vu, (int, float)):
+                    if vo > vu:
+                        cases.add(co)
+                    elif vu > vo:
+                        cases.add(cu)
+        out.append(cases)
+    return out
+
+
 def tableau_affichage(lignes) -> list:
     """Les lignes de `tableau_heure`, pretes pour un tableau. Sans Streamlit.
 

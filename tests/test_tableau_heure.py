@@ -217,3 +217,48 @@ def test_une_ligne_en_erreur_garde_ses_cases_vides():
                                   "erreur": "historique insuffisant"}])
     assert rows[0]["Pronostic"] == "— historique insuffisant"
     assert all(rows[0][k] is None for k in pt.TABLEAU_COLONNES[3:])
+
+
+# --------------------------------------------------------------------------
+# LA COLORATION DU PRONOSTIC (04/10)
+# --------------------------------------------------------------------------
+
+def test_le_pronostic_de_chaque_ligne_est_colore(base):
+    lignes = pt.tableau_heure(None, heure="17:12")["lignes"]
+    reco = pt.tableau_reco(lignes)
+    assert len(reco) == len(lignes)
+    burnley = reco[0]                      # 1 a 52 %, 2,6 buts attendus
+    assert burnley & {"1", "X", "2"} == {"1"}
+    assert len(burnley & {"Over 2,5", "Under 2,5"}) == 1
+    assert burnley & {"Over 3,5", "Under 3,5"} == {"Under 3,5"}
+
+
+def test_la_case_coloree_est_le_pronostic_du_debusqueur(base):
+    """Pas de nouveau calcul : la couleur suit `sel`, le pronostic affiche."""
+    lignes = pt.tableau_heure(None, heure="17:12")["lignes"]
+    for l, cases in zip(lignes, pt.tableau_reco(lignes)):
+        assert l["sel"] in cases
+
+
+def test_le_cote_colore_est_le_plus_probable():
+    l = {"sel": "2", "over25": 0.61, "under25": 0.39,
+         "over35": 0.30, "under35": 0.70}
+    assert pt.tableau_reco([l]) == [{"2", "Over 2,5", "Under 3,5"}]
+
+
+def test_une_egalite_ne_colore_rien():
+    l = {"sel": "X", "over25": 0.5, "under25": 0.5,
+         "over35": 0.3, "under35": 0.7}
+    assert pt.tableau_reco([l]) == [{"X", "Under 3,5"}]
+
+
+def test_une_ligne_en_erreur_n_est_pas_coloree():
+    assert pt.tableau_reco([{"erreur": "historique insuffisant",
+                             "sel": "1"}]) == [set()]
+    assert pt.tableau_reco(None) == []
+
+
+def test_les_noms_colores_sont_des_colonnes_du_tableau(base):
+    lignes = pt.tableau_heure(None, heure="17:12")["lignes"]
+    for cases in pt.tableau_reco(lignes):
+        assert cases <= set(pt.TABLEAU_COLONNES)
