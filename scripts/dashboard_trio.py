@@ -589,6 +589,21 @@ def main():
         import predict_trio as _pth2
         engH = st.cache_resource(_engine)()
         st.caption('Choisis une ligue et deux équipes → face-à-face direct + 5 derniers matchs de chacune (du + récent au + ancien).')
+        # Fraîcheur des données (04/10) : si la collecte en ligne s'est arrêtée
+        # (Space endormi), on affichait de vieux matchs comme s'ils étaient
+        # récents. On annonce la date du dernier résultat, et on alerte au-delà
+        # de 2 jours — au rythme d'un round toutes les 2 min, 2 jours sans
+        # résultat ne peut signifier qu'une collecte interrompue.
+        _dr = _pth2.derniere_date_resultat(engH)
+        if _dr:
+            _txt, _age = _dr
+            if _age > 2:
+                st.warning(f"⚠️ Dernier résultat en base : **{_txt}** (il y a "
+                           f"{int(_age)} j). La collecte en ligne est "
+                           f"interrompue — les face-à-face ci-dessous ne sont "
+                           f"pas à jour.")
+            else:
+                st.caption(f"🟢 Données à jour — dernier résultat : {_txt}.")
         hl1, hl2, hl3 = st.columns([2, 2, 2])
         # ⚠️ `_dfi` etait calcule par l'onglet de prediction, supprime le 27/09 :
         # ce bloc lisait donc un nom qui n'existait plus. Il est desormais calcule

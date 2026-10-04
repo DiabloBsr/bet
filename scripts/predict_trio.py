@@ -812,6 +812,25 @@ def _match_rows(d) -> list:
     return out
 
 
+def derniere_date_resultat(engine, leagues: list | None = None):
+    """Le résultat le plus récent en base : (texte JJ/MM/AAAA HH:MM Mada, âge en
+    jours) ou None. Sert à montrer si l'historique est FIGÉ (04/10) : la
+    collecte s'arrête quand le Space HF dort, et on lisait de vieux matchs en
+    les croyant récents."""
+    try:
+        d = pd.read_sql(f"""SELECT MAX(e.expected_start) m FROM events e
+            JOIN results r ON r.event_id=e.id
+            WHERE r.score_a IS NOT NULL {_lg_clause(leagues)}""", engine)
+        v = d["m"].iloc[0] if len(d) else None
+        if not v:
+            return None
+        dt = pd.to_datetime(v, utc=True)
+        jours = (pd.Timestamp.now(tz="UTC") - dt).total_seconds() / 86400.0
+        return dt.tz_convert(MADA).strftime("%d/%m/%Y %H:%M"), jours
+    except Exception:
+        return None
+
+
 def head_to_head(engine, team_a: str, team_b: str, leagues: list | None = None, n: int = 30) -> list:
     """Tous les face-à-face directs entre 2 équipes (les deux orientations), du + récent au + ancien.
     Inclut les cotes 1X2 (1er snapshot) offertes CE match-là : oh/od/oa (None si absentes)."""

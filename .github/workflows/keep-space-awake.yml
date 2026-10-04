@@ -1,0 +1,47 @@
+name: Garder le Space HF éveillé
+
+# POURQUOI (04/10/2026). Le Space olivioBsr/vfoot-trio tourne sur cpu-basic
+# gratuit : HuggingFace le met en VEILLE après 48 h sans visite (gcTimeout =
+# 172800 s). Endormi, le scraper (_scrape_loop.py) s'arrête -> plus aucun
+# resultat collecte -> l'historique face-a-face gèle (vu : figé au 19/07).
+#
+# Un simple GET sur l'URL du Space réinitialise ce compteur. Ce workflow ping
+# toutes les 12 h : bien en dessous des 48 h, avec de la marge si un run saute.
+# Gratuit (GitHub Actions), n'écrit rien, ne consomme aucun jeton.
+#
+# ⚠️ Ça garde le scraper VIVANT ; ça ne protège pas la base d'un rebuild
+# (le Space n'a pas de disque persistant). Un déploiement repart donc du seed.
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"   # toutes les 12 h (UTC)
+  workflow_dispatch:          # déclenchable à la main
+
+# Un seul ping à la fois : un run en retard n'en double pas un autre.
+concurrency:
+  group: keep-space-awake
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Réveiller le Space
+        run: |
+          URL="https://olivioBsr-vfoot-trio.hf.space/"
+          # Un Space endormi met un moment à redémarrer : on tolère la lenteur
+          # et on réessaie, le but est qu'il REÇOIVE la requête.
+          for attempt in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 120 \
+              -H "User-Agent: keep-awake (github-actions)" "$URL" || echo "000")
+            echo "tentative $attempt : HTTP $code"
+            if [ "$code" = "200" ]; then
+              echo "Space éveillé."
+              exit 0
+            fi
+            sleep 30
+          done
+          # Un ping raté n'est pas un échec grave (le prochain run réessaie dans
+          # 12 h, toujours sous les 48 h) : on ne fait pas échouer le workflow.
+          echo "Space non confirmé à 200 après 3 tentatives — sans gravité, prochain run dans 12 h."
