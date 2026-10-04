@@ -262,3 +262,19 @@ def test_les_noms_colores_sont_des_colonnes_du_tableau(base):
     lignes = pt.tableau_heure(None, heure="17:12")["lignes"]
     for cases in pt.tableau_reco(lignes):
         assert cases <= set(pt.TABLEAU_COLONNES)
+
+
+# --------------------------------------------------------------------------
+# ONGLET RETIRE LE 04/10, MOTEUR GARDE
+# --------------------------------------------------------------------------
+
+def test_l_onglet_est_retire_mais_le_moteur_reste():
+    """⚠️ L'onglet « Tableau des predictions » a ete retire de l'ecran le
+    04/10, a la demande d'Olivio. Meme parti que pour les onglets coupes le
+    27/09 : le moteur reste entier -- il ne coute rien tant que rien ne
+    l'appelle, et remettre l'ecran ne demandera que son affichage."""
+    src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
+    assert "tableau_heure" not in src and "Tableau des prédictions" not in src
+    for f in (pt.tableau_heure, pt.tableau_affichage, pt.tableau_reco,
+              pt._1x2_somme_100):
+        assert callable(f)
