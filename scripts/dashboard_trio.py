@@ -732,32 +732,26 @@ def main():
                        "encore mesuré. Le score exact ne sort juste qu'environ "
                        "une fois sur huit.")
 
-        # ---- 3 COMBINES PROPOSES PAR LES MOTEURS (04/10), sous le tableau ----
-        # `combines_round` : le constructeur de l'app, aux reglages de la
-        # famille « surs » du tracker -- ceux que le suivi reel mesure deja.
-        combis = _pt.combines_round(shown, top=3)
-        if combis:
-            st.markdown("### 🎯 3 combinés proposés par les moteurs — cote ≥ 3")
-            for i, c in enumerate(combis, 1):
-                jambes = [f"• {j['libelle']} — cote {j['o']:g} "
-                          f"({j['p'] * 100:.0f} %)" for j in c["jambes"]]
-                st.markdown(f"**Combiné {i}** — cote **{c['cote']:g}** · chance "
-                            f"**{c['p'] * 100:.0f} %**  \n"
-                            + "  \n".join(jambes))
-            st.caption("Le combiné le plus probable dont la cote atteint 3, sur "
-                       "2 ou 3 matchs distincts, puis le suivant, sur d'autres "
-                       "matchs. Chance d'une jambe = cote du book dévigée ; "
-                       "chance du combiné = leur produit. Ce sont les combinés "
-                       "« sûrs » que le suivi réel ci-dessous compare, annoncé "
-                       "contre réel. Le book prend sa marge sur chaque jambe.")
+        # ---- LE COMBINE DE 3 MATCHS PROPOSE PAR LES MOTEURS (04/10) ----
+        # Sous le tableau. `combine_round` : le constructeur de l'app, aux
+        # marches et au seuil de jambe des combines « surs » du tracker.
+        combi = _pt.combine_round(shown)
+        if combi:
+            st.markdown("### 🎯 Le combiné de 3 matchs proposé par les moteurs")
+            jambes = [f"• {j['libelle']} — cote {j['o']:g} "
+                      f"({j['p'] * 100:.0f} %)" for j in combi["jambes"]]
+            st.markdown(f"**Cote {combi['cote']:g}** · chance "
+                        f"**{combi['p'] * 100:.0f} %**  \n"
+                        + "  \n".join(jambes))
+            st.caption("Le combiné de 3 matchs le plus probable dont la cote "
+                       "atteint 3, une jambe par match. Chance d'une jambe = "
+                       "cote du book dévigée ; chance du combiné = leur "
+                       "produit. Le book prend sa marge sur chaque jambe : à "
+                       "cette cote, le rendement attendu reste négatif.")
         elif tab["lignes"]:
-            st.caption("🎯 Aucun combiné de cote ≥ 3 à proposer sur ce round : "
-                       "aucune combinaison de jambes assez sûres n'y arrive.")
-        if not pronos:
-            st.warning("Aucun match à prédire sur ce round.")
+            st.caption("🎯 Pas de combiné de 3 matchs à proposer sur ce round : "
+                       "trois jambes assez sûres n'atteignent pas la cote 3.")
 
-        # Matchs pieges (demande user) : favori fragile, nul menacant, match
-        # chaotique ou moteurs en desaccord -- a eviter ; affiche quand il y en a.
         pieges = []
         for m in shown:
             oh, od, oa = m["cotes"]

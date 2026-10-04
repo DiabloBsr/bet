@@ -2169,25 +2169,30 @@ def libelle_jambe(match: str, marche: str, sel: str) -> str:
     return f"{a} – {b} → {marche} : {lisible}" if b else f"{match} → {marche} : {lisible}"
 
 
-def combines_round(matches, top: int = 3) -> list:
-    """Les combines que proposent les moteurs pour ce round (Olivio, 04/10).
+def combine_round(matches) -> dict | None:
+    """LE combine de 3 matchs que proposent les moteurs pour ce round (04/10).
+
+    « Je veux un combine de 3 matchs propose par les moteurs. »
 
     Rien de neuf : `build_combos`, le constructeur de combines de l'app, avec
-    les reglages de la famille « surs » du tracker (`trio_tracker.FAMILIES`) --
-    2 ou 3 matchs, une jambe par match, cote totale >= 3, jambes a 45 % au
-    moins, marches a marge fine (`COMBO_MARKETS`). Ce sont ces combines-la que
-    le suivi reel mesure deja, annonce contre reel.
+    les marches et le seuil de jambe de la famille « surs » du tracker
+    (`COMBO_MARKETS`, 45 % au moins par jambe) -- mais EXACTEMENT 3 matchs,
+    une jambe chacun, et le seul plus probable dont la cote atteint 3. Sans ce
+    plancher, le plus probable serait trois jambes a 1,05 : une cote de 1,15.
 
-    Rend [{"jambes": [{"libelle", "p", "o"}...], "cote", "p"}...], du plus
-    probable au moins probable, sur des ensembles de matchs distincts. Les
-    chances des jambes sont celles du marche devige (l'arbitre du trio) ; celle
-    du combine est leur produit, les matchs etant independants.
+    Rend {"jambes": [{"libelle", "p", "o"}...], "cote", "p"} ou None si le
+    round n'a pas trois matchs aux jambes assez sures. Chance d'une jambe =
+    cote du marche devigee (l'arbitre du trio) ; celle du combine est leur
+    produit, les matchs etant independants.
     """
-    combos = build_combos(list(matches or []), 3.0, 3, top=top,
-                          markets=COMBO_MARKETS, min_legs=2, p_min=0.45)
-    return [{"jambes": [{"libelle": libelle_jambe(mn, mkt, s), "p": p, "o": o}
-                        for mn, mkt, s, p, o in c["legs"]],
-             "cote": c["odds"], "p": c["p"]} for c in combos]
+    combos = build_combos(list(matches or []), 3.0, 3, top=1,
+                          markets=COMBO_MARKETS, min_legs=3, p_min=0.45)
+    if not combos:
+        return None
+    c = combos[0]
+    return {"jambes": [{"libelle": libelle_jambe(mn, mkt, s), "p": p, "o": o}
+                       for mn, mkt, s, p, o in c["legs"]],
+            "cote": c["odds"], "p": c["p"]}
 
 
 def _accord_lisible(mo) -> str:
