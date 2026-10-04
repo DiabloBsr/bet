@@ -40,6 +40,11 @@ DEFAULT_FILES = [
     "scripts/trap_detector.py",
     "scripts/market_ranges.py",
     "scripts/lire_cotes.py",
+    # Importe par dashboard_trio : absent, l'app en ligne meurt a l'import.
+    "scripts/forme_pastilles.py",
+    # Deja sur le Space, identique au depot (controle le 04/10), mais hors
+    # liste : une retouche du theme ne serait jamais partie.
+    "scripts/ui_theme.py",
     # L OCR de l onglet a cette cote a besoin du binaire tesseract : sans le
     # Dockerfile et les deps, le Space garde son image et la lecture est morte.
     "Dockerfile",
