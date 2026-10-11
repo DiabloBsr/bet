@@ -87,18 +87,30 @@ def _apply_calib(d: dict, lg: str = None) -> dict:
     return {k: v / tt for k, v in out.items()}
 
 
-def load_hist(engine):
+def load_hist(engine, lg: str = LG):
+    """L'historique coté + résultats d'UNE ligue (anglaise par défaut)."""
+    t = str(lg).replace("'", "''")
     return pd.read_sql(f"""SELECT e.team_a,e.team_b,o.odds_home,o.odds_draw,o.odds_away,
         r.score_a,r.score_b,r.ht_score_a,r.ht_score_b FROM events e
         JOIN odds_snapshots o ON o.id=(SELECT MIN(id) FROM odds_snapshots WHERE event_id=e.id)
         JOIN results r ON r.event_id=e.id
-        WHERE r.ht_score_a IS NOT NULL AND e.competition='{LG}'""", engine)
+        WHERE r.ht_score_a IS NOT NULL AND e.competition='{t}'""", engine)
 
 
-def fit(engine):
-    """Fit V5 + V2. Retourne (m5, v2model, n)."""
-    hist = load_hist(engine)
-    m5 = fit_model_v5(hist, ht_history=hist.copy(), engine=engine, form_alpha=0.0)
+def fit(engine, lg: str = LG):
+    """Fit V5 + V2 sur la ligue `lg` (anglaise par défaut). Retourne (m5, v2model, n).
+
+    ── UN MODÈLE PAR LIGUE (04/10 → 11/10) ──────────────────────────────────────
+
+    Avant, seule l'anglaise s'entraînait ; les 8 autres tournaient en « marché
+    pur » (cotes dévigées, sans V2/V5). Or chaque ligue a son historique coté
+    ET sa table de calibration (`_calib_for`) : on peut donc entraîner le trio
+    sur n'importe laquelle. `competition=lg` fait lire à V3 les classements de
+    CETTE ligue (sans effet tant que form_alpha=0, mais juste si on l'active).
+    """
+    hist = load_hist(engine, lg)
+    m5 = fit_model_v5(hist, ht_history=hist.copy(), engine=engine,
+                      form_alpha=0.0, competition=lg)
     v2 = fit_model_v2(hist)
     return m5, v2, len(hist)
 

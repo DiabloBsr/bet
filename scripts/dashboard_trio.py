@@ -28,12 +28,12 @@ LEAGUES = {"🏴 Angleterre": "InstantLeague-8035", "🌍 Coupe du Monde": "Inst
            "🇵🇹 Portugal": "InstantLeague-8044"}
 
 
-def _fit():
+def _fit(lg="InstantLeague-8035"):
     from scraper.config import load_settings
     from sqlalchemy import create_engine
     import predict_trio as pt
     eng = create_engine(load_settings().db_url)
-    m5, v2, n = pt.fit(eng)
+    m5, v2, n = pt.fit(eng, lg)
     return eng, m5, v2, n
 
 
@@ -638,7 +638,10 @@ def main():
 
     # fit PARESSEUX : ne bloque plus le chargement de la page — il ne se lance
     # qu'au premier clic (spinner ~60-90s), puis reste en cache (instantané).
-    cached_fit = st.cache_resource(_fit)
+    # Un modèle EN CACHE PAR LIGUE (11/10). max_entries=5 : on garde les 5
+    # dernières ligues consultées, les autres se re-fit au besoin — un modèle
+    # est léger, mais on borne pour ne pas accumuler 9 engines + modèles.
+    cached_fit = st.cache_resource(max_entries=5)(_fit)
 
     # Panneau reduit a l'essentiel (demande user) : ligue + heure du round.
     # Les reglages retires sont FIGES sur la valeur qui etait deja proposee par
@@ -655,9 +658,12 @@ def main():
 
     lg_name = st.selectbox("Ligue", list(LEAGUES), index=0)
     lg = LEAGUES[lg_name]
-    if lg != "InstantLeague-8035":
-        st.caption("ℹ️ Ligue en mode MARCHÉ pur (probas dévigées, calibrées) — V2/V5 sont "
-                   "entraînés sur l'anglaise.")
+    # V2/V5 s'entraînent désormais sur CHAQUE ligue (11/10), chacune ayant son
+    # historique coté et sa calibration. L'anglaise reste la plus fournie
+    # (collectée depuis plus longtemps). Le 1er fit d'une ligue prend quelques
+    # dizaines de secondes, puis reste en cache.
+    st.caption("🧠 V2 + V5 entraînés sur cette ligue, arbitrés par le marché. "
+               "L'anglaise reste la plus fournie en historique.")
 
     t_str = st.text_input("Heure Mada du round (ex: 21:03) — vide = prochain", value="", key="rt")
     go_h = st.button("🔮 Prédire", type="primary")
@@ -669,10 +675,17 @@ def main():
             if len(d) >= 2:
                 target = f"{int(d[0]) % 24:02d}:{int(d[1]) % 60:02d}"
         try:
-            with st.spinner("Fit V5+V2 (1er appel ~60-90s, puis instantané)…"):
-                models = cached_fit()
+            with st.spinner("Fit V5+V2 sur cette ligue (1er appel ~15-90s selon "
+                            "sa taille, puis instantané)…"):
+                models = cached_fit(lg)
         except Exception as exc:
             st.error(f"Fit impossible : {exc}"); return
+        # Garde-fou : une ligue qui vient de redémarrer une saison a peu de
+        # résultats -> le modèle est faible, on le dit plutôt que de laisser
+        # croire à une analyse solide.
+        if models[3] < 500:
+            st.warning(f"⚠️ Peu d'historique pour {lg_name} ({models[3]} matchs) "
+                       "— l'analyse V2/V5 est peu fiable, le marché domine.")
         with _db("Calcul du trio…"):
             res_new = _round(models, target, lg)
         if target and res_new.get("rounds") and target not in res_new["rounds"]:
@@ -742,8 +755,10 @@ def main():
                        "matchs du round dont le score exact est le plus "
                        "concentré. L'over/under 2,5 est la recommandation des "
                        "moteurs — V2, V5 et le marché à poids égaux ; « Moteurs "
-                       "O/U » dit combien d'entre eux la portent (hors anglaise, "
-                       "le marché est seul). Son taux de réussite n'est pas "
+                       "O/U » dit combien d'entre eux la portent (si une ligue "
+                       "manque d'historique, V2/V5 ne reconnaissent pas les "
+                       "équipes et le marché est seul). Son taux de réussite "
+                       "n'est pas "
                        "encore mesuré. Le score exact ne sort juste qu'environ "
                        "une fois sur huit.")
 
