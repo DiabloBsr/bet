@@ -153,3 +153,77 @@ def test_predict_one_porte_la_recommandation_des_moteurs():
     assert '"ou25_moteurs": ou25_moteurs(v2_o25, v5_o25' in bloc
     assert "v2_o25 = _p_over25_grille(g2)" in bloc
     assert 'v5_o25 = p5.get("p_over_25_blend")' in bloc
+
+
+# --------------------------------------------------------------------------
+# L'ÉQUIPE CIBLE DE LA SAISON (J1→J38), MARQUÉE 🔥 (11/10)
+# --------------------------------------------------------------------------
+
+import pandas as pd  # noqa: E402
+
+
+def _saison(rows):
+    """rows : (team_a, team_b, score_a, score_b, journée)."""
+    return pd.DataFrame(rows, columns=["ta", "tb", "sa", "sb", "rd"])
+
+
+def test_la_cible_est_la_tete_du_classement(monkeypatch):
+    rows = [("A", "B", 2, 0, "1"), ("C", "D", 1, 1, "1"),
+            ("A", "C", 1, 0, "2"), ("B", "D", 0, 0, "2"),
+            ("A", "D", 3, 0, "3"), ("B", "C", 0, 1, "3")]
+    # A : 3 victoires = 9 pts (leader). C : 4, D : 2, B : 1.
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    assert pt.equipe_cible_saison(None, "X", min_matchs=1) == "A"
+
+
+def test_egalite_departagee_par_la_difference_de_buts(monkeypatch):
+    rows = [("C", "Z", 1, 0, "1"), ("E", "Y", 5, 0, "1"),
+            ("C", "Y", 1, 0, "2"), ("E", "Z", 5, 0, "2")]
+    # C et E : 6 pts chacun, mais E a +10 de diff contre +2 pour C.
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    assert pt.equipe_cible_saison(None, "X", min_matchs=1) == "E"
+
+
+def test_seule_la_saison_en_cours_compte(monkeypatch):
+    """Quand la journée retombe (J38 → J1), une nouvelle saison commence :
+    on ne classe que la plus récente."""
+    rows = [("OLD", "X", 3, 0, "37"), ("OLD", "Y", 3, 0, "38"),   # saison passée
+            ("NEW", "X", 3, 0, "1"), ("NEW", "Y", 3, 0, "2"),     # saison en cours
+            ("Z", "NEW", 0, 0, "3")]
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    assert pt.equipe_cible_saison(None, "X", min_matchs=1) == "NEW"
+
+
+def test_pas_de_cible_si_trop_peu_de_matchs(monkeypatch):
+    monkeypatch.setattr(pt.pd, "read_sql",
+                        lambda q, e: _saison([("A", "B", 1, 0, "1")]))
+    assert pt.equipe_cible_saison(None, "X", min_matchs=10) is None
+
+
+def test_pas_de_cible_sans_journee(monkeypatch):
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison([]))
+    assert pt.equipe_cible_saison(None, "X") is None
+    monkeypatch.setattr(pt.pd, "read_sql",
+                        lambda q, e: _saison([("A", "B", 1, 0, None)]))
+    assert pt.equipe_cible_saison(None, "X") is None
+
+
+def test_le_feu_marque_la_cible_passee_au_tableau():
+    ms = [_m("Bayern", "Dortmund", (0.6, 0.2, 0.2)),
+          _m("Leipzig", "Mainz", (0.5, 0.3, 0.2))]
+    lignes = pt.tableau_round(ms, cible="Bayern")["lignes"]
+    assert any(l["Match"] == "Bayern 🔥 – Dortmund" for l in lignes), [l["Match"] for l in lignes]
+    assert sum(l["Match"].count("🔥") for l in lignes) == 1
+
+
+def test_sans_cible_aucun_feu():
+    lignes = pt.tableau_round([_m("A", "B", (0.5, 0.3, 0.2))], cible=None)["lignes"]
+    assert all("🔥" not in l["Match"] for l in lignes)
+
+
+def test_predict_round_fournit_la_cible():
+    """Lu dans la source : predict_round calcule et renvoie `cible`."""
+    src = (RACINE / "scripts" / "predict_trio.py").read_text(encoding="utf-8")
+    bloc = src[src.index("def predict_round("):src.index("def main():")]
+    assert "equipe_cible_saison(engine, lg)" in bloc
+    assert '"cible": cible' in bloc

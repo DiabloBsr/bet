@@ -2233,7 +2233,54 @@ def _accord_lisible(mo) -> str:
     return f"{mo['accord']} {mo['sens']}"
 
 
-def tableau_round(matches) -> dict:
+def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | None:
+    """L'équipe CIBLE de la ligue (🔥, 11/10) : la TÊTE du classement de la
+    saison EN COURS (J1 → J38), en points — 3 par victoire, 1 par nul.
+
+    ── DÉLIMITER LA SAISON EN COURS ─────────────────────────────────────────────
+
+    `round_info` porte le numéro de journée (1..38 ; « 0 » = sans journée). Les
+    saisons virtuelles s'enchaînent, donc on repère le début de la saison
+    courante au moment où la journée RETOMBE (J38 → J1) : même logique que
+    `season_context.detect_current_season`, mais pour N'IMPORTE quelle ligue
+    (celle-là est figée sur l'anglaise).
+
+    None si la ligue n'a pas de journées, ou si la saison en cours compte moins
+    de `min_matchs` matchs finis (début de saison : classement pas significatif,
+    on préfère ne rien marquer plutôt qu'un leader de hasard).
+    """
+    t = str(lg).replace("'", "''")
+    d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb,
+        e.round_info rd FROM events e JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND e.competition='{t}'
+          AND e.round_info IS NOT NULL
+        ORDER BY e.expected_start""", engine)
+    if d.empty:
+        return None
+    d["j"] = pd.to_numeric(d.rd, errors="coerce")
+    d = d.dropna(subset=["j"])
+    d = d[d.j >= 1]
+    if d.empty:
+        return None
+    # Début de la saison courante : dernier « retour en arrière » de la journée.
+    d["jump"] = (d["j"].shift(1) > d["j"] + 5).fillna(False)
+    d["sid"] = d["jump"].cumsum()
+    cur = d[d.sid == d.sid.max()]
+    if len(cur) < int(min_matchs):
+        return None
+    pts = {}
+    for r in cur.itertuples():
+        for t_, mine, opp in ((r.ta, r.sa, r.sb), (r.tb, r.sb, r.sa)):
+            p = pts.setdefault(t_, [0, 0])
+            p[0] += 3 if mine > opp else (1 if mine == opp else 0)
+            p[1] += int(mine) - int(opp)
+    if not pts:
+        return None
+    # Départage : points, puis différence de buts, puis nom (déterministe).
+    return max(pts, key=lambda t_: (pts[t_][0], pts[t_][1], t_))
+
+
+def tableau_round(matches, cible: str | None = None) -> dict:
     """La prediction du round en TABLEAU, avec l'over/under 2,5 (04/10).
 
     « Affiche le resultat de prediction de cette ligne sous forme tableau, et
@@ -2249,6 +2296,11 @@ def tableau_round(matches) -> dict:
     a poids egaux, 04/10), et « Moteurs O/U » dit combien la portent.
     L'under est son complement.
     """
+    # 🔥 marque l'équipe cible de la ligue (tête de la saison, calculée par
+    # `equipe_cible_saison` et passée ici) dans la colonne « Match ».
+    def _nom(t):
+        return f"{t} 🔥" if t and t == cible else (t or "?")
+
     brut = []
     for m in matches or []:
         sel, issue, pi, ci = issue_round(m)
@@ -2266,7 +2318,7 @@ def tableau_round(matches) -> dict:
             o25 = float(o25) if isinstance(o25, (int, float)) and o25 == o25 else None
         brut.append({
             "_pi": pi, "_conf": m.get("confidence") or 0, "_sel": sel, "_o25": o25,
-            "Match": f"{m.get('team_a', '?')} – {m.get('team_b', '?')}",
+            "Match": f"{_nom(m.get('team_a'))} – {_nom(m.get('team_b'))}",
             "Pronostic": issue,
             "1": int(round(ph * 100)), "X": int(round(pd_ * 100)),
             "2": int(round(pa * 100)),
@@ -3261,7 +3313,9 @@ def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
     ms = up[up.local == target]
     matches = [predict_one(engine, m5, v2model, r.team_a, r.team_b, r.oh, r.od, r.oa, r.extra_markets, lg)
                for r in ms.itertuples() if float(r.oh) > 1 and float(r.oa) > 1]
-    return {"target": target, "rounds": rounds, "matches": matches}
+    # 🔥 l'équipe en tête de la saison en cours de CETTE ligue (11/10).
+    cible = equipe_cible_saison(engine, lg)
+    return {"target": target, "rounds": rounds, "matches": matches, "cible": cible}
 
 
 def main():

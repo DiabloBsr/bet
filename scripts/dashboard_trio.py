@@ -745,13 +745,14 @@ def main():
         # meme ordre, et garde le score exact de CHAQUE rencontre avec ses
         # deux suivants (27/09) : `tableau_round` est la seule ecriture du
         # format -- deux ecritures divergeraient a la premiere retouche.
-        tab = _pt.tableau_round(shown)
+        tab = _pt.tableau_round(shown, cible=res.get("cible"))
         if tab["lignes"]:
             st.markdown("### 📋 Pronostics du round")
             _tableau_vert(st, tab["lignes"], tab["reco"],
                           ("1", "X", "2", "Over 2,5", "Under 2,5"))
             st.caption("**En vert, mon pronostic** : l'issue 1X2 choisie et le "
-                       "côté le plus probable de l'over/under 2,5. 🏆 = les 3 "
+                       "côté le plus probable de l'over/under 2,5. 🔥 = l'équipe "
+                       "en tête de la saison en cours de cette ligue. 🏆 = les 3 "
                        "matchs du round dont le score exact est le plus "
                        "concentré. L'over/under 2,5 est la recommandation des "
                        "moteurs — V2, V5 et le marché à poids égaux ; « Moteurs "
