@@ -746,7 +746,8 @@ def main():
         # deux suivants (27/09) : `tableau_round` est la seule ecriture du
         # format -- deux ecritures divergeraient a la premiere retouche.
         _cb = res.get("cibles") or {}
-        tab = _pt.tableau_round(shown, feu=_cb.get("feu"), glace=_cb.get("glace"))
+        tab = _pt.tableau_round(shown, feu=_cb.get("feu"), glace=_cb.get("glace"),
+                                eclair=_cb.get("eclair"))
         if tab["lignes"]:
             st.markdown("### 📋 Pronostics du round")
             _tableau_vert(st, tab["lignes"], tab["reco"],
@@ -754,7 +755,7 @@ def main():
             st.caption("**En vert, mon pronostic** : l'issue 1X2 choisie et le "
                        "côté le plus probable de l'over/under 2,5. 🔥 = l'équipe "
                        "en tête de la saison en cours ; 🧊 = la meilleure "
-                       "attaque de la saison. 🏆 = les 3 "
+                       "attaque ; ⚡ = la meilleure forme récente. 🏆 = les 3 "
                        "matchs du round dont le score exact est le plus "
                        "concentré. L'over/under 2,5 est la recommandation des "
                        "moteurs — V2, V5 et le marché à poids égaux ; « Moteurs "

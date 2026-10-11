@@ -2233,14 +2233,17 @@ def _accord_lisible(mo) -> str:
     return f"{mo['accord']} {mo['sens']}"
 
 
-def cibles_saison(engine, lg: str = LG, min_matchs: int = 10) -> dict:
-    """Les DEUX équipes cibles de la saison EN COURS (J1 → J38) d'une ligue :
+def cibles_saison(engine, lg: str = LG, min_matchs: int = 10,
+                  n_forme: int = 5) -> dict:
+    """Les TROIS équipes cibles de la saison EN COURS (J1 → J38) d'une ligue :
 
     - « feu » 🔥 : la TÊTE du classement, en points (3 par victoire, 1 par nul) ;
-    - « glace » 🧊 : la MEILLEURE ATTAQUE, en buts marqués par match.
+    - « glace » 🧊 : la MEILLEURE ATTAQUE, en buts marqués par match ;
+    - « eclair » ⚡ : la MEILLEURE FORME, en points sur les `n_forme` derniers
+      matchs — l'équipe la plus chaude du moment, pas forcément en tête.
 
-    Rend {"feu": team | None, "glace": team | None}. Une même équipe peut être
-    les deux (elle portera alors 🔥 et 🧊).
+    Rend {"feu": team | None, "glace": ..., "eclair": ...}. Une même équipe peut
+    cumuler plusieurs rôles (elle portera alors 🔥🧊⚡).
 
     ── DÉLIMITER LA SAISON EN COURS ─────────────────────────────────────────────
 
@@ -2254,7 +2257,7 @@ def cibles_saison(engine, lg: str = LG, min_matchs: int = 10) -> dict:
     en cours compte moins de `min_matchs` matchs finis (début de saison :
     classement pas significatif, on préfère ne rien marquer).
     """
-    vide = {"feu": None, "glace": None}
+    vide = {"feu": None, "glace": None, "eclair": None}
     t = str(lg).replace("'", "''")
     d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb,
         e.round_info rd FROM events e JOIN results r ON r.event_id=e.id
@@ -2274,20 +2277,28 @@ def cibles_saison(engine, lg: str = LG, min_matchs: int = 10) -> dict:
     cur = d[d.sid == d.sid.max()]
     if len(cur) < int(min_matchs):
         return vide
-    st = {}   # team -> [points, diff de buts, buts marqués, nb matchs]
-    for r in cur.itertuples():
+    st = {}      # team -> [points, diff de buts, buts marqués, nb matchs]
+    forme = {}   # team -> points de chaque match, dans l'ordre chronologique
+    for r in cur.itertuples():   # cur est trié par expected_start
         for t_, mine, opp in ((r.ta, r.sa, r.sb), (r.tb, r.sb, r.sa)):
+            pm = 3 if mine > opp else (1 if mine == opp else 0)
             s = st.setdefault(t_, [0, 0, 0, 0])
-            s[0] += 3 if mine > opp else (1 if mine == opp else 0)
+            s[0] += pm
             s[1] += int(mine) - int(opp)
             s[2] += int(mine)
             s[3] += 1
+            forme.setdefault(t_, []).append(pm)
     if not st:
         return vide
-    # Départages déterministes : points→diff→nom ; attaque→buts totaux→nom.
+    k = int(n_forme)
+    # Départages déterministes : points→diff→nom ; attaque→buts totaux→nom ;
+    # forme→points sur les k derniers (moyenne pour comparer des séries de
+    # longueurs différentes)→points totaux→nom.
     feu = max(st, key=lambda t_: (st[t_][0], st[t_][1], t_))
     glace = max(st, key=lambda t_: (st[t_][2] / st[t_][3], st[t_][2], t_))
-    return {"feu": feu, "glace": glace}
+    eclair = max(forme, key=lambda t_: (
+        sum(forme[t_][-k:]) / len(forme[t_][-k:]), st[t_][0], t_))
+    return {"feu": feu, "glace": glace, "eclair": eclair}
 
 
 def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | None:
@@ -2295,7 +2306,8 @@ def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | Non
     return cibles_saison(engine, lg, min_matchs)["feu"]
 
 
-def tableau_round(matches, feu: str | None = None, glace: str | None = None) -> dict:
+def tableau_round(matches, feu: str | None = None, glace: str | None = None,
+                  eclair: str | None = None) -> dict:
     """La prediction du round en TABLEAU, avec l'over/under 2,5 (04/10).
 
     « Affiche le resultat de prediction de cette ligne sous forme tableau, et
@@ -2311,13 +2323,14 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None) -> 
     a poids egaux, 04/10), et « Moteurs O/U » dit combien la portent.
     L'under est son complement.
     """
-    # Dans « Match » : 🔥 la tête du classement, 🧊 la meilleure attaque de la
-    # saison en cours (calculées par `cibles_saison` et passées ici). Une même
-    # équipe peut porter les deux.
+    # Dans « Match » : 🔥 tête du classement, 🧊 meilleure attaque, ⚡ meilleure
+    # forme de la saison en cours (via `cibles_saison`). Une même équipe peut
+    # cumuler plusieurs marques.
     def _nom(t):
         if not t:
             return "?"
-        marque = ("🔥" if t == feu else "") + ("🧊" if t == glace else "")
+        marque = (("🔥" if t == feu else "") + ("🧊" if t == glace else "")
+                  + ("⚡" if t == eclair else ""))
         return f"{t} {marque}" if marque else t
 
     brut = []

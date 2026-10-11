@@ -261,3 +261,42 @@ def test_la_glace_marque_la_meilleure_attaque_au_tableau():
     lignes = pt.tableau_round(ms, feu="Bayern", glace="Leipzig")["lignes"]
     assert any(l["Match"] == "Leipzig 🧊 – Mainz" for l in lignes), [l["Match"] for l in lignes]
     assert any(l["Match"] == "Bayern 🔥 – Koln" for l in lignes)
+
+
+# --------------------------------------------------------------------------
+# L'ÉCLAIR ⚡ : MEILLEURE FORME RÉCENTE DE LA SAISON (11/10)
+# --------------------------------------------------------------------------
+
+def test_l_eclair_est_la_meilleure_forme_recente(monkeypatch):
+    # F perd au début puis enchaîne 3 victoires (forme récente parfaite) ;
+    # G domine tôt puis s'effondre. F a la meilleure forme, pas G.
+    rows = [("F", "X", 0, 1, "1"), ("G", "Y", 3, 0, "1"),
+            ("F", "Y", 3, 0, "2"), ("G", "X", 3, 0, "2"),
+            ("F", "Z", 3, 0, "3"), ("Z", "G", 3, 0, "3"),
+            ("F", "W", 3, 0, "4"), ("W", "G", 3, 0, "4")]
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    c = pt.cibles_saison(None, "X", min_matchs=1, n_forme=3)
+    assert c["eclair"] == "F"      # 3 victoires sur ses 3 derniers
+
+
+def test_les_trois_cibles_sont_rendues(monkeypatch):
+    monkeypatch.setattr(pt.pd, "read_sql",
+                        lambda q, e: _saison([("A", "B", 1, 0, "1")]))
+    c = pt.cibles_saison(None, "X", min_matchs=1)
+    assert set(c) == {"feu", "glace", "eclair"}
+
+
+def test_l_eclair_marque_la_forme_au_tableau():
+    ms = [_m("Leipzig", "Mainz", (0.5, 0.3, 0.2)),
+          _m("Bayern", "Koln", (0.6, 0.2, 0.2))]
+    lignes = pt.tableau_round(ms, feu="Bayern", glace="Mainz",
+                              eclair="Leipzig")["lignes"]
+    noms = [l["Match"] for l in lignes]
+    assert "Leipzig ⚡ – Mainz 🧊" in noms or "Leipzig ⚡ – Mainz" in str(noms), noms
+    assert any("Bayern 🔥" in n for n in noms)
+
+
+def test_une_equipe_peut_cumuler_les_trois():
+    lignes = pt.tableau_round([_m("A", "B", (0.6, 0.2, 0.2))],
+                              feu="A", glace="A", eclair="A")["lignes"]
+    assert any("A 🔥🧊⚡" in l["Match"] for l in lignes), [l["Match"] for l in lignes]
