@@ -2233,9 +2233,14 @@ def _accord_lisible(mo) -> str:
     return f"{mo['accord']} {mo['sens']}"
 
 
-def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | None:
-    """L'équipe CIBLE de la ligue (🔥, 11/10) : la TÊTE du classement de la
-    saison EN COURS (J1 → J38), en points — 3 par victoire, 1 par nul.
+def cibles_saison(engine, lg: str = LG, min_matchs: int = 10) -> dict:
+    """Les DEUX équipes cibles de la saison EN COURS (J1 → J38) d'une ligue :
+
+    - « feu » 🔥 : la TÊTE du classement, en points (3 par victoire, 1 par nul) ;
+    - « glace » 🧊 : la MEILLEURE ATTAQUE, en buts marqués par match.
+
+    Rend {"feu": team | None, "glace": team | None}. Une même équipe peut être
+    les deux (elle portera alors 🔥 et 🧊).
 
     ── DÉLIMITER LA SAISON EN COURS ─────────────────────────────────────────────
 
@@ -2245,10 +2250,11 @@ def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | Non
     `season_context.detect_current_season`, mais pour N'IMPORTE quelle ligue
     (celle-là est figée sur l'anglaise).
 
-    None si la ligue n'a pas de journées, ou si la saison en cours compte moins
-    de `min_matchs` matchs finis (début de saison : classement pas significatif,
-    on préfère ne rien marquer plutôt qu'un leader de hasard).
+    Les deux cibles sont None si la ligue n'a pas de journées, ou si la saison
+    en cours compte moins de `min_matchs` matchs finis (début de saison :
+    classement pas significatif, on préfère ne rien marquer).
     """
+    vide = {"feu": None, "glace": None}
     t = str(lg).replace("'", "''")
     d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb,
         e.round_info rd FROM events e JOIN results r ON r.event_id=e.id
@@ -2256,31 +2262,40 @@ def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | Non
           AND e.round_info IS NOT NULL
         ORDER BY e.expected_start""", engine)
     if d.empty:
-        return None
+        return vide
     d["j"] = pd.to_numeric(d.rd, errors="coerce")
     d = d.dropna(subset=["j"])
     d = d[d.j >= 1]
     if d.empty:
-        return None
+        return vide
     # Début de la saison courante : dernier « retour en arrière » de la journée.
     d["jump"] = (d["j"].shift(1) > d["j"] + 5).fillna(False)
     d["sid"] = d["jump"].cumsum()
     cur = d[d.sid == d.sid.max()]
     if len(cur) < int(min_matchs):
-        return None
-    pts = {}
+        return vide
+    st = {}   # team -> [points, diff de buts, buts marqués, nb matchs]
     for r in cur.itertuples():
         for t_, mine, opp in ((r.ta, r.sa, r.sb), (r.tb, r.sb, r.sa)):
-            p = pts.setdefault(t_, [0, 0])
-            p[0] += 3 if mine > opp else (1 if mine == opp else 0)
-            p[1] += int(mine) - int(opp)
-    if not pts:
-        return None
-    # Départage : points, puis différence de buts, puis nom (déterministe).
-    return max(pts, key=lambda t_: (pts[t_][0], pts[t_][1], t_))
+            s = st.setdefault(t_, [0, 0, 0, 0])
+            s[0] += 3 if mine > opp else (1 if mine == opp else 0)
+            s[1] += int(mine) - int(opp)
+            s[2] += int(mine)
+            s[3] += 1
+    if not st:
+        return vide
+    # Départages déterministes : points→diff→nom ; attaque→buts totaux→nom.
+    feu = max(st, key=lambda t_: (st[t_][0], st[t_][1], t_))
+    glace = max(st, key=lambda t_: (st[t_][2] / st[t_][3], st[t_][2], t_))
+    return {"feu": feu, "glace": glace}
 
 
-def tableau_round(matches, cible: str | None = None) -> dict:
+def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | None:
+    """La seule tête du classement (🔥) — raccourci sur `cibles_saison`."""
+    return cibles_saison(engine, lg, min_matchs)["feu"]
+
+
+def tableau_round(matches, feu: str | None = None, glace: str | None = None) -> dict:
     """La prediction du round en TABLEAU, avec l'over/under 2,5 (04/10).
 
     « Affiche le resultat de prediction de cette ligne sous forme tableau, et
@@ -2296,10 +2311,14 @@ def tableau_round(matches, cible: str | None = None) -> dict:
     a poids egaux, 04/10), et « Moteurs O/U » dit combien la portent.
     L'under est son complement.
     """
-    # 🔥 marque l'équipe cible de la ligue (tête de la saison, calculée par
-    # `equipe_cible_saison` et passée ici) dans la colonne « Match ».
+    # Dans « Match » : 🔥 la tête du classement, 🧊 la meilleure attaque de la
+    # saison en cours (calculées par `cibles_saison` et passées ici). Une même
+    # équipe peut porter les deux.
     def _nom(t):
-        return f"{t} 🔥" if t and t == cible else (t or "?")
+        if not t:
+            return "?"
+        marque = ("🔥" if t == feu else "") + ("🧊" if t == glace else "")
+        return f"{t} {marque}" if marque else t
 
     brut = []
     for m in matches or []:
@@ -3313,9 +3332,10 @@ def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
     ms = up[up.local == target]
     matches = [predict_one(engine, m5, v2model, r.team_a, r.team_b, r.oh, r.od, r.oa, r.extra_markets, lg)
                for r in ms.itertuples() if float(r.oh) > 1 and float(r.oa) > 1]
-    # 🔥 l'équipe en tête de la saison en cours de CETTE ligue (11/10).
-    cible = equipe_cible_saison(engine, lg)
-    return {"target": target, "rounds": rounds, "matches": matches, "cible": cible}
+    # 🔥 tête du classement, 🧊 meilleure attaque de la saison en cours (11/10).
+    cibles = cibles_saison(engine, lg)
+    return {"target": target, "rounds": rounds, "matches": matches,
+            "cibles": cibles}
 
 
 def main():

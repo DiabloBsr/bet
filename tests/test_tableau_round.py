@@ -211,19 +211,53 @@ def test_pas_de_cible_sans_journee(monkeypatch):
 def test_le_feu_marque_la_cible_passee_au_tableau():
     ms = [_m("Bayern", "Dortmund", (0.6, 0.2, 0.2)),
           _m("Leipzig", "Mainz", (0.5, 0.3, 0.2))]
-    lignes = pt.tableau_round(ms, cible="Bayern")["lignes"]
+    lignes = pt.tableau_round(ms, feu="Bayern")["lignes"]
     assert any(l["Match"] == "Bayern 🔥 – Dortmund" for l in lignes), [l["Match"] for l in lignes]
     assert sum(l["Match"].count("🔥") for l in lignes) == 1
 
 
 def test_sans_cible_aucun_feu():
-    lignes = pt.tableau_round([_m("A", "B", (0.5, 0.3, 0.2))], cible=None)["lignes"]
-    assert all("🔥" not in l["Match"] for l in lignes)
+    lignes = pt.tableau_round([_m("A", "B", (0.5, 0.3, 0.2))])["lignes"]
+    assert all("🔥" not in l["Match"] and "🧊" not in l["Match"] for l in lignes)
 
 
 def test_predict_round_fournit_la_cible():
     """Lu dans la source : predict_round calcule et renvoie `cible`."""
     src = (RACINE / "scripts" / "predict_trio.py").read_text(encoding="utf-8")
     bloc = src[src.index("def predict_round("):src.index("def main():")]
-    assert "equipe_cible_saison(engine, lg)" in bloc
-    assert '"cible": cible' in bloc
+    assert "cibles_saison(engine, lg)" in bloc
+    assert '"cibles": cibles' in bloc
+
+
+# --------------------------------------------------------------------------
+# LA GLACE 🧊 : MEILLEURE ATTAQUE DE LA SAISON (11/10)
+# --------------------------------------------------------------------------
+
+def test_les_deux_cibles_feu_et_glace(monkeypatch):
+    # A domine au classement (3 victoires 1-0 = 9 pts) ; B marque le plus mais
+    # ne fait que des nuls 3-3 (3 pts, mais 3 buts/match = meilleure attaque).
+    rows = [("A", "X", 1, 0, "1"), ("B", "Y", 3, 3, "1"),
+            ("A", "Y", 1, 0, "2"), ("B", "X", 3, 3, "2"),
+            ("A", "Z", 1, 0, "3"), ("B", "Z", 3, 3, "3")]
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    c = pt.cibles_saison(None, "X", min_matchs=1)
+    assert c["feu"] == "A"      # 9 pts, leader
+    assert c["glace"] == "B"    # 3 buts/match, la meilleure attaque
+
+
+def test_une_equipe_peut_etre_feu_et_glace(monkeypatch):
+    rows = [("A", "X", 5, 0, "1"), ("A", "Y", 5, 0, "2"), ("B", "X", 0, 1, "1")]
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    c = pt.cibles_saison(None, "X", min_matchs=1)
+    assert c["feu"] == "A" and c["glace"] == "A"
+    lignes = pt.tableau_round([_m("A", "B", (0.6, 0.2, 0.2))],
+                              feu=c["feu"], glace=c["glace"])["lignes"]
+    assert any("A 🔥🧊" in l["Match"] for l in lignes), [l["Match"] for l in lignes]
+
+
+def test_la_glace_marque_la_meilleure_attaque_au_tableau():
+    ms = [_m("Leipzig", "Mainz", (0.5, 0.3, 0.2)),
+          _m("Bayern", "Koln", (0.6, 0.2, 0.2))]
+    lignes = pt.tableau_round(ms, feu="Bayern", glace="Leipzig")["lignes"]
+    assert any(l["Match"] == "Leipzig 🧊 – Mainz" for l in lignes), [l["Match"] for l in lignes]
+    assert any(l["Match"] == "Bayern 🔥 – Koln" for l in lignes)
