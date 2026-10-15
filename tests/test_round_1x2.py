@@ -501,8 +501,9 @@ def test_le_plafond_de_rencontres_est_respecte(monkeypatch):
 
 
 def test_l_onglet_ne_demande_plus_l_heure():
+    """L'onglet Débusqueur a été RETIRÉ de l'écran le 15/10 (Olivio). Le
+    moteur (`debusquer_rounds`) reste disponible, non câblé."""
     src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
-    bloc = src[src.index("Débusqueur 1X2 à cote 2"):src.index("HISTORIQUE & FACE")]
-    assert "Heure Mada" not in bloc, "l'indicateur d'heure devait disparaître"
-    assert "debusquer_rounds(" in bloc
-    assert "Rounds à venir" in bloc
+    assert "Débusqueur 1X2 à cote 2" not in src
+    assert "debusquer_rounds(" not in src
+    assert callable(pt.debusquer_rounds)

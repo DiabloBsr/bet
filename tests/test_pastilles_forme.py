@@ -59,10 +59,11 @@ def test_que_jouer_et_le_debusqueur_montrent_la_forme_en_pastilles():
     src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
     assert '"V": "🟢"' not in src
     assert src.count('_pastilles(res_c.get("seq_a"), 16)') == 1   # Que jouer ?
-    assert src.count('_pastilles(m.get("seq_a"), 16)') == 1       # debusqueur
+    # Débusqueur retiré de l'écran le 15/10 : il ne montre plus de pastilles.
+    assert src.count('_pastilles(m.get("seq_a"), 16)') == 0
     # ⚠️ Jamais dans `st.caption` : son conteneur est a 60 % d'opacite et les
     # pastilles y perdaient les couleurs de la photo (mesure le 04/10).
-    assert src.count("_legende_html(st, f") == 2
+    assert src.count("_legende_html(st, f") == 1
     deb = src.index("def _legende_html(")
     assert "st.caption(" not in src[deb:src.index("def _hist_block(")]
 

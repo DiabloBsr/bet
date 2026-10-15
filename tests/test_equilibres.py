@@ -140,11 +140,12 @@ def test_le_debusqueur_par_cible_reste_disponible():
 
 
 def test_l_onglet_reutilise_le_moteur_existant():
+    """Onglet Débusqueur RETIRÉ de l'écran le 15/10 (Olivio) : comme pour les
+    autres coupes, le moteur reste entier et ne coûte rien tant que rien ne
+    l'appelle — remettre l'écran ne demandera que son affichage."""
     src = (RACINE / "scripts" / "dashboard_trio.py").read_text(encoding="utf-8")
-    assert "Débusqueur 1X2 à cote 2" in src
-    assert "debusquer_rounds(" in src, "l'onglet doit réutiliser le moteur"
-    # Le pronostic n'est pas recopie dans l'interface.
-    assert "predict_own(" not in src
+    assert "Débusqueur 1X2 à cote 2" not in src
+    assert callable(pt.debusquer_rounds) and callable(pt.round_1x2)
 
 
 # --------------------------------------------------------------------------
