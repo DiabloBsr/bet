@@ -2306,8 +2306,74 @@ def equipe_cible_saison(engine, lg: str = LG, min_matchs: int = 10) -> str | Non
     return cibles_saison(engine, lg, min_matchs)["feu"]
 
 
+# Ligues où l'on annote les pronostics 1-1 selon le dernier match de chaque
+# équipe (Olivio, 15/10 : la CAN produit beaucoup de 0-0 et de 1-1). Un set
+# pour pouvoir étendre sans toucher au reste.
+LIGUES_ANNOTE_11 = {CAN_LG}
+
+
+def derniers_resultats(engine, lg: str, limite: int = 400) -> dict:
+    """Le DERNIER match joué par chaque équipe de la ligue (contre n'importe
+    quel adversaire), vu de l'équipe : {equipe: (buts_marqués, buts_encaissés)}.
+
+    Sert à annoter les pronostics 1-1 (15/10). On parcourt les résultats du
+    plus récent au plus ancien et on garde le premier vu par équipe.
+    """
+    t = str(lg).replace("'", "''")
+    d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb
+        FROM events e JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND e.competition='{t}'
+        ORDER BY e.expected_start DESC LIMIT {int(limite)}""", engine)
+    out = {}
+    for r in d.itertuples():
+        if r.ta not in out:
+            out[r.ta] = (int(r.sa), int(r.sb))
+        if r.tb not in out:
+            out[r.tb] = (int(r.sb), int(r.sa))
+    return out
+
+
+def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
+    """Le marquage 🧱/🔻/🔺 d'un pronostic 1-1, selon le DERNIER match de
+    chacune des deux équipes (Olivio, 15/10). "" si aucun cas ne s'applique.
+
+    - 🧱 : les deux équipes ont fait 0-0 à leur dernier match.
+    - 🔻 : le domicile a fait 0-0 et l'extérieur a perdu — 🔻🔻 si c'était 0-1.
+    - 🔺 : l'extérieur a fait 0-0 et le domicile a gagné — 🔺🔺 si c'était 1-0.
+
+    Les trois cas s'excluent. Rien si une équipe n'a pas d'historique.
+    """
+    dh = (derniers or {}).get(home)
+    da = (derniers or {}).get(away)
+    if not dh or not da:
+        return ""
+    hf, hc = dh       # domicile : buts marqués / encaissés à SON dernier match
+    af, ac = da       # extérieur : idem
+    home_00, away_00 = (hf == 0 and hc == 0), (af == 0 and ac == 0)
+    if home_00 and away_00:                          # cas 1
+        return "🧱"
+    if home_00 and af < ac:                           # cas 2 : extérieur a perdu
+        return "🔻🔻" if (af, ac) == (0, 1) else "🔻"
+    if away_00 and hf > hc:                           # cas 3 : domicile a gagné
+        return "🔺🔺" if (hf, hc) == (1, 0) else "🔺"
+    return ""
+
+
+def _score_exact_txt(t1, m, derniers) -> str:
+    """« 1-1 · 17 % », plus le marquage 🧱/🔻/🔺 quand le pronostic est 1-1 et
+    que les derniers résultats sont fournis (ligues de LIGUES_ANNOTE_11)."""
+    if not t1 or not t1[0]:
+        return ""
+    txt = f"{t1[0]} · {t1[1] * 100:.0f} %"
+    if derniers and t1[0] == "1-1":
+        emo = emoji_nul_11(m.get("team_a"), m.get("team_b"), derniers)
+        if emo:
+            txt += f" {emo}"
+    return txt
+
+
 def tableau_round(matches, feu: str | None = None, glace: str | None = None,
-                  eclair: str | None = None) -> dict:
+                  eclair: str | None = None, derniers: dict | None = None) -> dict:
     """La prediction du round en TABLEAU, avec l'over/under 2,5 (04/10).
 
     « Affiche le resultat de prediction de cette ligne sous forme tableau, et
@@ -2355,8 +2421,7 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
             "1": int(round(ph * 100)), "X": int(round(pd_ * 100)),
             "2": int(round(pa * 100)),
             "Cote": round(float(ci), 2) if ci else None,
-            "Score exact": (f"{t1[0]} · {t1[1] * 100:.0f} %"
-                            if t1 and t1[0] else ""),
+            "Score exact": _score_exact_txt(t1, m, derniers),
             "Sinon": sinon,
             "Over 2,5": int(round(o25)) if o25 is not None else None,
             "Under 2,5": int(round(100 - o25)) if o25 is not None else None,
@@ -3347,8 +3412,10 @@ def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
                for r in ms.itertuples() if float(r.oh) > 1 and float(r.oa) > 1]
     # 🔥 tête du classement, 🧊 meilleure attaque de la saison en cours (11/10).
     cibles = cibles_saison(engine, lg)
+    # Annotation 1-1 selon le dernier match de chaque équipe (15/10) : CAN seule.
+    derniers = derniers_resultats(engine, lg) if lg in LIGUES_ANNOTE_11 else None
     return {"target": target, "rounds": rounds, "matches": matches,
-            "cibles": cibles}
+            "cibles": cibles, "derniers": derniers}
 
 
 def main():

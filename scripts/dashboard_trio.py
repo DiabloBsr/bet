@@ -747,7 +747,7 @@ def main():
         # format -- deux ecritures divergeraient a la premiere retouche.
         _cb = res.get("cibles") or {}
         tab = _pt.tableau_round(shown, feu=_cb.get("feu"), glace=_cb.get("glace"),
-                                eclair=_cb.get("eclair"))
+                                eclair=_cb.get("eclair"), derniers=res.get("derniers"))
         if tab["lignes"]:
             st.markdown("### 📋 Pronostics du round")
             _tableau_vert(st, tab["lignes"], tab["reco"],
@@ -765,6 +765,13 @@ def main():
                        "n'est pas "
                        "encore mesuré. Le score exact ne sort juste qu'environ "
                        "une fois sur huit.")
+            # Légende des annotations 1-1, affichée seulement là où elles
+            # s'appliquent (CAN) : inutile de l'imposer aux autres ligues.
+            if res.get("derniers"):
+                st.caption("Sur un pronostic **1-1**, d'après le dernier match "
+                           "de chaque équipe : 🧱 les deux ont fait 0-0 · "
+                           "🔻 domicile 0-0 et extérieur battu (🔻🔻 si 0-1) · "
+                           "🔺 extérieur 0-0 et domicile vainqueur (🔺🔺 si 1-0).")
 
         # ---- LE COMBINE DE 3 MATCHS PROPOSE PAR LES MOTEURS (04/10) ----
         # Sous le tableau. `combine_round` : le constructeur de l'app, aux
