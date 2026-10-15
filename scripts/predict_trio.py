@@ -2359,17 +2359,22 @@ def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
     return ""
 
 
-def _score_exact_txt(t1, m, derniers) -> str:
-    """« 1-1 · 17 % », plus le marquage 🧱/🔻/🔺 quand le pronostic est 1-1 et
-    que les derniers résultats sont fournis (ligues de LIGUES_ANNOTE_11)."""
-    if not t1 or not t1[0]:
-        return ""
-    txt = f"{t1[0]} · {t1[1] * 100:.0f} %"
-    if derniers and t1[0] == "1-1":
+def _marque_11(sc, m, derniers) -> str:
+    """Le suffixe 🧱/🔻/🔺 si le score `sc` est un 1-1 et que les derniers
+    résultats sont fournis (CAN). "" sinon. Appliqué au score exact principal
+    ET aux deux scores « Sinon » (Olivio, 15/10)."""
+    if derniers and sc == "1-1":
         emo = emoji_nul_11(m.get("team_a"), m.get("team_b"), derniers)
         if emo:
-            txt += f" {emo}"
-    return txt
+            return f" {emo}"
+    return ""
+
+
+def _score_exact_txt(t1, m, derniers) -> str:
+    """« 1-1 · 17 % », plus le marquage 🧱/🔻/🔺 si le pronostic de tête est 1-1."""
+    if not t1 or not t1[0]:
+        return ""
+    return f"{t1[0]} · {t1[1] * 100:.0f} %" + _marque_11(t1[0], m, derniers)
 
 
 def tableau_round(matches, feu: str | None = None, glace: str | None = None,
@@ -2404,7 +2409,9 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
         sel, issue, pi, ci = issue_round(m)
         ph, pd_, pa = m["x12"]
         t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
-        sinon = " · ".join(f"{sc} {pr * 100:.0f} %"
+        # Les scores « Sinon » portent AUSSI le marquage 1-1 (Olivio, 15/10) :
+        # un 1-1 parmi les alternatives doit être annoté comme le score de tête.
+        sinon = " · ".join(f"{sc} {pr * 100:.0f} %" + _marque_11(sc, m, derniers)
                            for sc, pr in (m.get("consensus_top3") or [])[1:3] if sc)
         # Over 2,5 = ce que RECOMMANDENT les moteurs (V2, V5, marche a poids
         # egaux, 04/10) ; repli sur le marche seul pour un resultat ancien.

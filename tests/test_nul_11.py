@@ -95,3 +95,36 @@ def test_la_can_seule_est_annotee():
     bloc = src[src.index("def predict_round("):src.index("def main():")]
     assert "derniers_resultats(engine, lg) if lg in LIGUES_ANNOTE_11 else None" in bloc
     assert '"derniers": derniers' in bloc
+
+
+# -------- annotation AUSSI sur les scores "Sinon" (15/10) --------
+
+def test_un_1_1_en_sinon_est_annote():
+    """Le pronostic de tête n'est pas 1-1, mais un des scores « Sinon » l'est :
+    il doit porter l'emoji (cas Mozambique-Tanzanie, 15/10)."""
+    m = {"team_a": "A", "team_b": "B", "cotes": [2.0, 3.2, 3.8],
+         "x12": [0.33, 0.34, 0.33], "confidence": 0.25, "over25_pct": 45.0,
+         "top1_calibre": ("0-0", 0.20),
+         "consensus_top3": [("0-0", 0.20), ("1-1", 0.15), ("1-0", 0.10)]}
+    l = pt.tableau_round([m], derniers=D)["lignes"][0]
+    assert "🧱" not in l["Score exact"]          # tête = 0-0, pas d'emoji
+    assert "1-1 15 % 🧱" in l["Sinon"], l["Sinon"]
+
+
+def test_le_1_1_de_tete_et_de_sinon_sont_annotes():
+    m = {"team_a": "A", "team_b": "B", "cotes": [2.0, 3.2, 3.8],
+         "x12": [0.33, 0.34, 0.33], "confidence": 0.25, "over25_pct": 45.0,
+         "top1_calibre": ("1-1", 0.17),
+         "consensus_top3": [("1-1", 0.17), ("1-1", 0.12), ("0-0", 0.10)]}
+    l = pt.tableau_round([m], derniers=D)["lignes"][0]
+    assert l["Score exact"].endswith("🧱")
+    assert "1-1 12 % 🧱" in l["Sinon"]
+
+
+def test_sinon_sans_1_1_pas_d_emoji():
+    m = {"team_a": "A", "team_b": "B", "cotes": [2.0, 3.2, 3.8],
+         "x12": [0.33, 0.34, 0.33], "confidence": 0.25, "over25_pct": 45.0,
+         "top1_calibre": ("0-0", 0.20),
+         "consensus_top3": [("0-0", 0.20), ("1-0", 0.12), ("0-1", 0.10)]}
+    l = pt.tableau_round([m], derniers=D)["lignes"][0]
+    assert "🧱" not in l["Sinon"] and "🧱" not in l["Score exact"]
