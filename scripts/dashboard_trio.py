@@ -419,9 +419,14 @@ def main():
                                              for sc, pr in (d_.get("scores") or [])[:3])
                             col.caption(f"　score : {sc_}　·　"
                                         f"{d_.get('attendus')} buts attendus")
-                    # Detail COMPLET pour chaque rencontre : les 11 marches et,
-                    # sous chacun, ses deux meilleures alternatives avec leur cote.
+                    # Detail RESTREINT (Olivio, 15/10) : seulement le score
+                    # exact, le 1X2 et le G/NG. Les 11 marches restent calcules
+                    # par le moteur (le pari suggere est le meilleur des 11),
+                    # seul l'AFFICHAGE du detail est reduit a ces trois-la.
+                    MARCHES_DETAIL = ("Score exact", "1X2", "G/NG")
                     for l in res_c["lignes"]:
+                        if l["marche"] not in MARCHES_DETAIL:
+                            continue
                         cot = f"cote **{l['odds']:g}**" if l.get("odds") else "_non coté_"
                         # ⚠️ LA FIABILITE DU MARCHE, a cote de la proba du match.
                         # Les deux nombres ne disent pas la meme chose : « 14 % »
