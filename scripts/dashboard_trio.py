@@ -334,46 +334,15 @@ def main():
                    "mi-temps/fin de match) de CHAQUE rencontre, et je dis quoi jouer. "
                    "Prédiction issue de la seule forme des équipes.")
         c_lgs = st.multiselect("Ligues (vide = les 9)", list(LEAGUES), default=[], key="cs_lgs")
-        cc1, cc2, cc3 = st.columns([1, 1, 1])
+        cc1, cc2 = st.columns([1, 1])
         c_h = cc1.text_input("Heure (HH:MM Mada) — vide = les prochaines heures",
                              value="", key="cs_h", placeholder="ex: 21:03")
         c_max = cc2.number_input("Rencontres max", 1, 30, 12, 1, key="cs_max",
                                  help="Garde-fou : chaque rencontre demande une "
                                       "analyse complète de ses 11 marchés.")
-        # SEUIL SUR LA COTE DU CONSEIL, demande du 27/09 : « affiche juste ceux de
-        # ton pronostic >= 1,2 ».
-        #
-        # POURQUOI CE FILTRE A UN SENS ICI, et pourquoi il porte sur la RENCONTRE
-        # et non sur les lignes de détail. Mesure sur les 12 dernières rencontres
-        # en base : le conseil de tête est TOUJOURS un double chance (1X / X2 / 12)
-        # — c'est mécanique, `sur` = la ligne la plus probable des 11 marchés, et
-        # le double chance est structurellement le plus probable de tous. Ses cotes
-        # s'étalent de 1,00 à 1,29 : cinq rencontres sur douze payaient moins de
-        # 1,20 (jusqu'à 1,00, soit rien du tout). Le seuil sépare donc vraiment.
-        #
-        # Sur les lignes de détail, au contraire, 125 des 132 mesurées sont déjà
-        # au-dessus de 1,20 : y appliquer le seuil n'aurait écarté que 7 lignes sur
-        # 132. Le détail des 11 marchés reste donc ENTIER — « garder tout ».
-        c_min = cc3.number_input("Cote min. du conseil", 1.00, 5.00, 1.20, 0.01,
-                                 key="cs_min", format="%.2f",
-                                 help="N'affiche que les rencontres dont le conseil "
-                                      "de tête paie au moins ça. À 1,00 tout "
-                                      "s'affiche, comme avant.")
-        # QUEL conseil, demande du 27/09 : « afficher les rencontres où les
-        # prédictions X2 à une cote supérieure 1,20, et les autres enlève ».
-        #
-        # Deux critères et non un. Sur les douze rencontres mesurées, sept
-        # passent le seuil de 1,20 — mais deux seulement sont des X2 : le
-        # conseil de tête est aussi souvent un 1X ou un 12, selon lequel des
-        # deux camps le modèle voit le mieux tenir.
-        #
-        # Vide = tous les conseils, ce qui rend l'onglet à son comportement
-        # d'avant sans toucher au code.
-        c_sel = st.multiselect("Conseil retenu (vide = tous)",
-                               ["X2", "1X", "12"], default=["X2"], key="cs_sel",
-                               help="X2 = nul ou victoire extérieure. "
-                                    "1X = nul ou victoire domicile. "
-                                    "12 = pas de nul.")
+        # Plus aucun filtre de conseil (Olivio, 15/10) : on affiche TOUTES
+        # les rencontres analysées, tous conseils, toutes cotes. Seul
+        # « Rencontres max » reste, garde-fou de performance.
         if st.button("🧭 Que dois-je jouer ?", key="cs_go", type="primary"):
             hh = c_h.strip()
             if hh and not re.match(r"^\d{1,2}:\d{2}$", hh):
@@ -396,32 +365,15 @@ def main():
                 st.info("Aucune rencontre à venir sur ces critères — élargis les ligues, "
                         "vide l'heure, ou attends le prochain round.")
             else:
-                # Le tri se fait À L'AFFICHAGE et non au calcul : bouger le seuil
-                # réaffiche aussitôt, sans relancer onze analyses par rencontre.
-                tri = _ptc2.filtrer_conseils(res_l, c_min, c_sel)
-                gardees = tri.gardees
+                # Plus de filtre (Olivio, 15/10) : toutes les rencontres
+                # analysées sont affichées, tous conseils, toutes cotes.
+                gardees = res_l
                 n_vraies = sum(1 for r_c in gardees if not r_c.get("erreur"))
-                quoi = " ou ".join(c_sel) if c_sel else "tous conseils"
-                if not n_vraies:
-                    st.info(f"Aucune des {len(res_l)} rencontre(s) analysée(s) ne "
-                            f"porte un conseil **{quoi}** à **≥ {c_min:g}**."
-                            + (f" {tri.hors_selection} conseillent autre chose."
-                               if tri.hors_selection else "")
-                            + (f" {tri.trop_bas} le conseillent mais sous {c_min:g}."
-                               if tri.trop_bas else "")
-                            + " Élargis le conseil retenu, ou baisse le seuil.")
-                else:
-                    st.success(
-                        f"**{n_vraies} rencontre(s) retenue(s)** sur {len(res_l)} "
-                        f"analysée(s)"
-                        + (f" — {total} à venir en tout" if total > len(res_l) else "")
-                        + f" — conseil **{quoi}** à cote **≥ {c_min:g}**."
-                        + (f" {tri.hors_selection} écartée(s), autre conseil."
-                           if tri.hors_selection else "")
-                        + (f" {tri.trop_bas} écartée(s), conseil sous le seuil."
-                           if tri.trop_bas else "")
-                        + (f" {tri.sans_cote} écartée(s), conseil non coté."
-                           if tri.sans_cote else ""))
+                st.success(
+                    f"**{n_vraies} rencontre(s) analysée(s)**"
+                    + (f" — {total} à venir en tout, coupées à {len(res_l)} par "
+                       "le plafond « Rencontres max »." if total > len(res_l)
+                       else "."))
                 for res_c in gardees:
                     if res_c.get("erreur"):
                         st.caption(f"⚠️ {res_c['erreur']}")
