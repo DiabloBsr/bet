@@ -51,10 +51,13 @@ mkdir -p data/vfoot_ml logs
 cp -f config/score_calibration.json data/vfoot_ml/score_calibration.json 2>/dev/null || true
 
 # ---- 3. scraper LÉGER (httpx, pas de pandas/modèle) — throttlé, pour les matchs À VENIR ----
-#   180s au lieu de 45s : 4x moins de charge CPU sur cpu-basic. Le scraper seul est léger ;
-#   c'était le rendu Fiabilité (446 Mo) + la grosse DB qui pégaient le CPU (crash-loop), pas lui.
+#   60s (Olivio, 15/10) au lieu de 180s : meilleure FRAÎCHEUR des résultats (un
+#   score tout juste sorti est en base en moins d'une minute, avant le round
+#   suivant — nécessaire à l'annotation 1-1 de la CAN). Le scraper seul est
+#   léger ; le CPU n'était pégé que par le rendu Fiabilité (retiré) + la grosse
+#   DB, pas lui. À surveiller : 3x plus de requêtes qu'à 180s.
 ( while true; do
-    python scripts/_scrape_loop.py --interval 180 --n 100000 >> /data/scrape.log 2>&1 || true
+    python scripts/_scrape_loop.py --interval 60 --n 100000 >> /data/scrape.log 2>&1 || true
     sleep 15
   done ) &
 
