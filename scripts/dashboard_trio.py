@@ -663,25 +663,8 @@ def main():
                            "🔻 domicile 0-0 et extérieur battu (🔻🔻 si 0-1) · "
                            "🔺 extérieur 0-0 et domicile vainqueur (🔺🔺 si 1-0).")
 
-        # ---- LE COMBINE DE 3 MATCHS PROPOSE PAR LES MOTEURS (04/10) ----
-        # Sous le tableau. `combine_round` : le constructeur de l'app, aux
-        # marches et au seuil de jambe des combines « surs » du tracker.
-        combi = _pt.combine_round(shown)
-        if combi:
-            st.markdown("### 🎯 Le combiné de 3 matchs proposé par les moteurs")
-            jambes = [f"• {j['libelle']} — cote {j['o']:g} "
-                      f"({j['p'] * 100:.0f} %)" for j in combi["jambes"]]
-            st.markdown(f"**Cote {combi['cote']:g}** · chance "
-                        f"**{combi['p'] * 100:.0f} %**  \n"
-                        + "  \n".join(jambes))
-            st.caption("Le combiné de 3 matchs le plus probable dont la cote "
-                       "atteint 3, une jambe par match. Chance d'une jambe = "
-                       "cote du book dévigée ; chance du combiné = leur "
-                       "produit. Le book prend sa marge sur chaque jambe : à "
-                       "cette cote, le rendement attendu reste négatif.")
-        elif tab["lignes"]:
-            st.caption("🎯 Pas de combiné de 3 matchs à proposer sur ce round : "
-                       "trois jambes assez sûres n'atteignent pas la cote 3.")
+        # Le combiné de 3 matchs a été RETIRÉ de l'écran (Olivio, 16/10) ;
+        # `combine_round` reste dans le moteur, non câblé.
 
         pieges = []
         for m in shown:
