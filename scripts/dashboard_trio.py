@@ -630,8 +630,8 @@ def main():
             # Over/Under 2,5, Classement et Moteurs O/U retirées de l'affichage
             # (le moteur les calcule toujours). Le classement passe sous le
             # tableau, à côté du nom de chaque équipe des matchs marqués.
-            _cols_round = ("Top 3", "Match", "Pronostic", "Cote",
-                           "Score exact", "Sinon")
+            _cols_round = ("Top 3", "Match", "Cote",
+                           "Score exact", "Sinon", "Pronostic")
             _lignes_aff = [{k: l[k] for k in _cols_round} for l in tab["lignes"]]
             _tableau_vert(st, _lignes_aff, tab["reco"], ())
             # Les 5 derniers matchs (en pastilles) + le classement de chaque

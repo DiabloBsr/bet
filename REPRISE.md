@@ -1,0 +1,186 @@
+# Reprise de session — Bet261
+
+> Note de passation écrite le 04/10/2026. Fichier NON suivi par git :
+> à committer ou à supprimer selon ce que tu préfères.
+
+## 1. Coordonnées du chantier
+
+| | |
+|---|---|
+| Dépôt local | `d:/projets/bet` |
+| Branche | `feat/h2h-toutes-ligues` |
+| Distant | `DiabloBsr/bet` — **jamais** l'org Agentova |
+| Identité git | `DiabloBsr` / `diablobsr@users.noreply.github.com` |
+| Déploiement | Hugging Face `olivioBsr/vfoot-trio` |
+| Commande | `.venv/Scripts/python.exe deploy/deploy_hf.py` |
+| Python | `.venv/Scripts/python.exe` (Windows) |
+| Tests | `.venv/Scripts/python.exe -m pytest tests/ -q` |
+
+## 2. ÉTAT EXACT À LA REPRISE
+
+| Point | État |
+|---|---|
+| Dernier commit | `287de6c` — prédiction du round en tableau + over/under 2,5 |
+| Entraînement par ligue | **FAIT** (11/10) — `19be676`, commit HF `5077ce4`. V2/V5 s'entraînent sur CHAQUE ligue. Vérifié en ligne sur l'Allemagne : « Moteurs O/U » à 3/3 |
+| Cibles 🔥🧊⚡ | **FAIT** (11/10) — `26f95a8`, HF `63f46d2`. Tableau du round : 🔥 tête du classement, 🧊 meilleure attaque, ⚡ meilleure forme (5 derniers). `cibles_saison`→{feu,glace,eclair}. Vérifié en ligne (London Reds 🔥🧊⚡) |
+| Que jouer épuré + Débusqueur retiré | **FAIT** (15/10) — `190260b`, HF `f658d47`. « Que jouer ? » : filtres « Cote min. » et « Conseil retenu » retirés (plafond « Rencontres max » gardé — mesure en ligne : 1080 rencontres à venir, d'où le plafond vital) ; détail réduit à Score exact / 1X2 / G/NG. Onglet Débusqueur effacé (moteur `debusquer_rounds`/`round_1x2` conservé). Reste 2 onglets. 494 tests |
+| Round épuré (colonnes retirées) | **FAIT + DÉPLOYÉ** (16/10) — `90bb8f5` (combiné de 3 matchs retiré de l'écran, `combine_round` conservé non câblé) + `a4bc834` (colonnes « Moteurs O/U » et « Classement » retirées de l'affichage ; le rang passe à côté du nom des équipes sous le tableau via `_nom_rang`/`_pt._rang`). `_cols_round = (Top 3, Match, Pronostic, Cote, Score exact, Sinon)`. Poussé `origin` + HF `260370b`, app stable 5/5 en 200. Vérifié en ligne (CAN round 22:55) : 6 colonnes seules, « South Africa (4e) / Gabon (24e) » et « Zambia (17e) / Ivory Coast (1er) » sous le tableau. 507 tests |
+| Tableau round enrichi | **FAIT** (16/10) — dernier `b28a1cf`, HF `01a6367`. Colonnes 1/X/2 + Over/Under 2,5 retirées de l'affichage. Emojis cibles 🔥 (classement) / 💥 (attaque, ex-🧊) / ⚡ (forme). Annotation 1-1 CAN : 🔒 (ex-🧱, deux 0-0) · 💀 (deux perdu sans marquer) · 🔻/🔻🔻 · 🔺/🔺🔺, sur les 3 scores (principal + 2 « Sinon »). Pour les matchs portant un emoji : colonne « Classement » (ex « 1er vs 4e ») + 5 derniers matchs en pastilles sous le tableau (`classement_saison`, `formes_recentes`, `tableau_round` renvoie `marques`). Que jouer : filtres Cote/Conseil retirés, détail = score exact/1X2/G-NG. Débusqueur effacé (2 onglets). Vérifié en ligne : Egypt 🔥💥⚡, Cameroon-Mozambique 1-1 💀. 507 tests |
+| Scraper 30s + 1-1 en « Sinon » | **FAIT** (15/10) — dernier `1ebd0b6`, HF `c933448`. Scraper à **30 s** (était 180 s) dans `start_cloud.sh` : rounds toutes les 120 s, donc 30 s nécessaire pour que le résultat précédent soit en base 30 s avant le coup d'envoi suivant (60 s était trop juste, ~20 s de marge). L'annotation 1-1 porte aussi sur les 2 scores de « Sinon » (`_marque_11`). Base préservée au redéploiement (données à jour 15/10). **À SURVEILLER : ~6x plus de requêtes API qu'à 180 s → si le Space souffre ou l'API limite, remonter à 60 s** |
+| Annotation 1-1 CAN | **FAIT** (15/10) — `5deb28b`, HF `532bd9d`. Sur un pronostic 1-1 en CAN, selon le dernier match de chaque équipe : 🧱 (deux 0-0), 🔻/🔻🔻 (dom 0-0, ext battu / 0-1), 🔺/🔺🔺 (ext 0-0, dom vainqueur / 1-0). `derniers_resultats`, `emoji_nul_11`, `LIGUES_ANNOTE_11={CAN}`. 494 tests. En ligne : légende visible, mais le round testé n'avait pas de 1-1 remplissant une condition (à revérifier sur un round qui en a un) |
+| Poussé | **OUI** (04/10) — `origin` à jour (dernier `0ab0195` keep-alive + fraîcheur) |
+| Déployé | **OUI** (04/10) — commit HF `b936761`. En ligne, la collecte est REPARTIE : bandeau « 🟢 Données à jour — dernier résultat 04/10/2026 19:41 » (la base n'est plus figée au 19/07). Le keep-alive (ping 12 h) maintiendra ça. À lancer une fois à la main : GitHub Actions → « Garder le Space HF éveillé » |
+| Gel face-à-face (19/07) | Cause RÉELLE prouvée le 04/10 : pas un bug de code. Space HF dort après 48 h (gcTimeout) → scraper arrêté ; + pas de disque persistant → rebuild repart du seed du 5 juillet. API `/results` OK (6/9 ligues), parser OK. 3 ligues (ANG/ITA/ESP) en nouvelle saison = `/results` vide (normal). Voir mémoire `collecte-resultats-hf`. Correctif `0ab0195` : keep-alive GitHub Action (ping 12 h) + bandeau fraîcheur. Persistance aux rebuilds NON résolue (Olivio : « pas de préférence ») |
+| Bug `p_h_bl` | **corrigé** dans `d113c64` sur demande d'Olivio : le 1X2 V2 du round lit désormais `p_h_blend` |
+| « Que jouer ? » | **ne pas y toucher** (Olivio, 04/10) — le tableau est un onglet à part |
+| Face-à-face | **ne plus y toucher** (Olivio, 04/10). Patch mis de côté pour ses ✅ et 🟢⚪🔴 : `h2h-trois-couleurs*.patch` dans le scratchpad de session |
+| Non committé | les 3 `scraper/*.py` en CRLF, ce fichier, `.claude/launch.json` (serveur local) |
+| Suite de tests | **405 passés** (04/10) |
+
+Mis à jour le 04/10 :
+- le garde-fou laissé à la session d'avant ne se chargeait même pas
+  (chaîne cassée en deux : SyntaxError) — le code 66 venait de là ou de la
+  machine, peu importe : corrigé ;
+- son « test de détection » ne testait rien (il vérifiait qu'un ensemble
+  privé d'un élément ne contenait plus cet élément) — il rejoue maintenant
+  l'oubli réel, et un mutant qui aveugle l'analyseur le fait passer au rouge ;
+- réparé, il a trouvé `scripts/ui_theme.py` hors liste : présent sur le
+  Space et identique au dépôt, donc sans casse aujourd'hui, ajouté quand même ;
+- Space contrôlé : Dockerfile, requirements, start_cloud.sh et les 6 modules
+  `scraper/` que l'app atteint sont identiques à HEAD (aux fins de ligne près).
+
+⚠️ Les trois fichiers `scraper/*.py` qui apparaissent modifiés sont du **CRLF
+seul** — vérifié avec `git diff --ignore-cr-at-eol`. **Ne jamais les committer.**
+
+## 3. CE QUI RESTE À FAIRE, DANS L'ORDRE
+
+1. ~~Relancer la suite de tests~~ — fait, 403 passés.
+2. ~~Committer~~ — fait, `70f6a9d`.
+3. ~~Pousser et déployer~~ — fait le 04/10 sur GO d'Olivio.
+
+### Pourquoi le point 2 est bloquant
+
+`scripts/forme_pastilles.py` est un module NEUF que `dashboard_trio.py`
+importe. Il n'était **pas** dans `DEFAULT_FILES` de `deploy/deploy_hf.py` :
+l'app en ligne serait morte à l'import — écran blanc, sans rien pour
+comprendre. Le dépôt était vert, les 400 tests passaient.
+
+Le garde-fou ajouté lit les imports RÉELS des scripts déployés et vérifie que
+chacun de leurs voisins locaux figure dans la liste. Il porte son propre test
+de détection, pour ne pas donner un vert trompeur.
+
+## 4. LA DERNIÈRE FONCTIONNALITÉ LIVRÉE (commit 81ca475)
+
+Sous chaque confrontation de l'onglet « Historique & face-à-face », les **5
+derniers résultats de chaque équipe AVANT cette rencontre** : rond vert à
+coche (victoire), rond rouge à croix (défaite), rond gris à tiret (nul).
+
+Décisions prises, et pourquoi :
+
+- **En HTML, pas en émoji.** Aucun émoji ne porte à la fois la couleur et le
+  glyphe de la maquette : la coche verte existe en carré, la croix rouge n'a
+  pas de rond, et il n'y a pas de rond gris à tiret. `unsafe_allow_html` était
+  déjà utilisé par le thème de l'app.
+- **Seuls V, N et D traversent** — c'est ce qui rend l'insertion sûre : rien
+  venu de la base n'atteint le HTML. La ligne des noms d'équipes reste en
+  markdown pour cette raison.
+- **Le match est exclu de sa propre forme**, sinon on lirait le résultat qu'on
+  prétend annoncer. Le face-à-face PRÉCÉDENT, lui, compte : il a été joué.
+- **Deux requêtes, pas soixante** : l'historique de chaque équipe est chargé
+  une fois puis découpé en mémoire.
+- Les pastilles vivent dans `scripts/forme_pastilles.py`, **sans dépendance
+  Streamlit** : les garder dans le tableau de bord faisait tomber pytest sans
+  trace sur cette machine.
+
+### Un piège mesuré au passage
+
+Les rounds de ces ligues tombent **toutes les 2 minutes**, pas toutes les 35.
+La forme d'avant une confrontation n'est donc PAS la confrontation précédente,
+contrairement à ce que l'écart d'heures affichées laissait croire. J'ai failli
+conclure à un bug qui n'existait pas — contrôle fait avant de parler.
+
+## 5. L'APP EN LIGNE AUJOURD'HUI
+
+🧭 **Que jouer ?** — les 11 marchés cotés par rencontre, chacun avec sa
+fiabilité mesurée, plus les deux mi-temps (1X2 + score exact).
+Filtres : cote min. du conseil (1,20) et conseil retenu (X2).
+
+🔎 **Débusqueur 1X2 à cote 2** — les 5 prochains rounds de chaque ligue, les
+rencontres dont les TROIS cotes commencent par 2 (2,00 à 2,99).
+
+🔎 **Historique & face-à-face** — deux équipes au choix, 9 ligues, avec les
+pastilles de forme d'avant chaque confrontation.
+
+**La prédiction du round** (section restaurée, hors onglet) — fit V5+V2
+paresseux, 60 à 90 s au premier clic. Score exact sur TOUTES les rencontres.
+
+📈 **Suivi réel (forward)**
+
+## 6. RÈGLES DE TRAVAIL À NE PAS PERDRE
+
+- **Jamais de push ni de déploiement sans GO explicite d'Olivio.**
+- Bet261 pousse **uniquement** sur `DiabloBsr/bet`.
+- La base locale est **figée au 5 juillet** : aucune rencontre à venir, donc
+  les onglets ne rendent rien en local. Toute vérification passe par des
+  matchs passés ou une base simulée (monkeypatch de `_upcoming_df`).
+- Les heredocs Bash sont **tronqués au-delà d'environ 160 lignes** : écrire
+  les gros fichiers en plusieurs morceaux.
+- `.venv/Scripts/python.exe` est un Python **Windows** : lui donner des
+  chemins **relatifs**, jamais `/d/projets/...`.
+- Tout nouveau module importé par l'app doit entrer dans `DEFAULT_FILES`.
+- Finir chaque session prédicteur par 2 à 4 pistes d'amélioration.
+
+## 7. CE QUE LE MOTEUR SAIT, ET CE QU'IL NE PROUVE PAS
+
+Taux « touché » = part des matchs où la sélection la plus probable est sortie
+juste, mesurée hors échantillon d'entraînement.
+
+| Marché | Touché | | Marché | Touché |
+|---|---|---|---|---|
+| Double Chance | 78,1 % | | Pair/Impair | 51,1 % |
+| +/- 3,5 | 68,2 % | | 1X2 | 50,4 % |
+| Multi-Buts | 66,5 % | | Minute du 1er but | 31,0 % |
+| G/NG | 58,8 % | | HT/FT | 31,0 % |
+| FTTS | 57,2 % | | Total de buts | 24,4 % |
+| | | | Score exact | 11,8 % |
+
+Mi-temps (non cotées par le book, calibrées à part sur 103 714 matchs) :
+1re MT 1X2 44,4 % · 1re MT score exact 29,4 % · 2e MT 1X2 42,4 % ·
+2e MT score exact 19,6 %.
+
+⚠️ **Un taux élevé n'est pas un gain.** Le book price tout : ROI ≈ **−7 %**
+sur le marché le mieux touché comme sur les autres.
+
+⚠️ **La règle « proba × cote » est un signal INVERSÉ**, démontré deux fois sur
+l'historique complet. Elle sélectionne les matchs où le modèle s'écarte le
+plus du book, c'est-à-dire ses propres erreurs. Le bloc restauré de la section
+du round l'utilise encore pour SÉLECTIONNER, mais le mot « value » a été
+retiré et la mention dit ce qui a été mesuré. Ne pas le remettre.
+
+## 8. TROIS PISTES OUVERTES
+
+1. **Mesurer ce qui tourne sans preuve.** Trois choses reposent sur des règles
+   plausibles mais jamais vérifiées : les signaux de piège (favori fragile,
+   nul menaçant, aucun favori net), le bloc « proba × cote », et l'hypothèse
+   implicite qu'un match aux trois cotes voisines serait plus prévisible.
+   Une seule campagne — backtest sans fuite sur 207 000 matchs — répondrait
+   aux trois. Si un signal ne tient pas, le dire plutôt que de le laisser
+   rassurer à tort.
+2. **Les filtres de « Que jouer ? »** masquent les 11 marchés sur 10
+   rencontres sur 12. Les faire porter sur le seul conseil de tête.
+3. **`tesseract` dans le Dockerfile**, inutile depuis la coupe des onglets
+   OCR : du poids mort à chaque build.
+
+## 9. FONCTIONS MOTEUR CONSERVÉES MAIS NON CÂBLÉES
+
+Gardées volontairement : elles ne coûtent rien tant que rien ne les appelle,
+et remettre un écran ne demandera alors que son affichage.
+
+- `filtrer_equilibres` — les trois cotes au moins X
+- `debusquer_cotes` — cible + tolérance sur les trois cotes
+- `round_1x2` — appelée par le débusqueur, plus par un onglet propre
+- `over25_scan`, `totals_scan`, `ou25_picks`, `resultats_a_cette_cote`,
+  `associer_equipes`, module OCR `lire_cotes` — onglets supprimés le 27/09
+- `tableau_heure`, `tableau_affichage`, `tableau_reco`, `_1x2_somme_100` —
+  onglet « 📋 Tableau des prédictions » (1X2 à 100 %, O/U 2,5 et 3,5,
+  pronostic en vert), créé puis retiré le 04/10 à la demande d'Olivio
