@@ -164,8 +164,15 @@ def _tableau_vert(st, lignes: list, reco: list, pourcents) -> None:
     if "Cote" in df:
         fmt["Cote"] = "{:g}"
     sty = df.style.apply(_colore, axis=1).format(fmt, na_rep="")
+    # « Score exact » et « Sinon » portent le texte le plus long (3 scores +
+    # pourcentages) : on les elargit pour qu'ils ne soient plus tronques
+    # (Olivio, 16/10). `width="large"` est dispo des Streamlit 1.35.
+    _cfg = {"Match": st.column_config.TextColumn(pinned=True)}
+    for _c in ("Score exact", "Sinon"):
+        if _c in df:
+            _cfg[_c] = st.column_config.TextColumn(width="large")
     st.dataframe(sty, hide_index=True, height=35 * (len(lignes) + 1) + 3,
-                 column_config={"Match": st.column_config.TextColumn(pinned=True)})
+                 column_config=_cfg)
 
 
 def _hist_block(st, engine, home, away, leagues, n=5, show_ou35=True, n_h2h=60):
