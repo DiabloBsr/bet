@@ -2238,12 +2238,12 @@ def cibles_saison(engine, lg: str = LG, min_matchs: int = 10,
     """Les TROIS équipes cibles de la saison EN COURS (J1 → J38) d'une ligue :
 
     - « feu » 🔥 : la TÊTE du classement, en points (3 par victoire, 1 par nul) ;
-    - « glace » 🧊 : la MEILLEURE ATTAQUE, en buts marqués par match ;
+    - « glace » 💥 : la MEILLEURE ATTAQUE, en buts marqués par match ;
     - « eclair » ⚡ : la MEILLEURE FORME, en points sur les `n_forme` derniers
       matchs — l'équipe la plus chaude du moment, pas forcément en tête.
 
     Rend {"feu": team | None, "glace": ..., "eclair": ...}. Une même équipe peut
-    cumuler plusieurs rôles (elle portera alors 🔥🧊⚡).
+    cumuler plusieurs rôles (elle portera alors 🔥💥⚡).
 
     ── DÉLIMITER LA SAISON EN COURS ─────────────────────────────────────────────
 
@@ -2399,13 +2399,13 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
     a poids egaux, 04/10), et « Moteurs O/U » dit combien la portent.
     L'under est son complement.
     """
-    # Dans « Match » : 🔥 tête du classement, 🧊 meilleure attaque, ⚡ meilleure
+    # Dans « Match » : 🔥 tête du classement, 💥 meilleure attaque, ⚡ meilleure
     # forme de la saison en cours (via `cibles_saison`). Une même équipe peut
     # cumuler plusieurs marques.
     def _nom(t):
         if not t:
             return "?"
-        marque = (("🔥" if t == feu else "") + ("🧊" if t == glace else "")
+        marque = (("🔥" if t == feu else "") + ("💥" if t == glace else "")
                   + ("⚡" if t == eclair else ""))
         return f"{t} {marque}" if marque else t
 
@@ -3422,7 +3422,7 @@ def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
     ms = up[up.local == target]
     matches = [predict_one(engine, m5, v2model, r.team_a, r.team_b, r.oh, r.od, r.oa, r.extra_markets, lg)
                for r in ms.itertuples() if float(r.oh) > 1 and float(r.oa) > 1]
-    # 🔥 tête du classement, 🧊 meilleure attaque de la saison en cours (11/10).
+    # 🔥 tête du classement, 💥 meilleure attaque de la saison en cours (11/10).
     cibles = cibles_saison(engine, lg)
     # Annotation 1-1 selon le dernier match de chaque équipe (15/10) : CAN seule.
     derniers = derniers_resultats(engine, lg) if lg in LIGUES_ANNOTE_11 else None

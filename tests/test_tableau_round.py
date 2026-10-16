@@ -218,7 +218,7 @@ def test_le_feu_marque_la_cible_passee_au_tableau():
 
 def test_sans_cible_aucun_feu():
     lignes = pt.tableau_round([_m("A", "B", (0.5, 0.3, 0.2))])["lignes"]
-    assert all("🔥" not in l["Match"] and "🧊" not in l["Match"] for l in lignes)
+    assert all("🔥" not in l["Match"] and "💥" not in l["Match"] for l in lignes)
 
 
 def test_predict_round_fournit_la_cible():
@@ -230,7 +230,7 @@ def test_predict_round_fournit_la_cible():
 
 
 # --------------------------------------------------------------------------
-# LA GLACE 🧊 : MEILLEURE ATTAQUE DE LA SAISON (11/10)
+# LA GLACE 💥 : MEILLEURE ATTAQUE DE LA SAISON (11/10)
 # --------------------------------------------------------------------------
 
 def test_les_deux_cibles_feu_et_glace(monkeypatch):
@@ -252,14 +252,14 @@ def test_une_equipe_peut_etre_feu_et_glace(monkeypatch):
     assert c["feu"] == "A" and c["glace"] == "A"
     lignes = pt.tableau_round([_m("A", "B", (0.6, 0.2, 0.2))],
                               feu=c["feu"], glace=c["glace"])["lignes"]
-    assert any("A 🔥🧊" in l["Match"] for l in lignes), [l["Match"] for l in lignes]
+    assert any("A 🔥💥" in l["Match"] for l in lignes), [l["Match"] for l in lignes]
 
 
 def test_la_glace_marque_la_meilleure_attaque_au_tableau():
     ms = [_m("Leipzig", "Mainz", (0.5, 0.3, 0.2)),
           _m("Bayern", "Koln", (0.6, 0.2, 0.2))]
     lignes = pt.tableau_round(ms, feu="Bayern", glace="Leipzig")["lignes"]
-    assert any(l["Match"] == "Leipzig 🧊 – Mainz" for l in lignes), [l["Match"] for l in lignes]
+    assert any(l["Match"] == "Leipzig 💥 – Mainz" for l in lignes), [l["Match"] for l in lignes]
     assert any(l["Match"] == "Bayern 🔥 – Koln" for l in lignes)
 
 
@@ -292,11 +292,11 @@ def test_l_eclair_marque_la_forme_au_tableau():
     lignes = pt.tableau_round(ms, feu="Bayern", glace="Mainz",
                               eclair="Leipzig")["lignes"]
     noms = [l["Match"] for l in lignes]
-    assert "Leipzig ⚡ – Mainz 🧊" in noms or "Leipzig ⚡ – Mainz" in str(noms), noms
+    assert "Leipzig ⚡ – Mainz 💥" in noms or "Leipzig ⚡ – Mainz" in str(noms), noms
     assert any("Bayern 🔥" in n for n in noms)
 
 
 def test_une_equipe_peut_cumuler_les_trois():
     lignes = pt.tableau_round([_m("A", "B", (0.6, 0.2, 0.2))],
                               feu="A", glace="A", eclair="A")["lignes"]
-    assert any("A 🔥🧊⚡" in l["Match"] for l in lignes), [l["Match"] for l in lignes]
+    assert any("A 🔥💥⚡" in l["Match"] for l in lignes), [l["Match"] for l in lignes]

@@ -634,7 +634,7 @@ def main():
                            "Score exact", "Sinon", "Moteurs O/U")
             _lignes_aff = [{k: l[k] for k in _cols_round} for l in tab["lignes"]]
             _tableau_vert(st, _lignes_aff, tab["reco"], ())
-            st.caption("🔥 = l'équipe en tête de la saison en cours ; 🧊 = la "
+            st.caption("🔥 = l'équipe en tête de la saison en cours ; 💥 = la "
                        "meilleure attaque ; ⚡ = la meilleure forme récente. "
                        "🏆 = les 3 matchs du round dont le score exact est le "
                        "plus concentré. « Moteurs O/U » dit combien des 3 "
