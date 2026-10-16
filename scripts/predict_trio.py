@@ -2334,10 +2334,10 @@ def derniers_resultats(engine, lg: str, limite: int = 400) -> dict:
 
 
 def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
-    """Le marquage 🧱/🔻/🔺 d'un pronostic 1-1, selon le DERNIER match de
+    """Le marquage 🔒/🔻/🔺 d'un pronostic 1-1, selon le DERNIER match de
     chacune des deux équipes (Olivio, 15/10). "" si aucun cas ne s'applique.
 
-    - 🧱 : les deux équipes ont fait 0-0 à leur dernier match.
+    - 🔒 : les deux équipes ont fait 0-0 à leur dernier match.
     - 💀 : les deux ont PERDU sans marquer (défaite 0-X des deux côtés).
     - 🔻 : le domicile a fait 0-0 et l'extérieur a perdu — 🔻🔻 si c'était 0-1.
     - 🔺 : l'extérieur a fait 0-0 et le domicile a gagné — 🔺🔺 si c'était 1-0.
@@ -2354,7 +2354,7 @@ def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
     # Perdu SANS marquer = a marqué 0 ET encaissé au moins 1 (défaite 0-X).
     home_perdu_0, away_perdu_0 = (hf == 0 and hc > 0), (af == 0 and ac > 0)
     if home_00 and away_00:                          # cas 1 : les deux 0-0
-        return "🧱"
+        return "🔒"
     if home_perdu_0 and away_perdu_0:                # cas 4 : les deux perdu 0-X
         return "💀"
     if home_00 and af < ac:                           # cas 2 : extérieur a perdu
@@ -2365,7 +2365,7 @@ def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
 
 
 def _marque_11(sc, m, derniers) -> str:
-    """Le suffixe 🧱/🔻/🔺 si le score `sc` est un 1-1 et que les derniers
+    """Le suffixe 🔒/🔻/🔺 si le score `sc` est un 1-1 et que les derniers
     résultats sont fournis (CAN). "" sinon. Appliqué au score exact principal
     ET aux deux scores « Sinon » (Olivio, 15/10)."""
     if derniers and sc == "1-1":
@@ -2376,7 +2376,7 @@ def _marque_11(sc, m, derniers) -> str:
 
 
 def _score_exact_txt(t1, m, derniers) -> str:
-    """« 1-1 · 17 % », plus le marquage 🧱/🔻/🔺 si le pronostic de tête est 1-1."""
+    """« 1-1 · 17 % », plus le marquage 🔒/🔻/🔺 si le pronostic de tête est 1-1."""
     if not t1 or not t1[0]:
         return ""
     return f"{t1[0]} · {t1[1] * 100:.0f} %" + _marque_11(t1[0], m, derniers)

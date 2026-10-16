@@ -645,7 +645,7 @@ def main():
             # s'appliquent (CAN) : inutile de l'imposer aux autres ligues.
             if res.get("derniers"):
                 st.caption("Sur un pronostic **1-1**, d'après le dernier match "
-                           "de chaque équipe : 🧱 les deux ont fait 0-0 · "
+                           "de chaque équipe : 🔒 les deux ont fait 0-0 · "
                            "💀 les deux ont perdu sans marquer · "
                            "🔻 domicile 0-0 et extérieur battu (🔻🔻 si 0-1) · "
                            "🔺 extérieur 0-0 et domicile vainqueur (🔺🔺 si 1-0).")

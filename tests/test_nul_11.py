@@ -2,7 +2,7 @@
 
 Sur un pronostic 1-1, selon le DERNIER match de chaque équipe (contre
 n'importe qui, pas leur face-à-face) :
-  🧱 les deux ont fait 0-0 ;
+  🔒 les deux ont fait 0-0 ;
   🔻 domicile 0-0 + extérieur battu (🔻🔻 si 0-1) ;
   🔺 extérieur 0-0 + domicile vainqueur (🔺🔺 si 1-0).
 Uniquement la CAN, uniquement les lignes 1-1.
@@ -23,7 +23,7 @@ D = {"A": (0, 0), "B": (0, 0), "C": (0, 1), "E": (0, 2),
 # -------- emoji_nul_11 : les trois cas --------
 
 def test_cas1_les_deux_ont_fait_0_0():
-    assert pt.emoji_nul_11("A", "B", D) == "🧱"
+    assert pt.emoji_nul_11("A", "B", D) == "🔒"
 
 
 def test_cas2_domicile_0_0_exterieur_battu():
@@ -45,7 +45,7 @@ def test_aucun_cas_ne_s_applique():
 
 def test_les_cas_s_excluent():
     # domicile 0-0 et extérieur 0-0 -> cas 1, jamais cas 2.
-    assert pt.emoji_nul_11("A", "B", D) == "🧱"
+    assert pt.emoji_nul_11("A", "B", D) == "🔒"
 
 
 # -------- derniers_resultats --------
@@ -74,17 +74,17 @@ def _m11(a, b, score="1-1"):
 def test_le_tableau_annote_le_1_1():
     lignes = pt.tableau_round([_m11("A", "B")], derniers=D)["lignes"]
     assert lignes[0]["Score exact"].startswith("1-1 ·")
-    assert lignes[0]["Score exact"].endswith("🧱"), lignes[0]["Score exact"]
+    assert lignes[0]["Score exact"].endswith("🔒"), lignes[0]["Score exact"]
 
 
 def test_pas_d_annotation_sans_derniers():
     lignes = pt.tableau_round([_m11("A", "B")])["lignes"]
-    assert "🧱" not in lignes[0]["Score exact"]
+    assert "🔒" not in lignes[0]["Score exact"]
 
 
 def test_pas_d_annotation_si_le_score_n_est_pas_1_1():
     lignes = pt.tableau_round([_m11("A", "B", score="2-1")], derniers=D)["lignes"]
-    assert "🧱" not in lignes[0]["Score exact"] and lignes[0]["Score exact"].startswith("2-1")
+    assert "🔒" not in lignes[0]["Score exact"] and lignes[0]["Score exact"].startswith("2-1")
 
 
 # -------- câblage : CAN seule --------
@@ -107,8 +107,8 @@ def test_un_1_1_en_sinon_est_annote():
          "top1_calibre": ("0-0", 0.20),
          "consensus_top3": [("0-0", 0.20), ("1-1", 0.15), ("1-0", 0.10)]}
     l = pt.tableau_round([m], derniers=D)["lignes"][0]
-    assert "🧱" not in l["Score exact"]          # tête = 0-0, pas d'emoji
-    assert "1-1 15 % 🧱" in l["Sinon"], l["Sinon"]
+    assert "🔒" not in l["Score exact"]          # tête = 0-0, pas d'emoji
+    assert "1-1 15 % 🔒" in l["Sinon"], l["Sinon"]
 
 
 def test_le_1_1_de_tete_et_de_sinon_sont_annotes():
@@ -117,8 +117,8 @@ def test_le_1_1_de_tete_et_de_sinon_sont_annotes():
          "top1_calibre": ("1-1", 0.17),
          "consensus_top3": [("1-1", 0.17), ("1-1", 0.12), ("0-0", 0.10)]}
     l = pt.tableau_round([m], derniers=D)["lignes"][0]
-    assert l["Score exact"].endswith("🧱")
-    assert "1-1 12 % 🧱" in l["Sinon"]
+    assert l["Score exact"].endswith("🔒")
+    assert "1-1 12 % 🔒" in l["Sinon"]
 
 
 def test_sinon_sans_1_1_pas_d_emoji():
@@ -127,7 +127,7 @@ def test_sinon_sans_1_1_pas_d_emoji():
          "top1_calibre": ("0-0", 0.20),
          "consensus_top3": [("0-0", 0.20), ("1-0", 0.12), ("0-1", 0.10)]}
     l = pt.tableau_round([m], derniers=D)["lignes"][0]
-    assert "🧱" not in l["Sinon"] and "🧱" not in l["Score exact"]
+    assert "🔒" not in l["Sinon"] and "🔒" not in l["Score exact"]
 
 
 # -------- cas 4 : les deux ont perdu sans marquer 💀 (16/10) --------
@@ -154,8 +154,8 @@ def test_cas4_ne_declenche_pas_si_une_equipe_n_a_pas_perdu():
 
 
 def test_les_quatre_cas_s_excluent():
-    # 0-0/0-0 -> 🧱, pas 💀 ; 0-X/0-Y -> 💀, jamais 🧱.
-    assert pt.emoji_nul_11("A", "B", {"A": (0, 0), "B": (0, 0)}) == "🧱"
+    # 0-0/0-0 -> 🔒, pas 💀 ; 0-X/0-Y -> 💀, jamais 🔒.
+    assert pt.emoji_nul_11("A", "B", {"A": (0, 0), "B": (0, 0)}) == "🔒"
     assert pt.emoji_nul_11("A", "B", {"A": (0, 1), "B": (0, 1)}) == "💀"
 
 
