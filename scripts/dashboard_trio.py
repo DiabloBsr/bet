@@ -625,21 +625,22 @@ def main():
                                 eclair=_cb.get("eclair"), derniers=res.get("derniers"))
         if tab["lignes"]:
             st.markdown("### 📋 Pronostics du round")
-            _tableau_vert(st, tab["lignes"], tab["reco"],
-                          ("1", "X", "2", "Over 2,5", "Under 2,5"))
-            st.caption("**En vert, mon pronostic** : l'issue 1X2 choisie et le "
-                       "côté le plus probable de l'over/under 2,5. 🔥 = l'équipe "
-                       "en tête de la saison en cours ; 🧊 = la meilleure "
-                       "attaque ; ⚡ = la meilleure forme récente. 🏆 = les 3 "
-                       "matchs du round dont le score exact est le plus "
-                       "concentré. L'over/under 2,5 est la recommandation des "
-                       "moteurs — V2, V5 et le marché à poids égaux ; « Moteurs "
-                       "O/U » dit combien d'entre eux la portent (si une ligue "
-                       "manque d'historique, V2/V5 ne reconnaissent pas les "
-                       "équipes et le marché est seul). Son taux de réussite "
-                       "n'est pas "
-                       "encore mesuré. Le score exact ne sort juste qu'environ "
-                       "une fois sur huit.")
+            # Colonnes 1/X/2 et Over/Under 2,5 retirées de l'AFFICHAGE
+            # (Olivio, 16/10) : le moteur les calcule toujours, mais le
+            # tableau ne montre que l'essentiel. « Pronostic » donne l'issue
+            # 1X2, « Moteurs O/U » résume l'over/under. Plus de coloration ni
+            # de pourcentages -> `_tableau_vert` sans colonnes « % ».
+            _cols_round = ("Top 3", "Match", "Pronostic", "Cote",
+                           "Score exact", "Sinon", "Moteurs O/U")
+            _lignes_aff = [{k: l[k] for k in _cols_round} for l in tab["lignes"]]
+            _tableau_vert(st, _lignes_aff, tab["reco"], ())
+            st.caption("🔥 = l'équipe en tête de la saison en cours ; 🧊 = la "
+                       "meilleure attaque ; ⚡ = la meilleure forme récente. "
+                       "🏆 = les 3 matchs du round dont le score exact est le "
+                       "plus concentré. « Moteurs O/U » dit combien des 3 "
+                       "moteurs (V2, V5, marché) recommandent l'over ou l'under "
+                       "2,5 — son taux de réussite n'est pas mesuré. Le score "
+                       "exact ne sort juste qu'environ une fois sur huit.")
             # Légende des annotations 1-1, affichée seulement là où elles
             # s'appliquent (CAN) : inutile de l'imposer aux autres ligues.
             if res.get("derniers"):
