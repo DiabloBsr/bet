@@ -164,13 +164,15 @@ def _tableau_vert(st, lignes: list, reco: list, pourcents) -> None:
     if "Cote" in df:
         fmt["Cote"] = "{:g}"
     sty = df.style.apply(_colore, axis=1).format(fmt, na_rep="")
-    # « Score exact » et « Sinon » portent le texte le plus long (3 scores +
-    # pourcentages) : on les elargit pour qu'ils ne soient plus tronques
-    # (Olivio, 16/10). `width="large"` est dispo des Streamlit 1.35.
+    # « Score exact » et « Sinon » portent l'annotation 1-1 (🔒💀🔻🔺, et le
+    # double 🔻🔻/🔺🔺) : « large » debordait sur ordinateur (Olivio, 16/10).
+    # « medium » suffit : en portrait sur telephone, les deux emoji tiennent
+    # dans la case sans etre coupes, sans elargir a l'exces ailleurs.
+    # `width="medium"` est dispo des Streamlit 1.35.
     _cfg = {"Match": st.column_config.TextColumn(pinned=True)}
     for _c in ("Score exact", "Sinon"):
         if _c in df:
-            _cfg[_c] = st.column_config.TextColumn(width="large")
+            _cfg[_c] = st.column_config.TextColumn(width="medium")
     st.dataframe(sty, hide_index=True, height=35 * (len(lignes) + 1) + 3,
                  column_config=_cfg)
 
