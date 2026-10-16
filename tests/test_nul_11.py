@@ -128,3 +128,41 @@ def test_sinon_sans_1_1_pas_d_emoji():
          "consensus_top3": [("0-0", 0.20), ("1-0", 0.12), ("0-1", 0.10)]}
     l = pt.tableau_round([m], derniers=D)["lignes"][0]
     assert "🧱" not in l["Sinon"] and "🧱" not in l["Score exact"]
+
+
+# -------- cas 4 : les deux ont perdu sans marquer 💀 (16/10) --------
+
+def test_cas4_les_deux_ont_perdu_sans_marquer():
+    D4 = {"A": (0, 2), "B": (0, 1), "C": (0, 3)}
+    assert pt.emoji_nul_11("A", "B", D4) == "💀"   # 0-2 et 0-1
+    assert pt.emoji_nul_11("A", "C", D4) == "💀"   # 0-2 et 0-3
+
+
+def test_cas4_ne_declenche_pas_si_une_equipe_a_marque():
+    # B a perdu 1-2 (a marqué) -> pas de double défaite blanche.
+    D = {"A": (0, 2), "B": (1, 2)}
+    assert pt.emoji_nul_11("A", "B", D) == ""
+
+
+def test_cas4_ne_declenche_pas_si_une_equipe_n_a_pas_perdu():
+    # B a fait 0-0 (nul, pas défaite) -> ni cas 4 ni cas 1 (A pas 0-0).
+    D = {"A": (0, 2), "B": (0, 0)}
+    assert pt.emoji_nul_11("A", "B", D) == ""
+    # B a gagné 0 encaissé mais a marqué (2-0) -> pas perdu.
+    D2 = {"A": (0, 2), "B": (2, 0)}
+    assert pt.emoji_nul_11("A", "B", D2) == ""
+
+
+def test_les_quatre_cas_s_excluent():
+    # 0-0/0-0 -> 🧱, pas 💀 ; 0-X/0-Y -> 💀, jamais 🧱.
+    assert pt.emoji_nul_11("A", "B", {"A": (0, 0), "B": (0, 0)}) == "🧱"
+    assert pt.emoji_nul_11("A", "B", {"A": (0, 1), "B": (0, 1)}) == "💀"
+
+
+def test_le_cas4_annote_le_1_1_au_tableau():
+    m = {"team_a": "A", "team_b": "B", "cotes": [2.0, 3.2, 3.8],
+         "x12": [0.33, 0.34, 0.33], "confidence": 0.25, "over25_pct": 45.0,
+         "top1_calibre": ("1-1", 0.17),
+         "consensus_top3": [("1-1", 0.17), ("0-0", 0.14), ("2-1", 0.10)]}
+    l = pt.tableau_round([m], derniers={"A": (0, 2), "B": (0, 1)})["lignes"][0]
+    assert l["Score exact"].endswith("💀"), l["Score exact"]

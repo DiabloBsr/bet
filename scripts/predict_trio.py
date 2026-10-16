@@ -2338,10 +2338,11 @@ def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
     chacune des deux équipes (Olivio, 15/10). "" si aucun cas ne s'applique.
 
     - 🧱 : les deux équipes ont fait 0-0 à leur dernier match.
+    - 💀 : les deux ont PERDU sans marquer (défaite 0-X des deux côtés).
     - 🔻 : le domicile a fait 0-0 et l'extérieur a perdu — 🔻🔻 si c'était 0-1.
     - 🔺 : l'extérieur a fait 0-0 et le domicile a gagné — 🔺🔺 si c'était 1-0.
 
-    Les trois cas s'excluent. Rien si une équipe n'a pas d'historique.
+    Les cas s'excluent. Rien si une équipe n'a pas d'historique.
     """
     dh = (derniers or {}).get(home)
     da = (derniers or {}).get(away)
@@ -2350,8 +2351,12 @@ def emoji_nul_11(home: str, away: str, derniers: dict) -> str:
     hf, hc = dh       # domicile : buts marqués / encaissés à SON dernier match
     af, ac = da       # extérieur : idem
     home_00, away_00 = (hf == 0 and hc == 0), (af == 0 and ac == 0)
-    if home_00 and away_00:                          # cas 1
+    # Perdu SANS marquer = a marqué 0 ET encaissé au moins 1 (défaite 0-X).
+    home_perdu_0, away_perdu_0 = (hf == 0 and hc > 0), (af == 0 and ac > 0)
+    if home_00 and away_00:                          # cas 1 : les deux 0-0
         return "🧱"
+    if home_perdu_0 and away_perdu_0:                # cas 4 : les deux perdu 0-X
+        return "💀"
     if home_00 and af < ac:                           # cas 2 : extérieur a perdu
         return "🔻🔻" if (af, ac) == (0, 1) else "🔻"
     if away_00 and hf > hc:                           # cas 3 : domicile a gagné
