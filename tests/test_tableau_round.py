@@ -93,8 +93,8 @@ def test_les_cases_colorees_sont_des_colonnes():
 
 
 def test_un_round_vide():
-    assert pt.tableau_round([]) == {"lignes": [], "reco": []}
-    assert pt.tableau_round(None) == {"lignes": [], "reco": []}
+    assert pt.tableau_round([]) == {"lignes": [], "reco": [], "marques": []}
+    assert pt.tableau_round(None) == {"lignes": [], "reco": [], "marques": []}
 
 
 # --------------------------------------------------------------------------
@@ -300,3 +300,53 @@ def test_une_equipe_peut_cumuler_les_trois():
     lignes = pt.tableau_round([_m("A", "B", (0.6, 0.2, 0.2))],
                               feu="A", glace="A", eclair="A")["lignes"]
     assert any("A 🔥💥⚡" in l["Match"] for l in lignes), [l["Match"] for l in lignes]
+
+
+# --------------------------------------------------------------------------
+# CLASSEMENT + FORME DES MATCHS MARQUÉS (16/10)
+# --------------------------------------------------------------------------
+
+def test_classement_saison_rangs(monkeypatch):
+    rows = [("A", "B", 2, 0, "1"), ("C", "D", 1, 1, "1"),
+            ("A", "C", 1, 0, "2"), ("B", "D", 0, 0, "2"),
+            ("A", "D", 3, 0, "3"), ("B", "C", 0, 1, "3")]
+    monkeypatch.setattr(pt.pd, "read_sql", lambda q, e: _saison(rows))
+    cl = pt.classement_saison(None, "X", min_matchs=1)
+    assert cl["A"] == 1                      # 9 pts, tête
+    assert cl["C"] < cl["B"]                 # C (4 pts) devant B (1 pt)
+
+
+def test_rang_lisible():
+    assert pt._rang(1) == "1er" and pt._rang(12) == "12e" and pt._rang(None) == "?"
+
+
+def test_formes_recentes(monkeypatch):
+    # du + récent au + ancien : A gagne 2-0 (V) puis perd 0-1 (D).
+    rows = [("A", "B", 2, 0), ("C", "A", 1, 0)]
+    monkeypatch.setattr(pt.pd, "read_sql",
+                        lambda q, e: pd.DataFrame(rows, columns=["ta", "tb", "sa", "sb"]))
+    f = pt.formes_recentes(None, "X", n=5)
+    assert f["A"] == "VD"       # V (2-0) puis D (0-1 vu de A)
+    assert f["B"] == "D" and f["C"] == "V"
+
+
+def test_le_classement_n_apparait_que_pour_les_matchs_marques():
+    CL = {"Bayern": 1, "Dortmund": 8, "X": 5, "Y": 6}
+    ms = [_m("Bayern", "Dortmund", (0.6, 0.2, 0.2)),   # cible 🔥
+          _m("X", "Y", (0.5, 0.3, 0.2))]               # rien
+    t = pt.tableau_round(ms, feu="Bayern", classement=CL)
+    d = {l["Match"].split(" ")[0]: l["Classement"] for l in t["lignes"]}
+    assert d["Bayern"] == "1er vs 8e"
+    assert d["X"] == ""                        # pas d'emoji -> pas de classement
+    assert t["marques"] == [{"a": "Bayern", "b": "Dortmund"}]
+
+
+def test_un_match_1_1_annote_est_marque():
+    m = {"team_a": "A", "team_b": "B", "cotes": [2.0, 3.2, 3.8],
+         "x12": [0.33, 0.34, 0.33], "confidence": 0.25, "over25_pct": 45.0,
+         "top1_calibre": ("1-1", 0.17),
+         "consensus_top3": [("1-1", 0.17), ("0-0", 0.14), ("2-1", 0.10)]}
+    t = pt.tableau_round([m], derniers={"A": (0, 0), "B": (0, 0)},
+                         classement={"A": 2, "B": 4})
+    assert t["marques"] == [{"a": "A", "b": "B"}]
+    assert t["lignes"][0]["Classement"] == "2e vs 4e"

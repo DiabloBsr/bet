@@ -2179,7 +2179,7 @@ def issue_round(m) -> tuple:
 
 
 # Colonnes du tableau de la prediction du round (04/10), dans l'ordre.
-ROUND_COLONNES = ("Top 3", "Match", "Pronostic", "1", "X", "2", "Cote",
+ROUND_COLONNES = ("Top 3", "Match", "Classement", "Pronostic", "1", "X", "2", "Cote",
                   "Score exact", "Sinon", "Over 2,5", "Under 2,5", "Moteurs O/U")
 
 
@@ -2233,6 +2233,73 @@ def _accord_lisible(mo) -> str:
     return f"{mo['accord']} {mo['sens']}"
 
 
+def _stats_saison(engine, lg: str = LG, min_matchs: int = 10):
+    """Stats de la saison EN COURS d'une ligue, ou ({}, {}) si trop courte.
+
+    Rend (st, forme) : st[team] = [points, diff de buts, buts marqués, nb] ;
+    forme[team] = points de chaque match, dans l'ordre chronologique. Partagé
+    par `cibles_saison` et `classement_saison`.
+    """
+    t = str(lg).replace("'", "''")
+    d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb,
+        e.round_info rd FROM events e JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND e.competition='{t}'
+          AND e.round_info IS NOT NULL
+        ORDER BY e.expected_start""", engine)
+    if d.empty:
+        return {}, {}
+    d["j"] = pd.to_numeric(d.rd, errors="coerce")
+    d = d.dropna(subset=["j"])
+    d = d[d.j >= 1]
+    if d.empty:
+        return {}, {}
+    # Début de la saison courante : dernier « retour en arrière » de la journée.
+    d["jump"] = (d["j"].shift(1) > d["j"] + 5).fillna(False)
+    d["sid"] = d["jump"].cumsum()
+    cur = d[d.sid == d.sid.max()]
+    if len(cur) < int(min_matchs):
+        return {}, {}
+    st, forme = {}, {}
+    for r in cur.itertuples():   # cur est trié par expected_start
+        for t_, mine, opp in ((r.ta, r.sa, r.sb), (r.tb, r.sb, r.sa)):
+            pm = 3 if mine > opp else (1 if mine == opp else 0)
+            s = st.setdefault(t_, [0, 0, 0, 0])
+            s[0] += pm
+            s[1] += int(mine) - int(opp)
+            s[2] += int(mine)
+            s[3] += 1
+            forme.setdefault(t_, []).append(pm)
+    return st, forme
+
+
+def classement_saison(engine, lg: str = LG, min_matchs: int = 10) -> dict:
+    """{équipe: rang} de la saison en cours (1 = tête), par points puis
+    différence de buts puis nom. {} si la saison est trop courte (16/10)."""
+    st, _ = _stats_saison(engine, lg, min_matchs)
+    if not st:
+        return {}
+    ordre = sorted(st, key=lambda t_: (-st[t_][0], -st[t_][1], t_))
+    return {team: i for i, team in enumerate(ordre, 1)}
+
+
+def formes_recentes(engine, lg: str, n: int = 5, limite: int = 800) -> dict:
+    """{équipe: "VNDVV"} : les `n` derniers résultats de chaque équipe (contre
+    n'importe qui), du PLUS RÉCENT au plus ancien — pour les pastilles sous le
+    tableau du round (16/10)."""
+    t = str(lg).replace("'", "''")
+    d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb
+        FROM events e JOIN results r ON r.event_id=e.id
+        WHERE r.score_a IS NOT NULL AND e.competition='{t}'
+        ORDER BY e.expected_start DESC LIMIT {int(limite)}""", engine)
+    out = {}
+    for r in d.itertuples():   # du plus récent au plus ancien
+        for team, mine, opp in ((r.ta, r.sa, r.sb), (r.tb, r.sb, r.sa)):
+            seq = out.setdefault(team, [])
+            if len(seq) < int(n):
+                seq.append("V" if mine > opp else ("N" if mine == opp else "D"))
+    return {k: "".join(v) for k, v in out.items()}
+
+
 def cibles_saison(engine, lg: str = LG, min_matchs: int = 10,
                   n_forme: int = 5) -> dict:
     """Les TROIS équipes cibles de la saison EN COURS (J1 → J38) d'une ligue :
@@ -2257,39 +2324,9 @@ def cibles_saison(engine, lg: str = LG, min_matchs: int = 10,
     en cours compte moins de `min_matchs` matchs finis (début de saison :
     classement pas significatif, on préfère ne rien marquer).
     """
-    vide = {"feu": None, "glace": None, "eclair": None}
-    t = str(lg).replace("'", "''")
-    d = pd.read_sql(f"""SELECT e.team_a ta, e.team_b tb, r.score_a sa, r.score_b sb,
-        e.round_info rd FROM events e JOIN results r ON r.event_id=e.id
-        WHERE r.score_a IS NOT NULL AND e.competition='{t}'
-          AND e.round_info IS NOT NULL
-        ORDER BY e.expected_start""", engine)
-    if d.empty:
-        return vide
-    d["j"] = pd.to_numeric(d.rd, errors="coerce")
-    d = d.dropna(subset=["j"])
-    d = d[d.j >= 1]
-    if d.empty:
-        return vide
-    # Début de la saison courante : dernier « retour en arrière » de la journée.
-    d["jump"] = (d["j"].shift(1) > d["j"] + 5).fillna(False)
-    d["sid"] = d["jump"].cumsum()
-    cur = d[d.sid == d.sid.max()]
-    if len(cur) < int(min_matchs):
-        return vide
-    st = {}      # team -> [points, diff de buts, buts marqués, nb matchs]
-    forme = {}   # team -> points de chaque match, dans l'ordre chronologique
-    for r in cur.itertuples():   # cur est trié par expected_start
-        for t_, mine, opp in ((r.ta, r.sa, r.sb), (r.tb, r.sb, r.sa)):
-            pm = 3 if mine > opp else (1 if mine == opp else 0)
-            s = st.setdefault(t_, [0, 0, 0, 0])
-            s[0] += pm
-            s[1] += int(mine) - int(opp)
-            s[2] += int(mine)
-            s[3] += 1
-            forme.setdefault(t_, []).append(pm)
+    st, forme = _stats_saison(engine, lg, min_matchs)
     if not st:
-        return vide
+        return {"feu": None, "glace": None, "eclair": None}
     k = int(n_forme)
     # Départages déterministes : points→diff→nom ; attaque→buts totaux→nom ;
     # forme→points sur les k derniers (moyenne pour comparer des séries de
@@ -2382,8 +2419,14 @@ def _score_exact_txt(t1, m, derniers) -> str:
     return f"{t1[0]} · {t1[1] * 100:.0f} %" + _marque_11(t1[0], m, derniers)
 
 
+def _rang(n) -> str:
+    """Rang lisible : 1 → « 1er », n → « Ne », rien → « ? »."""
+    return "1er" if n == 1 else (f"{int(n)}e" if n else "?")
+
+
 def tableau_round(matches, feu: str | None = None, glace: str | None = None,
-                  eclair: str | None = None, derniers: dict | None = None) -> dict:
+                  eclair: str | None = None, derniers: dict | None = None,
+                  classement: dict | None = None) -> dict:
     """La prediction du round en TABLEAU, avec l'over/under 2,5 (04/10).
 
     « Affiche le resultat de prediction de cette ligne sous forme tableau, et
@@ -2409,15 +2452,26 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
                   + ("⚡" if t == eclair else ""))
         return f"{t} {marque}" if marque else t
 
+    cibles = {c for c in (feu, glace, eclair) if c}
+    cl = classement or {}
     brut = []
     for m in matches or []:
         sel, issue, pi, ci = issue_round(m)
         ph, pd_, pa = m["x12"]
+        ta, tb = m.get("team_a"), m.get("team_b")
         t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
         # Les scores « Sinon » portent AUSSI le marquage 1-1 (Olivio, 15/10) :
         # un 1-1 parmi les alternatives doit être annoté comme le score de tête.
         sinon = " · ".join(f"{sc} {pr * 100:.0f} %" + _marque_11(sc, m, derniers)
                            for sc, pr in (m.get("consensus_top3") or [])[1:3] if sc)
+        # Un match « porte un emoji » (16/10) s'il a une équipe cible (🔥💥⚡)
+        # OU une annotation 1-1 affichée (🔒💀🔻🔺). Pour ceux-là : classement
+        # des deux équipes dans le tableau, et 5 derniers matchs sous le tableau.
+        scores = [t1[0] if t1 else None] + [sc for sc, _ in
+                                            (m.get("consensus_top3") or [])[1:3]]
+        a_11 = "1-1" in scores and bool(_marque_11("1-1", m, derniers))
+        a_emoji = (ta in cibles) or (tb in cibles) or a_11
+        classt = f"{_rang(cl.get(ta))} vs {_rang(cl.get(tb))}" if a_emoji else ""
         # Over 2,5 = ce que RECOMMANDENT les moteurs (V2, V5, marche a poids
         # egaux, 04/10) ; repli sur le marche seul pour un resultat ancien.
         mo = m.get("ou25_moteurs") or {}
@@ -2428,7 +2482,9 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
             o25 = float(o25) if isinstance(o25, (int, float)) and o25 == o25 else None
         brut.append({
             "_pi": pi, "_conf": m.get("confidence") or 0, "_sel": sel, "_o25": o25,
-            "Match": f"{_nom(m.get('team_a'))} – {_nom(m.get('team_b'))}",
+            "_ta": ta, "_tb": tb, "_emoji": a_emoji,
+            "Match": f"{_nom(ta)} – {_nom(tb)}",
+            "Classement": classt,
             "Pronostic": issue,
             "1": int(round(ph * 100)), "X": int(round(pd_ * 100)),
             "2": int(round(pa * 100)),
@@ -2443,7 +2499,7 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
     ids = {id(r) for r in top3}
     ordre = top3 + sorted((r for r in brut if id(r) not in ids),
                           key=lambda r: -r["_pi"])
-    lignes, reco = [], []
+    lignes, reco, marques = [], [], []
     for r in ordre:
         r["Top 3"] = "🏆" if id(r) in ids else ""
         lignes.append({k: r[k] for k in ROUND_COLONNES})
@@ -2452,7 +2508,9 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
         if r["_o25"] is not None and r["_o25"] != 50:
             cases.add("Over 2,5" if r["_o25"] > 50 else "Under 2,5")
         reco.append(cases)
-    return {"lignes": lignes, "reco": reco}
+        if r["_emoji"]:   # match marqué : pour les pastilles sous le tableau
+            marques.append({"a": r["_ta"], "b": r["_tb"]})
+    return {"lignes": lignes, "reco": reco, "marques": marques}
 
 
 def _partie_entiere(o) -> int | None:
@@ -3426,8 +3484,13 @@ def predict_round(engine, m5, v2model, target_local=None, lg: str = LG) -> dict:
     cibles = cibles_saison(engine, lg)
     # Annotation 1-1 selon le dernier match de chaque équipe (15/10) : CAN seule.
     derniers = derniers_resultats(engine, lg) if lg in LIGUES_ANNOTE_11 else None
+    # Classement de saison (colonne du tableau) et 5 derniers matchs (pastilles
+    # sous le tableau) pour les matchs qui portent un emoji (16/10).
+    classement = classement_saison(engine, lg)
+    formes = formes_recentes(engine, lg)
     return {"target": target, "rounds": rounds, "matches": matches,
-            "cibles": cibles, "derniers": derniers}
+            "cibles": cibles, "derniers": derniers,
+            "classement": classement, "formes": formes}
 
 
 def main():
