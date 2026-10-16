@@ -126,11 +126,13 @@ def test_les_mi_temps_ne_rejoignent_pas_les_marches_cotes():
     assert "lignes.append" in bloc and "mi_temps" not in bloc.split("lignes.append")[1][:400]
 
 
-def test_l_onglet_affiche_les_deux_periodes():
+def test_l_onglet_n_affiche_plus_les_deux_periodes():
+    # Affichage des mi-temps RETIRE de « Que jouer ? » (Olivio, 16/10). Le
+    # moteur continue de les calculer (test_les_mi_temps_ne_rejoignent_pas... +
+    # les tests marches_mi_temps ci-dessus), seul l'affichage disparait.
     src = (Path(__file__).resolve().parents[1] / "scripts" / "dashboard_trio.py"
            ).read_text(encoding="utf-8")
-    assert 'res_c.get("mi_temps")' in src
-    assert "1re mi-temps" in src and "2e mi-temps" in src
+    assert "1re mi-temps" not in src and "2e mi-temps" not in src
 
 
 def test_la_calibration_part_au_deploiement():
