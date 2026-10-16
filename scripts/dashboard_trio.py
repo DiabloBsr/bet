@@ -626,34 +626,39 @@ def main():
                                 classement=res.get("classement"))
         if tab["lignes"]:
             st.markdown("### 📋 Pronostics du round")
-            # Colonnes 1/X/2 et Over/Under 2,5 retirées de l'AFFICHAGE
-            # (Olivio, 16/10) : le moteur les calcule toujours, mais le
-            # tableau ne montre que l'essentiel. « Classement » (16/10) n'est
-            # rempli que pour les matchs qui portent un emoji.
-            _cols_round = ("Top 3", "Match", "Classement", "Pronostic", "Cote",
-                           "Score exact", "Sinon", "Moteurs O/U")
+            # Tableau réduit à l'essentiel (Olivio, 16/10) : colonnes 1/X/2,
+            # Over/Under 2,5, Classement et Moteurs O/U retirées de l'affichage
+            # (le moteur les calcule toujours). Le classement passe sous le
+            # tableau, à côté du nom de chaque équipe des matchs marqués.
+            _cols_round = ("Top 3", "Match", "Pronostic", "Cote",
+                           "Score exact", "Sinon")
             _lignes_aff = [{k: l[k] for k in _cols_round} for l in tab["lignes"]]
             _tableau_vert(st, _lignes_aff, tab["reco"], ())
-            # Les 5 derniers matchs (en pastilles) des équipes des matchs
-            # marqués — sous le tableau, car une grille ne peut pas afficher
-            # de pastilles HTML (Olivio, 16/10). Noms échappés (ligne HTML).
+            # Les 5 derniers matchs (en pastilles) + le classement de chaque
+            # équipe des matchs marqués — sous le tableau, car une grille ne
+            # peut pas afficher de pastilles HTML. Noms échappés (ligne HTML).
             _formes = res.get("formes") or {}
+            _cl = res.get("classement") or {}
+
+            def _nom_rang(t):
+                r = _cl.get(t)
+                return f"{_esc(t)} ({_pt._rang(r)})" if r else _esc(t)
+
             if tab.get("marques"):
                 st.caption("**Forme des matchs marqués** — 5 derniers, du plus "
-                           "récent au plus ancien :")
+                           "récent au plus ancien ; le rang en saison entre "
+                           "parenthèses :")
                 for _mq in tab["marques"]:
                     _a, _b = _mq["a"], _mq["b"]
                     st.markdown(
-                        f"　{_pastilles(_formes.get(_a, ''))} _{_esc(_a)}_"
-                        f"  　{_pastilles(_formes.get(_b, ''))} _{_esc(_b)}_",
+                        f"　{_pastilles(_formes.get(_a, ''))} _{_nom_rang(_a)}_"
+                        f"  　{_pastilles(_formes.get(_b, ''))} _{_nom_rang(_b)}_",
                         unsafe_allow_html=True)
             st.caption("🔥 = l'équipe en tête de la saison en cours ; 💥 = la "
                        "meilleure attaque ; ⚡ = la meilleure forme récente. "
                        "🏆 = les 3 matchs du round dont le score exact est le "
-                       "plus concentré. « Moteurs O/U » dit combien des 3 "
-                       "moteurs (V2, V5, marché) recommandent l'over ou l'under "
-                       "2,5 — son taux de réussite n'est pas mesuré. Le score "
-                       "exact ne sort juste qu'environ une fois sur huit.")
+                       "plus concentré. Le score exact ne sort juste "
+                       "qu'environ une fois sur huit.")
             # Légende des annotations 1-1, affichée seulement là où elles
             # s'appliquent (CAN) : inutile de l'imposer aux autres ligues.
             if res.get("derniers"):
