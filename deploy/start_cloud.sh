@@ -51,17 +51,17 @@ mkdir -p data/vfoot_ml logs
 cp -f config/score_calibration.json data/vfoot_ml/score_calibration.json 2>/dev/null || true
 
 # ---- 3. scraper LÉGER (httpx, pas de pandas/modèle) — throttlé, pour les matchs À VENIR ----
-#   40s (Olivio, 18/10 ; était 30s le 15/10) : il faut que TOUT soit prêt 30s
-#   AVANT le coup d'envoi. Les rounds tombent toutes les 120s (mesuré). Pour que
-#   le résultat du round précédent soit en base 30s avant le prochain coup
-#   d'envoi (= dans les 90s après le précédent), il faut collecter assez vite :
-#   à 60s la marge tombait à ~20s dans le pire cas ; à 40s elle reste ~40-50s
-#   (30s donnait ~50-60s). 40s allège un peu la charge API par rapport à 30s
-#   tout en gardant la garantie. Le scraper seul est léger (le CPU n'était pégé
-#   que par l'onglet Fiabilité, retiré).
-#   ⚠️ À SURVEILLER : si l'API Bet261 limite ou si le Space souffre, remonter à 60s.
+#   30s (Olivio, 19/10) : il faut que TOUT soit prêt 40s AVANT le coup d'envoi
+#   (cible relevée de 30s à 40s). Les rounds tombent toutes les 120s (mesuré).
+#   Relation mesurée : marge dans le pire cas ≈ 80s − intervalle. Pour tenir une
+#   marge ≥ 40s, il faut donc un intervalle ≤ 40s ; à 40s pile la marge vaut ~40s
+#   (juste à la limite, sans coussin), à 30s elle remonte à ~50s (confortable).
+#   On revient donc à 30s pour garantir les 40s avant le coup d'envoi. Le scraper
+#   seul est léger (le CPU n'était pégé que par l'onglet Fiabilité, retiré).
+#   ⚠️ À SURVEILLER : ~plus de requêtes qu'à 40s — si l'API Bet261 limite ou si
+#   le Space souffre, remonter vers 40s (marge alors ~40s, à la limite).
 ( while true; do
-    python scripts/_scrape_loop.py --interval 40 --n 100000 >> /data/scrape.log 2>&1 || true
+    python scripts/_scrape_loop.py --interval 30 --n 100000 >> /data/scrape.log 2>&1 || true
     sleep 15
   done ) &
 
