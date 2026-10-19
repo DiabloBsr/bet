@@ -225,6 +225,117 @@ def a_venir(path: str, jours: int = 10, kind: str = "team",
     return [g for g in jeux if not g["done"] and g["home"] and g["away"]]
 
 
+# ---------------------------------------------------------------------------
+# PRONOSTIC par FORME + FACE-À-FACE (sans aucune cote) — Olivio, 20/10.
+# Le pronostic ne regarde QUE les résultats : la forme récente de chaque camp
+# et leur historique de confrontations directes.
+# ---------------------------------------------------------------------------
+
+def _vu_de(g: dict, team: str):
+    """Résultat du match `g` vu de `team` : ('V'|'N'|'D', écart de buts)."""
+    gf, ga = (g["hs"], g["as_"]) if g["home"] == team else (g["as_"], g["hs"])
+    if gf > ga:
+        return "V", gf - ga
+    if gf < ga:
+        return "D", gf - ga
+    return "N", 0
+
+
+def forme(passes: list, team: str, n: int = 6) -> dict:
+    """Forme récente d'une équipe/joueur sur ses `n` derniers matchs TERMINÉS
+    (parmi `passes`, déjà chronologiques). `score` = taux de réussite (V=1,
+    N=0,5, D=0). `seq` = du plus récent au plus ancien."""
+    rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
+    seq, pts = [], 0.0
+    for g in rec:
+        r, _ = _vu_de(g, team)
+        seq.append(r)
+        pts += 1.0 if r == "V" else (0.5 if r == "N" else 0.0)
+    return {"seq": "".join(reversed(seq)), "n": len(rec),
+            "score": pts / len(rec) if rec else 0.5}
+
+
+def face_a_face(passes: list, a: str, b: str, n: int = 6) -> dict:
+    """Confrontations directes récentes entre `a` et `b` (max `n`). `score_a` =
+    taux de réussite de `a` dans ces face-à-face (None si aucun)."""
+    h = [g for g in passes if {g["home"], g["away"]} == {a, b}][-n:]
+    va = vb = nul = 0
+    for g in h:
+        r, _ = _vu_de(g, a)
+        va += r == "V"
+        vb += r == "D"
+        nul += r == "N"
+    tot = va + vb + nul
+    return {"va": va, "vb": vb, "nul": nul, "tot": tot,
+            "score_a": (va + 0.5 * nul) / tot if tot else None}
+
+
+def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
+                    home_adv: float = 0.0, n_forme: int = 6, n_h2h: int = 6) -> dict:
+    """Pronostic d'un match à partir de la FORME récente + du FACE-À-FACE, sans
+    aucune cote. Rend probas, `pick` (home/draw/away) et la confiance."""
+    fh = forme(passes, home, n_forme)
+    fa = forme(passes, away, n_forme)
+    eps = 0.1
+    # Cœur (hors nul) : part de forme du domicile, + l'avantage terrain traduit
+    # en probabilité via la même courbe que l'Elo.
+    p_ratio = (fh["score"] + eps) / (fh["score"] + fa["score"] + 2 * eps)
+    bonus = Elo._attendu(1500 + home_adv, 1500) - 0.5
+    p_core = min(0.97, max(0.03, p_ratio + bonus))
+    h2h = face_a_face(passes, home, away, n_h2h)
+    if h2h["score_a"] is not None and h2h["tot"] >= 2:
+        # le face-à-face pèse ~35 % quand il existe (au moins 2 confrontations).
+        p_core = min(0.97, max(0.03, 0.65 * p_core + 0.35 * h2h["score_a"]))
+    if nuls:
+        # le nul est d'autant plus probable que les deux camps sont proches.
+        p_draw = max(0.06, 0.30 * (1.0 - 2.0 * abs(p_core - 0.5)))
+        ph, pd_, pa = p_core * (1 - p_draw), p_draw, (1 - p_core) * (1 - p_draw)
+        s = ph + pd_ + pa
+        p = {"home": ph / s, "draw": pd_ / s, "away": pa / s}
+        pick = max(p, key=p.get)
+    else:
+        p = {"home": p_core, "draw": 0.0, "away": 1.0 - p_core}
+        pick = "home" if p_core >= 0.5 else "away"
+    return {"home": home, "away": away, "p": p, "pick": pick,
+            "conf": max(p.values()), "forme_home": fh, "forme_away": fa, "h2h": h2h}
+
+
+def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
+                       home_adv: float = 0.0) -> list:
+    """Pronostic forme + face-à-face pour chaque match à venir (contexte = tout
+    l'historique terminé)."""
+    passes = [g for g in hist if g.get("done") and g.get("hs") is not None]
+    passes.sort(key=lambda g: g.get("date") or "")
+    return [pronostic_forme(passes, g["home"], g["away"], nuls, home_adv)
+            for g in fixtures if g.get("home") and g.get("away")]
+
+
+def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
+                  maxi: int = 250, warmup: int = 50) -> dict | None:
+    """Backtest HONNÊTE : pour chaque match passé (après un warmup), on prédit
+    avec la forme + le face-à-face calculés UNIQUEMENT sur les matchs d'AVANT,
+    puis on compare au résultat réel. Rend le taux de réussite + une base de
+    comparaison (toujours le domicile). None si trop peu de données."""
+    done = sorted([g for g in hist if g.get("done") and g.get("hs") is not None],
+                  key=lambda g: g.get("date") or "")
+    if len(done) < warmup + 20:
+        return None
+    sous = done[warmup:]
+    if len(sous) > maxi:
+        sous = sous[-maxi:]
+    ok = tot = ok_base = 0
+    for g in sous:
+        d = g.get("date") or ""
+        passes = [x for x in done if (x.get("date") or "") < d]
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv)
+        reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
+        ok += pr["pick"] == reel
+        ok_base += reel == "home"
+        tot += 1
+    return {"ok": ok, "tot": tot, "taux": ok / tot if tot else 0.0,
+            "base_domicile": ok_base / tot if tot else 0.0}
+
+
 def predire(elo: Elo, fixtures: list, nuls: bool = True) -> list:
     """Attache à chaque match à venir les probas du modèle + le favori."""
     out = []

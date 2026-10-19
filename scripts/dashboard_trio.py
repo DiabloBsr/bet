@@ -529,18 +529,26 @@ def main():
         _cfg = _sr.SPORTS[_lig]
         _path, _nuls = _cfg["path"], _cfg["nuls"]
 
-        @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path, home_adv, kind, slug):
-            hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
-            elo = _sr.Elo(home_adv=home_adv).entrainer(hist)
-            fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
-            return len(hist), dict(elo.r), elo.home_adv, fx
+        st.caption("Le pronostic est fondé sur la **forme récente** (6 derniers "
+                   "matchs) et le **face-à-face** direct — **aucune cote**. Le "
+                   "taux de réussite ci-dessous est mesuré par backtest honnête "
+                   "(prédit sur le passé, sans tricher).")
 
-        if st.button("📊 Entraîner le modèle et prédire", key="sr_go", type="primary"):
-            with _db("Historique ESPN + entraînement Elo…"):
+        @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
+        def _sr_charger(path, home_adv, kind, slug, nuls):
+            hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
+            fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
+            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv)
+            bt = _sr.taux_reussite(hist, nuls, home_adv)
+            top = sorted(_sr.Elo(home_adv=home_adv).entrainer(hist).r.items(),
+                         key=lambda kv: -kv[1])[:10]
+            return len(hist), pronos, bt, top
+
+        if st.button("📊 Pronostiquer (forme + face-à-face)", key="sr_go", type="primary"):
+            with _db("Historique ESPN + forme/face-à-face + backtest…"):
                 try:
                     st.session_state["sr_res"] = (_lig, _sr_charger(
-                        _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug")))
+                        _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug"), _nuls))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
@@ -549,40 +557,45 @@ def main():
             if _r[1] is None:
                 st.error(f"Données ESPN indisponibles. {st.session_state.get('sr_err','')}")
             else:
-                _nb, _ratings, _hadv, _fx = _r[1]
-                _elo = _sr.Elo(home_adv=_hadv)
-                _elo.r = _ratings
-                st.success(f"Modèle entraîné sur **{_nb}** matchs terminés "
-                           f"(220 derniers jours) · **{len(_fx)}** match(s) à venir.")
-                _preds = _sr.predire(_elo, _fx, _nuls)
-                # Tennis : terrain neutre -> libellés « Joueur 1/2 » plutôt que
-                # « domicile/extérieur » ; sports d'équipe -> 1 / Nul / 2.
+                _nb, _pronos, _bt, _top = _r[1]
                 _tennis = _cfg["kind"] == "tennis"
-                _c1, _c2 = ("Joueur 1", "Joueur 2") if _tennis else ("1 (dom.)", "2 (ext.)")
-                _e1, _e2 = ("Elo J1", "Elo J2") if _tennis else ("Elo dom.", "Elo ext.")
-                if _preds:
-                    st.markdown("**Prochaines rencontres — probabilités du modèle**"
-                                if _tennis else "**Prochains matchs — probabilités du modèle**")
+                st.success(f"Entraîné sur **{_nb}** matchs terminés (220 derniers "
+                           f"jours) · **{len(_pronos)}** pronostic(s) à venir.")
+                if _bt:
+                    _ref = ("pile ou face 50%" if _tennis
+                            else f"« toujours le domicile » {_bt['base_domicile'] * 100:.0f}%")
+                    st.info(f"🎯 **Taux de réussite** du pronostic forme + face-à-face "
+                            f"(backtest sur {_bt['tot']} matchs passés) : "
+                            f"**{_bt['taux'] * 100:.0f}%** · référence {_ref}.")
+
+                def _pick_txt(p):
+                    if _tennis:
+                        return _esc(p["home"] if p["pick"] == "home" else p["away"])
+                    return {"home": f"1 — {_esc(p['home'])}", "draw": "Nul",
+                            "away": f"2 — {_esc(p['away'])}"}[p["pick"]]
+
+                def _h2h_txt(h):
+                    if not h["tot"]:
+                        return "aucun"
+                    return (f"{h['va']}–{h['vb']}" + (f" ({h['nul']} nul)" if h["nul"] else "")
+                            + f" sur {h['tot']}")
+
+                if _pronos:
+                    st.markdown("**Pronostics — forme récente (V/N/D, récent→ancien) & face-à-face**")
                     _rows = [{"Match": f"{p['home']} – {p['away']}",
-                              _c1: p["p"]["home"] * 100,
-                              "Nul": p["p"]["draw"] * 100,
-                              _c2: p["p"]["away"] * 100,
-                              _e1: p["rating_home"], _e2: p["rating_away"]}
-                             for p in _preds]
-                    _cols = ["Match", _c1, "Nul", _c2, _e1, _e2]
-                    if not _nuls:
-                        _cols.remove("Nul")
-                        for _row in _rows:
-                            _row.pop("Nul", None)
-                    _dfp = pd.DataFrame(_rows)[_cols]
-                    _fmtp = {c: "{:.0f} %" for c in (_c1, "Nul", _c2) if c in _dfp}
-                    st.dataframe(_dfp.style.format(_fmtp), hide_index=True,
-                                 height=35 * (len(_dfp) + 1) + 3)
+                              "Pronostic": _pick_txt(p),
+                              "Confiance": p["conf"] * 100,
+                              ("Forme J1" if _tennis else "Forme dom."): p["forme_home"]["seq"] or "—",
+                              ("Forme J2" if _tennis else "Forme ext."): p["forme_away"]["seq"] or "—",
+                              "Face-à-face": _h2h_txt(p["h2h"])}
+                             for p in _pronos]
+                    _dfp = pd.DataFrame(_rows)
+                    st.dataframe(_dfp.style.format({"Confiance": "{:.0f} %"}),
+                                 hide_index=True, height=35 * (len(_dfp) + 1) + 3)
                 else:
-                    st.info("Aucun match à venir dans les 10 prochains jours pour cette ligue.")
-                _top = sorted(_ratings.items(), key=lambda kv: -kv[1])[:10]
-                st.caption("**Top 10 Elo** : " + " · ".join(
-                    f"{_esc(t)} {round(v)}" for t, v in _top))
+                    st.info("Aucun match à venir dans les 10 prochains jours.")
+                st.caption("Contexte (notes Elo, cumul des résultats) — **Top 10** : "
+                           + " · ".join(f"{_esc(t)} {round(v)}" for t, v in _top))
 
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):

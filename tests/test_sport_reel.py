@@ -116,3 +116,40 @@ def test_predire_attache_proba_et_favori():
     assert out[0]["favori"] == "home"
     assert out[0]["p"]["home"] > out[0]["p"]["away"]
     assert out[0]["rating_home"] == 1800
+
+
+# -------- pronostic FORME + FACE-À-FACE (sans cote) --------
+
+def _g(h, a, hs, as_, d):
+    return {"home": h, "away": a, "hs": hs, "as_": as_, "done": True, "date": d}
+
+
+def test_forme_recent_dabord_et_score():
+    passes = [_g("A", "X", 2, 0, "1"), _g("Y", "A", 1, 1, "2"), _g("A", "Z", 0, 3, "3")]
+    f = sr.forme(passes, "A", n=3)
+    assert f["seq"] == "DNV"            # récent→ancien : défaite, nul, victoire
+    assert f["n"] == 3
+    assert abs(f["score"] - (0 + 0.5 + 1.0) / 3) < 1e-9
+
+
+def test_face_a_face_compte_du_point_de_vue_de_a():
+    passes = [_g("A", "B", 2, 0, "1"), _g("B", "A", 1, 1, "2"), _g("B", "A", 3, 0, "3"),
+              _g("A", "C", 1, 0, "4")]   # le dernier (vs C) ne compte pas
+    h = sr.face_a_face(passes, "A", "B", n=6)
+    assert (h["va"], h["nul"], h["vb"], h["tot"]) == (1, 1, 1, 3)
+    assert abs(h["score_a"] - (1 + 0.5) / 3) < 1e-9
+
+
+def test_pronostic_meilleure_forme_est_favori():
+    # A gagne tout récemment, B perd tout -> pronostic = A (home).
+    passes = ([_g("A", f"o{i}", 2, 0, f"a{i}") for i in range(6)]
+              + [_g("B", f"p{i}", 0, 2, f"b{i}") for i in range(6)])
+    pr = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0)
+    assert pr["pick"] == "home" and pr["p"]["home"] > 0.5
+
+
+def test_backtest_rend_un_taux_borne_ou_none():
+    assert sr.taux_reussite([], nuls=False) is None      # trop peu
+    base = [_g("A", "B", 2, 0, f"{i:03d}") for i in range(80)]
+    bt = sr.taux_reussite(base, nuls=False, home_adv=0, warmup=20)
+    assert bt is not None and 0.0 <= bt["taux"] <= 1.0 and bt["tot"] > 0
