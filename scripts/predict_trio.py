@@ -2412,20 +2412,23 @@ def _marque_11(sc, m, derniers) -> str:
     return ""
 
 
-def _marque_21(sc, derniers) -> str:
-    """⚽ si le score `sc` est un 2-1 ou 1-2 en CAN (Olivio, 19/10). Sans
-    condition : dès que le pronostic est 2-1/1-2, l'emoji sort. `derniers` n'est
-    fourni (même vide) que pour la CAN, il sert donc de drapeau de ligue."""
+def _marque_21(sc, m, derniers) -> str:
+    """Un 2-1/1-2 en CAN porte la MÊME annotation que le 1-1, d'après le dernier
+    match de chaque équipe (🔒 les deux 0-0 · 💀 les deux perdu sans marquer ·
+    🔻/🔻🔻 · 🔺/🔺🔺) ; si AUCUNE condition ne s'applique, ⚽ (Olivio, 19/10).
+    `derniers` n'est fourni (même vide) que pour la CAN : drapeau de ligue."""
     if derniers is not None and sc in ("2-1", "1-2"):
-        return " ⚽"
+        emo = emoji_nul_11(m.get("team_a"), m.get("team_b"), derniers)
+        return f" {emo}" if emo else " ⚽"
     return ""
 
 
 def _marque_score(sc, m, derniers) -> str:
     """Suffixe emoji du score `sc` en CAN : 🔒/💀/🔻/🔺 pour un 1-1 (selon les
-    derniers résultats), ⚽ pour un 2-1/1-2 (sans condition). "" sinon. Appliqué
-    au score exact principal ET aux deux scores « Sinon »."""
-    return _marque_11(sc, m, derniers) + _marque_21(sc, derniers)
+    derniers résultats) ; pour un 2-1/1-2, la même annotation si une condition
+    s'applique, sinon ⚽. "" sinon. Appliqué au score exact principal ET aux deux
+    scores « Sinon »."""
+    return _marque_11(sc, m, derniers) + _marque_21(sc, m, derniers)
 
 
 def _score_exact_txt(t1, m, derniers) -> str:

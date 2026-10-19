@@ -82,9 +82,11 @@ def test_pas_d_annotation_sans_derniers():
     assert "🔒" not in lignes[0]["Score exact"]
 
 
-def test_pas_d_annotation_si_le_score_n_est_pas_1_1():
-    lignes = pt.tableau_round([_m11("A", "B", score="2-1")], derniers=D)["lignes"]
-    assert "🔒" not in lignes[0]["Score exact"] and lignes[0]["Score exact"].startswith("2-1")
+def test_pas_d_annotation_si_le_score_n_est_ni_1_1_ni_2_1_1_2():
+    # 2-0 n'est ni un 1-1 ni un 2-1/1-2 : aucun emoji, même en CAN.
+    lignes = pt.tableau_round([_m11("A", "B", score="2-0")], derniers=D)["lignes"]
+    se = lignes[0]["Score exact"]
+    assert se.startswith("2-0") and "🔒" not in se and "⚽" not in se, se
 
 
 # -------- câblage : CAN seule --------
