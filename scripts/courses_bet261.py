@@ -12,7 +12,8 @@ le football virtuel, c'est du RNG, on ne fait que lire proprement les cotes.
 """
 from __future__ import annotations
 
-import httpx
+import json
+import urllib.request
 
 # Catégories Bet261 (vérifiées 19/10/2026 sur bet261.mg/virtual/category/{id}).
 CATEGORIES = {"Dashing Derby": 8006, "Platinum Hounds": 8005}  # chevaux / lévriers
@@ -21,12 +22,19 @@ DISCIPLINE = {8006: "🏇 Chevaux", 8005: "🐕 Lévriers"}
 _BASE = "https://hg-event-api-prod.sporty-tech.net/api/events"
 # L'API Sporty-Tech répond aux GET simples avec Origin/Referer bet261 (comme le
 # scraper football). Pas d'authentification pour les cotes (seul le direct vidéo
-# exige un compte).
+# exige un compte). On reste sur urllib.request (stdlib) comme scraper/collector :
+# httpx n'est PAS dans l'image du Space.
 _HEADERS = {
     "Origin": "https://bet261.mg",
     "Referer": "https://bet261.mg/",
     "User-Agent": "Mozilla/5.0",
 }
+
+
+def _get_json(url: str, timeout: float):
+    req = urllib.request.Request(url, headers=_HEADERS)
+    with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 (https constant)
+        return json.loads(resp.read().decode("utf-8"))
 
 
 def _devig(runners: list) -> list:
@@ -89,6 +97,4 @@ def fetch_courses(category_id: int, length: int = 21, timeout: float = 20.0) -> 
     par heure, chacune passée par `course_cotes`. Lève en cas d'erreur réseau."""
     u = (f"{_BASE}?eventCategoryIds={int(category_id)}&offset=0"
          f"&length={int(length)}&fetchEventBetTypesMode=1&l=fr")
-    r = httpx.get(u, headers=_HEADERS, timeout=timeout)
-    r.raise_for_status()
-    return [course_cotes(c) for c in parse_events(r.json())]
+    return [course_cotes(c) for c in parse_events(_get_json(u, timeout))]
