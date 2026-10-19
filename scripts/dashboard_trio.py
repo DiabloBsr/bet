@@ -443,6 +443,63 @@ def main():
                            "Le pari le plus sûr n'est pas un pari gagnant — mise petite.")
 
 
+    # ---- 🏇 COURSES — chevaux & lévriers (Palier 1 : lecture des cotes, 19/10) ----
+    #   Donnée Bet261/Sporty-Tech en direct (events?eventCategoryIds=8006|8005).
+    #   RNG, et les RÉSULTATS ne sont pas exposés : pas d'historique ni d'edge,
+    #   juste la proba DÉVIGÉE de victoire par partant. Voir courses_bet261.py.
+    with st.expander("🏇 Courses — chevaux (Dashing Derby) & lévriers (Platinum Hounds)"):
+        import courses_bet261 as _crs
+
+        def _mada_h(iso):
+            """ISO UTC (…Z) → heure Mada (UTC+3) « HH:MM »."""
+            try:
+                t = datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
+                return t.astimezone(timezone(timedelta(hours=3))).strftime("%H:%M")
+            except Exception:
+                return "?"
+
+        st.caption("Cotes **en direct** de Bet261. Pour chaque course, la "
+                   "probabilité **dévigée** de victoire par partant (la marge du "
+                   "book retirée des cotes). ⚠️ Courses RNG : **pas d'historique "
+                   "ni d'edge** — comme le football virtuel, on ne fait que lire "
+                   "proprement les cotes. Les résultats d'arrivée ne sont pas "
+                   "publiés par l'API.")
+        cc1, cc2 = st.columns([2, 1])
+        _disc = cc1.radio("Discipline", list(_crs.CATEGORIES), horizontal=True,
+                          key="crs_disc")
+        _nb = cc2.number_input("Courses à afficher", 1, 10, 4, 1, key="crs_nb")
+        if st.button("🏇 Charger les prochaines courses", key="crs_go", type="primary"):
+            try:
+                st.session_state["crs_res"] = (
+                    _disc, _crs.fetch_courses(_crs.CATEGORIES[_disc]), None)
+            except Exception as exc:          # réseau/API : on dégrade proprement
+                st.session_state["crs_res"] = (_disc, None, f"{type(exc).__name__}: {exc}")
+        _cr = st.session_state.get("crs_res")
+        if _cr and _cr[0] == _disc:
+            _, _races, _err = _cr
+            if _races is None:
+                st.error(f"Courses indisponibles (API Bet261 injoignable). {_err or ''}")
+            elif not _races:
+                st.info("Aucune course à venir pour l'instant — réessaie dans un moment.")
+            else:
+                st.success(f"**{len(_races)} course(s)** à venir · {_disc} "
+                           f"{_crs.DISCIPLINE.get(_crs.CATEGORIES[_disc], '')}.")
+                for c in _races[:int(_nb)]:
+                    st.markdown(f"#### {_esc(str(c['name']))} — {_mada_h(c['start'])} (Mada)")
+                    fav = c.get("favori")
+                    if fav:
+                        st.success(f"Favori : **n° {fav['num']}** — cote "
+                                   f"{fav['odds']:g} · proba dévigée "
+                                   f"**{fav['p_devig'] * 100:.0f}%**")
+                    _df = pd.DataFrame([{"N°": r["num"], "Cote": r["odds"],
+                                         "Proba dévigée": r["p_devig"] * 100}
+                                        for r in c["runners"]])
+                    st.dataframe(
+                        _df.style.format({"Cote": "{:g}", "Proba dévigée": "{:.0f} %"}),
+                        hide_index=True,
+                        height=35 * (len(_df) + 1) + 3)
+                    st.markdown("---")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2

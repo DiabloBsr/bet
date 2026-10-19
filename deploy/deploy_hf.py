@@ -42,6 +42,8 @@ DEFAULT_FILES = [
     "scripts/lire_cotes.py",
     # Importe par dashboard_trio : absent, l'app en ligne meurt a l'import.
     "scripts/forme_pastilles.py",
+    # Module Courses (chevaux/levriers), importe par dashboard_trio (19/10).
+    "scripts/courses_bet261.py",
     # Deja sur le Space, identique au depot (controle le 04/10), mais hors
     # liste : une retouche du theme ne serait jamais partie.
     "scripts/ui_theme.py",
