@@ -81,7 +81,8 @@ def parse_events(data) -> list:
         if not runners:
             continue
         out.append({"id": e.get("id"), "name": e.get("name"),
-                    "start": e.get("expectedStart"), "runners": runners})
+                    "start": e.get("expectedStart"), "end": e.get("expectedEnd"),
+                    "runners": runners})
     out.sort(key=lambda r: r.get("start") or "")
     return out
 

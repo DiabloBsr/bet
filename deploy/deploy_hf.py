@@ -44,6 +44,9 @@ DEFAULT_FILES = [
     "scripts/forme_pastilles.py",
     # Module Courses (chevaux/levriers), importe par dashboard_trio (19/10).
     "scripts/courses_bet261.py",
+    # Collecte des courses (cotes + arrivees) : loop lance par start_cloud (20/10).
+    "scripts/courses_collect.py",
+    "scripts/_courses_loop.py",
     # Deja sur le Space, identique au depot (controle le 04/10), mais hors
     # liste : une retouche du theme ne serait jamais partie.
     "scripts/ui_theme.py",
