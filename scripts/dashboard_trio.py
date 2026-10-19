@@ -516,29 +516,31 @@ def main():
     # ---- ⚽ SPORT RÉEL (Elo, données ESPN) — football réel, 20/10 ----
     #   Sport réel = vrai signal (≠ RNG virtuel). Modèle Elo sur l'historique
     #   ESPN (gratuit, sans clé). Réplicable NFL/NBA/NHL. Voir sport_reel.py.
-    with st.expander("⚽ Sport réel — prédiction par Elo (football, données ESPN)"):
+    with st.expander("🏅 Sport réel — prédiction par Elo (foot · NFL · NBA · NHL · tennis)"):
         import sport_reel as _sr
 
         st.caption("**Vrai sport, vrai signal** (≠ RNG virtuel) : un modèle **Elo** "
-                   "(notes d'équipes, avantage du terrain, nul) donne des "
-                   "probabilités de victoire calibrées à partir de l'historique "
-                   "ESPN. ⚠️ Honnête : proches des bookmakers, mais ça ne **bat "
-                   "pas le marché** de façon rentable — c'est pour prédire et "
-                   "comprendre.")
+                   "(notes des équipes/joueurs, avantage du terrain au besoin, nul "
+                   "au foot) donne des probabilités de victoire calibrées à partir "
+                   "de l'historique **ESPN** (gratuit). ⚠️ Honnête : proches des "
+                   "bookmakers, mais ça ne **bat pas le marché** de façon rentable "
+                   "— c'est pour prédire et comprendre.")
         _lig = st.selectbox("Ligue / sport", list(_sr.SPORTS), key="sr_lig")
-        _path, _nuls, _hadv0 = _sr.SPORTS[_lig]
+        _cfg = _sr.SPORTS[_lig]
+        _path, _nuls = _cfg["path"], _cfg["nuls"]
 
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path, home_adv):
-            hist = _sr.historique(path, jours=220)
+        def _sr_charger(path, home_adv, kind, slug):
+            hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             elo = _sr.Elo(home_adv=home_adv).entrainer(hist)
-            fx = _sr.a_venir(path, jours=10)
+            fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
             return len(hist), dict(elo.r), elo.home_adv, fx
 
         if st.button("📊 Entraîner le modèle et prédire", key="sr_go", type="primary"):
             with _db("Historique ESPN + entraînement Elo…"):
                 try:
-                    st.session_state["sr_res"] = (_lig, _sr_charger(_path, _hadv0))
+                    st.session_state["sr_res"] = (_lig, _sr_charger(
+                        _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug")))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
@@ -553,21 +555,27 @@ def main():
                 st.success(f"Modèle entraîné sur **{_nb}** matchs terminés "
                            f"(220 derniers jours) · **{len(_fx)}** match(s) à venir.")
                 _preds = _sr.predire(_elo, _fx, _nuls)
+                # Tennis : terrain neutre -> libellés « Joueur 1/2 » plutôt que
+                # « domicile/extérieur » ; sports d'équipe -> 1 / Nul / 2.
+                _tennis = _cfg["kind"] == "tennis"
+                _c1, _c2 = ("Joueur 1", "Joueur 2") if _tennis else ("1 (dom.)", "2 (ext.)")
+                _e1, _e2 = ("Elo J1", "Elo J2") if _tennis else ("Elo dom.", "Elo ext.")
                 if _preds:
-                    st.markdown("**Prochains matchs — probabilités du modèle**")
+                    st.markdown("**Prochaines rencontres — probabilités du modèle**"
+                                if _tennis else "**Prochains matchs — probabilités du modèle**")
                     _rows = [{"Match": f"{p['home']} – {p['away']}",
-                              "1 (dom.)": p["p"]["home"] * 100,
+                              _c1: p["p"]["home"] * 100,
                               "Nul": p["p"]["draw"] * 100,
-                              "2 (ext.)": p["p"]["away"] * 100,
-                              "Elo dom.": p["rating_home"], "Elo ext.": p["rating_away"]}
+                              _c2: p["p"]["away"] * 100,
+                              _e1: p["rating_home"], _e2: p["rating_away"]}
                              for p in _preds]
-                    _cols = ["Match", "1 (dom.)", "Nul", "2 (ext.)", "Elo dom.", "Elo ext."]
+                    _cols = ["Match", _c1, "Nul", _c2, _e1, _e2]
                     if not _nuls:
                         _cols.remove("Nul")
                         for _row in _rows:
                             _row.pop("Nul", None)
                     _dfp = pd.DataFrame(_rows)[_cols]
-                    _fmtp = {c: "{:.0f} %" for c in ("1 (dom.)", "Nul", "2 (ext.)") if c in _dfp}
+                    _fmtp = {c: "{:.0f} %" for c in (_c1, "Nul", _c2) if c in _dfp}
                     st.dataframe(_dfp.style.format(_fmtp), hide_index=True,
                                  height=35 * (len(_dfp) + 1) + 3)
                 else:

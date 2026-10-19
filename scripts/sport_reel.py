@@ -22,19 +22,23 @@ from datetime import datetime, timedelta, timezone
 _H = {"User-Agent": "Mozilla/5.0"}
 _BASE = "https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
 
-# label affiché -> (chemin ESPN, match nul possible, avantage terrain en pts Elo).
-# L'avantage terrain diffère par sport (ordres de grandeur façon FiveThirtyEight) :
-# NBA le plus marqué, NFL/NHL plus modestes, foot ~60.
+# label affiché -> {path ESPN, nul possible, avantage terrain (pts Elo), kind}.
+#   kind="team"   : event.competitions[0].competitors[] (équipes, score chiffré).
+#   kind="tennis" : event.groupings[].competitions[] (joueurs 1v1, flag `winner`,
+#                   terrain neutre -> home_adv 0, pas de nul).
+# L'avantage terrain diffère par sport (ordres de grandeur façon FiveThirtyEight).
 SPORTS = {
-    "⚽ Premier League (Angleterre)": ("soccer/eng.1", True, 60),
-    "⚽ La Liga (Espagne)":           ("soccer/esp.1", True, 60),
-    "⚽ Serie A (Italie)":            ("soccer/ita.1", True, 60),
-    "⚽ Bundesliga (Allemagne)":      ("soccer/ger.1", True, 60),
-    "⚽ Ligue 1 (France)":            ("soccer/fra.1", True, 60),
-    "⚽ Ligue des Champions":         ("soccer/uefa.champions", True, 55),
-    "🏈 NFL (football américain)":    ("football/nfl", False, 48),
-    "🏀 NBA (basket)":                ("basketball/nba", False, 100),
-    "🏒 NHL (hockey)":                ("hockey/nhl", False, 50),
+    "⚽ Premier League (Angleterre)": {"path": "soccer/eng.1", "nuls": True, "home_adv": 60, "kind": "team"},
+    "⚽ La Liga (Espagne)":           {"path": "soccer/esp.1", "nuls": True, "home_adv": 60, "kind": "team"},
+    "⚽ Serie A (Italie)":            {"path": "soccer/ita.1", "nuls": True, "home_adv": 60, "kind": "team"},
+    "⚽ Bundesliga (Allemagne)":      {"path": "soccer/ger.1", "nuls": True, "home_adv": 60, "kind": "team"},
+    "⚽ Ligue 1 (France)":            {"path": "soccer/fra.1", "nuls": True, "home_adv": 60, "kind": "team"},
+    "⚽ Ligue des Champions":         {"path": "soccer/uefa.champions", "nuls": True, "home_adv": 55, "kind": "team"},
+    "🏈 NFL (football américain)":    {"path": "football/nfl", "nuls": False, "home_adv": 48, "kind": "team"},
+    "🏀 NBA (basket)":                {"path": "basketball/nba", "nuls": False, "home_adv": 100, "kind": "team"},
+    "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 50, "kind": "team"},
+    "🎾 Tennis ATP (simple messieurs)": {"path": "tennis/atp", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "mens-singles"},
+    "🎾 Tennis WTA (simple dames)":      {"path": "tennis/wta", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "womens-singles"},
 }
 
 
@@ -44,8 +48,12 @@ def _get(url: str, timeout: float = 20.0):
         return json.loads(r.read().decode("utf-8"))
 
 
-def parse_games(data: dict) -> list:
-    """Réponse scoreboard ESPN → [{date, home, away, hs, as_, done}]."""
+def _completed(comp: dict) -> bool:
+    return bool(((comp.get("status") or {}).get("type") or {}).get("completed"))
+
+
+def _parse_team(data: dict) -> list:
+    """Sports d'équipe : event.competitions[0].competitors[] (score chiffré)."""
     out = []
     for e in (data or {}).get("events", []):
         comp = (e.get("competitions") or [{}])[0]
@@ -54,7 +62,6 @@ def parse_games(data: dict) -> list:
         away = next((c for c in cs if c.get("homeAway") == "away"), None)
         if not home or not away:
             continue
-        done = bool(((comp.get("status") or {}).get("type") or {}).get("completed"))
 
         def _nm(c):
             return (c.get("team") or {}).get("displayName")
@@ -65,34 +72,87 @@ def parse_games(data: dict) -> list:
             except (TypeError, ValueError):
                 return None
 
-        out.append({"date": e.get("date"), "home": _nm(home), "away": _nm(away),
-                    "hs": _sc(home), "as_": _sc(away), "done": done})
+        out.append({"id": comp.get("id") or e.get("id"), "date": e.get("date"),
+                    "home": _nm(home), "away": _nm(away),
+                    "hs": _sc(home), "as_": _sc(away), "done": _completed(comp)})
     return out
 
 
-def _jour(path: str, d: datetime, timeout: float) -> list:
+def _parse_tennis(data: dict, slug: str | None = None) -> list:
+    """Tennis (1v1) : event(tournoi).groupings[].competitions[](matchs). Pas de
+    score chiffré exposé → le résultat vient du flag `winner` (hs/as_ = 1/0).
+    Terrain neutre : les deux joueurs sont mis en home/away arbitrairement, mais
+    l'Elo tennis tourne avec home_adv=0, donc l'ordre n'influe pas.
+
+    `slug` filtre le TABLEAU (ex 'mens-singles') : les flux ATP et WTA d'ESPN
+    renvoient le même tournoi avec TOUS les tableaux (simples + doubles + mixte),
+    donc sans filtre on mélangerait hommes/femmes et on polluerait avec les
+    doubles. Par défaut (slug None) : tous les tableaux de SIMPLE."""
+    out = []
+    for e in (data or {}).get("events", []):
+        for gr in e.get("groupings") or []:
+            g_slug = (gr.get("grouping") or {}).get("slug") or ""
+            if slug:
+                if g_slug != slug:
+                    continue
+            elif "singles" not in g_slug:     # défaut : simples seulement
+                continue
+            for comp in gr.get("competitions") or []:
+                cs = comp.get("competitors") or []
+                if len(cs) != 2:
+                    continue
+
+                def _nm(c):
+                    return (c.get("athlete") or {}).get("displayName")
+
+                a, b = cs[0], cs[1]
+                na, nb = _nm(a), _nm(b)
+                if not na or not nb:
+                    continue
+                done = _completed(comp)
+                hs = as_ = None
+                if done:
+                    # qui a gagné : flag `winner` sur l'un des deux.
+                    if a.get("winner"):
+                        hs, as_ = 1, 0
+                    elif b.get("winner"):
+                        hs, as_ = 0, 1
+                    else:
+                        continue          # terminé mais sans vainqueur clair -> ignoré
+                out.append({"id": comp.get("id"), "date": comp.get("date") or e.get("date"),
+                            "home": na, "away": nb, "hs": hs, "as_": as_, "done": done})
+    return out
+
+
+def parse_games(data: dict, kind: str = "team", slug: str | None = None) -> list:
+    """Dispatcher : → [{id, date, home, away, hs, as_, done}] selon le type."""
+    return _parse_tennis(data, slug) if kind == "tennis" else _parse_team(data)
+
+
+def _jour(path: str, d: datetime, timeout: float, kind: str, slug: str | None) -> list:
     try:
-        u = _BASE.format(path=path) + "?dates=" + d.strftime("%Y%m%d") + "&limit=200"
-        return parse_games(_get(u, timeout))
+        u = _BASE.format(path=path) + "?dates=" + d.strftime("%Y%m%d") + "&limit=300"
+        return parse_games(_get(u, timeout), kind, slug)
     except Exception:
         return []          # un jour qui échoue ne casse pas la collecte
 
 
-def fetch_range(path: str, debut: datetime, fin: datetime, timeout: float = 20.0) -> list:
+def fetch_range(path: str, debut: datetime, fin: datetime,
+                kind: str = "team", slug: str | None = None, timeout: float = 20.0) -> list:
     """ESPN ne gère pas les plages (400) : on interroge JOUR PAR JOUR, EN
-    PARALLÈLE (sinon ~0,5 s × N jours), on concatène, déduplique par
-    (home, away, jour), et on trie par date croissante."""
+    PARALLÈLE (sinon ~0,5 s × N jours), on concatène, déduplique par id de match
+    (ou (home, away, jour) à défaut), et on trie par date croissante."""
     jours = []
     d = debut
     while d <= fin:
         jours.append(d)
         d += timedelta(days=1)
     with ThreadPoolExecutor(max_workers=16) as ex:
-        lots = list(ex.map(lambda x: _jour(path, x, timeout), jours))
+        lots = list(ex.map(lambda x: _jour(path, x, timeout, kind, slug), jours))
     jeux, vus = [], set()
     for lot in lots:
         for g in lot:
-            k = (g["home"], g["away"], (g["date"] or "")[:10])
+            k = g.get("id") or (g["home"], g["away"], (g["date"] or "")[:10])
             if k not in vus:
                 vus.add(k)
                 jeux.append(g)
@@ -148,18 +208,21 @@ def _auj() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def historique(path: str, jours: int = 160) -> list:
+def historique(path: str, jours: int = 160, kind: str = "team",
+               slug: str | None = None) -> list:
     """Matchs TERMINÉS des `jours` derniers jours (pour entraîner l'Elo)."""
     fin = _auj()
-    jeux = fetch_range(path, fin - timedelta(days=jours), fin)
+    jeux = fetch_range(path, fin - timedelta(days=jours), fin, kind, slug)
     return [g for g in jeux if g["done"] and g["hs"] is not None and g["as_"] is not None]
 
 
-def a_venir(path: str, jours: int = 10) -> list:
-    """Matchs À VENIR (non terminés) des `jours` prochains jours."""
+def a_venir(path: str, jours: int = 10, kind: str = "team",
+            slug: str | None = None) -> list:
+    """Matchs À VENIR (non terminés) des `jours` prochains jours. En tennis,
+    on ne garde que ceux dont les DEUX joueurs sont déjà connus."""
     debut = _auj()
-    jeux = fetch_range(path, debut, debut + timedelta(days=jours))
-    return [g for g in jeux if not g["done"]]
+    jeux = fetch_range(path, debut, debut + timedelta(days=jours), kind, slug)
+    return [g for g in jeux if not g["done"] and g["home"] and g["away"]]
 
 
 def predire(elo: Elo, fixtures: list, nuls: bool = True) -> list:

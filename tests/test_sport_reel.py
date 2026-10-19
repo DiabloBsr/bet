@@ -76,6 +76,39 @@ def test_entrainer_ignore_les_matchs_non_termines():
     assert "C" not in e.r            # le match non joué n'a rien mis à jour
 
 
+# -------- tennis (1v1, groupings, filtre de tableau) --------
+
+def _tournoi():
+    def _m(a, b, a_gagne, done=True):
+        return {"id": f"{a}-{b}", "date": "2026-01-18T00:00Z",
+                "status": {"type": {"completed": done}},
+                "competitors": [{"athlete": {"displayName": a}, "winner": a_gagne},
+                                {"athlete": {"displayName": b}, "winner": not a_gagne}]}
+    return {"events": [{"date": "2026-01-18T00:00Z", "groupings": [
+        {"grouping": {"slug": "mens-singles"}, "competitions": [_m("Sinner", "Alcaraz", True)]},
+        {"grouping": {"slug": "womens-singles"}, "competitions": [_m("Swiatek", "Gauff", False)]},
+        {"grouping": {"slug": "mens-doubles"}, "competitions": [_m("X", "Y", True)]},
+    ]}]}
+
+
+def test_tennis_parse_simple_messieurs_seulement():
+    g = sr.parse_games(_tournoi(), kind="tennis", slug="mens-singles")
+    assert len(g) == 1
+    assert g[0]["home"] == "Sinner" and g[0]["away"] == "Alcaraz"
+    assert g[0]["hs"] == 1 and g[0]["as_"] == 0      # Sinner a gagné
+
+
+def test_tennis_filtre_exclut_doubles_et_autre_genre():
+    hommes = sr.parse_games(_tournoi(), kind="tennis", slug="mens-singles")
+    femmes = sr.parse_games(_tournoi(), kind="tennis", slug="womens-singles")
+    assert [x["home"] for x in hommes] == ["Sinner"]     # pas de doubles, pas de dames
+    assert [x["home"] for x in femmes] == ["Swiatek"]
+    # sans slug : tous les SIMPLES (hommes + dames), jamais les doubles
+    tous = sr.parse_games(_tournoi(), kind="tennis")
+    noms = {x["home"] for x in tous}
+    assert noms == {"Sinner", "Swiatek"} and "X" not in noms
+
+
 def test_predire_attache_proba_et_favori():
     e = sr.Elo()
     e.r = {"Fort": 1800, "Faible": 1400}
