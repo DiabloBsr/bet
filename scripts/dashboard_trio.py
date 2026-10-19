@@ -520,15 +520,17 @@ def main():
         import sport_reel as _sr3
 
         st.caption("Chaque jour, mes **3 pronostics les plus confiants par sport** "
-                   "(forme récente + face-à-face, **sans cote**), sur les matchs "
-                   "des **3 prochains jours**. Rappel honnête : fiable surtout en "
-                   "**NBA et tennis** ; le football reste difficile.")
+                   "(forme récente + face-à-face + **blessures**, **sans cote**), "
+                   "sur les matchs des **3 prochains jours**. Les absences (Out) "
+                   "sont prises en compte en NBA/NFL/NHL (ESPN ne publie pas les "
+                   "blessés au foot). Fiable surtout en **NBA et tennis**.")
 
         @st.cache_data(ttl=10800, show_spinner=False)
         def _sr_jour(path, home_adv, kind, slug, nuls):
             hist = _sr3.historique(path, jours=150, kind=kind, slug=slug)
             fx = _sr3.a_venir(path, jours=3, kind=kind, slug=slug)
-            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv)
+            bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
+            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl)
 
         if st.button("🏆 Calculer le top 3 du jour (tous sports)", key="sr3_go",
                      type="primary"):
@@ -562,11 +564,23 @@ def main():
                 for _p, _tn in _lst:
                     _h = _p["h2h"]
                     _h2 = (f" · face-à-face {_h['va']}–{_h['vb']}" if _h["tot"] else "")
+
+                    def _outs(lst):
+                        return [b["nom"] for b in (lst or []) if b.get("status") == "Out"]
+                    _oh, _oa = _outs(_p.get("bless_home")), _outs(_p.get("bless_away"))
+                    _bl = ""
+                    if _oh or _oa:
+                        _parts = []
+                        if _oh:
+                            _parts.append(f"{_esc(_p['home'])} : {_esc(', '.join(_oh[:3]))}")
+                        if _oa:
+                            _parts.append(f"{_esc(_p['away'])} : {_esc(', '.join(_oa[:3]))}")
+                        _bl = " · ⛑ absents — " + " ; ".join(_parts)
                     st.markdown(
                         f"- **{_pick3(_p, _tn)}** — confiance **{_p['conf'] * 100:.0f}%**  "
                         f"<span style='opacity:.7'>({_esc(_p['home'])} – {_esc(_p['away'])}) · "
                         f"forme {_p['forme_home']['seq'] or '—'} / "
-                        f"{_p['forme_away']['seq'] or '—'}{_h2}</span>",
+                        f"{_p['forme_away']['seq'] or '—'}{_h2}{_bl}</span>",
                         unsafe_allow_html=True)
             if not _vu:
                 st.info("Aucun match à venir dans les 3 prochains jours, tous sports confondus.")
@@ -596,7 +610,8 @@ def main():
         def _sr_charger(path, home_adv, kind, slug, nuls):
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
-            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv)
+            bl = _sr.blessures_du_sport(path) if kind == "team" else {}
+            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl)
             bt = _sr.taux_reussite(hist, nuls, home_adv)
             top = sorted(_sr.Elo(home_adv=home_adv).entrainer(hist).r.items(),
                          key=lambda kv: -kv[1])[:10]
@@ -638,18 +653,34 @@ def main():
                     return (f"{h['va']}–{h['vb']}" + (f" ({h['nul']} nul)" if h["nul"] else "")
                             + f" sur {h['tot']}")
 
+                def _nb_out(lst):
+                    return sum(1 for b in (lst or []) if b.get("status") == "Out")
+
+                # Colonne « Absents » (Out) seulement là où ESPN publie les blessés.
+                _a_bless = any(p.get("bless_home") or p.get("bless_away") for p in _pronos)
                 if _pronos:
-                    st.markdown("**Pronostics — forme récente (V/N/D, récent→ancien) & face-à-face**")
-                    _rows = [{"Match": f"{p['home']} – {p['away']}",
-                              "Pronostic": _pick_txt(p),
-                              "Confiance": p["conf"] * 100,
-                              ("Forme J1" if _tennis else "Forme dom."): p["forme_home"]["seq"] or "—",
-                              ("Forme J2" if _tennis else "Forme ext."): p["forme_away"]["seq"] or "—",
-                              "Face-à-face": _h2h_txt(p["h2h"])}
-                             for p in _pronos]
+                    st.markdown("**Pronostics — forme récente (V/N/D, récent→ancien), "
+                                "face-à-face & blessures**")
+                    _rows = []
+                    for p in _pronos:
+                        _row = {"Match": f"{p['home']} – {p['away']}",
+                                "Pronostic": _pick_txt(p),
+                                "Confiance": p["conf"] * 100,
+                                ("Forme J1" if _tennis else "Forme dom."): p["forme_home"]["seq"] or "—",
+                                ("Forme J2" if _tennis else "Forme ext."): p["forme_away"]["seq"] or "—",
+                                "Face-à-face": _h2h_txt(p["h2h"])}
+                        if _a_bless:
+                            _row["Absents (dom/ext)"] = (
+                                f"{_nb_out(p.get('bless_home'))} / {_nb_out(p.get('bless_away'))}")
+                        _rows.append(_row)
                     _dfp = pd.DataFrame(_rows)
                     st.dataframe(_dfp.style.format({"Confiance": "{:.0f} %"}),
                                  hide_index=True, height=35 * (len(_dfp) + 1) + 3)
+                    if _a_bless:
+                        st.caption("« Absents » = joueurs **Out** (blessés) de chaque "
+                                   "équipe, pris en compte dans la proba. Repère "
+                                   "(pas de valeur par joueur) ; détail des noms "
+                                   "dans « Top 3 du jour ».")
                 else:
                     st.info("Aucun match à venir dans les 10 prochains jours.")
                 st.caption("Contexte (notes Elo, cumul des résultats) — **Top 10** : "

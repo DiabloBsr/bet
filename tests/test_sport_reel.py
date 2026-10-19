@@ -153,3 +153,23 @@ def test_backtest_rend_un_taux_borne_ou_none():
     base = [_g("A", "B", 2, 0, f"{i:03d}") for i in range(80)]
     bt = sr.taux_reussite(base, nuls=False, home_adv=0, warmup=20)
     assert bt is not None and 0.0 <= bt["taux"] <= 1.0 and bt["tot"] > 0
+
+
+# -------- blessures --------
+
+def test_poids_blessures():
+    assert sr.poids_blessures(None) == 0.0
+    assert sr.poids_blessures([{"status": "Out"}, {"status": "Out"}]) == 2.0
+    assert sr.poids_blessures([{"status": "Day-To-Day"}]) == 0.4
+    assert sr.poids_blessures([{"status": "Out"}, {"status": "Day-To-Day"}]) == 1.4
+
+
+def test_blessures_baissent_la_proba_de_l_equipe_touchee():
+    # deux camps à forme égale ; le domicile perd 3 titulaires -> sa proba baisse.
+    passes = ([_g("A", f"o{i}", 1, 0, f"a{i}") for i in range(6)]
+              + [_g("B", f"p{i}", 1, 0, f"b{i}") for i in range(6)])
+    sans = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0)
+    avec = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0,
+                              inj_home=[{"status": "Out"}] * 3)
+    assert avec["p"]["home"] < sans["p"]["home"]
+    assert len(avec["bless_home"]) == 3

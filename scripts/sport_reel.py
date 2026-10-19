@@ -286,10 +286,45 @@ def face_a_face(passes: list, a: str, b: str, n: int = 6) -> dict:
             "score_a": (va + 0.5 * nul) / tot if tot else None}
 
 
+_INJ = "https://site.api.espn.com/apis/site/v2/sports/{path}/injuries"
+
+
+def blessures_du_sport(path: str, timeout: float = 20.0) -> dict:
+    """{équipe (displayName): [{'nom', 'status'}]} depuis l'endpoint injuries
+    d'ESPN. Dispo pour NBA/NFL/NHL ; VIDE pour le foot (ESPN ne publie pas) et
+    le tennis (un forfait annule le match)."""
+    out: dict = {}
+    try:
+        d = _get(_INJ.format(path=path), timeout)
+    except Exception:
+        return out
+    for grp in d.get("injuries") or []:
+        team = grp.get("displayName")
+        lst = []
+        for it in grp.get("injuries") or []:
+            nom = (it.get("athlete") or {}).get("displayName")
+            if nom:
+                lst.append({"nom": nom, "status": it.get("status")})
+        if team and lst:
+            out[team] = lst
+    return out
+
+
+def poids_blessures(liste: list | None) -> float:
+    """Poids d'absence d'une équipe : 1,0 par « Out », 0,4 par « Day-To-Day »
+    (incertain). Faute de valeur par joueur, c'est un COMPTE pondéré, pas une
+    mesure de l'importance réelle des blessés."""
+    if not liste:
+        return 0.0
+    return sum(1.0 if x.get("status") == "Out" else 0.4 for x in liste)
+
+
 def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
-                    home_adv: float = 0.0, n_forme: int = 6, n_h2h: int = 6) -> dict:
+                    home_adv: float = 0.0, n_forme: int = 6, n_h2h: int = 6,
+                    inj_home: list | None = None, inj_away: list | None = None) -> dict:
     """Pronostic d'un match à partir de la FORME récente + du FACE-À-FACE, sans
-    aucune cote. Rend probas, `pick` (home/draw/away) et la confiance."""
+    aucune cote. Les BLESSURES (si fournies) décalent modérément la proba contre
+    l'équipe la plus touchée. Rend probas, `pick`, confiance, blessés."""
     fh = forme(passes, home, n_forme)
     fa = forme(passes, away, n_forme)
     eps = 0.1
@@ -302,6 +337,12 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
     if h2h["score_a"] is not None and h2h["tot"] >= 2:
         # le face-à-face pèse ~35 % quand il existe (au moins 2 confrontations).
         p_core = min(0.97, max(0.03, 0.65 * p_core + 0.35 * h2h["score_a"]))
+    # Blessures : décale la proba contre l'équipe la plus touchée. 0,04 par unité
+    # de poids d'écart, plafonné à ±0,12 (repère, pas une mesure précise).
+    pw_h, pw_a = poids_blessures(inj_home), poids_blessures(inj_away)
+    if pw_h or pw_a:
+        adj = max(-0.12, min(0.12, 0.04 * (pw_a - pw_h)))
+        p_core = min(0.97, max(0.03, p_core + adj))
     if nuls:
         # le nul est d'autant plus probable que les deux camps sont proches.
         p_draw = max(0.06, 0.30 * (1.0 - 2.0 * abs(p_core - 0.5)))
@@ -313,16 +354,19 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
         p = {"home": p_core, "draw": 0.0, "away": 1.0 - p_core}
         pick = "home" if p_core >= 0.5 else "away"
     return {"home": home, "away": away, "p": p, "pick": pick,
-            "conf": max(p.values()), "forme_home": fh, "forme_away": fa, "h2h": h2h}
+            "conf": max(p.values()), "forme_home": fh, "forme_away": fa, "h2h": h2h,
+            "bless_home": inj_home or [], "bless_away": inj_away or []}
 
 
 def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
-                       home_adv: float = 0.0) -> list:
-    """Pronostic forme + face-à-face pour chaque match à venir (contexte = tout
-    l'historique terminé)."""
+                       home_adv: float = 0.0, blessures: dict | None = None) -> list:
+    """Pronostic forme + face-à-face (+ blessures si fournies) pour chaque match
+    à venir. `blessures` = {équipe: [{'nom','status'}]}."""
     passes = [g for g in hist if g.get("done") and g.get("hs") is not None]
     passes.sort(key=lambda g: g.get("date") or "")
-    return [pronostic_forme(passes, g["home"], g["away"], nuls, home_adv)
+    bl = blessures or {}
+    return [pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
+                            inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]))
             for g in fixtures if g.get("home") and g.get("away")]
 
 
