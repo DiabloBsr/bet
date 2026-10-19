@@ -513,6 +513,69 @@ def main():
                         height=35 * (len(_df) + 1) + 3)
                     st.markdown("---")
 
+    # ---- ⚽ SPORT RÉEL (Elo, données ESPN) — football réel, 20/10 ----
+    #   Sport réel = vrai signal (≠ RNG virtuel). Modèle Elo sur l'historique
+    #   ESPN (gratuit, sans clé). Réplicable NFL/NBA/NHL. Voir sport_reel.py.
+    with st.expander("⚽ Sport réel — prédiction par Elo (football, données ESPN)"):
+        import sport_reel as _sr
+
+        st.caption("**Vrai sport, vrai signal** (≠ RNG virtuel) : un modèle **Elo** "
+                   "(notes d'équipes, avantage du terrain, nul) donne des "
+                   "probabilités de victoire calibrées à partir de l'historique "
+                   "ESPN. ⚠️ Honnête : proches des bookmakers, mais ça ne **bat "
+                   "pas le marché** de façon rentable — c'est pour prédire et "
+                   "comprendre.")
+        _lig = st.selectbox("Ligue", list(_sr.SPORTS), key="sr_lig")
+        _path, _nuls = _sr.SPORTS[_lig]
+
+        @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
+        def _sr_charger(path):
+            hist = _sr.historique(path, jours=220)
+            elo = _sr.Elo().entrainer(hist)
+            fx = _sr.a_venir(path, jours=10)
+            return len(hist), dict(elo.r), elo.home_adv, fx
+
+        if st.button("📊 Entraîner le modèle et prédire", key="sr_go", type="primary"):
+            with _db("Historique ESPN + entraînement Elo…"):
+                try:
+                    st.session_state["sr_res"] = (_lig, _sr_charger(_path))
+                except Exception as exc:
+                    st.session_state["sr_res"] = (_lig, None)
+                    st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
+        _r = st.session_state.get("sr_res")
+        if _r and _r[0] == _lig:
+            if _r[1] is None:
+                st.error(f"Données ESPN indisponibles. {st.session_state.get('sr_err','')}")
+            else:
+                _nb, _ratings, _hadv, _fx = _r[1]
+                _elo = _sr.Elo(home_adv=_hadv)
+                _elo.r = _ratings
+                st.success(f"Modèle entraîné sur **{_nb}** matchs terminés "
+                           f"(220 derniers jours) · **{len(_fx)}** match(s) à venir.")
+                _preds = _sr.predire(_elo, _fx, _nuls)
+                if _preds:
+                    st.markdown("**Prochains matchs — probabilités du modèle**")
+                    _rows = [{"Match": f"{p['home']} – {p['away']}",
+                              "1 (dom.)": p["p"]["home"] * 100,
+                              "Nul": p["p"]["draw"] * 100,
+                              "2 (ext.)": p["p"]["away"] * 100,
+                              "Elo dom.": p["rating_home"], "Elo ext.": p["rating_away"]}
+                             for p in _preds]
+                    _cols = ["Match", "1 (dom.)", "Nul", "2 (ext.)", "Elo dom.", "Elo ext."]
+                    if not _nuls:
+                        _cols.remove("Nul")
+                        for _row in _rows:
+                            _row.pop("Nul", None)
+                    _dfp = pd.DataFrame(_rows)[_cols]
+                    _fmtp = {c: "{:.0f} %" for c in ("1 (dom.)", "Nul", "2 (ext.)") if c in _dfp}
+                    st.dataframe(_dfp.style.format(_fmtp), hide_index=True,
+                                 height=35 * (len(_dfp) + 1) + 3)
+                else:
+                    st.info("Aucun match à venir dans les 10 prochains jours pour cette ligue.")
+                _top = sorted(_ratings.items(), key=lambda kv: -kv[1])[:10]
+                st.caption("**Top 10 Elo** : " + " · ".join(
+                    f"{_esc(t)} {round(v)}" for t, v in _top))
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2

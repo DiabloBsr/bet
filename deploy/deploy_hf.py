@@ -47,6 +47,8 @@ DEFAULT_FILES = [
     # Collecte des courses (cotes + arrivees) : loop lance par start_cloud (20/10).
     "scripts/courses_collect.py",
     "scripts/_courses_loop.py",
+    # Prediction sport reel par Elo (donnees ESPN), importe par dashboard (20/10).
+    "scripts/sport_reel.py",
     # Deja sur le Space, identique au depot (controle le 04/10), mais hors
     # liste : une retouche du theme ne serait jamais partie.
     "scripts/ui_theme.py",
