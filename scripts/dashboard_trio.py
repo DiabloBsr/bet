@@ -513,6 +513,64 @@ def main():
                         height=35 * (len(_df) + 1) + 3)
                     st.markdown("---")
 
+    # ---- 🏆 TOP 3 DU JOUR PAR SPORT (forme + face-à-face, 20/10) ----
+    #   Les 3 pronostics les plus CONFIANTS par sport sur les matchs des
+    #   prochains jours. Même modèle forme+face-à-face, sans cote.
+    with st.expander("🏆 Top 3 du jour — mes 3 meilleurs pronostics par sport"):
+        import sport_reel as _sr3
+
+        st.caption("Chaque jour, mes **3 pronostics les plus confiants par sport** "
+                   "(forme récente + face-à-face, **sans cote**), sur les matchs "
+                   "des **3 prochains jours**. Rappel honnête : fiable surtout en "
+                   "**NBA et tennis** ; le football reste difficile.")
+
+        @st.cache_data(ttl=10800, show_spinner=False)
+        def _sr_jour(path, home_adv, kind, slug, nuls):
+            hist = _sr3.historique(path, jours=150, kind=kind, slug=slug)
+            fx = _sr3.a_venir(path, jours=3, kind=kind, slug=slug)
+            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv)
+
+        if st.button("🏆 Calculer le top 3 du jour (tous sports)", key="sr3_go",
+                     type="primary"):
+            _par_groupe = {g: [] for g in _sr3.GROUPES}
+            with _db("Chargement de tous les sports (forme + face-à-face)…"):
+                for _lbl, _c in _sr3.SPORTS.items():
+                    try:
+                        _pr = _sr_jour(_c["path"], _c["home_adv"], _c["kind"],
+                                       _c.get("slug"), _c["nuls"])
+                    except Exception:
+                        _pr = []
+                    _g = _sr3.groupe_de(_c)
+                    for _p in _pr:
+                        _par_groupe.setdefault(_g, []).append((_p, _c["kind"] == "tennis"))
+            st.session_state["sr3_res"] = _par_groupe
+        _res3 = st.session_state.get("sr3_res")
+        if _res3 is not None:
+            def _pick3(p, tennis):
+                if tennis:
+                    return _esc(p["home"] if p["pick"] == "home" else p["away"])
+                return {"home": f"1 — {_esc(p['home'])}", "draw": "Nul",
+                        "away": f"2 — {_esc(p['away'])}"}[p["pick"]]
+            _vu = False
+            for _g in _sr3.GROUPES:
+                _lst = sorted(_res3.get(_g, []), key=lambda t: -t[0]["conf"])[:3]
+                st.markdown(f"#### {_g}")
+                if not _lst:
+                    st.caption("— aucun match dans les 3 prochains jours.")
+                    continue
+                _vu = True
+                for _p, _tn in _lst:
+                    _h = _p["h2h"]
+                    _h2 = (f" · face-à-face {_h['va']}–{_h['vb']}" if _h["tot"] else "")
+                    st.markdown(
+                        f"- **{_pick3(_p, _tn)}** — confiance **{_p['conf'] * 100:.0f}%**  "
+                        f"<span style='opacity:.7'>({_esc(_p['home'])} – {_esc(_p['away'])}) · "
+                        f"forme {_p['forme_home']['seq'] or '—'} / "
+                        f"{_p['forme_away']['seq'] or '—'}{_h2}</span>",
+                        unsafe_allow_html=True)
+            if not _vu:
+                st.info("Aucun match à venir dans les 3 prochains jours, tous sports confondus.")
+
     # ---- ⚽ SPORT RÉEL (Elo, données ESPN) — football réel, 20/10 ----
     #   Sport réel = vrai signal (≠ RNG virtuel). Modèle Elo sur l'historique
     #   ESPN (gratuit, sans clé). Réplicable NFL/NBA/NHL. Voir sport_reel.py.

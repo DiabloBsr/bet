@@ -42,6 +42,22 @@ SPORTS = {
 }
 
 
+# Regroupement des ligues par SPORT (pour le « top 3 du jour par sport »).
+GROUPES = ["⚽ Football", "🏈 NFL", "🏀 NBA", "🏒 NHL", "🎾 Tennis"]
+
+
+def groupe_de(cfg: dict) -> str:
+    """Sport d'appartenance d'une entrée SPORTS (les 6 ligues de foot → Football,
+    ATP+WTA → Tennis, etc.)."""
+    if cfg.get("kind") == "tennis":
+        return "🎾 Tennis"
+    p = cfg.get("path", "")
+    if p.startswith("soccer"):
+        return "⚽ Football"
+    return {"football/nfl": "🏈 NFL", "basketball/nba": "🏀 NBA",
+            "hockey/nhl": "🏒 NHL"}.get(p, p)
+
+
 def _get(url: str, timeout: float = 20.0):
     req = urllib.request.Request(url, headers=_H)
     with urllib.request.urlopen(req, timeout=timeout) as r:
