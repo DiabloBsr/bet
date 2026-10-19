@@ -460,10 +460,23 @@ def main():
 
         st.caption("Cotes **en direct** de Bet261. Pour chaque course, la "
                    "probabilité **dévigée** de victoire par partant (la marge du "
-                   "book retirée des cotes). ⚠️ Courses RNG : **pas d'historique "
-                   "ni d'edge** — comme le football virtuel, on ne fait que lire "
-                   "proprement les cotes. Les résultats d'arrivée ne sont pas "
-                   "publiés par l'API.")
+                   "book retirée des cotes). ⚠️ Courses RNG : pas d'edge prouvé — "
+                   "comme le football virtuel. Une collecte des **arrivées** "
+                   "tourne en fond pour permettre, à terme, une analyse "
+                   "indépendante des cotes (biais éventuel du RNG).")
+        # Compteur de collecte (lit la table `courses` remplie par _courses_loop).
+        # Garde : la table peut ne pas exister au tout premier démarrage.
+        try:
+            from sqlalchemy import text as _text_c
+            with _engine().connect() as _cxc:
+                _tot_c = _cxc.execute(_text_c("SELECT COUNT(*) FROM courses")).scalar() or 0
+                _res_c = _cxc.execute(_text_c(
+                    "SELECT COUNT(*) FROM courses WHERE result_json IS NOT NULL")).scalar() or 0
+            st.caption(f"🗃️ Collecte en base : **{_tot_c}** course(s) enregistrée(s), "
+                       f"dont **{_res_c}** avec arrivée. (Repart de zéro à chaque "
+                       f"redéploiement du Space.)")
+        except Exception:
+            st.caption("🗃️ Collecte : démarrage… (aucune course encore en base).")
         cc1, cc2 = st.columns([2, 1])
         _disc = cc1.radio("Discipline", list(_crs.CATEGORIES), horizontal=True,
                           key="crs_disc")
