@@ -22,14 +22,19 @@ from datetime import datetime, timedelta, timezone
 _H = {"User-Agent": "Mozilla/5.0"}
 _BASE = "https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
 
-# label affiché -> (chemin ESPN, la discipline connaît le match nul)
+# label affiché -> (chemin ESPN, match nul possible, avantage terrain en pts Elo).
+# L'avantage terrain diffère par sport (ordres de grandeur façon FiveThirtyEight) :
+# NBA le plus marqué, NFL/NHL plus modestes, foot ~60.
 SPORTS = {
-    "⚽ Premier League (Angleterre)": ("soccer/eng.1", True),
-    "⚽ La Liga (Espagne)":           ("soccer/esp.1", True),
-    "⚽ Serie A (Italie)":            ("soccer/ita.1", True),
-    "⚽ Bundesliga (Allemagne)":      ("soccer/ger.1", True),
-    "⚽ Ligue 1 (France)":            ("soccer/fra.1", True),
-    "⚽ Ligue des Champions":         ("soccer/uefa.champions", True),
+    "⚽ Premier League (Angleterre)": ("soccer/eng.1", True, 60),
+    "⚽ La Liga (Espagne)":           ("soccer/esp.1", True, 60),
+    "⚽ Serie A (Italie)":            ("soccer/ita.1", True, 60),
+    "⚽ Bundesliga (Allemagne)":      ("soccer/ger.1", True, 60),
+    "⚽ Ligue 1 (France)":            ("soccer/fra.1", True, 60),
+    "⚽ Ligue des Champions":         ("soccer/uefa.champions", True, 55),
+    "🏈 NFL (football américain)":    ("football/nfl", False, 48),
+    "🏀 NBA (basket)":                ("basketball/nba", False, 100),
+    "🏒 NHL (hockey)":                ("hockey/nhl", False, 50),
 }
 
 

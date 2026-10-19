@@ -525,20 +525,20 @@ def main():
                    "ESPN. ⚠️ Honnête : proches des bookmakers, mais ça ne **bat "
                    "pas le marché** de façon rentable — c'est pour prédire et "
                    "comprendre.")
-        _lig = st.selectbox("Ligue", list(_sr.SPORTS), key="sr_lig")
-        _path, _nuls = _sr.SPORTS[_lig]
+        _lig = st.selectbox("Ligue / sport", list(_sr.SPORTS), key="sr_lig")
+        _path, _nuls, _hadv0 = _sr.SPORTS[_lig]
 
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path):
+        def _sr_charger(path, home_adv):
             hist = _sr.historique(path, jours=220)
-            elo = _sr.Elo().entrainer(hist)
+            elo = _sr.Elo(home_adv=home_adv).entrainer(hist)
             fx = _sr.a_venir(path, jours=10)
             return len(hist), dict(elo.r), elo.home_adv, fx
 
         if st.button("📊 Entraîner le modèle et prédire", key="sr_go", type="primary"):
             with _db("Historique ESPN + entraînement Elo…"):
                 try:
-                    st.session_state["sr_res"] = (_lig, _sr_charger(_path))
+                    st.session_state["sr_res"] = (_lig, _sr_charger(_path, _hadv0))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
