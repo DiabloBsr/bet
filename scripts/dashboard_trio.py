@@ -651,6 +651,7 @@ def main():
                            "💀 les deux ont perdu sans marquer · "
                            "🔻 domicile 0-0 et extérieur battu (🔻🔻 si 0-1) · "
                            "🔺 extérieur 0-0 et domicile vainqueur (🔺🔺 si 1-0).")
+                st.caption("⚽ = pronostic **2-1 ou 1-2** (score serré à trois buts).")
 
         # Le combiné de 3 matchs a été RETIRÉ de l'écran (Olivio, 16/10) ;
         # `combine_round` reste dans le moteur, non câblé.

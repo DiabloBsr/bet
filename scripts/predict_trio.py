@@ -2412,11 +2412,27 @@ def _marque_11(sc, m, derniers) -> str:
     return ""
 
 
+def _marque_21(sc, derniers) -> str:
+    """⚽ si le score `sc` est un 2-1 ou 1-2 en CAN (Olivio, 19/10). Sans
+    condition : dès que le pronostic est 2-1/1-2, l'emoji sort. `derniers` n'est
+    fourni (même vide) que pour la CAN, il sert donc de drapeau de ligue."""
+    if derniers is not None and sc in ("2-1", "1-2"):
+        return " ⚽"
+    return ""
+
+
+def _marque_score(sc, m, derniers) -> str:
+    """Suffixe emoji du score `sc` en CAN : 🔒/💀/🔻/🔺 pour un 1-1 (selon les
+    derniers résultats), ⚽ pour un 2-1/1-2 (sans condition). "" sinon. Appliqué
+    au score exact principal ET aux deux scores « Sinon »."""
+    return _marque_11(sc, m, derniers) + _marque_21(sc, derniers)
+
+
 def _score_exact_txt(t1, m, derniers) -> str:
-    """« 1-1 · 17 % », plus le marquage 🔒/🔻/🔺 si le pronostic de tête est 1-1."""
+    """« 1-1 · 17 % », plus le marquage 🔒/🔻/🔺 (1-1) ou ⚽ (2-1/1-2) du score de tête."""
     if not t1 or not t1[0]:
         return ""
-    return f"{t1[0]} · {t1[1] * 100:.0f} %" + _marque_11(t1[0], m, derniers)
+    return f"{t1[0]} · {t1[1] * 100:.0f} %" + _marque_score(t1[0], m, derniers)
 
 
 def _rang(n) -> str:
@@ -2460,9 +2476,10 @@ def tableau_round(matches, feu: str | None = None, glace: str | None = None,
         ph, pd_, pa = m["x12"]
         ta, tb = m.get("team_a"), m.get("team_b")
         t1 = m.get("top1_calibre") or (m.get("consensus_top3") or [(None, 0)])[0]
-        # Les scores « Sinon » portent AUSSI le marquage 1-1 (Olivio, 15/10) :
-        # un 1-1 parmi les alternatives doit être annoté comme le score de tête.
-        sinon = " · ".join(f"{sc} {pr * 100:.0f} %" + _marque_11(sc, m, derniers)
+        # Les scores « Sinon » portent AUSSI le marquage (Olivio, 15/10) : un
+        # 1-1 (🔒💀🔻🔺) ou un 2-1/1-2 (⚽) parmi les alternatives est annoté
+        # comme le score de tête.
+        sinon = " · ".join(f"{sc} {pr * 100:.0f} %" + _marque_score(sc, m, derniers)
                            for sc, pr in (m.get("consensus_top3") or [])[1:3] if sc)
         # Un match « porte un emoji » (16/10) s'il a une équipe cible (🔥💥⚡)
         # OU une annotation 1-1 affichée (🔒💀🔻🔺). Pour ceux-là : classement
