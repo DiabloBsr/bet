@@ -436,8 +436,8 @@ def marches_buts(passes: list, home: str, away: str, nuls: bool,
         out["btts"] = (1 - math.exp(-lam_h)) * (1 - math.exp(-lam_a))
         out["ligne"] = 2.5
         out["over"] = 1.0 - _pois_cdf_le(tot, 2)
-    else:                                      # NBA / NHL : ligne = moyenne ligue
-        ligne = round(ligue_avg * 2) / 2 if ligue_avg else tot
+    else:                                      # NBA / NHL : DEMI-ligne près de la moyenne
+        ligne = int(ligue_avg) + 0.5 if ligue_avg else tot
         sigma = max(1.0, (ligue_avg or tot) * 0.08)
         out["ligne"] = ligne
         out["over"] = 1.0 / (1.0 + math.exp(-(tot - ligne) / sigma))
@@ -599,6 +599,8 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
             pr["jeux"] = marche_jeux(passes, g["home"], g["away"], g.get("periods"))
         else:
             pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
+            if pr["marches"] is not None and not nuls:
+                pr["marches"]["unite"] = "buts" if hockey else "points"
             pr["marqueur"] = (None if nuls else
                               meilleur_marqueur(passes, g["home"], g["away"], buts=hockey))
         out.append(pr)
@@ -647,9 +649,10 @@ def analyse_match(p: dict) -> str:
             parts.append(f"Total buts : **{sens} de {m['ligne']:g}** "
                          f"({max(m['over'], 1 - m['over']) * 100:.0f}%, "
                          f"~{m['exp_total']:.1f} attendus).")
-        else:                                  # NBA / NHL
+        else:                                  # NBA (points) / NHL (buts)
             sens = "plus" if m["over"] >= 0.5 else "moins"
-            parts.append(f"Total : **{sens} de {m['ligne']:g}** "
+            unite = m.get("unite", "points")
+            parts.append(f"Total de {unite} : **{sens} de {m['ligne']:g}** "
                          f"({max(m['over'], 1 - m['over']) * 100:.0f}%, "
                          f"~{m['exp_total']:.0f} attendus).")
     co = p.get("corners")

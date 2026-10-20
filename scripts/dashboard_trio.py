@@ -626,7 +626,8 @@ def main():
 
         st.caption("Le pronostic est fondé sur la **forme récente** (6 derniers "
                    "matchs) et le **face-à-face** direct — **aucune cote**. "
-                   "J'affiche **6 matchs** de la date choisie, avec l'heure.")
+                   "J'affiche mes **6 meilleurs pronostics** (les plus confiants) "
+                   "de la date choisie, avec l'heure.")
         from datetime import datetime as _dtsr, timezone as _tzsr, timedelta as _tdsr
         _today_sr = (_dtsr.now(_tzsr.utc) + _tdsr(hours=3)).date()
         _date_sr = st.date_input("📅 Date des matchs", value=_today_sr, key="sr_date")
@@ -636,10 +637,12 @@ def main():
         def _sr_charger(path, home_adv, kind, slug, nuls, jour_str):
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             jour = _dtsr.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tzsr.utc)
-            fx = _sr.matchs_du_jour(path, jour, kind=kind, slug=slug)[:6]
+            fx = _sr.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
                                             hockey=(path == "hockey/nhl"))
+            # Les 6 MEILLEURS pronostics = les plus confiants de la journée.
+            pronos = sorted(pronos, key=lambda p: -p["conf"])[:6]
             bt = _sr.taux_reussite(hist, nuls, home_adv)
             return len(hist), pronos, bt
 
@@ -672,8 +675,9 @@ def main():
                         return _esc(p["home"] if p["pick"] == "home" else p["away"])
                     return {"home": f"1 — {_esc(p['home'])}", "draw": "Nul",
                             "away": f"2 — {_esc(p['away'])}"}[p["pick"]]
-                st.success(f"**{len(_pronos)}** match(s) le "
-                           f"{_date_sr.strftime('%d/%m/%Y')} (6 max).")
+                st.success(f"Mes **{len(_pronos)}** meilleurs pronostics "
+                           f"(les plus confiants) le "
+                           f"{_date_sr.strftime('%d/%m/%Y')}.")
                 if _bt:
                     st.caption(f"Fiabilité du modèle (backtest) : "
                                f"**{_bt['taux'] * 100:.0f}%** de réussite.")

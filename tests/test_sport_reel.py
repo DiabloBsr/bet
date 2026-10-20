@@ -294,6 +294,16 @@ def test_pronostics_portent_la_date():
     assert out[0]["date"] == "2026-10-21T19:00Z"
 
 
+def test_nhl_total_en_buts_over_under():
+    # NHL (hockey=True) : le total est libellé en « buts », pas en « points ».
+    hist = [_g("A", "B", 4, 3, f"{i:03d}") for i in range(8)]
+    fx = [{"home": "A", "away": "B", "date": "2026-10-21T19:00Z", "done": False}]
+    out = sr.pronostics_a_venir(hist, fx, nuls=False, home_adv=0, hockey=True)
+    assert out[0]["marches"]["unite"] == "buts"
+    txt = sr.analyse_match(out[0])
+    assert "Total de buts" in txt
+
+
 def test_analyse_cite_le_pronostic_et_la_forme():
     passes = ([_g("A", f"o{i}", 2, 0, f"a{i}") for i in range(6)]
               + [_g("B", f"p{i}", 0, 2, f"b{i}") for i in range(6)])
