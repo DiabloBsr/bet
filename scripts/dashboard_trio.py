@@ -724,6 +724,60 @@ def main():
                 st.caption("Contexte (notes Elo, cumul des résultats) — **Top 10** : "
                            + " · ".join(f"{_esc(t)} {round(v)}" for t, v in _top))
 
+    # ---- 🏓 TENNIS DE TABLE (WTT) — forme + face-à-face, 20/10 ----
+    #   Source World Table Tennis (résultats officiels, Brotli JSON). Duel entre
+    #   deux joueurs. Réutilise le moteur sport_reel. Voir wtt_tt.py.
+    with st.expander("🏓 Tennis de table — duel entre deux joueurs (données WTT)"):
+        import wtt_tt as _tt
+        import sport_reel as _srtt
+
+        st.caption("Résultats officiels **World Table Tennis**, **sans cote** : "
+                   "modèle **forme récente + face-à-face** (+ total de manches). "
+                   "⚠️ Les tournois archivés disponibles sont surtout des **WTT "
+                   "Youth** (catégories jeunes). 1er chargement un peu long, puis "
+                   "en cache.")
+
+        @st.cache_data(ttl=10800, show_spinner=False)
+        def _tt_charger(annee):
+            m = _tt.historique(annees=(annee,), max_events=15)
+            bt = _srtt.taux_reussite(m, nuls=False, home_adv=0)
+            ratings = dict(_srtt.Elo(home_adv=0).entrainer(m).r)
+            return m, bt, ratings
+
+        if st.button("📊 Charger les résultats WTT & entraîner", key="tt_go", type="primary"):
+            with _db("Résultats WTT (Brotli) + entraînement…"):
+                try:
+                    st.session_state["tt_res"] = _tt_charger(2026)
+                except Exception as exc:
+                    st.session_state["tt_res"] = None
+                    st.session_state["tt_err"] = f"{type(exc).__name__}: {exc}"
+        _tr = st.session_state.get("tt_res")
+        if _tr is not None:
+            _m, _bt, _ratings = _tr
+            st.success(f"Entraîné sur **{len(_m)}** matchs de simple "
+                       f"({len(_ratings)} joueurs).")
+            if _bt:
+                st.info(f"🎯 **Taux de réussite** du pronostic forme + face-à-face "
+                        f"(backtest sur {_bt['tot']} matchs) : **{_bt['taux'] * 100:.0f}%** "
+                        f"· référence pile ou face 50%.")
+            _js = sorted(_ratings, key=lambda p: -_ratings[p])    # meilleurs d'abord
+            if len(_js) >= 2:
+                _ca, _cb = st.columns(2)
+                _ja = _ca.selectbox("Joueur 1", _js, index=0, key="tt_ja")
+                _jb = _cb.selectbox("Joueur 2", _js, index=1, key="tt_jb")
+                if _ja and _jb and _ja != _jb:
+                    _p = _tt.pronostic(_m, _ja, _jb)
+                    _cible = _ja if _p["pick"] == "home" else _jb
+                    st.markdown(f"### 👉 Pronostic : **{_esc(_cible)}** "
+                                f"— confiance **{_p['conf'] * 100:.0f}%**")
+                    st.markdown("🔎 " + _srtt.analyse_match(_p))
+                    st.caption(f"Elo : {_esc(_ja)} {round(_ratings.get(_ja, 1500))} · "
+                               f"{_esc(_jb)} {round(_ratings.get(_jb, 1500))}")
+            st.caption("**Top 10 Elo** : " + " · ".join(
+                f"{_esc(t)} {round(_ratings[t])}" for t in _js[:10]))
+        elif st.session_state.get("tt_err"):
+            st.error(f"WTT indisponible. {st.session_state['tt_err']}")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2

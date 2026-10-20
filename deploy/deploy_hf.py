@@ -49,6 +49,8 @@ DEFAULT_FILES = [
     "scripts/_courses_loop.py",
     # Prediction sport reel par Elo (donnees ESPN), importe par dashboard (20/10).
     "scripts/sport_reel.py",
+    # Tennis de table reel (donnees World Table Tennis), importe par dashboard (20/10).
+    "scripts/wtt_tt.py",
     # Deja sur le Space, identique au depot (controle le 04/10), mais hors
     # liste : une retouche du theme ne serait jamais partie.
     "scripts/ui_theme.py",

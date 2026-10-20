@@ -9,3 +9,5 @@ python-dotenv>=1.0.0
 # Lecture des cotes sur une capture (onglet a cette cote).
 Pillow>=10.0.0
 pytesseract>=0.3.10
+# Decompression des resultats World Table Tennis (CDN en Brotli) — onglet ping-pong.
+Brotli>=1.1.0
