@@ -535,7 +535,8 @@ def main():
             jour = _dt3.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tz3.utc)
             fx = _sr3.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
-            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind)
+            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
+                                           hockey=(path == "hockey/nhl"))
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -566,6 +567,24 @@ def main():
                     return "heure à confirmer"
             def _champ3(lbl):
                 return lbl.split(" ", 1)[1] if " " in lbl else lbl
+
+            @st.cache_data(ttl=10800, show_spinner=False)
+            def _corners_ligue(path):
+                return _sr3.stats_corners(path)
+
+            # Corners pour les 3 picks FOOTBALL du top (ESPN : 1 requête/match
+            # récent → on ne le fait que pour ces 3 matchs affichés).
+            _foot_top = sorted(_groupes3.get("⚽ Football", []),
+                               key=lambda t: -t[0]["conf"])[:3]
+            if _foot_top and not _foot_top[0][0].get("corners"):
+                with _db("Corners des matchs foot du top…"):
+                    for _p, _tn, _lbl in _foot_top:
+                        try:
+                            _sc = _corners_ligue(_sr3.SPORTS[_lbl]["path"])
+                            _p["corners"] = _sr3.marche_corners(_sc, _p["home"], _p["away"])
+                        except Exception:
+                            pass
+
             st.markdown(f"##### Top 3 pour le {_d3prev[6:8]}/{_d3prev[4:6]}/{_d3prev[0:4]}")
             _vu = False
             for _g in _sr3.GROUPES:
@@ -582,6 +601,10 @@ def main():
                         f"{_esc(_champ3(_lbl))} · {_heure3(_p.get('date'))} (Mada)</span>",
                         unsafe_allow_html=True)
                     st.markdown("🔎 " + _sr3.analyse_match(_p))
+                if _g == "⚽ Football":
+                    st.caption("ℹ️ Corners inclus ci-dessus. Le **buteur** n'est "
+                               "pas affichable au foot : ESPN ne publie pas les "
+                               "buteurs (dispo seulement en NBA/NHL).")
             if not _vu:
                 st.info("Aucun match programmé à cette date, tous sports confondus.")
 
@@ -602,9 +625,12 @@ def main():
         _path, _nuls = _cfg["path"], _cfg["nuls"]
 
         st.caption("Le pronostic est fondé sur la **forme récente** (6 derniers "
-                   "matchs) et le **face-à-face** direct — **aucune cote**. Le "
-                   "taux de réussite ci-dessous est mesuré par backtest honnête "
-                   "(prédit sur le passé, sans tricher).")
+                   "matchs) et le **face-à-face** direct — **aucune cote**. "
+                   "J'affiche **6 matchs** de la date choisie, avec l'heure.")
+        from datetime import datetime as _dtsr, timezone as _tzsr, timedelta as _tdsr
+        _today_sr = (_dtsr.now(_tzsr.utc) + _tdsr(hours=3)).date()
+        _date_sr = st.date_input("📅 Date des matchs", value=_today_sr, key="sr_date")
+        _dsrstr = _date_sr.strftime("%Y%m%d")
 
         _corners = False
         if _nuls:        # football seulement : les corners demandent 1 requête/match
@@ -612,11 +638,13 @@ def main():
                                    "match récent)", value=False, key="sr_corners")
 
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path, home_adv, kind, slug, nuls, avec_corners):
+        def _sr_charger(path, home_adv, kind, slug, nuls, avec_corners, jour_str):
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
-            fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
+            jour = _dtsr.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tzsr.utc)
+            fx = _sr.matchs_du_jour(path, jour, kind=kind, slug=slug)[:6]
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
-            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind)
+            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
+                                            hockey=(path == "hockey/nhl"))
             if avec_corners and nuls:
                 sc = _sr.stats_corners(path)
                 for p in pronos:
@@ -631,7 +659,7 @@ def main():
                 try:
                     st.session_state["sr_res"] = (_lig, _sr_charger(
                         _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug"),
-                        _nuls, _corners))
+                        _nuls, _corners, _dsrstr))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
@@ -642,8 +670,16 @@ def main():
             else:
                 _nb, _pronos, _bt, _top = _r[1]
                 _tennis = _cfg["kind"] == "tennis"
-                st.success(f"Entraîné sur **{_nb}** matchs terminés (220 derniers "
-                           f"jours) · **{len(_pronos)}** pronostic(s) à venir.")
+
+                def _heure_sr(iso):
+                    try:
+                        t = _dtsr.fromisoformat(str(iso).replace("Z", "+00:00"))
+                        return t.astimezone(_tzsr(_tdsr(hours=3))).strftime("%d/%m %Hh%M")
+                    except Exception:
+                        return "—"
+                st.success(f"Entraîné sur **{_nb}** matchs terminés · "
+                           f"**{len(_pronos)}** match(s) le {_date_sr.strftime('%d/%m/%Y')} "
+                           f"(6 max).")
                 if _bt:
                     _ref = ("pile ou face 50%" if _tennis
                             else f"« toujours le domicile » {_bt['base_domicile'] * 100:.0f}%")
@@ -699,7 +735,8 @@ def main():
                                 "& marchés (totaux / les deux marquent / marqueur)**")
                     _rows = []
                     for p in _pronos:
-                        _row = {"Match": f"{p['home']} – {p['away']}",
+                        _row = {"Heure": _heure_sr(p.get("date")),
+                                "Match": f"{p['home']} – {p['away']}",
                                 "Pronostic": _pick_txt(p),
                                 "Confiance": p["conf"] * 100,
                                 ("Forme J1" if _tennis else "Forme dom."): p["forme_home"]["seq"] or "—",
@@ -720,7 +757,7 @@ def main():
                                    "(pas de valeur par joueur) ; détail des noms "
                                    "dans « Top 3 du jour ».")
                 else:
-                    st.info("Aucun match à venir dans les 10 prochains jours.")
+                    st.info("Aucun match programmé à cette date pour cette ligue.")
                 st.caption("Contexte (notes Elo, cumul des résultats) — **Top 10** : "
                            + " · ".join(f"{_esc(t)} {round(v)}" for t, v in _top))
 

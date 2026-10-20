@@ -91,15 +91,18 @@ def _parse_team(data: dict) -> list:
         out.append({"id": comp.get("id") or e.get("id"), "date": e.get("date"),
                     "home": _nm(home), "away": _nm(away),
                     "hs": _sc(home), "as_": _sc(away), "done": _completed(comp),
-                    "lead_home": _leader_points(home), "lead_away": _leader_points(away)})
+                    "lead_home": _leader_cat(home, "points"),
+                    "lead_away": _leader_cat(away, "points"),
+                    "but_home": _leader_cat(home, "goals"),
+                    "but_away": _leader_cat(away, "goals")})
     return out
 
 
-def _leader_points(c: dict):
-    """Meilleur marqueur d'une équipe dans un match (catégorie 'points' du
-    scoreboard ESPN) : {'nom', 'val'}. Présent en NBA/NHL ; absent au foot."""
+def _leader_cat(c: dict, cat: str):
+    """Meneur d'une équipe dans un match pour une catégorie du scoreboard ESPN
+    ('points' en NBA/NHL, 'goals' en NHL) : {'nom', 'val'}. Absent au foot."""
     for l in c.get("leaders") or []:
-        if l.get("name") == "points":
+        if l.get("name") == cat:
             it = (l.get("leaders") or [{}])[0]
             nom = (it.get("athlete") or {}).get("displayName")
             try:
@@ -441,14 +444,18 @@ def marches_buts(passes: list, home: str, away: str, nuls: bool,
     return out
 
 
-def meilleur_marqueur(passes: list, home: str, away: str, n: int = 10) -> dict | None:
-    """Meilleur marqueur probable (NBA/NHL) à partir des leaders 'points' des
-    `n` derniers matchs de chaque équipe. None si pas de donnée (foot/tennis)."""
+def meilleur_marqueur(passes: list, home: str, away: str, n: int = 10,
+                      buts: bool = False) -> dict | None:
+    """Meilleur marqueur probable (NBA/NHL) sur les `n` derniers matchs de chaque
+    équipe : POINTS (NBA) ou BUTS (NHL, `buts=True`). Chaque `top` porte sa MOY
+    et une LIGNE « plus de X » (≈ moyenne arrondie − 0,5). None si pas de donnée."""
+    ch, ca = ("but_home", "but_away") if buts else ("lead_home", "lead_away")
+
     def _agg(team):
         rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
         tot: dict = {}
         for g in rec:
-            ld = g.get("lead_home") if g["home"] == team else g.get("lead_away")
+            ld = g.get(ch) if g["home"] == team else g.get(ca)
             if ld and ld.get("nom"):
                 e = tot.setdefault(ld["nom"], [0, 0.0])
                 e[0] += 1
@@ -458,12 +465,13 @@ def meilleur_marqueur(passes: list, home: str, away: str, n: int = 10) -> dict |
             return None
         nom = max(tot, key=lambda k: tot[k][0])
         fois, somme = tot[nom]
-        return {"nom": nom, "fois": fois, "sur": len(rec),
-                "moy": somme / fois if fois else None}
+        moy = somme / fois if fois else None
+        ligne = max(0.5, round(moy) - 0.5) if moy is not None else None
+        return {"nom": nom, "fois": fois, "sur": len(rec), "moy": moy, "ligne": ligne}
     mh, ma = _agg(home), _agg(away)
     cand = [x for x in (mh, ma) if x and x.get("moy") is not None]
     return {"home": mh, "away": ma,
-            "top": max(cand, key=lambda x: x["moy"]) if cand else None}
+            "top": max(cand, key=lambda x: x["moy"]) if cand else None, "buts": buts}
 
 
 def marche_sets(passes: list, a: str, b: str, periods: int | None = None,
@@ -569,10 +577,10 @@ def marche_corners(sc: dict, home: str, away: str, ligne: float = 9.5) -> dict |
 
 def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        home_adv: float = 0.0, blessures: dict | None = None,
-                       kind: str = "team") -> list:
+                       kind: str = "team", hockey: bool = False) -> list:
     """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
     chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
-    total points + meilleur marqueur ; tennis = total de SETS."""
+    total points + meilleur marqueur (buts en hockey) ; tennis = total de SETS."""
     passes = [g for g in hist if g.get("done") and g.get("hs") is not None]
     passes.sort(key=lambda g: g.get("date") or "")
     tots = [g["hs"] + g["as_"] for g in passes]
@@ -592,7 +600,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         else:
             pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
             pr["marqueur"] = (None if nuls else
-                              meilleur_marqueur(passes, g["home"], g["away"]))
+                              meilleur_marqueur(passes, g["home"], g["away"], buts=hockey))
         out.append(pr)
     return out
 
@@ -665,8 +673,11 @@ def analyse_match(p: dict) -> str:
     mq = p.get("marqueur")
     if mq and mq.get("top") and mq["top"].get("moy") is not None:
         t = mq["top"]
+        unite = "buts" if mq.get("buts") else "pts"
+        ligne = (f" → **plus de {t['ligne']:g} {unite}**"
+                 if t.get("ligne") is not None else "")
         parts.append(f"Meilleur marqueur probable : **{t['nom']}** "
-                     f"(~{t['moy']:.0f}, meneur {t['fois']}/{t['sur']}).")
+                     f"(~{t['moy']:.0f} {unite}/match{ligne}).")
     cible = ("le nul" if p["pick"] == "draw"
              else home if p["pick"] == "home" else away)
     parts.append(f"👉 Mon pronostic : **{cible}** (confiance {p['conf'] * 100:.0f}%).")

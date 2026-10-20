@@ -193,6 +193,17 @@ def test_meilleur_marqueur_choisit_le_meneur_recurrent():
     mq = sr.meilleur_marqueur(passes, "A", "B", n=10)
     assert mq["home"]["nom"] == "Star" and mq["home"]["fois"] == 5
     assert mq["top"]["nom"] == "Star"           # 30 > 10
+    assert mq["top"]["ligne"] == 29.5           # plus de (30 arrondi − 0,5)
+
+
+def test_meilleur_marqueur_en_buts_lit_le_bon_champ():
+    # NHL : on veut le meneur BUTS, pas points.
+    passes = [{"home": "A", "away": "B", "hs": 3, "as_": 1, "done": True, "date": f"{i}",
+               "lead_home": {"nom": "Passeur", "val": 20.0},
+               "but_home": {"nom": "Buteur", "val": 2.0}} for i in range(5)]
+    mq = sr.meilleur_marqueur(passes, "A", "B", buts=True)
+    assert mq["home"]["nom"] == "Buteur" and mq["buts"] is True
+    assert mq["home"]["ligne"] == 1.5           # ~2 buts → plus de 1,5
 
 
 def test_parse_team_capte_le_meilleur_marqueur():
