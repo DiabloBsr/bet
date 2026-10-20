@@ -709,7 +709,10 @@ def main():
         st.caption("Tennis de table **TT Elite Series** (Pologne). Données "
                    "**officielles tt-series.com** (sans cote) : forme + "
                    "face-à-face + **Elo**, entraîné sur **~20 000 matchs réels** "
-                   "(2022→aujourd'hui). 1er chargement un peu long, puis en cache.")
+                   "(2022→aujourd'hui). 1er chargement un peu long, puis en cache. "
+                   "ℹ️ tt-series.com ne publie **pas** les matchs à venir : **colle "
+                   "les matchs de Bet261** ci-dessous pour avoir tous les "
+                   "pronostics d'un coup (ou choisis deux joueurs plus bas).")
 
         @st.cache_data(ttl=21600, show_spinner=False)   # 6 h : l'historique bouge peu
         def _tte_charger():
@@ -736,6 +739,31 @@ def main():
                         f"(base pile ou face 50%). Elle **monte avec la confiance** : "
                         f"~61% au-dessus de 60%, ~65% au-dessus de 65%, ~69% "
                         f"au-dessus de 70% (backtest 20/10).")
+
+            # --- Mode LISTE : coller les matchs de Bet261 -> tous les pronostics.
+            st.markdown("##### 📋 Pronostics d'une liste de matchs (colle depuis Bet261)")
+            _bloc = st.text_area(
+                "Un match par ligne, ex. « Glanowski, Waldemar - Kurek, Pawel »",
+                height=120, key="tte_bloc",
+                placeholder="Glanowski, Waldemar - Kurek, Pawel\nWarpas, Blazej - Sulkowski, Karol")
+            if st.button("🎯 Pronostiquer la liste", key="tte_liste_go"):
+                _prs, _inc = _tte.pronostics_liste(_hist, _js, _bloc)
+                if _prs:
+                    _prs.sort(key=lambda p: -p["conf"])
+                    _rows = [{"Match": f"{p['home']} – {p['away']}",
+                              "Pronostic": _esc(p["home"] if p["pick"] == "home" else p["away"]),
+                              "Confiance": p["conf"] * 100} for p in _prs]
+                    _dfl = pd.DataFrame(_rows)
+                    st.dataframe(_dfl.style.format({"Confiance": "{:.0f} %"}),
+                                 hide_index=True, height=35 * (len(_dfl) + 1) + 3)
+                    st.caption("Triés par confiance. Rappel : fiable surtout "
+                               "au-dessus de 65%.")
+                if _inc:
+                    st.warning("Lignes non reconnues (joueur introuvable ou format) : "
+                               + " · ".join(_esc(x) for x in _inc[:8]))
+                if not _prs and not _inc:
+                    st.info("Colle au moins un match (« Joueur A - Joueur B »).")
+
             # Elo officiel décroissant pour un choix pertinent.
             _par_elo = sorted(_js.values(),
                               key=lambda v: -(v["elo"] if v["elo"] is not None else 0))

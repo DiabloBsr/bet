@@ -23,6 +23,8 @@ MESURABLE. Backtest walk-forward (20/10) : 56 % tous picks, ~61 % à conf ≥ 60
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 import urllib.request
 
 import sport_reel as _sr
@@ -104,3 +106,83 @@ def taux_fiabilite(hist: list, maxi: int = 1500, warmup: int = 200) -> dict | No
 
 def analyse(p: dict) -> str:
     return _sr.analyse_match(p)
+
+
+# ---------------------------------------------------------------------------
+# Rapprochement de noms + pronostics d'une LISTE de matchs collée (Bet261).
+# Bet261 affiche « Surname, First » (virgule, nom en premier) ; tt-series stocke
+# « Surname First ». On normalise (minuscule, sans accent/ponctuation) et on
+# rapproche par nom de famille + prénom (ou son initiale « P. »).
+# ---------------------------------------------------------------------------
+def _norm(s: str) -> list:
+    s = unicodedata.normalize("NFKD", str(s or ""))
+    s = "".join(c for c in s if not unicodedata.combining(c)).lower()
+    return [t for t in re.split(r"[^a-z0-9]+", s) if t]
+
+
+def _index_noms(js: dict) -> dict:
+    """{nom_canonique: [tokens normalisés]} pour tous les joueurs."""
+    return {v["nom"]: _norm(v["nom"]) for v in js.values()}
+
+
+def trouver_joueur(index: dict, texte: str) -> str | None:
+    """Meilleur nom canonique correspondant à `texte` (ex. 'Glanowski, Waldemar'
+    ou 'Kurek, P.'). None si aucune correspondance fiable."""
+    q = _norm(texte)
+    if not q:
+        return None
+    qs = set(q)
+    best, best_score = None, 0
+    for nom, toks in index.items():
+        ts = set(toks)
+        if qs == ts:
+            return nom                      # correspondance exacte
+        commun = qs & ts
+        if not commun:
+            # tolère l'initiale du prénom : 'kurek p' vs 'kurek pawel'
+            if toks and q and toks[0] == q[0] and any(
+                    t.startswith(q[-1]) or q[-1].startswith(t) for t in toks[1:]):
+                score = 1
+            else:
+                continue
+        else:
+            score = len(commun)
+            # bonus si le nom de famille (1er token) coïncide
+            if toks and q and toks[0] == q[0]:
+                score += 1
+        if score > best_score:
+            best, best_score = nom, score
+    return best if best_score >= 2 else None
+
+
+def _deux_cotes(ligne: str):
+    """Coupe une ligne de match en deux noms. Sépare sur ' - ' / ' – ' / ' vs '."""
+    for sep in (" - ", " – ", " — ", " vs ", " VS ", " v "):
+        if sep in ligne:
+            a, b = ligne.split(sep, 1)
+            return a.strip(), b.strip()
+    return None
+
+
+def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
+    """Pour un bloc de matchs collé (un par ligne, « JoueurA - JoueurB »), rend
+    (pronos, inconnus) : un pronostic par match reconnu + la liste des lignes non
+    reconnues. Entraîne l'Elo UNE fois sur tout l'historique."""
+    index = _index_noms(js)
+    elo = _sr.Elo(home_adv=0).entrainer(hist)
+    pronos, inconnus = [], []
+    for brute in (texte or "").splitlines():
+        ligne = brute.strip()
+        if not ligne:
+            continue
+        duo = _deux_cotes(ligne)
+        if not duo:
+            inconnus.append(ligne)
+            continue
+        na, nb = trouver_joueur(index, duo[0]), trouver_joueur(index, duo[1])
+        if not na or not nb or na == nb:
+            inconnus.append(ligne)
+            continue
+        pr = _sr.pronostic_forme(hist, na, nb, nuls=False, home_adv=0, elo=elo)
+        pronos.append(pr)
+    return pronos, inconnus

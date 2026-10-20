@@ -75,3 +75,33 @@ def test_joueurs_vide_si_injoignable(monkeypatch):
     monkeypatch.setattr(te, "_get", boom)
     assert te.joueurs() == {}
     assert te.historique() == []
+
+
+_JS = {"1": {"nom": "Glanowski Waldemar", "elo": 1500, "div": "1"},
+       "2": {"nom": "Kurek Pawel", "elo": 1400, "div": "1"},
+       "3": {"nom": "Baron Mariusz", "elo": 1450, "div": "1"}}
+
+
+def test_trouver_joueur_gere_virgule_et_initiale():
+    idx = te._index_noms(_JS)
+    assert te.trouver_joueur(idx, "Glanowski, Waldemar") == "Glanowski Waldemar"
+    assert te.trouver_joueur(idx, "Kurek, Pawel") == "Kurek Pawel"
+    assert te.trouver_joueur(idx, "Kurek, P.") == "Kurek Pawel"       # initiale
+    assert te.trouver_joueur(idx, "Inconnu, Xavier") is None
+
+
+def test_deux_cotes_coupe_la_ligne():
+    assert te._deux_cotes("Glanowski, Waldemar - Kurek, Pawel") == (
+        "Glanowski, Waldemar", "Kurek, Pawel")
+    assert te._deux_cotes("sans separateur") is None
+
+
+def test_pronostics_liste_reconnait_et_signale(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    hist = te.historique()                       # Alpha/Beta/Gamma (cf. _MECZE)
+    js = {"10": {"nom": "Alpha A", "elo": 1600, "div": "1"},
+          "20": {"nom": "Beta B", "elo": 1400, "div": "1"}}
+    bloc = "Alpha, A - Beta, B\nligne bidon sans tiret"
+    pronos, inconnus = te.pronostics_liste(hist, js, bloc)
+    assert len(pronos) == 1 and {pronos[0]["home"], pronos[0]["away"]} == {"Alpha A", "Beta B"}
+    assert inconnus == ["ligne bidon sans tiret"]
