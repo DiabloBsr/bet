@@ -365,9 +365,53 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
     passes = [g for g in hist if g.get("done") and g.get("hs") is not None]
     passes.sort(key=lambda g: g.get("date") or "")
     bl = blessures or {}
-    return [pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
-                            inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]))
-            for g in fixtures if g.get("home") and g.get("away")]
+    out = []
+    for g in fixtures:
+        if not (g.get("home") and g.get("away")):
+            continue
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
+                             inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]))
+        pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
+        out.append(pr)
+    return out
+
+
+def matchs_du_jour(path: str, jour: datetime, kind: str = "team",
+                   slug: str | None = None) -> list:
+    """Matchs programmés (non terminés) d'une DATE précise (fenêtre d'un jour)."""
+    jeux = fetch_range(path, jour, jour, kind, slug)
+    return [g for g in jeux if not g["done"] and g["home"] and g["away"]]
+
+
+def analyse_match(p: dict) -> str:
+    """Mon analyse en clair d'un pronostic (forme + face-à-face + blessures),
+    sans aucune cote. Rend un court texte français."""
+    fh, fa, h = p["forme_home"], p["forme_away"], p["h2h"]
+    home, away = p["home"], p["away"]
+    parts = [f"Forme récente — {home} : {fh['seq'] or '—'} ; {away} : {fa['seq'] or '—'}."]
+    if fh["score"] > fa["score"] + 0.12:
+        parts.append(f"{home} est nettement mieux lancé.")
+    elif fa["score"] > fh["score"] + 0.12:
+        parts.append(f"{away} est nettement mieux lancé.")
+    else:
+        parts.append("Les deux sont dans une forme comparable.")
+    if h["tot"]:
+        if h["va"] > h["vb"]:
+            parts.append(f"Face-à-face : {home} mène {h['va']}–{h['vb']} sur {h['tot']}.")
+        elif h["vb"] > h["va"]:
+            parts.append(f"Face-à-face : {away} mène {h['vb']}–{h['va']} sur {h['tot']}.")
+        else:
+            parts.append(f"Face-à-face équilibré ({h['va']}–{h['vb']} sur {h['tot']}).")
+    else:
+        parts.append("Pas de confrontation directe récente.")
+    for cote, lst, nom in ((home, p.get("bless_home"), home), (away, p.get("bless_away"), away)):
+        outs = [b["nom"] for b in (lst or []) if b.get("status") == "Out"]
+        if outs:
+            parts.append(f"{nom} privé de {', '.join(outs[:3])}.")
+    cible = ("le nul" if p["pick"] == "draw"
+             else home if p["pick"] == "home" else away)
+    parts.append(f"👉 Mon pronostic : **{cible}** (confiance {p['conf'] * 100:.0f}%).")
+    return " ".join(parts)
 
 
 def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,

@@ -518,72 +518,72 @@ def main():
     #   prochains jours. Même modèle forme+face-à-face, sans cote.
     with st.expander("🏆 Top 3 du jour — mes 3 meilleurs pronostics par sport"):
         import sport_reel as _sr3
+        from datetime import datetime as _dt3, timezone as _tz3, timedelta as _td3
 
-        st.caption("Chaque jour, mes **3 pronostics les plus confiants par sport** "
-                   "(forme récente + face-à-face + **blessures**, **sans cote**), "
-                   "sur les matchs des **3 prochains jours**. Les absences (Out) "
-                   "sont prises en compte en NBA/NFL/NHL (ESPN ne publie pas les "
-                   "blessés au foot). Fiable surtout en **NBA et tennis**.")
+        st.caption("Mes **3 pronostics les plus confiants par sport** pour la "
+                   "**date choisie** (forme récente + face-à-face + **blessures**, "
+                   "**sans cote**) — avec mon analyse de chaque match. Les absences "
+                   "(Out) comptent en NBA/NFL/NHL (ESPN ne publie pas le foot). "
+                   "Fiable surtout en **NBA et tennis**.")
+        _today3 = (_dt3.now(_tz3.utc) + _td3(hours=3)).date()   # aujourd'hui (Mada)
+        _d3 = st.date_input("📅 Date des matchs (ton choix)", value=_today3, key="sr3_date")
+        _d3str = _d3.strftime("%Y%m%d")
 
         @st.cache_data(ttl=10800, show_spinner=False)
-        def _sr_jour(path, home_adv, kind, slug, nuls):
+        def _sr_jour(path, home_adv, kind, slug, nuls, jour_str):
             hist = _sr3.historique(path, jours=150, kind=kind, slug=slug)
-            fx = _sr3.a_venir(path, jours=3, kind=kind, slug=slug)
+            jour = _dt3.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tz3.utc)
+            fx = _sr3.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
             return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl)
 
-        if st.button("🏆 Calculer le top 3 du jour (tous sports)", key="sr3_go",
-                     type="primary"):
+        if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
             with _db("Chargement de tous les sports (forme + face-à-face)…"):
                 for _lbl, _c in _sr3.SPORTS.items():
                     try:
                         _pr = _sr_jour(_c["path"], _c["home_adv"], _c["kind"],
-                                       _c.get("slug"), _c["nuls"])
+                                       _c.get("slug"), _c["nuls"], _d3str)
                     except Exception:
                         _pr = []
                     _g = _sr3.groupe_de(_c)
                     for _p in _pr:
-                        _par_groupe.setdefault(_g, []).append((_p, _c["kind"] == "tennis"))
-            st.session_state["sr3_res"] = _par_groupe
+                        _par_groupe.setdefault(_g, []).append((_p, _c["kind"] == "tennis", _lbl))
+            st.session_state["sr3_res"] = (_d3str, _par_groupe)
         _res3 = st.session_state.get("sr3_res")
         if _res3 is not None:
+            _d3prev, _groupes3 = _res3
             def _pick3(p, tennis):
                 if tennis:
                     return _esc(p["home"] if p["pick"] == "home" else p["away"])
                 return {"home": f"1 — {_esc(p['home'])}", "draw": "Nul",
                         "away": f"2 — {_esc(p['away'])}"}[p["pick"]]
+            def _heure3(iso):
+                try:
+                    t = _dt3.fromisoformat(str(iso).replace("Z", "+00:00"))
+                    return t.astimezone(_tz3(_td3(hours=3))).strftime("%d/%m à %Hh%M")
+                except Exception:
+                    return "heure à confirmer"
+            def _champ3(lbl):
+                return lbl.split(" ", 1)[1] if " " in lbl else lbl
+            st.markdown(f"##### Top 3 pour le {_d3prev[6:8]}/{_d3prev[4:6]}/{_d3prev[0:4]}")
             _vu = False
             for _g in _sr3.GROUPES:
-                _lst = sorted(_res3.get(_g, []), key=lambda t: -t[0]["conf"])[:3]
+                _lst = sorted(_groupes3.get(_g, []), key=lambda t: -t[0]["conf"])[:3]
                 st.markdown(f"#### {_g}")
                 if not _lst:
-                    st.caption("— aucun match dans les 3 prochains jours.")
+                    st.caption("— aucun match ce jour.")
                     continue
                 _vu = True
-                for _p, _tn in _lst:
-                    _h = _p["h2h"]
-                    _h2 = (f" · face-à-face {_h['va']}–{_h['vb']}" if _h["tot"] else "")
-
-                    def _outs(lst):
-                        return [b["nom"] for b in (lst or []) if b.get("status") == "Out"]
-                    _oh, _oa = _outs(_p.get("bless_home")), _outs(_p.get("bless_away"))
-                    _bl = ""
-                    if _oh or _oa:
-                        _parts = []
-                        if _oh:
-                            _parts.append(f"{_esc(_p['home'])} : {_esc(', '.join(_oh[:3]))}")
-                        if _oa:
-                            _parts.append(f"{_esc(_p['away'])} : {_esc(', '.join(_oa[:3]))}")
-                        _bl = " · ⛑ absents — " + " ; ".join(_parts)
+                for _p, _tn, _lbl in _lst:
                     st.markdown(
-                        f"- **{_pick3(_p, _tn)}** — confiance **{_p['conf'] * 100:.0f}%**  "
-                        f"<span style='opacity:.7'>({_esc(_p['home'])} – {_esc(_p['away'])}) · "
-                        f"forme {_p['forme_home']['seq'] or '—'} / "
-                        f"{_p['forme_away']['seq'] or '—'}{_h2}{_bl}</span>",
+                        f"**{_pick3(_p, _tn)}** — confiance **{_p['conf'] * 100:.0f}%**  \n"
+                        f"<span style='opacity:.75'>{_esc(_p['home'])} – {_esc(_p['away'])} · "
+                        f"{_esc(_champ3(_lbl))} · {_heure3(_p.get('date'))} (Mada)</span>",
                         unsafe_allow_html=True)
+                    st.markdown("🔎 " + _sr3.analyse_match(_p))
             if not _vu:
-                st.info("Aucun match à venir dans les 3 prochains jours, tous sports confondus.")
+                st.info("Aucun match programmé à cette date, tous sports confondus.")
 
     # ---- ⚽ SPORT RÉEL (Elo, données ESPN) — football réel, 20/10 ----
     #   Sport réel = vrai signal (≠ RNG virtuel). Modèle Elo sur l'historique

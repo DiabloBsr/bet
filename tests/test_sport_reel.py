@@ -164,6 +164,34 @@ def test_poids_blessures():
     assert sr.poids_blessures([{"status": "Out"}, {"status": "Day-To-Day"}]) == 1.4
 
 
+def test_pronostics_portent_la_date():
+    hist = [_g("A", "B", 2, 0, f"{i:03d}") for i in range(8)]
+    fx = [{"home": "A", "away": "B", "date": "2026-10-21T19:00Z", "done": False}]
+    out = sr.pronostics_a_venir(hist, fx, nuls=False, home_adv=0)
+    assert out[0]["date"] == "2026-10-21T19:00Z"
+
+
+def test_analyse_cite_le_pronostic_et_la_forme():
+    passes = ([_g("A", f"o{i}", 2, 0, f"a{i}") for i in range(6)]
+              + [_g("B", f"p{i}", 0, 2, f"b{i}") for i in range(6)])
+    p = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0,
+                           inj_away=[{"nom": "Star", "status": "Out"}])
+    txt = sr.analyse_match(p)
+    assert "Mon pronostic" in txt and "A" in txt
+    assert "Forme récente" in txt
+    assert "Star" in txt            # l'absent est cité
+
+
+def test_matchs_du_jour_filtre_non_termines(monkeypatch):
+    from datetime import datetime, timezone
+    jeux = [{"home": "A", "away": "B", "date": "x", "done": False},
+            {"home": "C", "away": "D", "date": "y", "done": True},
+            {"home": "E", "away": "", "date": "z", "done": False}]
+    monkeypatch.setattr(sr, "fetch_range", lambda *a, **k: jeux)
+    out = sr.matchs_du_jour("p", datetime(2026, 10, 21, tzinfo=timezone.utc))
+    assert [g["home"] for g in out] == ["A"]   # pas le terminé, pas le sans adversaire
+
+
 def test_blessures_baissent_la_proba_de_l_equipe_touchee():
     # deux camps à forme égale ; le domicile perd 3 titulaires -> sa proba baisse.
     passes = ([_g("A", f"o{i}", 1, 0, f"a{i}") for i in range(6)]
