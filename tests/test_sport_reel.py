@@ -209,6 +209,31 @@ def test_parse_team_capte_le_meilleur_marqueur():
     assert g["lead_away"] is None
 
 
+# -------- tennis : total de sets --------
+
+def test_parse_tennis_capte_le_nombre_de_sets():
+    data = {"events": [{"date": "d", "groupings": [{"grouping": {"slug": "mens-singles"},
+        "competitions": [{"status": {"type": {"completed": True}},
+            "format": {"regulation": {"periods": 3}},
+            "competitors": [
+                {"athlete": {"displayName": "A"}, "winner": True,
+                 "linescores": [{"value": 6}, {"value": 7}]},
+                {"athlete": {"displayName": "B"}, "winner": False,
+                 "linescores": [{"value": 4}, {"value": 5}]}]}]}]}]}
+    g = sr.parse_games(data, kind="tennis", slug="mens-singles")[0]
+    assert g["n_sets"] == 2 and g["periods"] == 3
+
+
+def test_marche_sets_ligne_selon_best_of():
+    passes = [{"home": "A", "away": "C", "n_sets": 3, "done": True, "hs": 1, "as_": 0},
+              {"home": "B", "away": "D", "n_sets": 3, "done": True, "hs": 1, "as_": 0}]
+    bo3 = sr.marche_sets(passes, "A", "B", periods=3)
+    assert bo3["ligne"] == 2.5 and bo3["exp"] == 3.0 and bo3["over"] > 0.5
+    bo5 = sr.marche_sets(passes, "A", "B", periods=5)
+    assert bo5["ligne"] == 3.5
+    assert sr.marche_sets([], "A", "B") is None
+
+
 # -------- corners (football) --------
 
 def test_corners_match_parse(monkeypatch):

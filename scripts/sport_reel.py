@@ -152,8 +152,16 @@ def _parse_tennis(data: dict, slug: str | None = None) -> list:
                         hs, as_ = 0, 1
                     else:
                         continue          # terminé mais sans vainqueur clair -> ignoré
+                # Nombre de sets joués = longueur des linescores (set par set).
+                # `periods` = best-of (3 ou 5), pour fixer la ligne total-sets.
+                n_sets = None
+                ls = a.get("linescores") or b.get("linescores")
+                if done and ls:
+                    n_sets = len(ls)
+                periods = ((comp.get("format") or {}).get("regulation") or {}).get("periods")
                 out.append({"id": comp.get("id"), "date": comp.get("date") or e.get("date"),
-                            "home": na, "away": nb, "hs": hs, "as_": as_, "done": done})
+                            "home": na, "away": nb, "hs": hs, "as_": as_, "done": done,
+                            "n_sets": n_sets, "periods": periods})
     return out
 
 
@@ -446,6 +454,25 @@ def meilleur_marqueur(passes: list, home: str, away: str, n: int = 10) -> dict |
             "top": max(cand, key=lambda x: x["moy"]) if cand else None}
 
 
+def marche_sets(passes: list, a: str, b: str, periods: int | None = None,
+                n: int = 12) -> dict | None:
+    """Total de SETS d'un match de tennis : moyenne de sets joués par chaque
+    joueur récemment → total attendu, plus/moins la ligne (2,5 en best-of-3,
+    3,5 en best-of-5). `n_sets` = longueur des linescores."""
+    def _moy(j):
+        vals = [g["n_sets"] for g in passes
+                if (g["home"] == j or g["away"] == j) and g.get("n_sets")]
+        vals = vals[-n:]
+        return sum(vals) / len(vals) if vals else None
+    ma, mb = _moy(a), _moy(b)
+    if ma is None or mb is None:
+        return None
+    exp = (ma + mb) / 2.0
+    ligne = 3.5 if (periods or 3) >= 5 else 2.5
+    over = 1.0 / (1.0 + math.exp(-(exp - ligne) / 0.5))
+    return {"exp": exp, "ligne": ligne, "over": over}
+
+
 _SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/{path}/summary?event={eid}"
 
 
@@ -510,13 +537,16 @@ def marche_corners(sc: dict, home: str, away: str, ligne: float = 9.5) -> dict |
 
 
 def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
-                       home_adv: float = 0.0, blessures: dict | None = None) -> list:
-    """Pronostic forme + face-à-face (+ blessures) + marchés additionnels
-    (totaux, les deux marquent, meilleur marqueur) pour chaque match à venir."""
+                       home_adv: float = 0.0, blessures: dict | None = None,
+                       kind: str = "team") -> list:
+    """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
+    chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
+    total points + meilleur marqueur ; tennis = total de SETS."""
     passes = [g for g in hist if g.get("done") and g.get("hs") is not None]
     passes.sort(key=lambda g: g.get("date") or "")
     tots = [g["hs"] + g["as_"] for g in passes]
     ligue_avg = sum(tots) / len(tots) if tots else 0.0
+    tennis = kind == "tennis"
     bl = blessures or {}
     out = []
     for g in fixtures:
@@ -525,9 +555,12 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
                              inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]))
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
-        pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
-        pr["marqueur"] = (None if nuls else
-                          meilleur_marqueur(passes, g["home"], g["away"]))
+        if tennis:
+            pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))
+        else:
+            pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
+            pr["marqueur"] = (None if nuls else
+                              meilleur_marqueur(passes, g["home"], g["away"]))
         out.append(pr)
     return out
 
@@ -585,6 +618,12 @@ def analyse_match(p: dict) -> str:
         parts.append(f"Corners : **{sens} de {co['ligne']:g}** "
                      f"({max(co['over'], 1 - co['over']) * 100:.0f}%, "
                      f"~{co['exp']:.0f} attendus).")
+    se = p.get("sets")
+    if se:
+        sens = "plus" if se["over"] >= 0.5 else "moins"
+        parts.append(f"Total de sets : **{sens} de {se['ligne']:g}** "
+                     f"({max(se['over'], 1 - se['over']) * 100:.0f}%, "
+                     f"~{se['exp']:.1f} attendus).")
     mq = p.get("marqueur")
     if mq and mq.get("top") and mq["top"].get("moy") is not None:
         t = mq["top"]

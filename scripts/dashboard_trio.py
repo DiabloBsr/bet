@@ -535,7 +535,7 @@ def main():
             jour = _dt3.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tz3.utc)
             fx = _sr3.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
-            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl)
+            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind)
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -616,7 +616,7 @@ def main():
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
-            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl)
+            pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind)
             if avec_corners and nuls:
                 sc = _sr.stats_corners(path)
                 for p in pronos:
@@ -668,9 +668,13 @@ def main():
 
                 # Colonne « Absents » (Out) seulement là où ESPN publie les blessés.
                 _a_bless = any(p.get("bless_home") or p.get("bless_away") for p in _pronos)
-                _a_march = any(p.get("marches") for p in _pronos)
+                _a_march = any(p.get("marches") or p.get("sets") for p in _pronos)
 
                 def _march_txt(p):
+                    se = p.get("sets")
+                    if se:                     # tennis : total de sets
+                        return (f"{'+' if se['over'] >= .5 else '−'}{se['ligne']:g} sets "
+                                f"(~{se['exp']:.1f})")
                     m, mq, co = p.get("marches"), p.get("marqueur"), p.get("corners")
                     if not m:
                         return "—"
