@@ -632,34 +632,23 @@ def main():
         _date_sr = st.date_input("📅 Date des matchs", value=_today_sr, key="sr_date")
         _dsrstr = _date_sr.strftime("%Y%m%d")
 
-        _corners = False
-        if _nuls:        # football seulement : les corners demandent 1 requête/match
-            _corners = st.checkbox("Inclure les corners (plus lent — 1 requête par "
-                                   "match récent)", value=False, key="sr_corners")
-
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path, home_adv, kind, slug, nuls, avec_corners, jour_str):
+        def _sr_charger(path, home_adv, kind, slug, nuls, jour_str):
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             jour = _dtsr.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tzsr.utc)
             fx = _sr.matchs_du_jour(path, jour, kind=kind, slug=slug)[:6]
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
                                             hockey=(path == "hockey/nhl"))
-            if avec_corners and nuls:
-                sc = _sr.stats_corners(path)
-                for p in pronos:
-                    p["corners"] = _sr.marche_corners(sc, p["home"], p["away"])
             bt = _sr.taux_reussite(hist, nuls, home_adv)
-            top = sorted(_sr.Elo(home_adv=home_adv).entrainer(hist).r.items(),
-                         key=lambda kv: -kv[1])[:10]
-            return len(hist), pronos, bt, top
+            return len(hist), pronos, bt
 
-        if st.button("📊 Pronostiquer (forme + face-à-face)", key="sr_go", type="primary"):
-            with _db("Historique ESPN + forme/face-à-face + marchés…"):
+        if st.button("📊 Pronostiquer", key="sr_go", type="primary"):
+            with _db("Historique ESPN + prédiction…"):
                 try:
                     st.session_state["sr_res"] = (_lig, _sr_charger(
                         _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug"),
-                        _nuls, _corners, _dsrstr))
+                        _nuls, _dsrstr))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
@@ -668,7 +657,7 @@ def main():
             if _r[1] is None:
                 st.error(f"Données ESPN indisponibles. {st.session_state.get('sr_err','')}")
             else:
-                _nb, _pronos, _bt, _top = _r[1]
+                _nb, _pronos, _bt = _r[1]
                 _tennis = _cfg["kind"] == "tennis"
 
                 def _heure_sr(iso):
@@ -677,89 +666,27 @@ def main():
                         return t.astimezone(_tzsr(_tdsr(hours=3))).strftime("%d/%m %Hh%M")
                     except Exception:
                         return "—"
-                st.success(f"Entraîné sur **{_nb}** matchs terminés · "
-                           f"**{len(_pronos)}** match(s) le {_date_sr.strftime('%d/%m/%Y')} "
-                           f"(6 max).")
-                if _bt:
-                    _ref = ("pile ou face 50%" if _tennis
-                            else f"« toujours le domicile » {_bt['base_domicile'] * 100:.0f}%")
-                    st.info(f"🎯 **Taux de réussite** du pronostic forme + face-à-face "
-                            f"(backtest sur {_bt['tot']} matchs passés) : "
-                            f"**{_bt['taux'] * 100:.0f}%** · référence {_ref}.")
 
                 def _pick_txt(p):
                     if _tennis:
                         return _esc(p["home"] if p["pick"] == "home" else p["away"])
                     return {"home": f"1 — {_esc(p['home'])}", "draw": "Nul",
                             "away": f"2 — {_esc(p['away'])}"}[p["pick"]]
-
-                def _h2h_txt(h):
-                    if not h["tot"]:
-                        return "aucun"
-                    return (f"{h['va']}–{h['vb']}" + (f" ({h['nul']} nul)" if h["nul"] else "")
-                            + f" sur {h['tot']}")
-
-                def _nb_out(lst):
-                    return sum(1 for b in (lst or []) if b.get("status") == "Out")
-
-                # Colonne « Absents » (Out) seulement là où ESPN publie les blessés.
-                _a_bless = any(p.get("bless_home") or p.get("bless_away") for p in _pronos)
-                _a_march = any(p.get("marches") or p.get("sets") or p.get("jeux")
-                               for p in _pronos)
-
-                def _march_txt(p):
-                    se, je = p.get("sets"), p.get("jeux")
-                    if se or je:               # tennis : sets + jeux
-                        bits = []
-                        if se:
-                            bits.append(f"{'+' if se['over'] >= .5 else '−'}{se['ligne']:g} sets")
-                        if je:
-                            bits.append(f"{'+' if je['over'] >= .5 else '−'}{je['ligne']:g} jeux")
-                        return " · ".join(bits)
-                    m, mq, co = p.get("marches"), p.get("marqueur"), p.get("corners")
-                    if not m:
-                        return "—"
-                    if "btts" in m:            # football
-                        txt = (f"{'+' if m['over'] >= .5 else '−'}2,5 buts · "
-                               f"BTTS {'oui' if m['btts'] >= .5 else 'non'}")
-                        if co:
-                            txt += f" · corners {'+' if co['over'] >= .5 else '−'}{co['ligne']:g}"
-                        return txt
-                    txt = f"{'+' if m['over'] >= .5 else '−'}{m['ligne']:g}"
-                    if mq and mq.get("top"):
-                        txt += f" · {mq['top']['nom']}"
-                    return txt
-
+                st.success(f"**{len(_pronos)}** match(s) le "
+                           f"{_date_sr.strftime('%d/%m/%Y')} (6 max).")
+                if _bt:
+                    st.caption(f"Fiabilité du modèle (backtest) : "
+                               f"**{_bt['taux'] * 100:.0f}%** de réussite.")
                 if _pronos:
-                    st.markdown("**Pronostics — forme (V/N/D), face-à-face, blessures "
-                                "& marchés (totaux / les deux marquent / marqueur)**")
-                    _rows = []
-                    for p in _pronos:
-                        _row = {"Heure": _heure_sr(p.get("date")),
-                                "Match": f"{p['home']} – {p['away']}",
-                                "Pronostic": _pick_txt(p),
-                                "Confiance": p["conf"] * 100,
-                                ("Forme J1" if _tennis else "Forme dom."): p["forme_home"]["seq"] or "—",
-                                ("Forme J2" if _tennis else "Forme ext."): p["forme_away"]["seq"] or "—",
-                                "Face-à-face": _h2h_txt(p["h2h"])}
-                        if _a_bless:
-                            _row["Absents (dom/ext)"] = (
-                                f"{_nb_out(p.get('bless_home'))} / {_nb_out(p.get('bless_away'))}")
-                        if _a_march:
-                            _row["Marchés"] = _march_txt(p)
-                        _rows.append(_row)
+                    _rows = [{"Heure": _heure_sr(p.get("date")),
+                              "Match": f"{p['home']} – {p['away']}",
+                              "Pronostic": _pick_txt(p),
+                              "Confiance": p["conf"] * 100} for p in _pronos]
                     _dfp = pd.DataFrame(_rows)
                     st.dataframe(_dfp.style.format({"Confiance": "{:.0f} %"}),
                                  hide_index=True, height=35 * (len(_dfp) + 1) + 3)
-                    if _a_bless:
-                        st.caption("« Absents » = joueurs **Out** (blessés) de chaque "
-                                   "équipe, pris en compte dans la proba. Repère "
-                                   "(pas de valeur par joueur) ; détail des noms "
-                                   "dans « Top 3 du jour ».")
                 else:
                     st.info("Aucun match programmé à cette date pour cette ligue.")
-                st.caption("Contexte (notes Elo, cumul des résultats) — **Top 10** : "
-                           + " · ".join(f"{_esc(t)} {round(v)}" for t, v in _top))
 
     # ---- 🏓 TENNIS DE TABLE (WTT) — forme + face-à-face, 20/10 ----
     #   Source World Table Tennis (résultats officiels, Brotli JSON). Duel entre
