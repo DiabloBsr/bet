@@ -470,7 +470,8 @@ def main():
             bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
             cl = _sr3.classement_du_sport(path) if kind == "team" else {}
             return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
-                                           hockey=(path == "hockey/nhl"), classement=cl)
+                                           hockey=(path == "hockey/nhl"), classement=cl,
+                                           unite=_sr3.unite_du_sport(path))
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -579,7 +580,8 @@ def main():
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
             cl = _sr.classement_du_sport(path) if kind == "team" else {}
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
-                                            hockey=(path == "hockey/nhl"), classement=cl)
+                                            hockey=(path == "hockey/nhl"), classement=cl,
+                                            unite=_sr.unite_du_sport(path))
             # Les 6 MEILLEURS pronostics = les plus confiants de la journée.
             pronos = sorted(pronos, key=lambda p: -p["conf"])[:6]
             bt = _sr.taux_reussite(hist, nuls, home_adv)

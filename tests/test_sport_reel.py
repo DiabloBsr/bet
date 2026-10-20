@@ -233,6 +233,29 @@ def test_marches_nba_total_vs_ligne():
     assert m["over"] > 0.5                      # équipes qui scorent au-dessus de la ligne
 
 
+def test_mlb_est_dans_sports_et_groupes():
+    assert "⚾ MLB (baseball)" in sr.SPORTS
+    cfg = sr.SPORTS["⚾ MLB (baseball)"]
+    assert cfg["path"] == "baseball/mlb" and cfg["nuls"] is False and cfg["kind"] == "team"
+    assert "⚾ MLB" in sr.GROUPES
+    assert sr.groupe_de(cfg) == "⚾ MLB"
+
+
+def test_unite_du_sport():
+    assert sr.unite_du_sport("hockey/nhl") == "buts"
+    assert sr.unite_du_sport("baseball/mlb") == "runs"
+    assert sr.unite_du_sport("basketball/nba") == "points"
+
+
+def test_total_mlb_libelle_en_runs():
+    hist = [_g("A", "B", 5, 4, f"{i:03d}") for i in range(8)]
+    fx = [{"home": "A", "away": "B", "date": "2026-10-21T19:00Z", "done": False}]
+    out = sr.pronostics_a_venir(hist, fx, nuls=False, home_adv=24,
+                                unite=sr.unite_du_sport("baseball/mlb"))
+    assert out[0]["marches"]["unite"] == "runs"
+    assert "Total de runs" in sr.analyse_match(out[0])
+
+
 def test_meilleur_marqueur_choisit_le_meneur_recurrent():
     L = {"nom": "Star", "val": 30.0}
     passes = [_gl("A", "B", 1, 0, f"{i:02d}", lh=L, la={"nom": "Autre", "val": 10.0})

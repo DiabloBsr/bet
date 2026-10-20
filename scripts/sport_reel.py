@@ -37,13 +37,14 @@ SPORTS = {
     "🏈 NFL (football américain)":    {"path": "football/nfl", "nuls": False, "home_adv": 48, "kind": "team"},
     "🏀 NBA (basket)":                {"path": "basketball/nba", "nuls": False, "home_adv": 100, "kind": "team"},
     "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 50, "kind": "team"},
+    "⚾ MLB (baseball)":               {"path": "baseball/mlb", "nuls": False, "home_adv": 24, "kind": "team"},
     "🎾 Tennis ATP (simple messieurs)": {"path": "tennis/atp", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "mens-singles"},
     "🎾 Tennis WTA (simple dames)":      {"path": "tennis/wta", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "womens-singles"},
 }
 
 
 # Regroupement des ligues par SPORT (pour le « top 3 du jour par sport »).
-GROUPES = ["⚽ Football", "🏈 NFL", "🏀 NBA", "🏒 NHL", "🎾 Tennis"]
+GROUPES = ["⚽ Football", "🏈 NFL", "🏀 NBA", "🏒 NHL", "⚾ MLB", "🎾 Tennis"]
 
 
 def groupe_de(cfg: dict) -> str:
@@ -55,7 +56,7 @@ def groupe_de(cfg: dict) -> str:
     if p.startswith("soccer"):
         return "⚽ Football"
     return {"football/nfl": "🏈 NFL", "basketball/nba": "🏀 NBA",
-            "hockey/nhl": "🏒 NHL"}.get(p, p)
+            "hockey/nhl": "🏒 NHL", "baseball/mlb": "⚾ MLB"}.get(p, p)
 
 
 def _get(url: str, timeout: float = 20.0):
@@ -656,10 +657,17 @@ def marche_corners(sc: dict, home: str, away: str, ligne: float = 9.5) -> dict |
     return {"exp": exp, "ligne": ligne, "over": over}
 
 
+def unite_du_sport(path: str) -> str:
+    """Nom de l'unité du total selon le sport : buts (NHL), runs (MLB), sinon
+    points (NBA…). Sert au libellé « Total de … » du Top 3."""
+    return {"hockey/nhl": "buts", "baseball/mlb": "runs"}.get(path, "points")
+
+
 def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        home_adv: float = 0.0, blessures: dict | None = None,
                        kind: str = "team", hockey: bool = False,
-                       classement: dict | None = None) -> list:
+                       classement: dict | None = None,
+                       unite: str | None = None) -> list:
     """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
     chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
     total points + meilleur marqueur (buts en hockey) ; tennis = total de SETS."""
@@ -686,7 +694,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         else:
             pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
             if pr["marches"] is not None and not nuls:
-                pr["marches"]["unite"] = "buts" if hockey else "points"
+                pr["marches"]["unite"] = unite or ("buts" if hockey else "points")
             pr["marqueur"] = (None if nuls else
                               meilleur_marqueur(passes, g["home"], g["away"], buts=hockey))
         out.append(pr)
