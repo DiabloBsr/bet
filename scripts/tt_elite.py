@@ -23,11 +23,18 @@ MESURABLE. Backtest walk-forward (20/10) : 56 % tous picks, ~61 % à conf ≥ 60
 from __future__ import annotations
 
 import json
+import os
 import re
 import unicodedata
 import urllib.request
 
 import sport_reel as _sr
+
+# Données EMBARQUÉES avec l'app (joueurs + historique), générées depuis une IP
+# NON bloquée puis livrées au Space : tt-series.com renvoie 403 à l'IP datacenter
+# du Space (pare-feu WordPress), donc on NE l'appelle pas en ligne — on lit ce
+# fichier. Régénéré par tools/maj_tt_elite.py (local) puis redéployé.
+_BUNDLE = os.path.join(os.path.dirname(__file__), "data", "tt_elite.json")
 
 # En-têtes « navigateur » complets : certains pare-feux WordPress (et l'IP
 # datacenter du Space) rejettent un User-Agent générique. On imite un vrai Chrome.
@@ -112,6 +119,33 @@ def historique(js: dict | None = None, timeout: float = 40.0) -> list:
                     "hs": 1 if w == a else 0, "as_": 0 if w == a else 1, "done": True})
     out.sort(key=lambda x: x["date"])
     return out
+
+
+def charger_bundle(path: str | None = None) -> tuple:
+    """Lit les données EMBARQUÉES (joueurs + matchs). Rend (js, hist, date) ou
+    (None, None, None) si le fichier est absent/illisible — on bascule alors sur
+    le direct (utile en local, où l'IP n'est pas bloquée)."""
+    try:
+        with open(path or _BUNDLE, encoding="utf-8") as f:
+            d = json.load(f)
+        js, hist = d.get("joueurs") or {}, d.get("matchs") or []
+        if js and hist:
+            return js, hist, d.get("genere_le")
+    except (FileNotFoundError, ValueError, OSError):
+        pass
+    return None, None, None
+
+
+def charger(path: str | None = None) -> tuple:
+    """(js, hist, source) : d'abord le bundle livré (le Space ne peut pas appeler
+    tt-series.com, 403), sinon le direct. Lève si rien n'est joignable."""
+    js, hist, date = charger_bundle(path)
+    if js:
+        return js, hist, f"données embarquées ({date or 'date ?'})"
+    js = joueurs()
+    if not js:
+        raise RuntimeError("tt-series.com injoignable — " + diagnostic())
+    return js, historique(js), "tt-series.com en direct"
 
 
 def pronostic(hist: list, nom_a: str, nom_b: str) -> dict:

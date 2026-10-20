@@ -52,3 +52,6 @@ data/vfoot_ml/seeded_history.jsonl
 # fichiers de travail jetables (analyses ponctuelles)
 scratch/
 ttcup_history.json
+
+# exception : bundle de donnees TT Elite livre avec l app (voir deploy_hf.py)
+!scripts/data/tt_elite.json

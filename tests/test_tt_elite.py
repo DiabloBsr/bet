@@ -107,6 +107,28 @@ def test_pronostics_liste_reconnait_et_signale(monkeypatch):
     assert inconnus == ["ligne bidon sans tiret"]
 
 
+def test_charger_bundle_prefere_le_fichier(tmp_path, monkeypatch):
+    import json
+    p = tmp_path / "b.json"
+    p.write_text(json.dumps({"genere_le": "2026-10-20",
+                             "joueurs": {"1": {"nom": "X Y", "elo": 1500, "div": "1"}},
+                             "matchs": [{"id": "1", "date": "2026-10-19", "home": "X Y",
+                                         "away": "Z W", "hs": 1, "as_": 0, "done": True}]}),
+                encoding="utf-8")
+    js, hist, date = te.charger_bundle(str(p))
+    assert js and hist and date == "2026-10-20"
+    # charger() doit prendre le bundle sans TOUCHER au réseau
+    def boom(*a, **k):
+        raise AssertionError("ne doit pas appeler le réseau")
+    monkeypatch.setattr(te, "joueurs", boom)
+    js2, hist2, src = te.charger(str(p))
+    assert len(js2) == 1 and "embarqu" in src
+
+
+def test_charger_bundle_absent_rend_none():
+    assert te.charger_bundle("/chemin/inexistant.json") == (None, None, None)
+
+
 def test_extraire_heure_en_tete():
     assert te._extraire_heure("11:10 Alpha, A - Beta, B") == ("11:10", "Alpha, A - Beta, B")
     assert te._extraire_heure("9h05 X - Y") == ("09:05", "X - Y")

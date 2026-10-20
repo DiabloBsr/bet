@@ -750,12 +750,9 @@ def main():
 
         @st.cache_data(ttl=21600, show_spinner=False)   # 6 h : l'historique bouge peu
         def _tte_charger():
-            js = _tte.joueurs()
-            if not js:                                   # échec réseau : on NE cache PAS
-                raise RuntimeError("tt-series.com injoignable — " + _tte.diagnostic())
-            hist = _tte.historique(js)
+            js, hist, source = _tte.charger()            # bundle livré, sinon direct
             taux = _tte.taux_fiabilite(hist, maxi=500)   # backtest réel, mis en cache
-            return js, hist, taux
+            return js, hist, taux, source
 
         if st.button("📊 Charger TT Elite & entraîner", key="tte_go", type="primary"):
             with _db("Données officielles tt-series.com + entraînement…"):
@@ -767,8 +764,9 @@ def main():
                     st.session_state["tte_err"] = f"{type(exc).__name__}: {exc}"
         _ttres = st.session_state.get("tte_res")
         if _ttres is not None:
-            _js, _hist, _taux = _ttres
-            st.success(f"Entraîné sur **{len(_hist)}** matchs · **{len(_js)}** joueurs.")
+            _js, _hist, _taux, _src = _ttres
+            st.success(f"Entraîné sur **{len(_hist)}** matchs · **{len(_js)}** "
+                       f"joueurs · source : {_src}.")
             if _taux:
                 st.info(f"🎯 Fiabilité mesurée (backtest walk-forward sur "
                         f"{_taux['tot']} matchs) : **{_taux['taux'] * 100:.0f}%** "
