@@ -668,13 +668,18 @@ def main():
 
                 # Colonne « Absents » (Out) seulement là où ESPN publie les blessés.
                 _a_bless = any(p.get("bless_home") or p.get("bless_away") for p in _pronos)
-                _a_march = any(p.get("marches") or p.get("sets") for p in _pronos)
+                _a_march = any(p.get("marches") or p.get("sets") or p.get("jeux")
+                               for p in _pronos)
 
                 def _march_txt(p):
-                    se = p.get("sets")
-                    if se:                     # tennis : total de sets
-                        return (f"{'+' if se['over'] >= .5 else '−'}{se['ligne']:g} sets "
-                                f"(~{se['exp']:.1f})")
+                    se, je = p.get("sets"), p.get("jeux")
+                    if se or je:               # tennis : sets + jeux
+                        bits = []
+                        if se:
+                            bits.append(f"{'+' if se['over'] >= .5 else '−'}{se['ligne']:g} sets")
+                        if je:
+                            bits.append(f"{'+' if je['over'] >= .5 else '−'}{je['ligne']:g} jeux")
+                        return " · ".join(bits)
                     m, mq, co = p.get("marches"), p.get("marqueur"), p.get("corners")
                     if not m:
                         return "—"

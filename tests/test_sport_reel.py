@@ -222,6 +222,17 @@ def test_parse_tennis_capte_le_nombre_de_sets():
                  "linescores": [{"value": 4}, {"value": 5}]}]}]}]}]}
     g = sr.parse_games(data, kind="tennis", slug="mens-singles")[0]
     assert g["n_sets"] == 2 and g["periods"] == 3
+    # jeux = (6+7) + (4+5) = 22
+    assert g["n_games"] == 22
+
+
+def test_marche_jeux_ligne_selon_best_of():
+    passes = [{"home": "A", "away": "C", "n_games": 24, "done": True, "hs": 1, "as_": 0},
+              {"home": "B", "away": "D", "n_games": 20, "done": True, "hs": 1, "as_": 0}]
+    bo3 = sr.marche_jeux(passes, "A", "B", periods=3)
+    assert bo3["ligne"] == 22.5 and abs(bo3["exp"] - 22.0) < 1e-9
+    assert sr.marche_jeux(passes, "A", "B", periods=5)["ligne"] == 36.5
+    assert sr.marche_jeux([], "A", "B") is None
 
 
 def test_marche_sets_ligne_selon_best_of():

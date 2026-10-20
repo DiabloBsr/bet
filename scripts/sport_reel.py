@@ -152,16 +152,28 @@ def _parse_tennis(data: dict, slug: str | None = None) -> list:
                         hs, as_ = 0, 1
                     else:
                         continue          # terminé mais sans vainqueur clair -> ignoré
-                # Nombre de sets joués = longueur des linescores (set par set).
-                # `periods` = best-of (3 ou 5), pour fixer la ligne total-sets.
-                n_sets = None
+                # Nombre de SETS = longueur des linescores. Nombre de JEUX =
+                # somme des jeux gagnés par les deux joueurs sur tous les sets
+                # (chaque linescore `value` = jeux gagnés dans ce set).
+                # `periods` = best-of (3 ou 5), pour fixer les lignes.
+                n_sets = n_games = None
                 ls = a.get("linescores") or b.get("linescores")
                 if done and ls:
                     n_sets = len(ls)
+                    tot, ok = 0, False
+                    for c in (a, b):
+                        for s in c.get("linescores") or []:
+                            try:
+                                tot += int(round(float(s.get("value"))))
+                                ok = True
+                            except (TypeError, ValueError):
+                                pass
+                    if ok:
+                        n_games = tot
                 periods = ((comp.get("format") or {}).get("regulation") or {}).get("periods")
                 out.append({"id": comp.get("id"), "date": comp.get("date") or e.get("date"),
                             "home": na, "away": nb, "hs": hs, "as_": as_, "done": done,
-                            "n_sets": n_sets, "periods": periods})
+                            "n_sets": n_sets, "n_games": n_games, "periods": periods})
     return out
 
 
@@ -473,6 +485,25 @@ def marche_sets(passes: list, a: str, b: str, periods: int | None = None,
     return {"exp": exp, "ligne": ligne, "over": over}
 
 
+def marche_jeux(passes: list, a: str, b: str, periods: int | None = None,
+                n: int = 12) -> dict | None:
+    """Total de JEUX d'un match de tennis : moyenne de jeux joués par chaque
+    joueur récemment → total attendu, plus/moins la ligne (22,5 en best-of-3,
+    36,5 en best-of-5)."""
+    def _moy(j):
+        vals = [g["n_games"] for g in passes
+                if (g["home"] == j or g["away"] == j) and g.get("n_games")]
+        vals = vals[-n:]
+        return sum(vals) / len(vals) if vals else None
+    ma, mb = _moy(a), _moy(b)
+    if ma is None or mb is None:
+        return None
+    exp = (ma + mb) / 2.0
+    ligne = 36.5 if (periods or 3) >= 5 else 22.5
+    over = 1.0 / (1.0 + math.exp(-(exp - ligne) / 3.5))
+    return {"exp": exp, "ligne": ligne, "over": over}
+
+
 _SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/{path}/summary?event={eid}"
 
 
@@ -557,6 +588,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
         if tennis:
             pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))
+            pr["jeux"] = marche_jeux(passes, g["home"], g["away"], g.get("periods"))
         else:
             pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
             pr["marqueur"] = (None if nuls else
@@ -624,6 +656,12 @@ def analyse_match(p: dict) -> str:
         parts.append(f"Total de sets : **{sens} de {se['ligne']:g}** "
                      f"({max(se['over'], 1 - se['over']) * 100:.0f}%, "
                      f"~{se['exp']:.1f} attendus).")
+    je = p.get("jeux")
+    if je:
+        sens = "plus" if je["over"] >= 0.5 else "moins"
+        parts.append(f"Total de jeux : **{sens} de {je['ligne']:g}** "
+                     f"({max(je['over'], 1 - je['over']) * 100:.0f}%, "
+                     f"~{je['exp']:.0f} attendus).")
     mq = p.get("marqueur")
     if mq and mq.get("top") and mq["top"].get("moy") is not None:
         t = mq["top"]
