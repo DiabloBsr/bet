@@ -51,3 +51,4 @@ data/vfoot_ml/seeded_history.jsonl
 
 # fichiers de travail jetables (analyses ponctuelles)
 scratch/
+ttcup_history.json

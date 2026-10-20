@@ -65,6 +65,16 @@ cp -f config/score_calibration.json data/vfoot_ml/score_calibration.json 2>/dev/
     sleep 15
   done ) &
 
+# ---- 3ter. collecte TT CUP / CZECH LIGA PRO — léger (urllib + json) ----
+#   Source officielle ttcup.com (serveur Django, SANS Cloudflare) : joignable
+#   depuis le datacenter du Space, contrairement aux agrégateurs (scores24, 403).
+#   Chaque cycle accumule les matchs joués dans /data/ttcup_history.json pour
+#   entraîner le prédicteur et mesurer sa fiabilité. Voir scripts/ttcup_tt.py.
+( while true; do
+    python scripts/_ttcup_loop.py --interval 120 >> /data/ttcup.log 2>&1 || true
+    sleep 20
+  done ) &
+
 # ---- 4-5. jobs LOURDS (tracker, monitors, calibration) — OPT-IN (chargent pandas+modèle) ----
 #   Le vrai stack d'analyse tourne en LOCAL. Pour les activer en ligne : CLOUD_FULL_STACK=1.
 if [ "${CLOUD_FULL_STACK:-0}" = "1" ]; then

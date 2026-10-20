@@ -631,6 +631,72 @@ def main():
                 else:
                     st.info("Aucun match programmé à cette date pour cette ligue.")
 
+    # ---- 🏓 TT CUP / CZECH LIGA PRO (données OFFICIELLES ttcup.com, 20/10) ----
+    #   Source officielle (serveur Django, SANS Cloudflare) joignable depuis le
+    #   datacenter du Space — contrairement aux agrégateurs (scores24/Sofascore,
+    #   403). Collecteur _ttcup_loop accumule l'historique dans /data. Honnête :
+    #   ligues très aléatoires → on n'affiche que les picks confiants et le taux
+    #   réel (None tant que l'historique est trop court). Voir ttcup_tt.py.
+    with st.expander("🏓 TT Cup / Czech Liga Pro — pronostics (données officielles ttcup.com)"):
+        import os as _os_tt
+        import ttcup_tt as _ttc
+
+        st.caption("Tennis de table rapide (halls tchèques = **Czech Liga Pro**, "
+                   "**TT Cup**, Pologne). Données **officielles ttcup.com** (pas "
+                   "de cote) : forme + face-à-face + Elo, comme le sport réel. "
+                   "⚠️ **Honnête** : ces ligues sont **très aléatoires** (joueurs "
+                   "proches, matchs courts). L'historique s'accumule en fond ; je "
+                   "n'affiche la fiabilité que lorsqu'elle est mesurable, et je "
+                   "mets en avant les **pronostics les plus confiants**.")
+        _tt_path = ("/data/ttcup_history.json" if _os_tt.path.isdir("/data")
+                    else _os_tt.path.join(_os_tt.getcwd(), "ttcup_history.json"))
+        _seuil_tt = st.slider("Confiance minimale affichée", 50, 80, 60, 5,
+                              key="ttc_seuil", format="%d %%") / 100.0
+
+        @st.cache_data(ttl=300, show_spinner=False)   # hotblock bouge souvent
+        def _ttc_charger(path):
+            acc = _ttc.charger_disque(path)
+            r = _ttc.charger_live(acc)
+            return r["pronos"], r["taux"], len(r["hist"]), r["halls"]
+
+        if st.button("🏓 Charger les pronostics TT Cup", key="ttc_go", type="primary"):
+            with _db("Données officielles ttcup.com + entraînement…"):
+                try:
+                    st.session_state["ttc_res"] = _ttc_charger(_tt_path)
+                    st.session_state.pop("ttc_err", None)
+                except Exception as exc:
+                    st.session_state["ttc_res"] = None
+                    st.session_state["ttc_err"] = f"{type(exc).__name__}: {exc}"
+        _ttr = st.session_state.get("ttc_res")
+        if _ttr is not None:
+            _pr, _taux, _nh, _halls = _ttr
+            st.caption(f"Entraîné sur **{_nh}** matchs joués récents · halls : "
+                       f"{', '.join(_halls) if _halls else '—'}.")
+            if _taux:
+                st.info(f"🎯 Fiabilité mesurée (backtest sur {_taux['tot']} matchs) : "
+                        f"**{_taux['taux'] * 100:.0f}%** · référence pile ou face 50%.")
+            else:
+                st.warning("Fiabilité pas encore mesurable (historique trop court). "
+                           "Le collecteur l'enrichit au fil des heures — repasse "
+                           "plus tard. Repère connu : ces ligues tournent ~54% "
+                           "(proche du hasard), à confirmer en ligne.")
+            _conf = [p for p in _pr if p["conf"] >= _seuil_tt]
+            _conf.sort(key=lambda p: -p["conf"])
+            if _conf:
+                _rows = [{"Match": f"{p['home']} – {p['away']}",
+                          "Pronostic": _esc(p["home"] if p["pick"] == "home" else p["away"]),
+                          "Confiance": p["conf"] * 100} for p in _conf]
+                _dft = pd.DataFrame(_rows)
+                st.dataframe(_dft.style.format({"Confiance": "{:.0f} %"}),
+                             hide_index=True, height=35 * (len(_dft) + 1) + 3)
+                st.caption(f"**{len(_conf)}** pronostic(s) ≥ {_seuil_tt * 100:.0f}% "
+                           f"sur {len(_pr)} match(s) à venir.")
+            else:
+                st.info(f"Aucun match à venir au-dessus de {_seuil_tt * 100:.0f}% "
+                        f"de confiance pour l'instant ({len(_pr)} match(s) analysé(s)).")
+        elif st.session_state.get("ttc_err"):
+            st.error(f"ttcup.com indisponible. {st.session_state['ttc_err']}")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2

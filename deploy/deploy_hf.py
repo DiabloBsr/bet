@@ -44,6 +44,10 @@ DEFAULT_FILES = [
     "scripts/forme_pastilles.py",
     # Prediction sport reel par Elo (donnees ESPN), importe par dashboard (20/10).
     "scripts/sport_reel.py",
+    # TT Cup / Czech Liga Pro (donnees OFFICIELLES ttcup.com, datacenter-OK, 20/10).
+    # Le collecteur _ttcup_loop est lance par start_cloud ; il accumule /data.
+    "scripts/ttcup_tt.py",
+    "scripts/_ttcup_loop.py",
     # NB: onglets Courses (courses_bet261/courses_collect/_courses_loop) et Tennis
     # de table (wtt_tt.py) RETIRES de l'app le 20/10 (demande Olivio) : scripts
     # gardes en local mais plus deployes ni lances par start_cloud.
