@@ -51,8 +51,8 @@ DEFAULT_FILES = [
     "scripts/sport_reel.py",
     # Tennis de table reel (donnees World Table Tennis), importe par dashboard (20/10).
     "scripts/wtt_tt.py",
-    # TT Elite Series (donnees scores24), pronostics confiants, importe par dashboard (20/10).
-    "scripts/scores24_tt.py",
+    # NB: scores24_tt.py (TT Elite Series) existe en local mais N'EST PAS deploye :
+    # scores24 bloque l'IP du Space (403). Gardé pour un eventuel contournement.
     # Deja sur le Space, identique au depot (controle le 04/10), mais hors
     # liste : une retouche du theme ne serait jamais partie.
     "scripts/ui_theme.py",
