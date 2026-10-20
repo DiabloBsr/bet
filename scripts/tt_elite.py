@@ -164,10 +164,22 @@ def _deux_cotes(ligne: str):
     return None
 
 
+_RE_HEURE = re.compile(r"^\s*(\d{1,2})\s*[:hH]\s*(\d{2})\b[\s.\-–—]*")
+
+
+def _extraire_heure(ligne: str):
+    """Détache une heure en tête de ligne ('11:10 …' ou '11h10 …') : rend
+    ('HH:MM' ou None, reste de la ligne)."""
+    m = _RE_HEURE.match(ligne)
+    if m:
+        return f"{int(m.group(1)):02d}:{m.group(2)}", ligne[m.end():].strip()
+    return None, ligne
+
+
 def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
-    """Pour un bloc de matchs collé (un par ligne, « JoueurA - JoueurB »), rend
-    (pronos, inconnus) : un pronostic par match reconnu + la liste des lignes non
-    reconnues. Entraîne l'Elo UNE fois sur tout l'historique."""
+    """Pour un bloc de matchs collé (un par ligne, « [HH:MM] JoueurA - JoueurB »),
+    rend (pronos, inconnus) : un pronostic par match reconnu (avec son heure si
+    présente) + les lignes non reconnues. Entraîne l'Elo UNE fois."""
     index = _index_noms(js)
     elo = _sr.Elo(home_adv=0).entrainer(hist)
     pronos, inconnus = [], []
@@ -175,7 +187,8 @@ def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
         ligne = brute.strip()
         if not ligne:
             continue
-        duo = _deux_cotes(ligne)
+        heure, reste = _extraire_heure(ligne)
+        duo = _deux_cotes(reste)
         if not duo:
             inconnus.append(ligne)
             continue
@@ -184,5 +197,6 @@ def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
             inconnus.append(ligne)
             continue
         pr = _sr.pronostic_forme(hist, na, nb, nuls=False, home_adv=0, elo=elo)
+        pr["time"] = heure
         pronos.append(pr)
     return pronos, inconnus

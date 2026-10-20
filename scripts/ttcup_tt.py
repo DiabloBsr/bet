@@ -21,10 +21,19 @@ réelle se mesure par backtest (taux_fiabilite) et n'est affichée que telle que
 from __future__ import annotations
 
 import json
+import re
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+
+try:
+    from zoneinfo import ZoneInfo
+    _PRAGUE = ZoneInfo("Europe/Prague")
+except Exception:                       # pragma: no cover - zoneinfo absent
+    _PRAGUE = None
 
 import sport_reel as _sr
+
+_MADA = timezone(timedelta(hours=3))    # heure de Madagascar (UTC+3), comme Bet261
 
 _H = {"User-Agent": "Mozilla/5.0", "X-Requested-With": "XMLHttpRequest"}
 HOTBLOCK_URL = "https://ttcup.com/tournaments/ajax/tournament/home/hotblock/"
@@ -54,57 +63,77 @@ def _iso(periode: str) -> str:
         return periode or ""
 
 
-def _sets(valeur: str):
-    """'2:3' -> (2, 3) ; None si illisible ou non joué ('0:0' / '' géré ailleurs)."""
-    try:
-        a, b = valeur.split(":")
-        return int(a), int(b)
-    except (ValueError, AttributeError):
+def _slug_nom(slug: str) -> str:
+    """'sindler-jaroslav-1997' -> 'Sindler Jaroslav' (année de naissance retirée)."""
+    s = re.sub(r"-\d{4}$", "", slug or "")
+    return " ".join(w.capitalize() for w in s.split("-") if w)
+
+
+def _noms_du_versus(url: str):
+    """Extrait les deux noms complets d'un versus_url ('/players/a/vs/b/')."""
+    m = re.search(r"/players/([^/]+)/vs/([^/]+)/?", url or "")
+    return (_slug_nom(m.group(1)), _slug_nom(m.group(2))) if m else (None, None)
+
+
+def _sets_de_games(games: list):
+    """Manches gagnées par chaque joueur d'après la liste games [[a,b], …].
+    Rend (a_sets, b_sets) ou None si games vide/illisible (= match non joué)."""
+    if not games:
         return None
+    a = b = 0
+    for g in games:
+        try:
+            x, y = int(g[0]), int(g[1])
+        except (TypeError, ValueError, IndexError):
+            continue
+        if x > y:
+            a += 1
+        elif y > x:
+            b += 1
+    return (a, b) if (a or b) else None
+
+
+def _mada(date_iso: str, heure: str):
+    """('2026-10-20', '07:40') heure de Prague -> ('HH:MM' Mada, ISO UTC) pour
+    tri/filtre, en gérant l'heure d'été. (None, '') si illisible."""
+    try:
+        naive = datetime.strptime(f"{date_iso} {heure}", "%Y-%m-%d %H:%M")
+    except (ValueError, TypeError):
+        return None, ""
+    if _PRAGUE is not None:
+        aware = naive.replace(tzinfo=_PRAGUE)
+    else:                                    # repli : Prague ~ UTC+2 (été)
+        aware = naive.replace(tzinfo=timezone(timedelta(hours=2)))
+    mada = aware.astimezone(_MADA)
+    return mada.strftime("%H:%M"), aware.astimezone(timezone.utc).isoformat()
 
 
 def parse_snapshot(data: list) -> list:
-    """Déplie les grilles round-robin en matchs {id, date, home, away, hs, as_,
-    done, hall}. Chaque paire n'est comptée qu'UNE fois (triangle supérieur par
-    ordre). done=True si joué (ex. '2:3'), done=False si programmé ('0:0')."""
+    """Déplie le PLANNING (table.standard_matches) en matchs {id, date, time
+    (Mada), dt (ISO UTC), home, away, hs, as_, done, hall}. Les matchs sans
+    manches jouées (games vide) sont les matchs À VENIR (done=False) — avec leur
+    heure. Noms complets tirés de versus_url."""
     out = []
     for t in data or []:
         pk = t.get("pk")
         hall = t.get("hall_hint") or t.get("auto_hall_hint")
         date = _iso(t.get("period") or t.get("date_first_day") or "")
-        rows = (t.get("table") or {}).get("tournament_table") or []
-        # ordre (1..N) -> nom du joueur
-        noms = {}
-        for r in rows:
-            p = r.get("player") or {}
-            if p.get("order") and p.get("full_name"):
-                noms[p["order"]] = p["full_name"]
-        for r in rows:
-            p = r.get("player") or {}
-            oi = p.get("order")
-            if not oi:
-                continue
-            cells = r.get("cells") or []
-            for idx, c in enumerate(cells):
-                oj = idx + 1                      # la colonne idx = joueur d'ordre idx+1
-                if oj <= oi:                      # triangle supérieur : une paire = un match
-                    continue
-                if not isinstance(c, dict) or c.get("is_empty"):
-                    continue
-                val = c.get("value")
-                home, away = noms.get(oi), noms.get(oj)
+        sm = (t.get("table") or {}).get("standard_matches") or {}
+        for day in ("first_day", "second_day"):
+            for m in sm.get(day) or []:
+                home, away = _noms_du_versus(m.get("versus_url"))
                 if not home or not away:
                     continue
-                mid = f"{pk}:{oi}:{oj}:{date}"
-                if val == "0:0":
-                    out.append({"id": mid, "date": date, "home": home, "away": away,
-                                "hs": None, "as_": None, "done": False, "hall": hall})
+                d = _iso(m.get("date") or "") or date
+                heure_mada, dt = _mada(d, m.get("time") or "")
+                mid = f"{pk}:{m.get('order')}:{d}"
+                s = _sets_de_games(m.get("games"))
+                base = {"id": mid, "date": d, "time": heure_mada, "dt": dt,
+                        "home": home, "away": away, "hall": hall}
+                if s is None:
+                    out.append({**base, "hs": None, "as_": None, "done": False})
                 else:
-                    s = _sets(val)
-                    if s is None:
-                        continue
-                    out.append({"id": mid, "date": date, "home": home, "away": away,
-                                "hs": s[0], "as_": s[1], "done": True, "hall": hall})
+                    out.append({**base, "hs": s[0], "as_": s[1], "done": True})
     return out
 
 
@@ -131,9 +160,16 @@ def matchs_a_venir(matchs: list) -> list:
 
 def pronostics(historique: list, fixtures: list) -> list:
     """Pronostics forme + face-à-face + Elo (moteur sport_reel) pour les matchs à
-    venir. Tennis de table : pas de nul, terrain neutre (home_adv=0)."""
-    return _sr.pronostics_a_venir(historique, fixtures, nuls=False, home_adv=0,
-                                  kind="team")
+    venir. Tennis de table : pas de nul, terrain neutre (home_adv=0). On rattache
+    l'heure (Mada), l'ISO et le hall de chaque fixture au pronostic."""
+    pr = _sr.pronostics_a_venir(historique, fixtures, nuls=False, home_adv=0,
+                                kind="team")
+    meta = {(f["home"], f["away"]): f for f in fixtures}
+    for p in pr:
+        f = meta.get((p["home"], p["away"]))
+        if f:
+            p["time"], p["dt"], p["hall"] = f.get("time"), f.get("dt"), f.get("hall")
+    return pr
 
 
 def taux_fiabilite(historique: list) -> dict | None:

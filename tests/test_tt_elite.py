@@ -105,3 +105,18 @@ def test_pronostics_liste_reconnait_et_signale(monkeypatch):
     pronos, inconnus = te.pronostics_liste(hist, js, bloc)
     assert len(pronos) == 1 and {pronos[0]["home"], pronos[0]["away"]} == {"Alpha A", "Beta B"}
     assert inconnus == ["ligne bidon sans tiret"]
+
+
+def test_extraire_heure_en_tete():
+    assert te._extraire_heure("11:10 Alpha, A - Beta, B") == ("11:10", "Alpha, A - Beta, B")
+    assert te._extraire_heure("9h05 X - Y") == ("09:05", "X - Y")
+    assert te._extraire_heure("Alpha, A - Beta, B") == (None, "Alpha, A - Beta, B")
+
+
+def test_pronostics_liste_attache_l_heure(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    hist = te.historique()
+    js = {"10": {"nom": "Alpha A", "elo": 1600, "div": "1"},
+          "20": {"nom": "Beta B", "elo": 1400, "div": "1"}}
+    pronos, _ = te.pronostics_liste(hist, js, "11:10 Alpha, A - Beta, B")
+    assert pronos and pronos[0]["time"] == "11:10"

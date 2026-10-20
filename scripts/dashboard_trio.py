@@ -650,8 +650,14 @@ def main():
                    "mets en avant les **pronostics les plus confiants**.")
         _tt_path = ("/data/ttcup_history.json" if _os_tt.path.isdir("/data")
                     else _os_tt.path.join(_os_tt.getcwd(), "ttcup_history.json"))
-        _seuil_tt = st.slider("Confiance minimale affichée", 50, 80, 60, 5,
-                              key="ttc_seuil", format="%d %%") / 100.0
+        from datetime import datetime as _dttc, timezone as _tztc, timedelta as _tdtc
+        _nowtc = _dttc.now(_tztc.utc) + _tdtc(hours=3)        # maintenant, heure Mada
+        _c1, _c2, _c3 = st.columns(3)
+        _d_tt = _c1.date_input("📅 Date", value=_nowtc.date(), key="ttc_date")
+        _h_tt = _c2.time_input("🕐 À partir de (heure Mada)",
+                               value=_dttc.min.time(), key="ttc_heure")
+        _seuil_tt = _c3.slider("Confiance mini", 50, 80, 60, 5,
+                               key="ttc_seuil", format="%d %%") / 100.0
 
         @st.cache_data(ttl=300, show_spinner=False)   # hotblock bouge souvent
         def _ttc_charger(path):
@@ -671,7 +677,8 @@ def main():
         if _ttr is not None:
             _pr, _taux, _nh, _halls = _ttr
             st.caption(f"Entraîné sur **{_nh}** matchs joués récents · halls : "
-                       f"{', '.join(_halls) if _halls else '—'}.")
+                       f"{', '.join(_halls) if _halls else '—'}. Pronostics **sans "
+                       "cote** (forme + face-à-face + Elo).")
             if _taux:
                 st.info(f"🎯 Fiabilité mesurée (backtest sur {_taux['tot']} matchs) : "
                         f"**{_taux['taux'] * 100:.0f}%** · référence pile ou face 50%.")
@@ -680,20 +687,42 @@ def main():
                            "Le collecteur l'enrichit au fil des heures — repasse "
                            "plus tard. Repère connu : ces ligues tournent ~54% "
                            "(proche du hasard), à confirmer en ligne.")
-            _conf = [p for p in _pr if p["conf"] >= _seuil_tt]
-            _conf.sort(key=lambda p: -p["conf"])
+
+            def _ligne_tt(p):
+                cible = p["home"] if p["pick"] == "home" else p["away"]
+                return {"Heure": p.get("time") or "—", "Hall": p.get("hall") or "—",
+                        "Match": f"{p['home']} – {p['away']}",
+                        "Pronostic": _esc(cible), "Confiance": p["conf"] * 100}
+
+            # Filtre date + heure (Mada) choisies.
+            _ds = _d_tt.strftime("%Y-%m-%d")
+            _hmin = _h_tt.strftime("%H:%M")
+            _vus = [p for p in _pr
+                    if (p.get("date") == _ds) and (not p.get("time") or p["time"] >= _hmin)]
+
+            # 🏆 Top 5 EN TÊTE (les plus confiants, tous seuils confondus).
+            _top5 = sorted(_vus, key=lambda p: -p["conf"])[:5]
+            st.markdown("##### 🏆 Top 5 du jour — mes pronostics les plus confiants")
+            if _top5:
+                _dt5 = pd.DataFrame([_ligne_tt(p) for p in _top5])
+                st.dataframe(_dt5.style.format({"Confiance": "{:.0f} %"}),
+                             hide_index=True, height=35 * (len(_dt5) + 1) + 3)
+            else:
+                st.caption("— aucun match à venir pour cette date/heure.")
+
+            # Liste complète filtrée par le seuil, triée par heure.
+            _conf = sorted([p for p in _vus if p["conf"] >= _seuil_tt],
+                           key=lambda p: (p.get("time") or ""))
+            st.markdown(f"##### Tous les matchs ≥ {_seuil_tt * 100:.0f}% de confiance")
             if _conf:
-                _rows = [{"Match": f"{p['home']} – {p['away']}",
-                          "Pronostic": _esc(p["home"] if p["pick"] == "home" else p["away"]),
-                          "Confiance": p["conf"] * 100} for p in _conf]
-                _dft = pd.DataFrame(_rows)
+                _dft = pd.DataFrame([_ligne_tt(p) for p in _conf])
                 st.dataframe(_dft.style.format({"Confiance": "{:.0f} %"}),
                              hide_index=True, height=35 * (len(_dft) + 1) + 3)
                 st.caption(f"**{len(_conf)}** pronostic(s) ≥ {_seuil_tt * 100:.0f}% "
-                           f"sur {len(_pr)} match(s) à venir.")
+                           f"sur {len(_vus)} match(s) à cette date/heure.")
             else:
-                st.info(f"Aucun match à venir au-dessus de {_seuil_tt * 100:.0f}% "
-                        f"de confiance pour l'instant ({len(_pr)} match(s) analysé(s)).")
+                st.info(f"Aucun match ≥ {_seuil_tt * 100:.0f}% pour ce filtre "
+                        f"({len(_vus)} match(s) à venir).")
         elif st.session_state.get("ttc_err"):
             st.error(f"ttcup.com indisponible. {st.session_state['ttc_err']}")
 
@@ -742,22 +771,38 @@ def main():
 
             # --- Mode LISTE : coller les matchs de Bet261 -> tous les pronostics.
             st.markdown("##### 📋 Pronostics d'une liste de matchs (colle depuis Bet261)")
+            from datetime import datetime as _dtte, timezone as _tzte, timedelta as _tdte
+            _nowte = (_dtte.now(_tzte.utc) + _tdte(hours=3)).date()
+            _de1, _de2 = st.columns([1, 2])
+            _d_te = _de1.date_input("📅 Date des matchs", value=_nowte, key="tte_date")
+            _de2.caption("Astuce : tu peux préfixer chaque ligne par l'heure, "
+                         "ex. « 11:10 Glanowski, Waldemar - Kurek, Pawel ».")
             _bloc = st.text_area(
-                "Un match par ligne, ex. « Glanowski, Waldemar - Kurek, Pawel »",
+                "Un match par ligne (heure optionnelle en tête)",
                 height=120, key="tte_bloc",
-                placeholder="Glanowski, Waldemar - Kurek, Pawel\nWarpas, Blazej - Sulkowski, Karol")
+                placeholder="11:10 Glanowski, Waldemar - Kurek, Pawel\n"
+                            "11:10 Warpas, Blazej - Sulkowski, Karol")
             if st.button("🎯 Pronostiquer la liste", key="tte_liste_go"):
                 _prs, _inc = _tte.pronostics_liste(_hist, _js, _bloc)
                 if _prs:
-                    _prs.sort(key=lambda p: -p["conf"])
-                    _rows = [{"Match": f"{p['home']} – {p['away']}",
-                              "Pronostic": _esc(p["home"] if p["pick"] == "home" else p["away"]),
-                              "Confiance": p["conf"] * 100} for p in _prs]
-                    _dfl = pd.DataFrame(_rows)
+                    def _lg_te(p):
+                        return {"Heure": p.get("time") or "—",
+                                "Match": f"{p['home']} – {p['away']}",
+                                "Pronostic": _esc(p["home"] if p["pick"] == "home" else p["away"]),
+                                "Confiance": p["conf"] * 100}
+                    _top5 = sorted(_prs, key=lambda p: -p["conf"])[:5]
+                    st.markdown(f"###### 🏆 Top 5 du {_d_te.strftime('%d/%m/%Y')} — "
+                                "mes pronostics les plus confiants")
+                    _d5 = pd.DataFrame([_lg_te(p) for p in _top5])
+                    st.dataframe(_d5.style.format({"Confiance": "{:.0f} %"}),
+                                 hide_index=True, height=35 * (len(_d5) + 1) + 3)
+                    st.markdown("###### Tous les matchs (triés par heure)")
+                    _ord = sorted(_prs, key=lambda p: (p.get("time") or "~"))
+                    _dfl = pd.DataFrame([_lg_te(p) for p in _ord])
                     st.dataframe(_dfl.style.format({"Confiance": "{:.0f} %"}),
                                  hide_index=True, height=35 * (len(_dfl) + 1) + 3)
-                    st.caption("Triés par confiance. Rappel : fiable surtout "
-                               "au-dessus de 65%.")
+                    st.caption("Sans cote (forme + face-à-face + Elo). Fiable "
+                               "surtout au-dessus de 65%.")
                 if _inc:
                     st.warning("Lignes non reconnues (joueur introuvable ou format) : "
                                + " · ".join(_esc(x) for x in _inc[:8]))
