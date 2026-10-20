@@ -392,7 +392,25 @@ def test_matchs_du_jour_filtre_non_termines(monkeypatch):
             {"home": "E", "away": "", "date": "z", "done": False}]
     monkeypatch.setattr(sr, "fetch_range", lambda *a, **k: jeux)
     out = sr.matchs_du_jour("p", datetime(2026, 10, 21, tzinfo=timezone.utc))
-    assert [g["home"] for g in out] == ["A"]   # pas le terminé, pas le sans adversaire
+    # date illisible gardée ; on écarte juste le terminé et le sans adversaire
+    assert [g["home"] for g in out] == ["A"]
+
+
+def test_matchs_du_jour_filtre_sur_la_date_locale_mada():
+    from datetime import datetime, timezone
+    # Match NHL à 23h30 UTC le 21/10 = 02h30 à Mada (UTC+3) le 22/10.
+    jeux = [{"home": "Sabres", "away": "Flyers", "date": "2026-10-21T23:30Z", "done": False},
+            {"home": "Jour21", "away": "X", "date": "2026-10-21T10:00Z", "done": False}]
+    sr_fetch = sr.fetch_range
+    try:
+        sr.fetch_range = lambda *a, **k: jeux
+        j21 = sr.matchs_du_jour("p", datetime(2026, 10, 21, tzinfo=timezone.utc))
+        j22 = sr.matchs_du_jour("p", datetime(2026, 10, 22, tzinfo=timezone.utc))
+    finally:
+        sr.fetch_range = sr_fetch
+    # 23h30 UTC le 21 -> 02h30 Mada le 22 : apparaît au 22, pas au 21.
+    assert [g["home"] for g in j21] == ["Jour21"]
+    assert [g["home"] for g in j22] == ["Sabres"]
 
 
 def test_blessures_baissent_la_proba_de_l_equipe_touchee():

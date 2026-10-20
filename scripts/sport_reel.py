@@ -702,10 +702,31 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
 
 
 def matchs_du_jour(path: str, jour: datetime, kind: str = "team",
-                   slug: str | None = None) -> list:
-    """Matchs programmés (non terminés) d'une DATE précise (fenêtre d'un jour)."""
-    jeux = fetch_range(path, jour, jour, kind, slug)
-    return [g for g in jeux if not g["done"] and g["home"] and g["away"]]
+                   slug: str | None = None, tz_offset_h: int = 3) -> list:
+    """Matchs programmés (non terminés) dont la date LOCALE (UTC+tz_offset_h,
+    Madagascar par défaut) tombe le jour `jour`.
+
+    Un match NHL/NBA/MLB joué le soir aux USA a lieu APRÈS MINUIT chez nous : sa
+    date calendaire US (celle du programme ESPN) n'est pas la date où l'utilisateur
+    le voit. On interroge donc la veille, le jour et le lendemain (dates US), puis
+    on filtre sur la date LOCALE — pour que « 21/10 » montre les matchs du 21/10
+    à Mada, pas ceux affichés à 02h30 le 22/10."""
+    cible = jour.date()
+    jeux = fetch_range(path, jour - timedelta(days=1), jour + timedelta(days=1),
+                       kind, slug)
+    tz = timezone(timedelta(hours=tz_offset_h))
+    out = []
+    for g in jeux:
+        if g["done"] or not (g["home"] and g["away"]):
+            continue
+        try:
+            local = datetime.fromisoformat(str(g.get("date")).replace("Z", "+00:00"))
+            if local.astimezone(tz).date() != cible:
+                continue
+        except (ValueError, TypeError):
+            pass          # date illisible : on garde (ne jamais perdre un vrai match)
+        out.append(g)
+    return out
 
 
 def analyse_match(p: dict) -> str:
