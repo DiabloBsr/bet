@@ -27,6 +27,25 @@ _H = {
 _API = "https://scores24.live/rapi/sport/table-tennis/leagues"
 
 
+def diagnostic(timeout: float = 20.0) -> str:
+    """Un fetch brut (sans masquer l'erreur) pour savoir si scores24 répond
+    depuis cet environnement (ex : IP du Space bloquée). Rend un court statut."""
+    now = datetime.now(timezone.utc)
+    d1 = (now - timedelta(days=1)).strftime("%Y-%m-%d 22:00:00")
+    d2 = now.strftime("%Y-%m-%d 21:59:59")
+    q = ("date_between[]=" + urllib.parse.quote(d1) + "&date_between[]="
+         + urllib.parse.quote(d2) + "&is_bot=false&is_open=true&lang=en"
+         + "&match_filter=all&with_live=true")
+    try:
+        req = urllib.request.Request(_API + "?" + q, headers=_H)
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            data = json.loads(r.read().decode("utf-8")).get("data") or []
+        nbm = sum(len(b.get("matches") or []) for b in data)
+        return f"HTTP {r.status} · {len(data)} ligue(s) · {nbm} match(s)"
+    except Exception as exc:
+        return f"ÉCHEC : {type(exc).__name__}: {exc}"
+
+
 def _get_jour(jour: datetime, timeout: float = 25.0) -> list:
     """Blocs ligues+matchs d'un JOUR (fenêtre 22:00 J-1 → 21:59 J, heure du site)."""
     d1 = (jour - timedelta(days=1)).strftime("%Y-%m-%d 22:00:00")

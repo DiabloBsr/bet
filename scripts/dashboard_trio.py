@@ -813,6 +813,9 @@ def main():
         if _rs is not None:
             _n, _bt, _pr = _rs
             st.success(f"Entraîné sur **{_n}** matchs TT Elite Series terminés.")
+            if _n == 0:
+                st.warning("Aucune donnée reçue de scores24 depuis le serveur. "
+                           "Diagnostic : " + _s24.diagnostic())
             if _bt:
                 st.info(f"🎯 **Réussite sur les pronostics confiants** "
                         f"(proba ≥ {_bt['seuil'] * 100:.0f}%) : **{_bt['taux'] * 100:.0f} %** "
