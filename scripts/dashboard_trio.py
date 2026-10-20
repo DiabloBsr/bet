@@ -606,22 +606,32 @@ def main():
                    "taux de réussite ci-dessous est mesuré par backtest honnête "
                    "(prédit sur le passé, sans tricher).")
 
+        _corners = False
+        if _nuls:        # football seulement : les corners demandent 1 requête/match
+            _corners = st.checkbox("Inclure les corners (plus lent — 1 requête par "
+                                   "match récent)", value=False, key="sr_corners")
+
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path, home_adv, kind, slug, nuls):
+        def _sr_charger(path, home_adv, kind, slug, nuls, avec_corners):
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             fx = _sr.a_venir(path, jours=10, kind=kind, slug=slug)
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl)
+            if avec_corners and nuls:
+                sc = _sr.stats_corners(path)
+                for p in pronos:
+                    p["corners"] = _sr.marche_corners(sc, p["home"], p["away"])
             bt = _sr.taux_reussite(hist, nuls, home_adv)
             top = sorted(_sr.Elo(home_adv=home_adv).entrainer(hist).r.items(),
                          key=lambda kv: -kv[1])[:10]
             return len(hist), pronos, bt, top
 
         if st.button("📊 Pronostiquer (forme + face-à-face)", key="sr_go", type="primary"):
-            with _db("Historique ESPN + forme/face-à-face + backtest…"):
+            with _db("Historique ESPN + forme/face-à-face + marchés…"):
                 try:
                     st.session_state["sr_res"] = (_lig, _sr_charger(
-                        _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug"), _nuls))
+                        _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug"),
+                        _nuls, _corners))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"
@@ -658,9 +668,26 @@ def main():
 
                 # Colonne « Absents » (Out) seulement là où ESPN publie les blessés.
                 _a_bless = any(p.get("bless_home") or p.get("bless_away") for p in _pronos)
+                _a_march = any(p.get("marches") for p in _pronos)
+
+                def _march_txt(p):
+                    m, mq, co = p.get("marches"), p.get("marqueur"), p.get("corners")
+                    if not m:
+                        return "—"
+                    if "btts" in m:            # football
+                        txt = (f"{'+' if m['over'] >= .5 else '−'}2,5 buts · "
+                               f"BTTS {'oui' if m['btts'] >= .5 else 'non'}")
+                        if co:
+                            txt += f" · corners {'+' if co['over'] >= .5 else '−'}{co['ligne']:g}"
+                        return txt
+                    txt = f"{'+' if m['over'] >= .5 else '−'}{m['ligne']:g}"
+                    if mq and mq.get("top"):
+                        txt += f" · {mq['top']['nom']}"
+                    return txt
+
                 if _pronos:
-                    st.markdown("**Pronostics — forme récente (V/N/D, récent→ancien), "
-                                "face-à-face & blessures**")
+                    st.markdown("**Pronostics — forme (V/N/D), face-à-face, blessures "
+                                "& marchés (totaux / les deux marquent / marqueur)**")
                     _rows = []
                     for p in _pronos:
                         _row = {"Match": f"{p['home']} – {p['away']}",
@@ -672,6 +699,8 @@ def main():
                         if _a_bless:
                             _row["Absents (dom/ext)"] = (
                                 f"{_nb_out(p.get('bless_home'))} / {_nb_out(p.get('bless_away'))}")
+                        if _a_march:
+                            _row["Marchés"] = _march_txt(p)
                         _rows.append(_row)
                     _dfp = pd.DataFrame(_rows)
                     st.dataframe(_dfp.style.format({"Confiance": "{:.0f} %"}),

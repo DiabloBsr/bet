@@ -90,8 +90,25 @@ def _parse_team(data: dict) -> list:
 
         out.append({"id": comp.get("id") or e.get("id"), "date": e.get("date"),
                     "home": _nm(home), "away": _nm(away),
-                    "hs": _sc(home), "as_": _sc(away), "done": _completed(comp)})
+                    "hs": _sc(home), "as_": _sc(away), "done": _completed(comp),
+                    "lead_home": _leader_points(home), "lead_away": _leader_points(away)})
     return out
+
+
+def _leader_points(c: dict):
+    """Meilleur marqueur d'une équipe dans un match (catégorie 'points' du
+    scoreboard ESPN) : {'nom', 'val'}. Présent en NBA/NHL ; absent au foot."""
+    for l in c.get("leaders") or []:
+        if l.get("name") == "points":
+            it = (l.get("leaders") or [{}])[0]
+            nom = (it.get("athlete") or {}).get("displayName")
+            try:
+                val = float(it.get("value"))
+            except (TypeError, ValueError):
+                val = None
+            if nom:
+                return {"nom": nom, "val": val}
+    return None
 
 
 def _parse_tennis(data: dict, slug: str | None = None) -> list:
@@ -358,12 +375,148 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
             "bless_home": inj_home or [], "bless_away": inj_away or []}
 
 
+def stats_off(passes: list, team: str, n: int = 8):
+    """Moyennes offensive/défensive récentes : (buts/points marqués par match,
+    encaissés par match) sur les `n` derniers. (None, None) si aucun."""
+    rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
+    bf = bc = 0.0
+    for g in rec:
+        gf, ga = (g["hs"], g["as_"]) if g["home"] == team else (g["as_"], g["hs"])
+        bf += gf
+        bc += ga
+    return (bf / len(rec), bc / len(rec)) if rec else (None, None)
+
+
+def _pois_cdf_le(lam: float, k: int) -> float:
+    """P(X ≤ k) pour une loi de Poisson de moyenne `lam`."""
+    s, t = 0.0, math.exp(-lam)
+    for i in range(k + 1):
+        if i:
+            t *= lam / i
+        s += t
+    return s
+
+
+def marches_buts(passes: list, home: str, away: str, nuls: bool,
+                 ligue_avg: float, n: int = 8) -> dict | None:
+    """Marchés dérivés des scores (sans cote) : total attendu, puis — au foot —
+    « les deux marquent » + plus/moins 2,5 buts (Poisson) ; en NBA/NHL — total
+    de points/buts plus/moins la ligne (moyenne récente de la ligue)."""
+    bf_h, bc_h = stats_off(passes, home, n)
+    bf_a, bc_a = stats_off(passes, away, n)
+    if bf_h is None or bf_a is None:
+        return None
+    lam_h, lam_a = (bf_h + bc_a) / 2.0, (bf_a + bc_h) / 2.0
+    tot = lam_h + lam_a
+    out = {"exp_total": tot}
+    if nuls:                                   # football
+        out["btts"] = (1 - math.exp(-lam_h)) * (1 - math.exp(-lam_a))
+        out["ligne"] = 2.5
+        out["over"] = 1.0 - _pois_cdf_le(tot, 2)
+    else:                                      # NBA / NHL : ligne = moyenne ligue
+        ligne = round(ligue_avg * 2) / 2 if ligue_avg else tot
+        sigma = max(1.0, (ligue_avg or tot) * 0.08)
+        out["ligne"] = ligne
+        out["over"] = 1.0 / (1.0 + math.exp(-(tot - ligne) / sigma))
+    return out
+
+
+def meilleur_marqueur(passes: list, home: str, away: str, n: int = 10) -> dict | None:
+    """Meilleur marqueur probable (NBA/NHL) à partir des leaders 'points' des
+    `n` derniers matchs de chaque équipe. None si pas de donnée (foot/tennis)."""
+    def _agg(team):
+        rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
+        tot: dict = {}
+        for g in rec:
+            ld = g.get("lead_home") if g["home"] == team else g.get("lead_away")
+            if ld and ld.get("nom"):
+                e = tot.setdefault(ld["nom"], [0, 0.0])
+                e[0] += 1
+                if ld.get("val") is not None:
+                    e[1] += ld["val"]
+        if not tot:
+            return None
+        nom = max(tot, key=lambda k: tot[k][0])
+        fois, somme = tot[nom]
+        return {"nom": nom, "fois": fois, "sur": len(rec),
+                "moy": somme / fois if fois else None}
+    mh, ma = _agg(home), _agg(away)
+    cand = [x for x in (mh, ma) if x and x.get("moy") is not None]
+    return {"home": mh, "away": ma,
+            "top": max(cand, key=lambda x: x["moy"]) if cand else None}
+
+
+_SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/{path}/summary?event={eid}"
+
+
+def _corners_match(path: str, eid, timeout: float) -> dict | None:
+    """Corners par équipe d'un match (endpoint summary ESPN, stat 'wonCorners')."""
+    try:
+        s = _get(_SUMMARY.format(path=path, eid=eid), timeout)
+    except Exception:
+        return None
+    res = {}
+    for t in (s.get("boxscore") or {}).get("teams") or []:
+        name = (t.get("team") or {}).get("displayName")
+        wc = None
+        for st in t.get("statistics") or []:
+            if st.get("name") == "wonCorners":
+                try:
+                    wc = float(st.get("displayValue") or st.get("value"))
+                except (TypeError, ValueError):
+                    wc = None
+        if name and wc is not None:
+            res[name] = wc
+    return res or None
+
+
+def stats_corners(path: str, jours: int = 45, timeout: float = 20.0,
+                  maxi: int = 90) -> dict:
+    """Corners moyens (pour / contre) par équipe sur les matchs récents (foot).
+    Coûteux : 1 requête `summary` par match → fenêtre courte + plafond `maxi`."""
+    fin = _auj()
+    games = fetch_range(path, fin - timedelta(days=jours), fin, "team")
+    done = [g for g in games if g["done"] and g.get("id")][-maxi:]
+    pour: dict = {}
+    contre: dict = {}
+
+    def _work(g):
+        return g, _corners_match(path, g["id"], timeout)
+
+    with ThreadPoolExecutor(max_workers=12) as ex:
+        for g, c in ex.map(_work, done):
+            if not c:
+                continue
+            h, a = g["home"], g["away"]
+            if h in c and a in c:
+                pour.setdefault(h, []).append(c[h]); contre.setdefault(h, []).append(c[a])
+                pour.setdefault(a, []).append(c[a]); contre.setdefault(a, []).append(c[h])
+    out = {}
+    for t in set(list(pour) + list(contre)):
+        f, ag = pour.get(t, []), contre.get(t, [])
+        out[t] = {"for": sum(f) / len(f) if f else None,
+                  "against": sum(ag) / len(ag) if ag else None, "n": len(f)}
+    return out
+
+
+def marche_corners(sc: dict, home: str, away: str, ligne: float = 9.5) -> dict | None:
+    """Total de corners attendu + plus/moins la ligne (9,5 par défaut)."""
+    h, a = sc.get(home), sc.get(away)
+    if not h or not a or h["for"] is None or a["for"] is None:
+        return None
+    exp = (h["for"] + a["against"]) / 2 + (a["for"] + h["against"]) / 2
+    over = 1.0 / (1.0 + math.exp(-(exp - ligne) / 3.0))
+    return {"exp": exp, "ligne": ligne, "over": over}
+
+
 def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        home_adv: float = 0.0, blessures: dict | None = None) -> list:
-    """Pronostic forme + face-à-face (+ blessures si fournies) pour chaque match
-    à venir. `blessures` = {équipe: [{'nom','status'}]}."""
+    """Pronostic forme + face-à-face (+ blessures) + marchés additionnels
+    (totaux, les deux marquent, meilleur marqueur) pour chaque match à venir."""
     passes = [g for g in hist if g.get("done") and g.get("hs") is not None]
     passes.sort(key=lambda g: g.get("date") or "")
+    tots = [g["hs"] + g["as_"] for g in passes]
+    ligue_avg = sum(tots) / len(tots) if tots else 0.0
     bl = blessures or {}
     out = []
     for g in fixtures:
@@ -372,6 +525,9 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
                              inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]))
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
+        pr["marches"] = marches_buts(passes, g["home"], g["away"], nuls, ligue_avg)
+        pr["marqueur"] = (None if nuls else
+                          meilleur_marqueur(passes, g["home"], g["away"]))
         out.append(pr)
     return out
 
@@ -408,6 +564,32 @@ def analyse_match(p: dict) -> str:
         outs = [b["nom"] for b in (lst or []) if b.get("status") == "Out"]
         if outs:
             parts.append(f"{nom} privé de {', '.join(outs[:3])}.")
+    # Marchés additionnels (totaux, les deux marquent, meilleur marqueur).
+    m = p.get("marches")
+    if m:
+        if "btts" in m:                        # football
+            parts.append(f"Les deux marquent : **{'oui' if m['btts'] >= 0.5 else 'non'}** "
+                         f"({m['btts'] * 100:.0f}%).")
+            sens = "plus" if m["over"] >= 0.5 else "moins"
+            parts.append(f"Total buts : **{sens} de {m['ligne']:g}** "
+                         f"({max(m['over'], 1 - m['over']) * 100:.0f}%, "
+                         f"~{m['exp_total']:.1f} attendus).")
+        else:                                  # NBA / NHL
+            sens = "plus" if m["over"] >= 0.5 else "moins"
+            parts.append(f"Total : **{sens} de {m['ligne']:g}** "
+                         f"({max(m['over'], 1 - m['over']) * 100:.0f}%, "
+                         f"~{m['exp_total']:.0f} attendus).")
+    co = p.get("corners")
+    if co:
+        sens = "plus" if co["over"] >= 0.5 else "moins"
+        parts.append(f"Corners : **{sens} de {co['ligne']:g}** "
+                     f"({max(co['over'], 1 - co['over']) * 100:.0f}%, "
+                     f"~{co['exp']:.0f} attendus).")
+    mq = p.get("marqueur")
+    if mq and mq.get("top") and mq["top"].get("moy") is not None:
+        t = mq["top"]
+        parts.append(f"Meilleur marqueur probable : **{t['nom']}** "
+                     f"(~{t['moy']:.0f}, meneur {t['fois']}/{t['sur']}).")
     cible = ("le nul" if p["pick"] == "draw"
              else home if p["pick"] == "home" else away)
     parts.append(f"👉 Mon pronostic : **{cible}** (confiance {p['conf'] * 100:.0f}%).")

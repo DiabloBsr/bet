@@ -155,6 +155,82 @@ def test_backtest_rend_un_taux_borne_ou_none():
     assert bt is not None and 0.0 <= bt["taux"] <= 1.0 and bt["tot"] > 0
 
 
+# -------- marchés : totaux, les deux marquent, meilleur marqueur --------
+
+def _gl(h, a, hs, as_, d, lh=None, la=None):
+    g = _g(h, a, hs, as_, d)
+    g["lead_home"], g["lead_away"] = lh, la
+    return g
+
+
+def test_stats_off_moyennes():
+    passes = [_g("A", "X", 2, 1, "1"), _g("Y", "A", 0, 3, "2")]  # A marque 2 puis 3, encaisse 1 puis 0
+    bf, bc = sr.stats_off(passes, "A", n=5)
+    assert abs(bf - 2.5) < 1e-9 and abs(bc - 0.5) < 1e-9
+
+
+def test_marches_football_btts_et_over():
+    # beaucoup de buts des deux côtés -> BTTS probable, over 2,5 probable.
+    passes = ([_g("A", f"o{i}", 2, 1, f"a{i}") for i in range(8)]
+              + [_g("B", f"p{i}", 2, 1, f"b{i}") for i in range(8)])
+    m = sr.marches_buts(passes, "A", "B", nuls=True, ligue_avg=3.0)
+    assert m["ligne"] == 2.5 and "btts" in m
+    assert m["over"] > 0.5 and m["btts"] > 0.5
+    assert m["exp_total"] > 2.5
+
+
+def test_marches_nba_total_vs_ligne():
+    passes = [_g("A", "B", 120, 110, f"{i:03d}") for i in range(10)]  # total 230 > ligue_avg
+    m = sr.marches_buts(passes, "A", "B", nuls=False, ligue_avg=220.0)
+    assert "btts" not in m
+    assert m["over"] > 0.5                      # équipes qui scorent au-dessus de la ligne
+
+
+def test_meilleur_marqueur_choisit_le_meneur_recurrent():
+    L = {"nom": "Star", "val": 30.0}
+    passes = [_gl("A", "B", 1, 0, f"{i:02d}", lh=L, la={"nom": "Autre", "val": 10.0})
+              for i in range(5)]
+    mq = sr.meilleur_marqueur(passes, "A", "B", n=10)
+    assert mq["home"]["nom"] == "Star" and mq["home"]["fois"] == 5
+    assert mq["top"]["nom"] == "Star"           # 30 > 10
+
+
+def test_parse_team_capte_le_meilleur_marqueur():
+    data = {"events": [{"date": "d", "competitions": [{
+        "status": {"type": {"completed": True}},
+        "competitors": [
+            {"homeAway": "home", "team": {"displayName": "A"}, "score": "100",
+             "leaders": [{"name": "points", "leaders": [
+                 {"athlete": {"displayName": "Joueur X"}, "value": 28}]}]},
+            {"homeAway": "away", "team": {"displayName": "B"}, "score": "98",
+             "leaders": []}]}]}]}
+    g = sr.parse_games(data)[0]
+    assert g["lead_home"] == {"nom": "Joueur X", "val": 28.0}
+    assert g["lead_away"] is None
+
+
+# -------- corners (football) --------
+
+def test_corners_match_parse(monkeypatch):
+    summary = {"boxscore": {"teams": [
+        {"team": {"displayName": "A"}, "statistics": [
+            {"name": "wonCorners", "displayValue": "7"}, {"name": "offsides", "displayValue": "2"}]},
+        {"team": {"displayName": "B"}, "statistics": [
+            {"name": "wonCorners", "displayValue": "4"}]}]}}
+    monkeypatch.setattr(sr, "_get", lambda u, t=20.0: summary)
+    c = sr._corners_match("soccer/eng.1", 1, 20.0)
+    assert c == {"A": 7.0, "B": 4.0}
+
+
+def test_marche_corners_total_et_ligne():
+    sc = {"A": {"for": 7.0, "against": 5.0, "n": 5},
+          "B": {"for": 6.0, "against": 4.0, "n": 5}}
+    m = sr.marche_corners(sc, "A", "B", ligne=9.5)
+    # (7+4)/2 + (6+5)/2 = 5.5 + 5.5 = 11 > 9.5 -> over probable
+    assert abs(m["exp"] - 11.0) < 1e-9 and m["ligne"] == 9.5 and m["over"] > 0.5
+    assert sr.marche_corners({}, "A", "B") is None     # pas de données
+
+
 # -------- blessures --------
 
 def test_poids_blessures():
