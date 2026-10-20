@@ -297,11 +297,20 @@ def _vu_de(g: dict, team: str):
     return "N", 0
 
 
-def forme(passes: list, team: str, n: int = 6) -> dict:
+def forme(passes: list, team: str, n: int = 6, lieu: str | None = None) -> dict:
     """Forme récente d'une équipe/joueur sur ses `n` derniers matchs TERMINÉS
     (parmi `passes`, déjà chronologiques). `score` = taux de réussite (V=1,
-    N=0,5, D=0). `seq` = du plus récent au plus ancien."""
-    rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
+    N=0,5, D=0). `seq` = du plus récent au plus ancien.
+
+    `lieu` restreint au LIEU du match : 'home' (seulement les matchs joués à
+    domicile) ou 'away' (seulement à l'extérieur) — pour mesurer si une équipe
+    est forte chez elle ou solide en déplacement. None = tous les matchs."""
+    rec = [g for g in passes if g["home"] == team or g["away"] == team]
+    if lieu == "home":
+        rec = [g for g in rec if g["home"] == team]
+    elif lieu == "away":
+        rec = [g for g in rec if g["away"] == team]
+    rec = rec[-n:]
     seq, pts = [], 0.0
     for g in rec:
         r, _ = _vu_de(g, team)
@@ -350,6 +359,41 @@ def blessures_du_sport(path: str, timeout: float = 20.0) -> dict:
     return out
 
 
+_STAND = "https://site.api.espn.com/apis/v2/sports/{path}/standings"
+
+
+def classement_du_sport(path: str, timeout: float = 20.0) -> dict:
+    """{équipe (displayName): position (1 = meilleur)} depuis l'endpoint standings
+    d'ESPN. La position vient de l'ORDRE des entrées dans chaque groupe (elles
+    sont déjà triées par classement) — robuste même quand le champ 'rank' varie.
+    Best-effort : VIDE si indisponible ou illisible (coupes à élimination,
+    tennis, early-season sans table). Ne sert qu'en live (le classement ACTUEL
+    ne vaut pas pour un match passé : pas utilisable dans le backtest)."""
+    out: dict = {}
+    try:
+        d = _get(_STAND.format(path=path), timeout)
+    except Exception:
+        return out
+
+    def _groupes(node):
+        """Rend la liste des groupes {entries:[…]} où qu'ils soient dans l'arbre
+        (structure ESPN variable : racine, children[], ou standings imbriqués)."""
+        res = []
+        st = node.get("standings")
+        if isinstance(st, dict) and st.get("entries"):
+            res.append(st)
+        for ch in node.get("children") or []:
+            res.extend(_groupes(ch))
+        return res
+
+    for grp in _groupes(d if isinstance(d, dict) else {}):
+        for i, e in enumerate(grp.get("entries") or [], start=1):
+            team = (e.get("team") or {}).get("displayName")
+            if team and team not in out:          # meilleur groupe gardé
+                out[team] = i
+    return out
+
+
 def poids_blessures(liste: list | None) -> float:
     """Poids d'absence d'une équipe : 1,0 par « Out », 0,4 par « Day-To-Day »
     (incertain). Faute de valeur par joueur, c'est un COMPTE pondéré, pas une
@@ -361,10 +405,12 @@ def poids_blessures(liste: list | None) -> float:
 
 def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
                     home_adv: float = 0.0, n_forme: int = 6, n_h2h: int = 6,
-                    inj_home: list | None = None, inj_away: list | None = None) -> dict:
-    """Pronostic d'un match à partir de la FORME récente + du FACE-À-FACE, sans
-    aucune cote. Les BLESSURES (si fournies) décalent modérément la proba contre
-    l'équipe la plus touchée. Rend probas, `pick`, confiance, blessés."""
+                    inj_home: list | None = None, inj_away: list | None = None,
+                    rang_home: int | None = None, rang_away: int | None = None) -> dict:
+    """Pronostic d'un match à partir de la FORME récente + de la FORME AU LIEU
+    (domicile/extérieur) + du FACE-À-FACE, sans aucune cote. Les BLESSURES et le
+    CLASSEMENT (si fournis) décalent modérément la proba. Rend probas, `pick`,
+    confiance, blessés."""
     fh = forme(passes, home, n_forme)
     fa = forme(passes, away, n_forme)
     eps = 0.1
@@ -377,6 +423,24 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
     if h2h["score_a"] is not None and h2h["tot"] >= 2:
         # le face-à-face pèse ~35 % quand il existe (au moins 2 confrontations).
         p_core = min(0.97, max(0.03, 0.65 * p_core + 0.35 * h2h["score_a"]))
+    # Force SELON LE LIEU : est-ce que l'hôte est INHABITUELLEMENT fort chez lui,
+    # le visiteur solide en déplacement ? On prend l'ÉCART de chacun à sa propre
+    # forme globale (pas le niveau brut : l'avantage terrain moyen est déjà dans
+    # `bonus`, le re-compter biaiserait tout vers le domicile). Nudge modéré,
+    # plafonné à ±0,03, seulement avec ≥ 4 matchs au lieu concerné. Mesuré sur
+    # données réelles : effet dans le bruit (neutre), sans dégrader la précision.
+    fh_lieu = forme(passes, home, n_forme, lieu="home")
+    fa_lieu = forme(passes, away, n_forme, lieu="away")
+    d_home = (fh_lieu["score"] - fh["score"]) if fh_lieu["n"] >= 4 else 0.0
+    d_away = (fa_lieu["score"] - fa["score"]) if fa_lieu["n"] >= 4 else 0.0
+    if d_home or d_away:
+        p_core = min(0.97, max(0.03, p_core + max(-0.03, min(0.03, 0.3 * (d_home - d_away)))))
+    # Classement (live seulement) : petit coup de pouce au mieux classé, selon
+    # l'écart de rang, plafonné à ±0,06. Non backtesté (le rang actuel ne vaut
+    # pas pour un match passé) → ne s'applique que si les deux rangs sont fournis.
+    if rang_home and rang_away:
+        adjc = max(-0.06, min(0.06, 0.004 * (rang_away - rang_home)))
+        p_core = min(0.97, max(0.03, p_core + adjc))
     # Blessures : décale la proba contre l'équipe la plus touchée. 0,04 par unité
     # de poids d'écart, plafonné à ±0,12 (repère, pas une mesure précise).
     pw_h, pw_a = poids_blessures(inj_home), poids_blessures(inj_away)
@@ -395,6 +459,8 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
         pick = "home" if p_core >= 0.5 else "away"
     return {"home": home, "away": away, "p": p, "pick": pick,
             "conf": max(p.values()), "forme_home": fh, "forme_away": fa, "h2h": h2h,
+            "forme_home_dom": fh_lieu, "forme_away_ext": fa_lieu,
+            "rang_home": rang_home, "rang_away": rang_away,
             "bless_home": inj_home or [], "bless_away": inj_away or []}
 
 
@@ -577,7 +643,8 @@ def marche_corners(sc: dict, home: str, away: str, ligne: float = 9.5) -> dict |
 
 def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        home_adv: float = 0.0, blessures: dict | None = None,
-                       kind: str = "team", hockey: bool = False) -> list:
+                       kind: str = "team", hockey: bool = False,
+                       classement: dict | None = None) -> list:
     """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
     chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
     total points + meilleur marqueur (buts en hockey) ; tennis = total de SETS."""
@@ -587,12 +654,14 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
     ligue_avg = sum(tots) / len(tots) if tots else 0.0
     tennis = kind == "tennis"
     bl = blessures or {}
+    cl = classement or {}
     out = []
     for g in fixtures:
         if not (g.get("home") and g.get("away")):
             continue
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
-                             inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]))
+                             inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]),
+                             rang_home=cl.get(g["home"]), rang_away=cl.get(g["away"]))
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
         if tennis:
             pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))
@@ -626,6 +695,17 @@ def analyse_match(p: dict) -> str:
         parts.append(f"{away} est nettement mieux lancé.")
     else:
         parts.append("Les deux sont dans une forme comparable.")
+    # Force selon le lieu (domicile de l'hôte / extérieur du visiteur).
+    fhd, fae = p.get("forme_home_dom"), p.get("forme_away_ext")
+    if fhd and fhd["n"] >= 3:
+        parts.append(f"À domicile, {home} : {fhd['seq']} ({fhd['score'] * 100:.0f}%).")
+    if fae and fae["n"] >= 3:
+        parts.append(f"À l'extérieur, {away} : {fae['seq']} ({fae['score'] * 100:.0f}%).")
+    # Classement (si connu).
+    rh, ra = p.get("rang_home"), p.get("rang_away")
+    if rh and ra:
+        mieux = home if rh < ra else away
+        parts.append(f"Classement : {home} {rh}ᵉ, {away} {ra}ᵉ (avantage {mieux}).")
     if h["tot"]:
         if h["va"] > h["vb"]:
             parts.append(f"Face-à-face : {home} mène {h['va']}–{h['vb']} sur {h['tot']}.")

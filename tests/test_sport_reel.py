@@ -132,6 +132,35 @@ def test_forme_recent_dabord_et_score():
     assert abs(f["score"] - (0 + 0.5 + 1.0) / 3) < 1e-9
 
 
+def test_forme_par_lieu_domicile_vs_exterieur():
+    # A gagne tous ses matchs À DOMICILE, perd tous ses matchs À L'EXTÉRIEUR.
+    passes = ([_g("A", f"h{i}", 2, 0, f"d{i}") for i in range(3)]
+              + [_g(f"x{i}", "A", 2, 0, f"e{i}") for i in range(3)])
+    assert sr.forme(passes, "A", lieu="home")["score"] == 1.0   # parfait chez lui
+    assert sr.forme(passes, "A", lieu="away")["score"] == 0.0   # nul dehors
+    assert sr.forme(passes, "A", lieu="home")["n"] == 3
+    assert 0.0 < sr.forme(passes, "A")["score"] < 1.0           # mélange sans filtre
+
+
+def test_pronostic_expose_force_lieu_et_rangs():
+    passes = ([_g("A", f"h{i}", 3, 0, f"d{i}") for i in range(4)]
+              + [_g(f"x{i}", "B", 3, 0, f"e{i}") for i in range(4)])
+    p = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0,
+                           rang_home=2, rang_away=9)
+    assert p["forme_home_dom"]["n"] == 4 and p["forme_away_ext"]["n"] == 4
+    assert p["rang_home"] == 2 and p["rang_away"] == 9
+
+
+def test_classement_lit_l_ordre_des_entrees(monkeypatch):
+    faux = {"children": [{"standings": {"entries": [
+        {"team": {"displayName": "Alpha"}},
+        {"team": {"displayName": "Beta"}},
+        {"team": {"displayName": "Gamma"}}]}}]}
+    monkeypatch.setattr(sr, "_get", lambda u, t=20.0: faux)
+    cl = sr.classement_du_sport("soccer/eng.1")
+    assert cl == {"Alpha": 1, "Beta": 2, "Gamma": 3}
+
+
 def test_face_a_face_compte_du_point_de_vue_de_a():
     passes = [_g("A", "B", 2, 0, "1"), _g("B", "A", 1, 1, "2"), _g("B", "A", 3, 0, "3"),
               _g("A", "C", 1, 0, "4")]   # le dernier (vs C) ne compte pas

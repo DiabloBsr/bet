@@ -451,10 +451,12 @@ def main():
         from datetime import datetime as _dt3, timezone as _tz3, timedelta as _td3
 
         st.caption("Mes **3 pronostics les plus confiants par sport** pour la "
-                   "**date choisie** (forme récente + face-à-face + **blessures**, "
+                   "**date choisie** (forme récente + **force à domicile/à "
+                   "l'extérieur** + face-à-face + **classement** + **blessures**, "
                    "**sans cote**) — avec mon analyse de chaque match. Les absences "
-                   "(Out) comptent en NBA/NFL/NHL (ESPN ne publie pas le foot). "
-                   "Fiable surtout en **NBA et tennis**.")
+                   "(Out) comptent en NBA/NFL/NHL (ESPN ne publie pas le foot) ; "
+                   "le **11 de départ** n'est pas disponible dans la source "
+                   "gratuite. Fiable surtout en **NBA et tennis**.")
         _today3 = (_dt3.now(_tz3.utc) + _td3(hours=3)).date()   # aujourd'hui (Mada)
         _d3 = st.date_input("📅 Date des matchs (ton choix)", value=_today3, key="sr3_date")
         _d3str = _d3.strftime("%Y%m%d")
@@ -465,8 +467,9 @@ def main():
             jour = _dt3.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tz3.utc)
             fx = _sr3.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
+            cl = _sr3.classement_du_sport(path) if kind == "team" else {}
             return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
-                                           hockey=(path == "hockey/nhl"))
+                                           hockey=(path == "hockey/nhl"), classement=cl)
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -554,8 +557,11 @@ def main():
         _cfg = _sr.SPORTS[_lig]
         _path, _nuls = _cfg["path"], _cfg["nuls"]
 
-        st.caption("Le pronostic est fondé sur la **forme récente** (6 derniers "
-                   "matchs) et le **face-à-face** direct — **aucune cote**. "
+        st.caption("Le pronostic combine la **forme récente** (6 derniers "
+                   "matchs), la **force à domicile / à l'extérieur** (forme au "
+                   "lieu du match), le **face-à-face** direct, le **classement** "
+                   "et les **blessures** (NBA/NFL/NHL) — **aucune cote**. Le "
+                   "**11 de départ** n'est pas fourni par la source gratuite. "
                    "J'affiche mes **6 meilleurs pronostics** (les plus confiants) "
                    "de la date choisie, avec l'heure.")
         from datetime import datetime as _dtsr, timezone as _tzsr, timedelta as _tdsr
@@ -569,8 +575,9 @@ def main():
             jour = _dtsr.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tzsr.utc)
             fx = _sr.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
+            cl = _sr.classement_du_sport(path) if kind == "team" else {}
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
-                                            hockey=(path == "hockey/nhl"))
+                                            hockey=(path == "hockey/nhl"), classement=cl)
             # Les 6 MEILLEURS pronostics = les plus confiants de la journée.
             pronos = sorted(pronos, key=lambda p: -p["conf"])[:6]
             bt = _sr.taux_reussite(hist, nuls, home_adv)
