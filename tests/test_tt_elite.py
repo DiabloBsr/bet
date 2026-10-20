@@ -1,0 +1,77 @@
+"""TT Elite Series (tt-series.com) : parsing joueurs + conversion des matchs.
+
+Aucun réseau : on monkeypatch _get pour renvoyer des réponses fidèles au format
+réel de l'API tt/v1 (zawodnicy, mecze-excel)."""
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
+
+import tt_elite as te  # noqa: E402
+
+_ZAWODNICY = [
+    {"id": "10", "nazwa": "Alpha A", "elo": "1600", "poziom": "1"},
+    {"id": "20", "nazwa": "Beta B", "elo": "1400", "poziom": "1"},
+    {"id": "30", "nazwa": "Gamma G", "elo": "bizarre", "poziom": "3"},  # elo illisible
+]
+# Alpha bat Beta ; Gamma bat Alpha.
+_MECZE = [
+    {"id": "901", "player1_id": "10", "player2_id": "20",
+     "match_date": "2026-10-19 00:00:00", "winner_id": "10"},
+    {"id": "902", "player1_id": "30", "player2_id": "10",
+     "match_date": "2026-10-20 00:00:00", "winner_id": "30"},
+    {"id": "903", "player1_id": "20", "player2_id": "999",   # 999 inconnu -> ignoré
+     "match_date": "2026-10-20 00:00:00", "winner_id": "20"},
+]
+
+
+def _fake_get(url, timeout=40.0):
+    if "zawodnicy" in url:
+        return _ZAWODNICY
+    if "mecze-excel" in url:
+        return _MECZE
+    raise AssertionError("url inattendue: " + url)
+
+
+def test_joueurs_parse_nom_et_elo(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    js = te.joueurs()
+    assert js["10"]["nom"] == "Alpha A" and js["10"]["elo"] == 1600.0
+    assert js["30"]["elo"] is None                      # elo illisible -> None
+    assert js["20"]["div"] == "1"
+
+
+def test_historique_convertit_vainqueur_en_score(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    H = te.historique()
+    # 903 (adversaire inconnu) est écarté -> 2 matchs exploitables.
+    assert len(H) == 2
+    m = next(x for x in H if x["id"] == "901")
+    assert m["home"] == "Alpha A" and m["away"] == "Beta B"
+    assert m["hs"] == 1 and m["as_"] == 0 and m["done"] is True   # Alpha gagne
+    assert m["date"] == "2026-10-19"
+    g = next(x for x in H if x["id"] == "902")
+    assert g["home"] == "Gamma G" and g["hs"] == 1 and g["as_"] == 0  # Gamma gagne
+
+
+def test_historique_trie_par_date(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    H = te.historique()
+    assert [x["date"] for x in H] == sorted(x["date"] for x in H)
+
+
+def test_pronostic_rend_un_pick_et_une_confiance(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    H = te.historique()
+    p = te.pronostic(H, "Alpha A", "Beta B")
+    assert p["pick"] in ("home", "away")
+    assert 0.0 <= p["conf"] <= 1.0
+    assert p["p"]["draw"] == 0.0                        # pas de nul au tennis de table
+
+
+def test_joueurs_vide_si_injoignable(monkeypatch):
+    def boom(url, timeout=40.0):
+        raise OSError("réseau")
+    monkeypatch.setattr(te, "_get", boom)
+    assert te.joueurs() == {}
+    assert te.historique() == []

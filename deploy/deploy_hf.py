@@ -48,6 +48,9 @@ DEFAULT_FILES = [
     # Le collecteur _ttcup_loop est lance par start_cloud ; il accumule /data.
     "scripts/ttcup_tt.py",
     "scripts/_ttcup_loop.py",
+    # TT Elite Series (donnees OFFICIELLES tt-series.com, WordPress sans Cloudflare,
+    # datacenter-OK, 20/10). API a tout l'historique -> pas de collecteur.
+    "scripts/tt_elite.py",
     # NB: onglets Courses (courses_bet261/courses_collect/_courses_loop) et Tennis
     # de table (wtt_tt.py) RETIRES de l'app le 20/10 (demande Olivio) : scripts
     # gardes en local mais plus deployes ni lances par start_cloud.

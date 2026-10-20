@@ -697,6 +697,68 @@ def main():
         elif st.session_state.get("ttc_err"):
             st.error(f"ttcup.com indisponible. {st.session_state['ttc_err']}")
 
+    # ---- 🏓 TT ELITE SERIES (données OFFICIELLES tt-series.com, 20/10) ----
+    #   Site officiel WordPress/LiteSpeed SANS Cloudflare → joignable depuis le
+    #   datacenter. API JSON tt/v1 : joueurs (+ Elo officiel) et matchs terminés
+    #   (vainqueur) 2022→auj. Pas de score en manches ni de fixtures dans le JSON
+    #   → prédicteur de DUEL (2 joueurs), entraîné sur ~20 000 matchs réels, donc
+    #   fiabilité MESURABLE. Voir tt_elite.py.
+    with st.expander("🏓 TT Elite Series — duel entre deux joueurs (données officielles tt-series.com)"):
+        import tt_elite as _tte
+
+        st.caption("Tennis de table **TT Elite Series** (Pologne). Données "
+                   "**officielles tt-series.com** (sans cote) : forme + "
+                   "face-à-face + **Elo**, entraîné sur **~20 000 matchs réels** "
+                   "(2022→aujourd'hui). 1er chargement un peu long, puis en cache.")
+
+        @st.cache_data(ttl=21600, show_spinner=False)   # 6 h : l'historique bouge peu
+        def _tte_charger():
+            js = _tte.joueurs()
+            hist = _tte.historique(js)
+            taux = _tte.taux_fiabilite(hist, maxi=500)   # backtest réel, mis en cache
+            return js, hist, taux
+
+        if st.button("📊 Charger TT Elite & entraîner", key="tte_go", type="primary"):
+            with _db("Données officielles tt-series.com + entraînement…"):
+                try:
+                    st.session_state["tte_res"] = _tte_charger()
+                    st.session_state.pop("tte_err", None)
+                except Exception as exc:
+                    st.session_state["tte_res"] = None
+                    st.session_state["tte_err"] = f"{type(exc).__name__}: {exc}"
+        _ttres = st.session_state.get("tte_res")
+        if _ttres is not None:
+            _js, _hist, _taux = _ttres
+            st.success(f"Entraîné sur **{len(_hist)}** matchs · **{len(_js)}** joueurs.")
+            if _taux:
+                st.info(f"🎯 Fiabilité mesurée (backtest walk-forward sur "
+                        f"{_taux['tot']} matchs) : **{_taux['taux'] * 100:.0f}%** "
+                        f"(base pile ou face 50%). Elle **monte avec la confiance** : "
+                        f"~61% au-dessus de 60%, ~65% au-dessus de 65%, ~69% "
+                        f"au-dessus de 70% (backtest 20/10).")
+            # Elo officiel décroissant pour un choix pertinent.
+            _par_elo = sorted(_js.values(),
+                              key=lambda v: -(v["elo"] if v["elo"] is not None else 0))
+            _liste = [v["nom"] for v in _par_elo]
+            _elo_nom = {v["nom"]: v["elo"] for v in _js.values()}
+            if len(_liste) >= 2:
+                _ca, _cb = st.columns(2)
+                _ja = _ca.selectbox("Joueur 1", _liste, index=0, key="tte_ja")
+                _jb = _cb.selectbox("Joueur 2", _liste, index=1, key="tte_jb")
+                if _ja and _jb and _ja != _jb:
+                    _p = _tte.pronostic(_hist, _ja, _jb)
+                    _cible = _ja if _p["pick"] == "home" else _jb
+                    st.markdown(f"### 👉 Pronostic : **{_esc(_cible)}** "
+                                f"— confiance **{_p['conf'] * 100:.0f}%**")
+                    st.markdown("🔎 " + _tte.analyse(_p))
+                    def _eloaff(n):
+                        e = _elo_nom.get(n)
+                        return f"{e:.0f}" if e is not None else "—"
+                    st.caption(f"Elo officiel : {_esc(_ja)} {_eloaff(_ja)} · "
+                               f"{_esc(_jb)} {_eloaff(_jb)}.")
+        elif st.session_state.get("tte_err"):
+            st.error(f"tt-series.com indisponible. {st.session_state['tte_err']}")
+
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):
         import predict_trio as _pth2
