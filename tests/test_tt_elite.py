@@ -101,10 +101,11 @@ def test_pronostics_liste_reconnait_et_signale(monkeypatch):
     hist = te.historique()                       # Alpha/Beta/Gamma (cf. _MECZE)
     js = {"10": {"nom": "Alpha A", "elo": 1600, "div": "1"},
           "20": {"nom": "Beta B", "elo": 1400, "div": "1"}}
-    bloc = "Alpha, A - Beta, B\nligne bidon sans tiret"
+    # Bruit sans « - » (odds, labels) ignoré ; match avec joueur inconnu signalé.
+    bloc = "Alpha, A - Beta, B\n1  2,80  2  1,29\nAlpha, A - Inconnu, Z"
     pronos, inconnus = te.pronostics_liste(hist, js, bloc)
     assert len(pronos) == 1 and {pronos[0]["home"], pronos[0]["away"]} == {"Alpha A", "Beta B"}
-    assert inconnus == ["ligne bidon sans tiret"]
+    assert inconnus == ["Alpha, A - Inconnu, Z"]     # 1 joueur introuvable → signalé
 
 
 def test_charger_bundle_prefere_le_fichier(tmp_path, monkeypatch):
@@ -142,3 +143,25 @@ def test_pronostics_liste_attache_l_heure(monkeypatch):
           "20": {"nom": "Beta B", "elo": 1400, "div": "1"}}
     pronos, _ = te.pronostics_liste(hist, js, "11:10 Alpha, A - Beta, B")
     assert pronos and pronos[0]["time"] == "11:10"
+
+
+def test_extraire_matchs_bloc_bet261_desordonne():
+    # Format réel Bet261 : heure APRÈS le match, cotes et libellés à ignorer.
+    idx = te._index_noms({"1": {"nom": "Alpha A"}, "2": {"nom": "Beta B"},
+                          "3": {"nom": "Gamma C"}, "4": {"nom": "Delta D"}})
+    bloc = ("Alpha, A - Beta, B\n"
+            "International  -  TT Elite Series   LIVE\n"
+            "1   2,80    2   1,29    +7\n"
+            "11:10 Aujourd'hui\n"
+            "Gamma, C - Delta, D\n"
+            "11:20 Aujourd'hui")
+    matchs, inconnus = te.extraire_matchs(idx, bloc)
+    assert len(matchs) == 2 and inconnus == []       # libellé/cotes ignorés
+    assert matchs[0] == {"time": "11:10", "a": "Alpha A", "b": "Beta B"}
+    assert matchs[1]["time"] == "11:20"
+
+
+def test_extraire_matchs_signale_joueur_introuvable():
+    idx = te._index_noms({"1": {"nom": "Alpha A"}})
+    matchs, inconnus = te.extraire_matchs(idx, "Alpha, A - Inconnu, Z")
+    assert matchs == [] and inconnus == ["Alpha, A - Inconnu, Z"]

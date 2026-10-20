@@ -780,13 +780,19 @@ def main():
             _nowte = (_dtte.now(_tzte.utc) + _tdte(hours=3)).date()
             _de1, _de2 = st.columns([1, 2])
             _d_te = _de1.date_input("📅 Date des matchs", value=_nowte, key="tte_date")
-            _de2.caption("Astuce : tu peux préfixer chaque ligne par l'heure, "
-                         "ex. « 11:10 Glanowski, Waldemar - Kurek, Pawel ».")
+            _de2.caption("Colle **tout le bloc Bet261 tel quel** (sélectionne les "
+                         "matchs et copie) : je repère seul les matchs, leur "
+                         "**heure**, et j'ignore les cotes et « LIVE ». Les heures "
+                         "collées s'affichent ; sinon mets-les toi-même.")
             _bloc = st.text_area(
-                "Un match par ligne (heure optionnelle en tête)",
-                height=120, key="tte_bloc",
-                placeholder="11:10 Glanowski, Waldemar - Kurek, Pawel\n"
-                            "11:10 Warpas, Blazej - Sulkowski, Karol")
+                "Colle les matchs TT Elite depuis Bet261 (avec ou sans les cotes)",
+                height=150, key="tte_bloc",
+                placeholder="Glanowski, Waldemar - Kurek, Pawel\n"
+                            "International  -  TT Elite Series   LIVE\n"
+                            "1  2,80   2  1,29   +7\n"
+                            "11:10 Aujourd'hui\n"
+                            "Warpas, Blazej - Sulkowski, Karol\n"
+                            "11:10 Aujourd'hui")
             if st.button("🎯 Pronostiquer la liste", key="tte_liste_go"):
                 _prs, _inc = _tte.pronostics_liste(_hist, _js, _bloc)
                 if _prs:

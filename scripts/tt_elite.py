@@ -220,6 +220,7 @@ def _deux_cotes(ligne: str):
 
 
 _RE_HEURE = re.compile(r"^\s*(\d{1,2})\s*[:hH]\s*(\d{2})\b[\s.\-–—]*")
+_RE_HEURE_LIBRE = re.compile(r"\b(\d{1,2})\s*[:hH]\s*(\d{2})\b")
 
 
 def _extraire_heure(ligne: str):
@@ -231,27 +232,50 @@ def _extraire_heure(ligne: str):
     return None, ligne
 
 
-def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
-    """Pour un bloc de matchs collé (un par ligne, « [HH:MM] JoueurA - JoueurB »),
-    rend (pronos, inconnus) : un pronostic par match reconnu (avec son heure si
-    présente) + les lignes non reconnues. Entraîne l'Elo UNE fois."""
-    index = _index_noms(js)
-    elo = _sr.Elo(home_adv=0).entrainer(hist)
-    pronos, inconnus = [], []
+def extraire_matchs(index: dict, texte: str) -> tuple:
+    """Lit un bloc Bet261 COLLÉ TEL QUEL (lignes de match, cotes, « LIVE », et
+    l'heure sur une ligne à part — avant OU après le match) et en tire la liste
+    des matchs {time, a, b} + les lignes qui ressemblaient à un match mais dont
+    un joueur reste introuvable. Le bruit (cotes, libellés de ligue, « +7 ») est
+    ignoré car ses deux côtés ne correspondent à aucun joueur connu."""
+    matchs, inconnus, attente = [], [], None
     for brute in (texte or "").splitlines():
         ligne = brute.strip()
         if not ligne:
             continue
         heure, reste = _extraire_heure(ligne)
         duo = _deux_cotes(reste)
-        if not duo:
-            inconnus.append(ligne)
+        na = nb = None
+        if duo:
+            na, nb = trouver_joueur(index, duo[0]), trouver_joueur(index, duo[1])
+        if na and nb and na != nb:                 # vrai match
+            matchs.append({"time": heure or attente, "a": na, "b": nb})
+            attente = None
             continue
-        na, nb = trouver_joueur(index, duo[0]), trouver_joueur(index, duo[1])
-        if not na or not nb or na == nb:
-            inconnus.append(ligne)
+        # pas un match : est-ce une ligne d'heure seule (« 11:10 Aujourd'hui ») ?
+        mh = _RE_HEURE_LIBRE.search(ligne)
+        if mh:
+            t = f"{int(mh.group(1)):02d}:{mh.group(2)}"
+            if matchs and not matchs[-1]["time"]:   # l'heure suit le match (cas Bet261)
+                matchs[-1]["time"] = t
+            else:
+                attente = t                         # l'heure précède le prochain match
             continue
-        pr = _sr.pronostic_forme(hist, na, nb, nuls=False, home_adv=0, elo=elo)
-        pr["time"] = heure
+        if duo and (na or nb):                      # ressemblait à un match : 1 joueur manquant
+            inconnus.append(ligne)
+    return matchs, inconnus
+
+
+def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
+    """Pronostics d'un bloc Bet261 collé tel quel. Rend (pronos, inconnus) : un
+    pronostic par match reconnu (avec son heure si présente) + les lignes non
+    reconnues. Entraîne l'Elo UNE fois."""
+    index = _index_noms(js)
+    matchs, inconnus = extraire_matchs(index, texte)
+    elo = _sr.Elo(home_adv=0).entrainer(hist)
+    pronos = []
+    for m in matchs:
+        pr = _sr.pronostic_forme(hist, m["a"], m["b"], nuls=False, home_adv=0, elo=elo)
+        pr["time"] = m["time"]
         pronos.append(pr)
     return pronos, inconnus
