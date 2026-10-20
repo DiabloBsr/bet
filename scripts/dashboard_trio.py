@@ -443,76 +443,6 @@ def main():
                            "Le pari le plus sûr n'est pas un pari gagnant — mise petite.")
 
 
-    # ---- 🏇 COURSES — chevaux & lévriers (Palier 1 : lecture des cotes, 19/10) ----
-    #   Donnée Bet261/Sporty-Tech en direct (events?eventCategoryIds=8006|8005).
-    #   RNG, et les RÉSULTATS ne sont pas exposés : pas d'historique ni d'edge,
-    #   juste la proba DÉVIGÉE de victoire par partant. Voir courses_bet261.py.
-    with st.expander("🏇 Courses — chevaux (Dashing Derby) & lévriers (Platinum Hounds)"):
-        import courses_bet261 as _crs
-
-        def _mada_h(iso):
-            """ISO UTC (…Z) → heure Mada (UTC+3) « HH:MM »."""
-            try:
-                t = datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
-                return t.astimezone(timezone(timedelta(hours=3))).strftime("%H:%M")
-            except Exception:
-                return "?"
-
-        st.caption("Cotes **en direct** de Bet261. Pour chaque course, la "
-                   "probabilité **dévigée** de victoire par partant (la marge du "
-                   "book retirée des cotes). ⚠️ Courses RNG : pas d'edge prouvé — "
-                   "comme le football virtuel. Une collecte des **arrivées** "
-                   "tourne en fond pour permettre, à terme, une analyse "
-                   "indépendante des cotes (biais éventuel du RNG).")
-        # Compteur de collecte (lit la table `courses` remplie par _courses_loop).
-        # Garde : la table peut ne pas exister au tout premier démarrage.
-        try:
-            from sqlalchemy import text as _text_c
-            with _engine().connect() as _cxc:
-                _tot_c = _cxc.execute(_text_c("SELECT COUNT(*) FROM courses")).scalar() or 0
-                _res_c = _cxc.execute(_text_c(
-                    "SELECT COUNT(*) FROM courses WHERE result_json IS NOT NULL")).scalar() or 0
-            st.caption(f"🗃️ Collecte en base : **{_tot_c}** course(s) enregistrée(s), "
-                       f"dont **{_res_c}** avec arrivée. (Repart de zéro à chaque "
-                       f"redéploiement du Space.)")
-        except Exception:
-            st.caption("🗃️ Collecte : démarrage… (aucune course encore en base).")
-        cc1, cc2 = st.columns([2, 1])
-        _disc = cc1.radio("Discipline", list(_crs.CATEGORIES), horizontal=True,
-                          key="crs_disc")
-        _nb = cc2.number_input("Courses à afficher", 1, 10, 4, 1, key="crs_nb")
-        if st.button("🏇 Charger les prochaines courses", key="crs_go", type="primary"):
-            try:
-                st.session_state["crs_res"] = (
-                    _disc, _crs.fetch_courses(_crs.CATEGORIES[_disc]), None)
-            except Exception as exc:          # réseau/API : on dégrade proprement
-                st.session_state["crs_res"] = (_disc, None, f"{type(exc).__name__}: {exc}")
-        _cr = st.session_state.get("crs_res")
-        if _cr and _cr[0] == _disc:
-            _, _races, _err = _cr
-            if _races is None:
-                st.error(f"Courses indisponibles (API Bet261 injoignable). {_err or ''}")
-            elif not _races:
-                st.info("Aucune course à venir pour l'instant — réessaie dans un moment.")
-            else:
-                st.success(f"**{len(_races)} course(s)** à venir · {_disc} "
-                           f"{_crs.DISCIPLINE.get(_crs.CATEGORIES[_disc], '')}.")
-                for c in _races[:int(_nb)]:
-                    st.markdown(f"#### {_esc(str(c['name']))} — {_mada_h(c['start'])} (Mada)")
-                    fav = c.get("favori")
-                    if fav:
-                        st.success(f"Favori : **n° {fav['num']}** — cote "
-                                   f"{fav['odds']:g} · proba dévigée "
-                                   f"**{fav['p_devig'] * 100:.0f}%**")
-                    _df = pd.DataFrame([{"N°": r["num"], "Cote": r["odds"],
-                                         "Proba dévigée": r["p_devig"] * 100}
-                                        for r in c["runners"]])
-                    st.dataframe(
-                        _df.style.format({"Cote": "{:g}", "Proba dévigée": "{:.0f} %"}),
-                        hide_index=True,
-                        height=35 * (len(_df) + 1) + 3)
-                    st.markdown("---")
-
     # ---- 🏆 TOP 3 DU JOUR PAR SPORT (forme + face-à-face, 20/10) ----
     #   Les 3 pronostics les plus CONFIANTS par sport sur les matchs des
     #   prochains jours. Même modèle forme+face-à-face, sans cote.
@@ -691,60 +621,6 @@ def main():
                                  hide_index=True, height=35 * (len(_dfp) + 1) + 3)
                 else:
                     st.info("Aucun match programmé à cette date pour cette ligue.")
-
-    # ---- 🏓 TENNIS DE TABLE (WTT) — forme + face-à-face, 20/10 ----
-    #   Source World Table Tennis (résultats officiels, Brotli JSON). Duel entre
-    #   deux joueurs. Réutilise le moteur sport_reel. Voir wtt_tt.py.
-    with st.expander("🏓 Tennis de table — duel entre deux joueurs (données WTT)"):
-        import wtt_tt as _tt
-        import sport_reel as _srtt
-
-        st.caption("Résultats officiels **World Table Tennis**, **sans cote** : "
-                   "modèle **forme récente + face-à-face** (+ total de manches). "
-                   "⚠️ Les tournois archivés disponibles sont surtout des **WTT "
-                   "Youth** (catégories jeunes). 1er chargement un peu long, puis "
-                   "en cache.")
-
-        @st.cache_data(ttl=10800, show_spinner=False)
-        def _tt_charger(annee):
-            m = _tt.historique(annees=(annee,), max_events=15)
-            bt = _srtt.taux_reussite(m, nuls=False, home_adv=0)
-            ratings = dict(_srtt.Elo(home_adv=0).entrainer(m).r)
-            return m, bt, ratings
-
-        if st.button("📊 Charger les résultats WTT & entraîner", key="tt_go", type="primary"):
-            with _db("Résultats WTT (Brotli) + entraînement…"):
-                try:
-                    st.session_state["tt_res"] = _tt_charger(2026)
-                except Exception as exc:
-                    st.session_state["tt_res"] = None
-                    st.session_state["tt_err"] = f"{type(exc).__name__}: {exc}"
-        _tr = st.session_state.get("tt_res")
-        if _tr is not None:
-            _m, _bt, _ratings = _tr
-            st.success(f"Entraîné sur **{len(_m)}** matchs de simple "
-                       f"({len(_ratings)} joueurs).")
-            if _bt:
-                st.info(f"🎯 **Taux de réussite** du pronostic forme + face-à-face "
-                        f"(backtest sur {_bt['tot']} matchs) : **{_bt['taux'] * 100:.0f}%** "
-                        f"· référence pile ou face 50%.")
-            _js = sorted(_ratings, key=lambda p: -_ratings[p])    # meilleurs d'abord
-            if len(_js) >= 2:
-                _ca, _cb = st.columns(2)
-                _ja = _ca.selectbox("Joueur 1", _js, index=0, key="tt_ja")
-                _jb = _cb.selectbox("Joueur 2", _js, index=1, key="tt_jb")
-                if _ja and _jb and _ja != _jb:
-                    _p = _tt.pronostic(_m, _ja, _jb)
-                    _cible = _ja if _p["pick"] == "home" else _jb
-                    st.markdown(f"### 👉 Pronostic : **{_esc(_cible)}** "
-                                f"— confiance **{_p['conf'] * 100:.0f}%**")
-                    st.markdown("🔎 " + _srtt.analyse_match(_p))
-                    st.caption(f"Elo : {_esc(_ja)} {round(_ratings.get(_ja, 1500))} · "
-                               f"{_esc(_jb)} {round(_ratings.get(_jb, 1500))}")
-            st.caption("**Top 10 Elo** : " + " · ".join(
-                f"{_esc(t)} {round(_ratings[t])}" for t in _js[:10]))
-        elif st.session_state.get("tt_err"):
-            st.error(f"WTT indisponible. {st.session_state['tt_err']}")
 
     # ---- 🔎 HISTORIQUE & FACE-À-FACE (choix manuel, 9 ligues) ----
     with st.expander("🔎 Historique & face-à-face — deux équipes au choix (9 ligues)"):

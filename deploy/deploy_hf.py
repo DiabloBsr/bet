@@ -42,16 +42,12 @@ DEFAULT_FILES = [
     "scripts/lire_cotes.py",
     # Importe par dashboard_trio : absent, l'app en ligne meurt a l'import.
     "scripts/forme_pastilles.py",
-    # Module Courses (chevaux/levriers), importe par dashboard_trio (19/10).
-    "scripts/courses_bet261.py",
-    # Collecte des courses (cotes + arrivees) : loop lance par start_cloud (20/10).
-    "scripts/courses_collect.py",
-    "scripts/_courses_loop.py",
     # Prediction sport reel par Elo (donnees ESPN), importe par dashboard (20/10).
     "scripts/sport_reel.py",
-    # Tennis de table reel (donnees World Table Tennis), importe par dashboard (20/10).
-    "scripts/wtt_tt.py",
-    # NB: scores24_tt.py (TT Elite Series) existe en local mais N'EST PAS deploye :
+    # NB: onglets Courses (courses_bet261/courses_collect/_courses_loop) et Tennis
+    # de table (wtt_tt.py) RETIRES de l'app le 20/10 (demande Olivio) : scripts
+    # gardes en local mais plus deployes ni lances par start_cloud.
+    # scores24_tt.py (TT Elite Series) existe en local mais N'EST PAS deploye :
     # scores24 bloque l'IP du Space (403). Gardé pour un eventuel contournement.
     # Deja sur le Space, identique au depot (controle le 04/10), mais hors
     # liste : une retouche du theme ne serait jamais partie.

@@ -65,16 +65,6 @@ cp -f config/score_calibration.json data/vfoot_ml/score_calibration.json 2>/dev/
     sleep 15
   done ) &
 
-# ---- 3bis. collecte des COURSES (chevaux/lévriers) — léger (urllib + sqlite) ----
-#   Étape A du Palier 2 (19/10) : capte cotes puis ARRIVÉES (re-GET events/{id}
-#   une fois la course réglée) dans la table `courses`. Permettra l'analyse
-#   indépendante des cotes. 60s suffit (course toutes les 2 min, le résultat
-#   reste interrogeable après). Voir scripts/courses_collect.py.
-( while true; do
-    python scripts/_courses_loop.py --interval 60 >> /data/courses.log 2>&1 || true
-    sleep 15
-  done ) &
-
 # ---- 4-5. jobs LOURDS (tracker, monitors, calibration) — OPT-IN (chargent pandas+modèle) ----
 #   Le vrai stack d'analyse tourne en LOCAL. Pour les activer en ligne : CLOUD_FULL_STACK=1.
 if [ "${CLOUD_FULL_STACK:-0}" = "1" ]; then
