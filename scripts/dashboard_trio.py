@@ -676,6 +676,9 @@ def main():
                     st.session_state["ttc_res"] = None
                     st.session_state["ttc_err"] = f"{type(exc).__name__}: {exc}"
         _ttr = st.session_state.get("ttc_res")
+        if _ttr is not None and not (_ttr[0] or _ttr[2]):     # 0 pronostic ET 0 historique
+            st.error("ttcup.com injoignable depuis le serveur — " + _ttc.diagnostic())
+            _ttr = None
         if _ttr is not None:
             _pr, _taux, _nh, _halls = _ttr
             st.caption(f"Entraîné sur **{_nh}** matchs joués récents · halls : "
@@ -748,6 +751,8 @@ def main():
         @st.cache_data(ttl=21600, show_spinner=False)   # 6 h : l'historique bouge peu
         def _tte_charger():
             js = _tte.joueurs()
+            if not js:                                   # échec réseau : on NE cache PAS
+                raise RuntimeError("tt-series.com injoignable — " + _tte.diagnostic())
             hist = _tte.historique(js)
             taux = _tte.taux_fiabilite(hist, maxi=500)   # backtest réel, mis en cache
             return js, hist, taux

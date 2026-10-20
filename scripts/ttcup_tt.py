@@ -35,7 +35,16 @@ import sport_reel as _sr
 
 _MADA = timezone(timedelta(hours=3))    # heure de Madagascar (UTC+3), comme Bet261
 
-_H = {"User-Agent": "Mozilla/5.0", "X-Requested-With": "XMLHttpRequest"}
+# En-têtes « navigateur » complets (certains pare-feux rejettent un UA générique
+# depuis une IP datacenter). X-Requested-With : l'endpoint est une route AJAX.
+_H = {
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"),
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
+    "X-Requested-With": "XMLHttpRequest",
+    "Referer": "https://ttcup.com/",
+}
 HOTBLOCK_URL = "https://ttcup.com/tournaments/ajax/tournament/home/hotblock/"
 
 
@@ -43,6 +52,19 @@ def _get(url: str, timeout: float = 25.0):
     req = urllib.request.Request(url, headers=_H)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
+
+
+def diagnostic(timeout: float = 20.0) -> str:
+    """Teste l'accès au hotblock et rend un message lisible (statut HTTP ou
+    erreur) — pour afficher POURQUOI le chargement échoue au lieu d'un « 0 »."""
+    import urllib.error
+    try:
+        d = _get(HOTBLOCK_URL, timeout)
+        return f"OK ({len(d) if isinstance(d, list) else '?'} tournois)"
+    except urllib.error.HTTPError as e:
+        return f"HTTP {e.code} {e.reason}"
+    except Exception as e:
+        return f"{type(e).__name__}: {e}"
 
 
 def fetch_hotblock(timeout: float = 25.0) -> list:
