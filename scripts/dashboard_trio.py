@@ -451,12 +451,13 @@ def main():
         from datetime import datetime as _dt3, timezone as _tz3, timedelta as _td3
 
         st.caption("Mes **3 pronostics les plus confiants par sport** pour la "
-                   "**date choisie** (forme récente + **force à domicile/à "
-                   "l'extérieur** + face-à-face + **classement** + **blessures**, "
-                   "**sans cote**) — avec mon analyse de chaque match. Les absences "
-                   "(Out) comptent en NBA/NFL/NHL (ESPN ne publie pas le foot) ; "
-                   "le **11 de départ** n'est pas disponible dans la source "
-                   "gratuite. Fiable surtout en **NBA et tennis**.")
+                   "**date choisie** (**note Elo** de la saison + forme récente + "
+                   "**force à domicile/à l'extérieur** + face-à-face + "
+                   "**classement** + **blessures**, **sans cote**) — avec mon "
+                   "analyse de chaque match. Les absences (Out) comptent en "
+                   "NBA/NFL/NHL (ESPN ne publie pas le foot) ; le **11 de départ** "
+                   "n'est pas disponible dans la source gratuite. Fiable surtout "
+                   "en **NBA et tennis**.")
         _today3 = (_dt3.now(_tz3.utc) + _td3(hours=3)).date()   # aujourd'hui (Mada)
         _d3 = st.date_input("📅 Date des matchs (ton choix)", value=_today3, key="sr3_date")
         _d3str = _d3.strftime("%Y%m%d")
@@ -557,13 +558,14 @@ def main():
         _cfg = _sr.SPORTS[_lig]
         _path, _nuls = _cfg["path"], _cfg["nuls"]
 
-        st.caption("Le pronostic combine la **forme récente** (6 derniers "
-                   "matchs), la **force à domicile / à l'extérieur** (forme au "
-                   "lieu du match), le **face-à-face** direct, le **classement** "
-                   "et les **blessures** (NBA/NFL/NHL) — **aucune cote**. Le "
-                   "**11 de départ** n'est pas fourni par la source gratuite. "
-                   "J'affiche mes **6 meilleurs pronostics** (les plus confiants) "
-                   "de la date choisie, avec l'heure.")
+        st.caption("Le pronostic combine une **note Elo** (force sur toute la "
+                   "saison, pondérée par les adversaires — 60 %) avec la **forme "
+                   "récente** (6 derniers matchs), la **force à domicile / à "
+                   "l'extérieur**, le **face-à-face**, le **classement** et les "
+                   "**blessures** (NBA/NFL/NHL) — **aucune cote**. Le **11 de "
+                   "départ** n'est pas fourni par la source gratuite. J'affiche "
+                   "mes **6 meilleurs pronostics** (les plus confiants) de la "
+                   "date choisie, avec l'heure.")
         from datetime import datetime as _dtsr, timezone as _tzsr, timedelta as _tdsr
         _today_sr = (_dtsr.now(_tzsr.utc) + _tdsr(hours=3)).date()
         _date_sr = st.date_input("📅 Date des matchs", value=_today_sr, key="sr_date")

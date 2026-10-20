@@ -406,11 +406,18 @@ def poids_blessures(liste: list | None) -> float:
 def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
                     home_adv: float = 0.0, n_forme: int = 6, n_h2h: int = 6,
                     inj_home: list | None = None, inj_away: list | None = None,
-                    rang_home: int | None = None, rang_away: int | None = None) -> dict:
+                    rang_home: int | None = None, rang_away: int | None = None,
+                    elo: "Elo | None" = None) -> dict:
     """Pronostic d'un match à partir de la FORME récente + de la FORME AU LIEU
     (domicile/extérieur) + du FACE-À-FACE, sans aucune cote. Les BLESSURES et le
-    CLASSEMENT (si fournis) décalent modérément la proba. Rend probas, `pick`,
-    confiance, blessés."""
+    CLASSEMENT (si fournis) décalent modérément la proba.
+
+    Si un `elo` (déjà entraîné sur `passes`) est fourni, la proba finale est le
+    MÉLANGE 60 % Elo + 40 % forme : l'Elo accumule le signal sur toute la saison
+    en pondérant par la force des adversaires, la forme apporte le court terme.
+    Backtest réel (8 ligues) : moyenne et plancher meilleurs que chaque méthode
+    seule — surtout au foot, où la forme seule faisait moins bien que « toujours
+    domicile ». Rend probas, `pick`, confiance, blessés."""
     fh = forme(passes, home, n_forme)
     fa = forme(passes, away, n_forme)
     eps = 0.1
@@ -457,6 +464,14 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
     else:
         p = {"home": p_core, "draw": 0.0, "away": 1.0 - p_core}
         pick = "home" if p_core >= 0.5 else "away"
+    # Mélange avec l'Elo (60 % Elo / 40 % forme) quand un Elo entraîné est fourni.
+    if elo is not None:
+        pe = elo.proba(home, away, nuls)
+        w = 0.6
+        p = {k: w * pe.get(k, 0.0) + (1.0 - w) * p[k] for k in p}
+        tot = sum(p.values()) or 1.0
+        p = {k: v / tot for k, v in p.items()}
+        pick = max(p, key=p.get) if nuls else ("home" if p["home"] >= p["away"] else "away")
     return {"home": home, "away": away, "p": p, "pick": pick,
             "conf": max(p.values()), "forme_home": fh, "forme_away": fa, "h2h": h2h,
             "forme_home_dom": fh_lieu, "forme_away_ext": fa_lieu,
@@ -655,13 +670,15 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
     tennis = kind == "tennis"
     bl = blessures or {}
     cl = classement or {}
+    elo = Elo(home_adv=home_adv).entrainer(passes)   # backbone saison entière
     out = []
     for g in fixtures:
         if not (g.get("home") and g.get("away")):
             continue
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
                              inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]),
-                             rang_home=cl.get(g["home"]), rang_away=cl.get(g["away"]))
+                             rang_home=cl.get(g["home"]), rang_away=cl.get(g["away"]),
+                             elo=elo)
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
         if tennis:
             pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))
@@ -784,7 +801,8 @@ def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
     for g in sous:
         d = g.get("date") or ""
         passes = [x for x in done if (x.get("date") or "") < d]
-        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv)
+        elo = Elo(home_adv=home_adv).entrainer(passes)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo)
         reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
         ok += pr["pick"] == reel
         ok_base += reel == "home"

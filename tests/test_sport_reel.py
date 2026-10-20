@@ -151,6 +151,24 @@ def test_pronostic_expose_force_lieu_et_rangs():
     assert p["rang_home"] == 2 and p["rang_away"] == 9
 
 
+def test_melange_elo_est_la_combinaison_60_40():
+    # A domine nettement en forme ; l'Elo, qui pondère par la force des
+    # adversaires, est moins tranché → le mélange 60/40 doit tomber ENTRE les
+    # deux, exactement à 0,6·Elo + 0,4·forme (pas de nul : home+away=1).
+    passes = ([_g("A", "C", 3, 0, f"ac{i}") for i in range(4)]
+              + [_g("C", "B", 3, 0, f"cb{i}") for i in range(4)]
+              + [_g("A", "D", 1, 1, f"ad{i}") for i in range(2)]
+              + [_g("B", "D", 1, 1, f"bd{i}") for i in range(2)])
+    sans = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0)
+    elo = sr.Elo(home_adv=0).entrainer(passes)
+    pe = elo.proba("A", "B", nuls=False)
+    avec = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0, elo=elo)
+    attendu = 0.6 * pe["home"] + 0.4 * sans["p"]["home"]
+    assert abs(avec["p"]["home"] - attendu) < 1e-9
+    assert pe["home"] < avec["p"]["home"] < sans["p"]["home"]   # tiré vers l'Elo
+    assert abs(sum(avec["p"].values()) - 1.0) < 1e-9            # proba normalisée
+
+
 def test_classement_lit_l_ordre_des_entrees(monkeypatch):
     faux = {"children": [{"standings": {"entries": [
         {"team": {"displayName": "Alpha"}},
