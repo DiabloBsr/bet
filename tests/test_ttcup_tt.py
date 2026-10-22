@@ -106,3 +106,23 @@ def test_pronostics_rattache_heure(monkeypatch):
     fx = tt.matchs_a_venir(ms)
     pr = tt.pronostics(hist, fx)
     assert pr and pr[0].get("time") == "09:10"           # heure propagée au pronostic
+
+
+def test_marge_points_depuis_games():
+    # A gagne 2-1 mais domine largement en points (11-5, 9-11, 11-3) = +12.
+    snap = [_tournoi(1, "Czech 7", [
+        _match(1, "a-a-1990", "b-b-1991", "07:40", [[11, 5], [9, 11], [11, 3]])])]
+    m = tt.matchs_joues(tt.parse_snapshot(snap))[0]
+    assert m["hs"] == 2 and m["as_"] == 1                # 2 manches à 1
+    assert m["marge"] == (11 + 9 + 11) - (5 + 11 + 3)    # +12 en points
+
+
+def test_pronostics_liste_bet261_seulement():
+    # Historique avec A,B,C,D ; on ne colle que A-B et C-D -> seuls ceux-là.
+    hist = ([{"home": "Alpha A", "away": "Beta B", "hs": 3, "as_": 0, "done": True,
+              "date": f"2026-10-{d:02d}", "marge": 20} for d in range(1, 9)]
+            + [{"home": "Gamma C", "away": "Delta D", "hs": 0, "as_": 3, "done": True,
+                "date": f"2026-10-{d:02d}", "marge": -20} for d in range(9, 17)])
+    pr, inc = tt.pronostics_liste(hist, "11:10 Alpha, A - Beta, B\nGamma, C - Delta, D")
+    assert len(pr) == 2 and inc == []
+    assert pr[0]["time"] == "11:10"

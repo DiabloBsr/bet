@@ -716,7 +716,7 @@ def main():
         def _ttc_charger(path):
             acc = _ttc.charger_disque(path)
             r = _ttc.charger_live(acc)
-            return r["pronos"], r["taux"], len(r["hist"]), r["halls"]
+            return r["pronos"], r["taux"], len(r["hist"]), r["halls"], r["hist"]
 
         if st.button("🏓 Charger les pronostics TT Cup", key="ttc_go", type="primary"):
             with _db("Données officielles ttcup.com + entraînement…"):
@@ -731,10 +731,41 @@ def main():
             st.error("ttcup.com injoignable depuis le serveur — " + _ttc.diagnostic())
             _ttr = None
         if _ttr is not None:
-            _pr, _taux, _nh, _halls = _ttr
+            _pr, _taux, _nh, _halls, _histtc = _ttr
             st.caption(f"Entraîné sur **{_nh}** matchs joués récents · halls : "
                        f"{', '.join(_halls) if _halls else '—'}. Pronostics **sans "
-                       "cote** (forme + face-à-face + Elo).")
+                       "cote** (forme + **marge en points** + Elo, confiance calibrée).")
+
+            # --- Mode Bet261 : ne pronostiquer QUE les matchs collés depuis Bet261.
+            st.markdown("##### 📋 Tes matchs Bet261 (colle-les → seuls ceux-là sont pronostiqués)")
+            _bloctc = st.text_area(
+                "Un match par ligne (format Bet261, heure optionnelle)", height=110,
+                key="ttc_bloc", placeholder="11:10 Sindler, Jaroslav - Drozd, Ales")
+            if st.button("🎯 Pronostiquer mes matchs Bet261", key="ttc_liste_go"):
+                _prs, _inc = _ttc.pronostics_liste(_histtc, _bloctc)
+                if _prs:
+                    def _lg(p):
+                        return {"Heure": p.get("time") or "—",
+                                "Match": f"{p['home']} – {p['away']}",
+                                "Pronostic": _esc(p["home"] if p["pick"] == "home" else p["away"]),
+                                "Confiance": p["conf"] * 100}
+                    _top5 = sorted(_prs, key=lambda p: -p["conf"])[:5]
+                    st.markdown("###### 🏆 Top 5 (les plus confiants)")
+                    _d5 = pd.DataFrame([_lg(p) for p in _top5])
+                    st.dataframe(_d5.style.format({"Confiance": "{:.0f} %"}),
+                                 hide_index=True, height=35 * (len(_d5) + 1) + 3)
+                    _ord = sorted(_prs, key=lambda p: (p.get("time") or "~"))
+                    _dfl = pd.DataFrame([_lg(p) for p in _ord])
+                    st.markdown("###### Tous tes matchs (triés par heure)")
+                    st.dataframe(_dfl.style.format({"Confiance": "{:.0f} %"}),
+                                 hide_index=True, height=35 * (len(_dfl) + 1) + 3)
+                if _inc:
+                    st.warning("Non reconnus (joueur absent de l'historique ttcup.com) : "
+                               + " · ".join(_esc(x) for x in _inc[:8]))
+                if not _prs and not _inc:
+                    st.info("Colle au moins un match (« Joueur A - Joueur B »).")
+            st.divider()
+            st.caption("Sinon, ci-dessous **tous** les matchs du jour (tous halls) :")
             if _taux:
                 st.info(f"🎯 Fiabilité mesurée (backtest sur {_taux['tot']} matchs) : "
                         f"**{_taux['taux'] * 100:.0f}%** · référence pile ou face 50%.")
@@ -801,9 +832,11 @@ def main():
 
         @st.cache_data(ttl=21600, show_spinner=False)   # 6 h : l'historique bouge peu
         def _tte_charger():
+            import sport_reel as _srx
             js, hist, source = _tte.charger()            # bundle livré, sinon direct
             taux = _tte.taux_fiabilite(hist, maxi=500)   # backtest réel, mis en cache
-            return js, hist, taux, source
+            cal = _srx.calibrer_platt(hist, nuls=False, home_adv=0, maxi=500)
+            return js, hist, taux, source, cal
 
         if st.button("📊 Charger TT Elite & entraîner", key="tte_go", type="primary"):
             with _db("Données officielles tt-series.com + entraînement…"):
@@ -815,7 +848,7 @@ def main():
                     st.session_state["tte_err"] = f"{type(exc).__name__}: {exc}"
         _ttres = st.session_state.get("tte_res")
         if _ttres is not None:
-            _js, _hist, _taux, _src = _ttres
+            _js, _hist, _taux, _src, _cal = _ttres
             st.success(f"Entraîné sur **{len(_hist)}** matchs · **{len(_js)}** "
                        f"joueurs · source : {_src}.")
             if _taux:
@@ -845,7 +878,7 @@ def main():
                             "Warpas, Blazej - Sulkowski, Karol\n"
                             "11:10 Aujourd'hui")
             if st.button("🎯 Pronostiquer la liste", key="tte_liste_go"):
-                _prs, _inc = _tte.pronostics_liste(_hist, _js, _bloc)
+                _prs, _inc = _tte.pronostics_liste(_hist, _js, _bloc, _cal)
                 if _prs:
                     def _lg_te(p):
                         return {"Heure": p.get("time") or "—",
@@ -881,7 +914,7 @@ def main():
                 _ja = _ca.selectbox("Joueur 1", _liste, index=0, key="tte_ja")
                 _jb = _cb.selectbox("Joueur 2", _liste, index=1, key="tte_jb")
                 if _ja and _jb and _ja != _jb:
-                    _p = _tte.pronostic(_hist, _ja, _jb)
+                    _p = _tte.pronostic(_hist, _ja, _jb, _cal)
                     _cible = _ja if _p["pick"] == "home" else _jb
                     st.markdown(f"### 👉 Pronostic : **{_esc(_cible)}** "
                                 f"— confiance **{_p['conf'] * 100:.0f}%**")

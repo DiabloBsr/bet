@@ -148,10 +148,13 @@ def charger(path: str | None = None) -> tuple:
     return js, historique(js), "tt-series.com en direct"
 
 
-def pronostic(hist: list, nom_a: str, nom_b: str) -> dict:
-    """Pronostic d'un duel (forme + face-à-face + Elo), terrain neutre, sans nul."""
+def pronostic(hist: list, nom_a: str, nom_b: str, cal: dict | None = None) -> dict:
+    """Pronostic d'un duel (forme + face-à-face + Elo), terrain neutre, sans nul.
+    Confiance calibrée (Platt) si `cal` fourni."""
     elo = _sr.Elo(home_adv=0).entrainer(hist)
-    return _sr.pronostic_forme(hist, nom_a, nom_b, nuls=False, home_adv=0, elo=elo)
+    pr = _sr.pronostic_forme(hist, nom_a, nom_b, nuls=False, home_adv=0, elo=elo)
+    pr["conf"] = _sr.applique_platt(pr["conf"], cal)
+    return pr
 
 
 def taux_fiabilite(hist: list, maxi: int = 1500, warmup: int = 200) -> dict | None:
@@ -266,16 +269,17 @@ def extraire_matchs(index: dict, texte: str) -> tuple:
     return matchs, inconnus
 
 
-def pronostics_liste(hist: list, js: dict, texte: str) -> tuple:
+def pronostics_liste(hist: list, js: dict, texte: str, cal: dict | None = None) -> tuple:
     """Pronostics d'un bloc Bet261 collé tel quel. Rend (pronos, inconnus) : un
     pronostic par match reconnu (avec son heure si présente) + les lignes non
-    reconnues. Entraîne l'Elo UNE fois."""
+    reconnues. Entraîne l'Elo UNE fois ; confiance calibrée si `cal` fourni."""
     index = _index_noms(js)
     matchs, inconnus = extraire_matchs(index, texte)
     elo = _sr.Elo(home_adv=0).entrainer(hist)
     pronos = []
     for m in matchs:
         pr = _sr.pronostic_forme(hist, m["a"], m["b"], nuls=False, home_adv=0, elo=elo)
+        pr["conf"] = _sr.applique_platt(pr["conf"], cal)
         pr["time"] = m["time"]
         pronos.append(pr)
     return pronos, inconnus

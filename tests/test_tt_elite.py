@@ -136,6 +136,17 @@ def test_extraire_heure_en_tete():
     assert te._extraire_heure("Alpha, A - Beta, B") == (None, "Alpha, A - Beta, B")
 
 
+def test_pronostic_applique_la_calibration(monkeypatch):
+    monkeypatch.setattr(te, "_get", _fake_get)
+    hist = te.historique()
+    brut = te.pronostic(hist, "Alpha A", "Beta B")
+    cal = {"A": 0.5, "B": 0.0}                            # A<1 -> rapproche de 0,5
+    calibre = te.pronostic(hist, "Alpha A", "Beta B", cal)
+    # confiance calibrée différente (recalée vers le centre) et bornée
+    assert calibre["conf"] != brut["conf"]
+    assert 0.0 < calibre["conf"] < 1.0
+
+
 def test_pronostics_liste_attache_l_heure(monkeypatch):
     monkeypatch.setattr(te, "_get", _fake_get)
     hist = te.historique()

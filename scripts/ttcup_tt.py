@@ -115,6 +115,24 @@ def _sets_de_games(games: list):
     return (a, b) if (a or b) else None
 
 
+def _marge_points(games: list):
+    """Écart TOTAL de points (dominance) d'après games [[a,b], …] : points gagnés
+    par le joueur A − par le joueur B, tous sets confondus. Plus fin que l'écart
+    de manches. None si illisible."""
+    if not games:
+        return None
+    pa = pb = 0
+    ok = False
+    for g in games:
+        try:
+            pa += int(g[0])
+            pb += int(g[1])
+            ok = True
+        except (TypeError, ValueError, IndexError):
+            continue
+    return (pa - pb) if ok else None
+
+
 def _mada(date_iso: str, heure: str):
     """('2026-10-20', '07:40') heure de Prague -> ('HH:MM' Mada, ISO UTC) pour
     tri/filtre, en gérant l'heure d'été. (None, '') si illisible."""
@@ -155,7 +173,8 @@ def parse_snapshot(data: list) -> list:
                 if s is None:
                     out.append({**base, "hs": None, "as_": None, "done": False})
                 else:
-                    out.append({**base, "hs": s[0], "as_": s[1], "done": True})
+                    out.append({**base, "hs": s[0], "as_": s[1], "done": True,
+                                "marge": _marge_points(m.get("games"))})
     return out
 
 
@@ -182,10 +201,11 @@ def matchs_a_venir(matchs: list) -> list:
 
 def pronostics(historique: list, fixtures: list) -> list:
     """Pronostics forme + face-à-face + Elo (moteur sport_reel) pour les matchs à
-    venir. Tennis de table : pas de nul, terrain neutre (home_adv=0). On rattache
-    l'heure (Mada), l'ISO et le hall de chaque fixture au pronostic."""
+    venir. Tennis de table : pas de nul, terrain neutre (home_adv=0). La MARGE EN
+    POINTS (domination) est utilisée quand elle est connue. On rattache l'heure
+    (Mada), l'ISO et le hall de chaque fixture au pronostic."""
     pr = _sr.pronostics_a_venir(historique, fixtures, nuls=False, home_adv=0,
-                                kind="team")
+                                kind="team", marge=True, marge_scale=8.0)
     meta = {(f["home"], f["away"]): f for f in fixtures}
     for p in pr:
         f = meta.get((p["home"], p["away"]))
@@ -197,7 +217,28 @@ def pronostics(historique: list, fixtures: list) -> list:
 def taux_fiabilite(historique: list) -> dict | None:
     """Backtest HONNÊTE (walk-forward) sur l'historique accumulé. None tant qu'il
     n'y a pas assez de matchs — on ne montre pas un taux calculé sur 3 matchs."""
-    return _sr.taux_reussite(historique, nuls=False, home_adv=0)
+    return _sr.taux_reussite(historique, nuls=False, home_adv=0, marge=True, marge_scale=8.0)
+
+
+def pronostics_liste(historique: list, texte: str) -> tuple:
+    """Ne pronostique QUE les matchs COLLÉS depuis Bet261 (un bloc brut accepté :
+    cotes/labels ignorés, heure en tête ou à part). Les joueurs sont rapprochés
+    de l'historique ttcup.com. Rend (pronos, inconnus). Calibration et marge en
+    points incluses."""
+    import tt_elite as _te
+    noms = {m["home"] for m in historique} | {m["away"] for m in historique}
+    index = {n: _te._norm(n) for n in noms}
+    matchs, inconnus = _te.extraire_matchs(index, texte)
+    elo = _sr.Elo(home_adv=0).entrainer(historique)
+    cal = _sr.calibrer_platt(historique, nuls=False, home_adv=0, marge=True, marge_scale=8.0)
+    pronos = []
+    for m in matchs:
+        pr = _sr.pronostic_forme(historique, m["a"], m["b"], nuls=False, home_adv=0,
+                                 elo=elo, marge=True, marge_scale=8.0)
+        pr["conf"] = _sr.applique_platt(pr["conf"], cal)
+        pr["time"] = m["time"]
+        pronos.append(pr)
+    return pronos, inconnus
 
 
 def analyse(p: dict) -> str:
