@@ -38,8 +38,8 @@ SPORTS = {
     "🏀 NBA (basket)":                {"path": "basketball/nba", "nuls": False, "home_adv": 100, "kind": "team", "elo_mov": True},
     "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 50, "kind": "team", "marge": True},
     "⚾ MLB (baseball)":               {"path": "baseball/mlb", "nuls": False, "home_adv": 24, "kind": "team"},
-    "🎾 Tennis ATP (simple messieurs)": {"path": "tennis/atp", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "mens-singles"},
-    "🎾 Tennis WTA (simple dames)":      {"path": "tennis/wta", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "womens-singles"},
+    "🎾 Tennis ATP (simple messieurs)": {"path": "tennis/atp", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "mens-singles", "marge": True, "marge_scale": 4.0},
+    "🎾 Tennis WTA (simple dames)":      {"path": "tennis/wta", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "womens-singles", "marge": True, "marge_scale": 4.0},
 }
 
 
@@ -160,24 +160,32 @@ def _parse_tennis(data: dict, slug: str | None = None) -> list:
                 # somme des jeux gagnés par les deux joueurs sur tous les sets
                 # (chaque linescore `value` = jeux gagnés dans ce set).
                 # `periods` = best-of (3 ou 5), pour fixer les lignes.
-                n_sets = n_games = None
+                n_sets = n_games = marge = None
                 ls = a.get("linescores") or b.get("linescores")
                 if done and ls:
                     n_sets = len(ls)
-                    tot, ok = 0, False
-                    for c in (a, b):
+
+                    def _jeux(c):
+                        t, ok = 0, False
                         for s in c.get("linescores") or []:
                             try:
-                                tot += int(round(float(s.get("value"))))
+                                t += int(round(float(s.get("value"))))
                                 ok = True
                             except (TypeError, ValueError):
                                 pass
-                    if ok:
-                        n_games = tot
+                        return (t, ok)
+
+                    ja, oka = _jeux(a)
+                    jb, okb = _jeux(b)
+                    if oka or okb:
+                        n_games = ja + jb
+                    if oka and okb:
+                        marge = ja - jb       # jeux gagnés par `a` − par `b` (domination)
                 periods = ((comp.get("format") or {}).get("regulation") or {}).get("periods")
                 out.append({"id": comp.get("id"), "date": comp.get("date") or e.get("date"),
                             "home": na, "away": nb, "hs": hs, "as_": as_, "done": done,
-                            "n_sets": n_sets, "n_games": n_games, "periods": periods})
+                            "n_sets": n_sets, "n_games": n_games, "periods": periods,
+                            "marge": marge})
     return out
 
 
@@ -327,16 +335,21 @@ def forme(passes: list, team: str, n: int = 6, lieu: str | None = None) -> dict:
 
 
 def forme_marge(passes: list, team: str, n: int = 8) -> float:
-    """Écart de score MOYEN d'une équipe sur ses `n` derniers matchs (buts/points
-    marqués − encaissés). Mesure la DOMINATION récente, plus prédictive que le
-    simple bilan V/N/D — utile au hockey (NHL). 0.0 si aucun match."""
+    """Écart de score MOYEN d'une équipe sur ses `n` derniers matchs (domination
+    récente, plus prédictive que le simple bilan). Utilise le champ `marge` quand
+    il existe (ex. tennis : jeux gagnés − perdus), sinon l'écart de score
+    (buts/points, ex. NHL). 0.0 si aucun match."""
     rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
     if not rec:
         return 0.0
     s = 0.0
     for g in rec:
-        gf, ga = (g["hs"], g["as_"]) if g["home"] == team else (g["as_"], g["hs"])
-        s += gf - ga
+        if g.get("marge") is not None:
+            m = g["marge"] if g["home"] == team else -g["marge"]
+        else:
+            gf, ga = (g["hs"], g["as_"]) if g["home"] == team else (g["as_"], g["hs"])
+            m = gf - ga
+        s += m
     return s / len(rec)
 
 
@@ -428,7 +441,8 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
                     inj_home: list | None = None, inj_away: list | None = None,
                     rang_home: int | None = None, rang_away: int | None = None,
                     elo: "Elo | None" = None, elo_ext: dict | None = None,
-                    xform: dict | None = None, marge: bool = False) -> dict:
+                    xform: dict | None = None, marge: bool = False,
+                    marge_scale: float = 2.0) -> dict:
     """Pronostic d'un match à partir de la FORME récente + de la FORME AU LIEU
     (domicile/extérieur) + du FACE-À-FACE, sans aucune cote. Les BLESSURES et le
     CLASSEMENT (si fournis) décalent modérément la proba.
@@ -526,7 +540,7 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
     # (échelle ~2 buts). Pas de nul (sports sans nul).
     if marge:
         mh, ma = forme_marge(passes, home), forme_marge(passes, away)
-        core = 1.0 / (1.0 + math.exp(-((mh - ma) / 2.0 + home_adv / 200.0)))
+        core = 1.0 / (1.0 + math.exp(-((mh - ma) / marge_scale + home_adv / 200.0)))
         pm = {"home": core, "draw": 0.0, "away": 1.0 - core}
         w = 0.35
         p = {k: w * pm[k] + (1.0 - w) * p[k] for k in p}
@@ -729,7 +743,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        classement: dict | None = None,
                        unite: str | None = None, elo_ext: dict | None = None,
                        xform: dict | None = None, elo_mov: bool = False,
-                       marge: bool = False) -> list:
+                       marge: bool = False, marge_scale: float = 2.0) -> list:
     """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
     chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
     total points + meilleur marqueur (buts en hockey) ; tennis = total de SETS."""
@@ -748,7 +762,8 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
                              inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]),
                              rang_home=cl.get(g["home"]), rang_away=cl.get(g["away"]),
-                             elo=elo, elo_ext=elo_ext, xform=xform, marge=marge)
+                             elo=elo, elo_ext=elo_ext, xform=xform, marge=marge,
+                             marge_scale=marge_scale)
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
         if tennis:
             pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))
@@ -877,7 +892,8 @@ def analyse_match(p: dict) -> str:
 
 def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
                   maxi: int = 250, warmup: int = 50,
-                  elo_mov: bool = False, marge: bool = False) -> dict | None:
+                  elo_mov: bool = False, marge: bool = False,
+                  marge_scale: float = 2.0) -> dict | None:
     """Backtest HONNÊTE : pour chaque match passé (après un warmup), on prédit
     avec la forme + le face-à-face calculés UNIQUEMENT sur les matchs d'AVANT,
     puis on compare au résultat réel. Rend le taux de réussite + une base de
@@ -894,7 +910,7 @@ def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
         d = g.get("date") or ""
         passes = [x for x in done if (x.get("date") or "") < d]
         elo = Elo(home_adv=home_adv, mov=elo_mov).entrainer(passes)
-        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo, marge=marge)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo, marge=marge, marge_scale=marge_scale)
         reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
         ok += pr["pick"] == reel
         ok_base += reel == "home"
@@ -906,7 +922,8 @@ def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
 def taux_par_confiance(hist: list, nuls: bool, home_adv: float = 0.0,
                        seuils=(0.50, 0.60, 0.65, 0.70, 0.75),
                        maxi: int = 400, warmup: int = 50,
-                       elo_mov: bool = False, marge: bool = False) -> list | None:
+                       elo_mov: bool = False, marge: bool = False,
+                       marge_scale: float = 2.0) -> list | None:
     """Backtest walk-forward qui mesure la réussite PAR TRANCHE DE CONFIANCE :
     pour chaque seuil, le taux sur les seuls pronostics où le modèle était au
     moins aussi sûr. Idée clé : la moyenne est capée, mais les picks confiants
@@ -922,7 +939,7 @@ def taux_par_confiance(hist: list, nuls: bool, home_adv: float = 0.0,
         d = g.get("date") or ""
         passes = [x for x in done if (x.get("date") or "") < d]
         elo = Elo(home_adv=home_adv, mov=elo_mov).entrainer(passes)
-        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo, marge=marge)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo, marge=marge, marge_scale=marge_scale)
         reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
         bon = pr["pick"] == reel
         for s in seuils:

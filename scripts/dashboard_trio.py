@@ -463,7 +463,7 @@ def main():
         _d3str = _d3.strftime("%Y%m%d")
 
         @st.cache_data(ttl=10800, show_spinner=False)
-        def _sr_jour(path, home_adv, kind, slug, nuls, jour_str, elo_mov, marge):
+        def _sr_jour(path, home_adv, kind, slug, nuls, jour_str, elo_mov, marge, marge_scale):
             import elo_multi as _em
             import xg_form as _xg
             hist = _sr3.historique(path, jours=150, kind=kind, slug=slug)
@@ -478,7 +478,8 @@ def main():
             return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
                                            hockey=(path == "hockey/nhl"), classement=cl,
                                            unite=_sr3.unite_du_sport(path), elo_ext=ext,
-                                           xform=xf, elo_mov=elo_mov, marge=marge)
+                                           xform=xf, elo_mov=elo_mov, marge=marge,
+                                           marge_scale=marge_scale)
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -487,7 +488,8 @@ def main():
                     try:
                         _pr = _sr_jour(_c["path"], _c["home_adv"], _c["kind"],
                                        _c.get("slug"), _c["nuls"], _d3str,
-                                       _c.get("elo_mov", False), _c.get("marge", False))
+                                       _c.get("elo_mov", False), _c.get("marge", False),
+                                       _c.get("marge_scale", 2.0))
                     except Exception:
                         _pr = []
                     _g = _sr3.groupe_de(_c)
@@ -584,7 +586,7 @@ def main():
         _dsrstr = _date_sr.strftime("%Y%m%d")
 
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
-        def _sr_charger(path, home_adv, kind, slug, nuls, jour_str, elo_mov, marge):
+        def _sr_charger(path, home_adv, kind, slug, nuls, jour_str, elo_mov, marge, marge_scale):
             import elo_multi as _em
             import xg_form as _xg
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
@@ -599,11 +601,14 @@ def main():
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
                                             hockey=(path == "hockey/nhl"), classement=cl,
                                             unite=_sr.unite_du_sport(path), elo_ext=ext,
-                                            xform=xf, elo_mov=elo_mov, marge=marge)
+                                            xform=xf, elo_mov=elo_mov, marge=marge,
+                                            marge_scale=marge_scale)
             # Les 6 MEILLEURS pronostics = les plus confiants de la journée.
             pronos = sorted(pronos, key=lambda p: -p["conf"])[:6]
-            bt = _sr.taux_reussite(hist, nuls, home_adv, elo_mov=elo_mov, marge=marge)
-            bandes = _sr.taux_par_confiance(hist, nuls, home_adv, elo_mov=elo_mov, marge=marge)
+            bt = _sr.taux_reussite(hist, nuls, home_adv, elo_mov=elo_mov, marge=marge,
+                                   marge_scale=marge_scale)
+            bandes = _sr.taux_par_confiance(hist, nuls, home_adv, elo_mov=elo_mov,
+                                            marge=marge, marge_scale=marge_scale)
             return len(hist), pronos, bt, bandes
 
         if st.button("📊 Pronostiquer", key="sr_go", type="primary"):
@@ -612,7 +617,7 @@ def main():
                     st.session_state["sr_res"] = (_lig, _sr_charger(
                         _path, _cfg["home_adv"], _cfg["kind"], _cfg.get("slug"),
                         _nuls, _dsrstr, _cfg.get("elo_mov", False),
-                        _cfg.get("marge", False)))
+                        _cfg.get("marge", False), _cfg.get("marge_scale", 2.0)))
                 except Exception as exc:
                     st.session_state["sr_res"] = (_lig, None)
                     st.session_state["sr_err"] = f"{type(exc).__name__}: {exc}"

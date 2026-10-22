@@ -352,8 +352,24 @@ def test_parse_tennis_capte_le_nombre_de_sets():
                  "linescores": [{"value": 4}, {"value": 5}]}]}]}]}]}
     g = sr.parse_games(data, kind="tennis", slug="mens-singles")[0]
     assert g["n_sets"] == 2 and g["periods"] == 3
-    # jeux = (6+7) + (4+5) = 22
+    # jeux = (6+7) + (4+5) = 22 ; marge = 13 − 9 = 4 (domination de A)
     assert g["n_games"] == 22
+    assert g["marge"] == 4
+
+
+def test_forme_marge_utilise_le_champ_marge_tennis():
+    # En tennis, forme_marge doit utiliser la marge EN JEUX (champ `marge`),
+    # pas l'écart de hs/as_ (toujours ±1 en tennis).
+    passes = [{"home": "A", "away": "B", "hs": 1, "as_": 0, "done": True,
+               "date": "1", "marge": 6},
+              {"home": "C", "away": "A", "hs": 1, "as_": 0, "done": True,
+               "date": "2", "marge": -4}]   # A a perdu de 4 jeux
+    assert sr.forme_marge(passes, "A") == (6 + 4) / 2       # +6 puis +4 (vu de A)
+
+
+def test_tennis_porte_le_flag_marge():
+    cfg = sr.SPORTS["🎾 Tennis ATP (simple messieurs)"]
+    assert cfg.get("marge") is True and cfg.get("marge_scale") == 4.0
 
 
 def test_marche_jeux_ligne_selon_best_of():
