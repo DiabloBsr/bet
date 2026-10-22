@@ -44,6 +44,9 @@ DEFAULT_FILES = [
     "scripts/forme_pastilles.py",
     # Prediction sport reel par Elo (donnees ESPN), importe par dashboard (20/10).
     "scripts/sport_reel.py",
+    # 2e reference foot : Elo multi-saisons depuis openfootball (GitHub, joignable
+    # datacenter), melange au pronostic. Importe par dashboard (22/10).
+    "scripts/elo_multi.py",
     # TT Cup / Czech Liga Pro (donnees OFFICIELLES ttcup.com, datacenter-OK, 20/10).
     # Le collecteur _ttcup_loop est lance par start_cloud ; il accumule /data.
     "scripts/ttcup_tt.py",

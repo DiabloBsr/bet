@@ -408,7 +408,7 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
                     home_adv: float = 0.0, n_forme: int = 6, n_h2h: int = 6,
                     inj_home: list | None = None, inj_away: list | None = None,
                     rang_home: int | None = None, rang_away: int | None = None,
-                    elo: "Elo | None" = None) -> dict:
+                    elo: "Elo | None" = None, elo_ext: dict | None = None) -> dict:
     """Pronostic d'un match à partir de la FORME récente + de la FORME AU LIEU
     (domicile/extérieur) + du FACE-À-FACE, sans aucune cote. Les BLESSURES et le
     CLASSEMENT (si fournis) décalent modérément la proba.
@@ -470,6 +470,17 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
         pe = elo.proba(home, away, nuls)
         w = 0.6
         p = {k: w * pe.get(k, 0.0) + (1.0 - w) * p[k] for k in p}
+        tot = sum(p.values()) or 1.0
+        p = {k: v / tot for k, v in p.items()}
+        pick = max(p, key=p.get) if nuls else ("home" if p["home"] >= p["away"] else "away")
+    # 2e RÉFÉRENCE : Elo MULTI-SAISONS (openfootball). Quand les deux équipes y
+    # figurent, on mélange sa proba (35 %) — signal indépendant, mémoire longue.
+    if elo_ext and home in elo_ext and away in elo_ext:
+        me = Elo(home_adv=home_adv)
+        me.r = elo_ext
+        px = me.proba(home, away, nuls)
+        w = 0.35
+        p = {k: w * px.get(k, 0.0) + (1.0 - w) * p[k] for k in p}
         tot = sum(p.values()) or 1.0
         p = {k: v / tot for k, v in p.items()}
         pick = max(p, key=p.get) if nuls else ("home" if p["home"] >= p["away"] else "away")
@@ -667,7 +678,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        home_adv: float = 0.0, blessures: dict | None = None,
                        kind: str = "team", hockey: bool = False,
                        classement: dict | None = None,
-                       unite: str | None = None) -> list:
+                       unite: str | None = None, elo_ext: dict | None = None) -> list:
     """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
     chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
     total points + meilleur marqueur (buts en hockey) ; tennis = total de SETS."""
@@ -686,7 +697,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
                              inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]),
                              rang_home=cl.get(g["home"]), rang_away=cl.get(g["away"]),
-                             elo=elo)
+                             elo=elo, elo_ext=elo_ext)
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
         if tennis:
             pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))

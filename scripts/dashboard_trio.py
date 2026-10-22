@@ -464,14 +464,18 @@ def main():
 
         @st.cache_data(ttl=10800, show_spinner=False)
         def _sr_jour(path, home_adv, kind, slug, nuls, jour_str):
+            import elo_multi as _em
             hist = _sr3.historique(path, jours=150, kind=kind, slug=slug)
             jour = _dt3.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tz3.utc)
             fx = _sr3.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr3.blessures_du_sport(path) if kind == "team" else {}
             cl = _sr3.classement_du_sport(path) if kind == "team" else {}
+            # 2e référence : Elo multi-saisons (openfootball) pour les ligues de foot.
+            _noms = {g[c] for g in (fx + hist) for c in ("home", "away")}
+            ext = _em.ratings_pour(path, _noms) if path in _em.LIGUES else {}
             return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
                                            hockey=(path == "hockey/nhl"), classement=cl,
-                                           unite=_sr3.unite_du_sport(path))
+                                           unite=_sr3.unite_du_sport(path), elo_ext=ext)
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -560,10 +564,12 @@ def main():
         _path, _nuls = _cfg["path"], _cfg["nuls"]
 
         st.caption("Le pronostic combine une **note Elo** (force sur toute la "
-                   "saison, pondérée par les adversaires — 60 %) avec la **forme "
-                   "récente** (6 derniers matchs), la **force à domicile / à "
-                   "l'extérieur**, le **face-à-face**, le **classement** et les "
-                   "**blessures** (NBA/NFL/NHL) — **aucune cote**. Le **11 de "
+                   "saison — 60 %) avec la **forme récente**, la **force à "
+                   "domicile / à l'extérieur**, le **face-à-face**, le "
+                   "**classement** et les **blessures** (NBA/NFL/NHL) — **aucune "
+                   "cote**. Pour le **foot** (5 grandes ligues), j'ajoute une **2e "
+                   "référence indépendante** : un **Elo multi-saisons** calculé sur "
+                   "openfootball (mesuré : +1 à +6 pts de réussite). Le **11 de "
                    "départ** n'est pas fourni par la source gratuite. J'affiche "
                    "mes **6 meilleurs pronostics** (les plus confiants) de la "
                    "date choisie, avec l'heure.")
@@ -574,14 +580,18 @@ def main():
 
         @st.cache_data(ttl=10800, show_spinner=False)   # 3 h : l'historique bouge peu
         def _sr_charger(path, home_adv, kind, slug, nuls, jour_str):
+            import elo_multi as _em
             hist = _sr.historique(path, jours=220, kind=kind, slug=slug)
             jour = _dtsr.strptime(jour_str, "%Y%m%d").replace(tzinfo=_tzsr.utc)
             fx = _sr.matchs_du_jour(path, jour, kind=kind, slug=slug)
             bl = _sr.blessures_du_sport(path) if kind == "team" else {}
             cl = _sr.classement_du_sport(path) if kind == "team" else {}
+            # 2e référence : Elo multi-saisons (openfootball) pour les ligues de foot.
+            _noms = {g[c] for g in (fx + hist) for c in ("home", "away")}
+            ext = _em.ratings_pour(path, _noms) if path in _em.LIGUES else {}
             pronos = _sr.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
                                             hockey=(path == "hockey/nhl"), classement=cl,
-                                            unite=_sr.unite_du_sport(path))
+                                            unite=_sr.unite_du_sport(path), elo_ext=ext)
             # Les 6 MEILLEURS pronostics = les plus confiants de la journée.
             pronos = sorted(pronos, key=lambda p: -p["conf"])[:6]
             bt = _sr.taux_reussite(hist, nuls, home_adv)
