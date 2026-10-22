@@ -475,11 +475,17 @@ def main():
             _noms = {g[c] for g in (fx + hist) for c in ("home", "away")}
             ext = _em.ratings_pour(path, _noms) if path in _em.LIGUES else {}
             xf = _xg.xform_pour(path, _noms) if path in _xg.LIGUES else {}
-            return _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
-                                           hockey=(path == "hockey/nhl"), classement=cl,
-                                           unite=_sr3.unite_du_sport(path), elo_ext=ext,
-                                           xform=xf, elo_mov=elo_mov, marge=marge,
-                                           marge_scale=marge_scale)
+            pr = _sr3.pronostics_a_venir(hist, fx, nuls, home_adv, bl, kind=kind,
+                                         hockey=(path == "hockey/nhl"), classement=cl,
+                                         unite=_sr3.unite_du_sport(path), elo_ext=ext,
+                                         xform=xf, elo_mov=elo_mov, marge=marge,
+                                         marge_scale=marge_scale)
+            # Calibration (Platt) : confiance affichée = vraie proba d'avoir raison.
+            cal = _sr3.calibrer_platt(hist, nuls, home_adv, maxi=300, elo_mov=elo_mov,
+                                      marge=marge, marge_scale=marge_scale)
+            for p in pr:
+                p["conf"] = _sr3.applique_platt(p["conf"], cal)
+            return pr
 
         if st.button("🏆 Calculer le top 3", key="sr3_go", type="primary"):
             _par_groupe = {g: [] for g in _sr3.GROUPES}
@@ -609,6 +615,12 @@ def main():
                                    marge_scale=marge_scale)
             bandes = _sr.taux_par_confiance(hist, nuls, home_adv, elo_mov=elo_mov,
                                             marge=marge, marge_scale=marge_scale)
+            # Calibration (Platt) : la confiance affichée collera au vrai taux.
+            cal = _sr.calibrer_platt(hist, nuls, home_adv, elo_mov=elo_mov,
+                                     marge=marge, marge_scale=marge_scale)
+            for p in pronos:
+                p["conf"] = _sr.applique_platt(p["conf"], cal)
+            pronos = sorted(pronos, key=lambda p: -p["conf"])
             return len(hist), pronos, bt, bandes
 
         if st.button("📊 Pronostiquer", key="sr_go", type="primary"):
@@ -647,22 +659,20 @@ def main():
                 if _bt:
                     st.caption(f"Fiabilité du modèle (backtest) : "
                                f"**{_bt['taux'] * 100:.0f}%** de réussite en moyenne.")
-                # Fiabilité PAR CONFIANCE : parier seulement les picks sûrs.
-                _seuil_fiable = None
+                st.caption("La **Confiance** affichée est **calibrée** (Platt) : "
+                           "elle colle au vrai taux de réussite — « 65 % » veut "
+                           "dire ~65 % de chances d'avoir raison.")
+                # Track record par niveau de confiance (sur confiance BRUTE).
                 if _bandes:
                     _txt = " · ".join(f"≥{b['seuil'] * 100:.0f}% → **{b['taux'] * 100:.0f}%** "
                                       f"({b['tot']})" for b in _bandes)
-                    st.info("🎯 **Réussite par niveau de confiance** (backtest) : "
+                    st.info("🎯 **Track record par niveau de confiance** (backtest) : "
                             + _txt + ". Conseil : **ne parie que les pronostics "
-                            "les plus confiants** — bien plus fiables que la moyenne.")
-                    # seuil « fiable » = le plus bas qui atteint ≥ 62 % sur ≥ 20 matchs.
-                    for b in _bandes:
-                        if b["taux"] >= 0.62 and b["tot"] >= 20:
-                            _seuil_fiable = b["seuil"]
-                            break
+                            "les plus confiants**.")
                 if _pronos:
+                    # ✅ = confiance calibrée ≥ 62 % (≈ vraie proba d'avoir raison).
                     def _marque(p):
-                        return "✅ " if (_seuil_fiable and p["conf"] >= _seuil_fiable) else ""
+                        return "✅ " if p["conf"] >= 0.62 else ""
                     _rows = [{"Heure": _heure_sr(p.get("date")),
                               "Match": f"{_marque(p)}{p['home']} – {p['away']}",
                               "Pronostic": _pick_txt(p),
@@ -670,9 +680,7 @@ def main():
                     _dfp = pd.DataFrame(_rows)
                     st.dataframe(_dfp.style.format({"Confiance": "{:.0f} %"}),
                                  hide_index=True, height=35 * (len(_dfp) + 1) + 3)
-                    if _seuil_fiable:
-                        st.caption(f"✅ = pronostic dans la **zone fiable** "
-                                   f"(confiance ≥ {_seuil_fiable * 100:.0f}%).")
+                    st.caption("✅ = **zone fiable** (confiance calibrée ≥ 62 %).")
                 else:
                     st.info("Aucun match programmé à cette date pour cette ligue.")
 

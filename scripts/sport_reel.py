@@ -951,6 +951,53 @@ def taux_par_confiance(hist: list, nuls: bool, home_adv: float = 0.0,
     return out or None
 
 
+def calibrer_platt(hist: list, nuls: bool, home_adv: float = 0.0,
+                   maxi: int = 600, warmup: int = 50, elo_mov: bool = False,
+                   marge: bool = False, marge_scale: float = 2.0) -> dict | None:
+    """Calibration de Platt de la CONFIANCE : ajuste la « Confiance X% » affichée
+    pour qu'elle colle au vrai taux de réussite (ex. si « 70% » gagne en fait
+    64%, on la ré-échelonne). Backtest walk-forward → on récolte (confiance,
+    pick correct ?), puis régression logistique P(correct)=σ(A·logit(conf)+B).
+    Rend {A, B} ou None si trop peu de données."""
+    done = sorted([g for g in hist if g.get("done") and g.get("hs") is not None],
+                  key=lambda g: g.get("date") or "")
+    if len(done) < warmup + 40:
+        return None
+    sous = done[warmup:][-maxi:]
+    data = []
+    for g in sous:
+        d = g.get("date") or ""
+        passes = [x for x in done if (x.get("date") or "") < d]
+        elo = Elo(home_adv=home_adv, mov=elo_mov).entrainer(passes)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
+                             elo=elo, marge=marge, marge_scale=marge_scale)
+        reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
+        c = min(0.999, max(0.001, pr["conf"]))
+        data.append((math.log(c / (1 - c)), 1.0 if pr["pick"] == reel else 0.0))
+    if len(data) < 40:
+        return None
+    a, b = 1.0, 0.0                                  # descente de gradient
+    for _ in range(600):
+        ga = gb = 0.0
+        for x, y in data:
+            p = 1.0 / (1.0 + math.exp(-max(-30, min(30, a * x + b))))
+            e = p - y
+            ga += e * x
+            gb += e
+        a -= 0.1 * ga / len(data)
+        b -= 0.1 * gb / len(data)
+    return {"A": a, "B": b, "n": len(data)}
+
+
+def applique_platt(conf: float, params: dict | None) -> float:
+    """Applique la calibration {A, B} à une confiance brute. Rend telle quelle si
+    pas de calibration ou valeur hors (0,1)."""
+    if not params or not (0.0 < conf < 1.0):
+        return conf
+    x = math.log(conf / (1 - conf))
+    return 1.0 / (1.0 + math.exp(-max(-30, min(30, params["A"] * x + params["B"]))))
+
+
 def predire(elo: Elo, fixtures: list, nuls: bool = True) -> list:
     """Attache à chaque match à venir les probas du modèle + le favori."""
     out = []

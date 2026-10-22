@@ -236,6 +236,24 @@ def test_backtest_rend_un_taux_borne_ou_none():
     assert bt is not None and 0.0 <= bt["taux"] <= 1.0 and bt["tot"] > 0
 
 
+def test_applique_platt_identite_et_monotone():
+    assert sr.applique_platt(0.7, None) == 0.7            # pas de params -> inchangé
+    assert sr.applique_platt(1.0, {"A": 1, "B": 0}) == 1.0  # hors (0,1) -> inchangé
+    pa = {"A": 0.5, "B": 0.0}
+    # A<1 : rapproche de 0,5 (corrige la sur-confiance)
+    assert 0.5 < sr.applique_platt(0.9, pa) < 0.9
+    # monotone croissante
+    assert sr.applique_platt(0.6, pa) < sr.applique_platt(0.8, pa)
+
+
+def test_calibrer_platt_rend_des_params_ou_none():
+    assert sr.calibrer_platt([], nuls=False) is None       # trop peu
+    base = ([_g("A", "B", 2, 0, f"ab{i:03d}") for i in range(50)]
+            + [_g("B", "A", 2, 0, f"ba{i:03d}") for i in range(50)])
+    cal = sr.calibrer_platt(base, nuls=False, home_adv=0, warmup=20)
+    assert cal is None or ("A" in cal and "B" in cal and cal["n"] > 0)
+
+
 def test_taux_par_confiance_bandes_croissantes():
     assert sr.taux_par_confiance([], nuls=False) is None   # trop peu
     # A domine B et C ; le modèle est très sûr et a raison -> bandes élevées.
