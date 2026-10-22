@@ -51,6 +51,40 @@ def test_proba_somme_a_un():
     assert p2["draw"] == 0.0 and abs(p2["home"] + p2["away"] - 1.0) < 1e-9
 
 
+def test_elo_mov_amplifie_les_blowouts():
+    # Même vainqueur, mais une raclée (10-0) bouge plus la note qu'une victoire
+    # serrée (1-0) quand mov=True ; identique quand mov=False.
+    serre = sr.Elo(home_adv=0, mov=True).entrainer([_g("A", "B", 1, 0, "1")])
+    raclee = sr.Elo(home_adv=0, mov=True).entrainer([_g("A", "B", 10, 0, "1")])
+    assert raclee.rating("A") > serre.rating("A")
+    sans = sr.Elo(home_adv=0, mov=False).entrainer([_g("A", "B", 1, 0, "1")])
+    sans2 = sr.Elo(home_adv=0, mov=False).entrainer([_g("A", "B", 10, 0, "1")])
+    assert sans.rating("A") == sans2.rating("A")        # mov=False : la marge est ignorée
+
+
+def test_forme_marge_moyenne_ecart():
+    passes = [_g("A", "B", 3, 1, "1"), _g("C", "A", 0, 2, "2")]  # A : +2 puis +2
+    assert sr.forme_marge(passes, "A") == 2.0
+    assert sr.forme_marge(passes, "B") == -2.0
+    assert sr.forme_marge([], "A") == 0.0
+
+
+def test_marge_oriente_le_pronostic():
+    # A écrase ses adversaires, B les frôle : la forme-marge doit renforcer A.
+    passes = ([_g("A", f"o{i}", 5, 0, f"a{i}") for i in range(6)]
+              + [_g("B", f"p{i}", 1, 0, f"b{i}") for i in range(6)])
+    base = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0)
+    avec = sr.pronostic_forme(passes, "A", "B", nuls=False, home_adv=0, marge=True)
+    assert avec["p"]["home"] > base["p"]["home"]
+    assert abs(sum(avec["p"].values()) - 1.0) < 1e-9
+
+
+def test_nba_nhl_portent_les_bons_flags():
+    assert sr.SPORTS["🏀 NBA (basket)"].get("elo_mov") is True
+    assert sr.SPORTS["🏒 NHL (hockey)"].get("marge") is True
+    assert "elo_mov" not in sr.SPORTS["⚾ MLB (baseball)"]      # rien pour le baseball
+
+
 def test_avantage_terrain():
     e = sr.Elo(home_adv=60)
     # deux équipes égales : le domicile est favori grâce à l'avantage terrain.

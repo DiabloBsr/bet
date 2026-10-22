@@ -35,8 +35,8 @@ SPORTS = {
     "⚽ Ligue 1 (France)":            {"path": "soccer/fra.1", "nuls": True, "home_adv": 60, "kind": "team"},
     "⚽ Ligue des Champions":         {"path": "soccer/uefa.champions", "nuls": True, "home_adv": 55, "kind": "team"},
     "🏈 NFL (football américain)":    {"path": "football/nfl", "nuls": False, "home_adv": 48, "kind": "team"},
-    "🏀 NBA (basket)":                {"path": "basketball/nba", "nuls": False, "home_adv": 100, "kind": "team"},
-    "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 50, "kind": "team"},
+    "🏀 NBA (basket)":                {"path": "basketball/nba", "nuls": False, "home_adv": 100, "kind": "team", "elo_mov": True},
+    "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 50, "kind": "team", "marge": True},
     "⚾ MLB (baseball)":               {"path": "baseball/mlb", "nuls": False, "home_adv": 24, "kind": "team"},
     "🎾 Tennis ATP (simple messieurs)": {"path": "tennis/atp", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "mens-singles"},
     "🎾 Tennis WTA (simple dames)":      {"path": "tennis/wta", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "womens-singles"},
@@ -222,8 +222,12 @@ class Elo:
     d'ajustement. Le nul (foot) est modélisé à part : sa part décroît avec
     l'écart de niveau."""
 
-    def __init__(self, k: float = 20.0, home_adv: float = 60.0, base: float = 1500.0):
-        self.k, self.home_adv, self.base = k, home_adv, base
+    def __init__(self, k: float = 20.0, home_adv: float = 60.0, base: float = 1500.0,
+                 mov: bool = False):
+        # mov=True : la mise à jour est pondérée par la MARGE (écart de score),
+        # via ln(|marge|+1). Un blow-out compte plus qu'une victoire serrée —
+        # mesuré meilleur en NBA (+1,9 pt). À NE PAS activer au hockey (y nuit).
+        self.k, self.home_adv, self.base, self.mov = k, home_adv, base, mov
         self.r: dict = {}
 
     def rating(self, t: str) -> float:
@@ -250,7 +254,8 @@ class Elo:
     def maj(self, home: str, away: str, hs: int, as_: int) -> None:
         s = 1.0 if hs > as_ else (0.0 if hs < as_ else 0.5)   # vu du domicile
         e = self._attendu(self.rating(home) + self.home_adv, self.rating(away))
-        delta = self.k * (s - e)
+        mult = math.log(abs(hs - as_) + 1) if self.mov else 1.0
+        delta = self.k * mult * (s - e)
         self.r[home] = self.rating(home) + delta
         self.r[away] = self.rating(away) - delta
 
@@ -319,6 +324,20 @@ def forme(passes: list, team: str, n: int = 6, lieu: str | None = None) -> dict:
         pts += 1.0 if r == "V" else (0.5 if r == "N" else 0.0)
     return {"seq": "".join(reversed(seq)), "n": len(rec),
             "score": pts / len(rec) if rec else 0.5}
+
+
+def forme_marge(passes: list, team: str, n: int = 8) -> float:
+    """Écart de score MOYEN d'une équipe sur ses `n` derniers matchs (buts/points
+    marqués − encaissés). Mesure la DOMINATION récente, plus prédictive que le
+    simple bilan V/N/D — utile au hockey (NHL). 0.0 si aucun match."""
+    rec = [g for g in passes if g["home"] == team or g["away"] == team][-n:]
+    if not rec:
+        return 0.0
+    s = 0.0
+    for g in rec:
+        gf, ga = (g["hs"], g["as_"]) if g["home"] == team else (g["as_"], g["hs"])
+        s += gf - ga
+    return s / len(rec)
 
 
 def face_a_face(passes: list, a: str, b: str, n: int = 6) -> dict:
@@ -409,7 +428,7 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
                     inj_home: list | None = None, inj_away: list | None = None,
                     rang_home: int | None = None, rang_away: int | None = None,
                     elo: "Elo | None" = None, elo_ext: dict | None = None,
-                    xform: dict | None = None) -> dict:
+                    xform: dict | None = None, marge: bool = False) -> dict:
     """Pronostic d'un match à partir de la FORME récente + de la FORME AU LIEU
     (domicile/extérieur) + du FACE-À-FACE, sans aucune cote. Les BLESSURES et le
     CLASSEMENT (si fournis) décalent modérément la proba.
@@ -499,6 +518,18 @@ def pronostic_forme(passes: list, home: str, away: str, nuls: bool,
         pxf = {k: v / sx for k, v in pxf.items()}
         w = 0.30
         p = {k: w * pxf[k] + (1.0 - w) * p[k] for k in p}
+        tot = sum(p.values()) or 1.0
+        p = {k: v / tot for k, v in p.items()}
+        pick = max(p, key=p.get) if nuls else ("home" if p["home"] >= p["away"] else "away")
+    # FORME-MARGE (écart de score récent) : domination réelle, mesurée meilleure
+    # au hockey (NHL). Mélange 35 %. L'écart est converti en proba par logistique
+    # (échelle ~2 buts). Pas de nul (sports sans nul).
+    if marge:
+        mh, ma = forme_marge(passes, home), forme_marge(passes, away)
+        core = 1.0 / (1.0 + math.exp(-((mh - ma) / 2.0 + home_adv / 200.0)))
+        pm = {"home": core, "draw": 0.0, "away": 1.0 - core}
+        w = 0.35
+        p = {k: w * pm[k] + (1.0 - w) * p[k] for k in p}
         tot = sum(p.values()) or 1.0
         p = {k: v / tot for k, v in p.items()}
         pick = max(p, key=p.get) if nuls else ("home" if p["home"] >= p["away"] else "away")
@@ -697,7 +728,8 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
                        kind: str = "team", hockey: bool = False,
                        classement: dict | None = None,
                        unite: str | None = None, elo_ext: dict | None = None,
-                       xform: dict | None = None) -> list:
+                       xform: dict | None = None, elo_mov: bool = False,
+                       marge: bool = False) -> list:
     """Pronostic forme + face-à-face (+ blessures) + marchés additionnels pour
     chaque match à venir. Marchés selon le sport : foot = buts/BTTS ; NBA/NHL =
     total points + meilleur marqueur (buts en hockey) ; tennis = total de SETS."""
@@ -708,7 +740,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
     tennis = kind == "tennis"
     bl = blessures or {}
     cl = classement or {}
-    elo = Elo(home_adv=home_adv).entrainer(passes)   # backbone saison entière
+    elo = Elo(home_adv=home_adv, mov=elo_mov).entrainer(passes)   # backbone saison
     out = []
     for g in fixtures:
         if not (g.get("home") and g.get("away")):
@@ -716,7 +748,7 @@ def pronostics_a_venir(hist: list, fixtures: list, nuls: bool,
         pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv,
                              inj_home=bl.get(g["home"]), inj_away=bl.get(g["away"]),
                              rang_home=cl.get(g["home"]), rang_away=cl.get(g["away"]),
-                             elo=elo, elo_ext=elo_ext, xform=xform)
+                             elo=elo, elo_ext=elo_ext, xform=xform, marge=marge)
         pr["date"] = g.get("date")      # date/heure ISO UTC du coup d'envoi
         if tennis:
             pr["sets"] = marche_sets(passes, g["home"], g["away"], g.get("periods"))
@@ -844,7 +876,8 @@ def analyse_match(p: dict) -> str:
 
 
 def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
-                  maxi: int = 250, warmup: int = 50) -> dict | None:
+                  maxi: int = 250, warmup: int = 50,
+                  elo_mov: bool = False, marge: bool = False) -> dict | None:
     """Backtest HONNÊTE : pour chaque match passé (après un warmup), on prédit
     avec la forme + le face-à-face calculés UNIQUEMENT sur les matchs d'AVANT,
     puis on compare au résultat réel. Rend le taux de réussite + une base de
@@ -860,8 +893,8 @@ def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
     for g in sous:
         d = g.get("date") or ""
         passes = [x for x in done if (x.get("date") or "") < d]
-        elo = Elo(home_adv=home_adv).entrainer(passes)
-        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo)
+        elo = Elo(home_adv=home_adv, mov=elo_mov).entrainer(passes)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo, marge=marge)
         reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
         ok += pr["pick"] == reel
         ok_base += reel == "home"
@@ -872,7 +905,8 @@ def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
 
 def taux_par_confiance(hist: list, nuls: bool, home_adv: float = 0.0,
                        seuils=(0.50, 0.60, 0.65, 0.70, 0.75),
-                       maxi: int = 400, warmup: int = 50) -> list | None:
+                       maxi: int = 400, warmup: int = 50,
+                       elo_mov: bool = False, marge: bool = False) -> list | None:
     """Backtest walk-forward qui mesure la réussite PAR TRANCHE DE CONFIANCE :
     pour chaque seuil, le taux sur les seuls pronostics où le modèle était au
     moins aussi sûr. Idée clé : la moyenne est capée, mais les picks confiants
@@ -887,8 +921,8 @@ def taux_par_confiance(hist: list, nuls: bool, home_adv: float = 0.0,
     for g in sous:
         d = g.get("date") or ""
         passes = [x for x in done if (x.get("date") or "") < d]
-        elo = Elo(home_adv=home_adv).entrainer(passes)
-        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo)
+        elo = Elo(home_adv=home_adv, mov=elo_mov).entrainer(passes)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo, marge=marge)
         reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
         bon = pr["pick"] == reel
         for s in seuils:
