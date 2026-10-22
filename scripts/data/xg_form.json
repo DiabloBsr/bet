@@ -1,0 +1,11 @@
+{
+  "genere_le": "2026-10-22",
+  "source": "understat.com/getLeagueData (xG des 6 derniers matchs, ratio xG/(xG+xGA))",
+  "xform": {
+    "soccer/eng.1": {"Arsenal": 0.6301, "Aston Villa": 0.4809, "Bournemouth": 0.6615, "Brentford": 0.4583, "Brighton": 0.6014, "Chelsea": 0.4446, "Coventry": 0.4524, "Crystal Palace": 0.3554, "Everton": 0.5444, "Fulham": 0.5438, "Hull": 0.3459, "Ipswich": 0.3949, "Leeds": 0.5095, "Liverpool": 0.5112, "Manchester City": 0.6267, "Manchester United": 0.4867, "Newcastle United": 0.412, "Nottingham Forest": 0.5837, "Sunderland": 0.4326, "Tottenham": 0.5241},
+    "soccer/esp.1": {"Alaves": 0.4497, "Athletic Club": 0.5732, "Atletico Madrid": 0.7029, "Barcelona": 0.7844, "Celta Vigo": 0.5204, "Deportivo La Coruna": 0.515, "Elche": 0.4103, "Espanyol": 0.5205, "Getafe": 0.3501, "Levante": 0.3976, "Malaga": 0.3429, "Osasuna": 0.4514, "Racing Santander": 0.2728, "Rayo Vallecano": 0.52, "Real Betis": 0.5237, "Real Madrid": 0.6298, "Real Sociedad": 0.4398, "Sevilla": 0.5173, "Valencia": 0.3848, "Villarreal": 0.6356},
+    "soccer/ita.1": {"AC Milan": 0.5783, "Atalanta": 0.3302, "Bologna": 0.4896, "Cagliari": 0.4108, "Como": 0.5775, "Fiorentina": 0.5239, "Frosinone": 0.4542, "Genoa": 0.4135, "Inter": 0.7268, "Juventus": 0.7278, "Lazio": 0.6119, "Lecce": 0.3565, "Monza": 0.5369, "Napoli": 0.6784, "Parma Calcio 1913": 0.2882, "Roma": 0.6586, "Sassuolo": 0.453, "Torino": 0.4972, "Udinese": 0.3259, "Venezia": 0.3608},
+    "soccer/ger.1": {"Augsburg": 0.4085, "Bayer Leverkusen": 0.6874, "Bayern Munich": 0.8129, "Borussia Dortmund": 0.6609, "Borussia M.Gladbach": 0.3296, "Eintracht Frankfurt": 0.4781, "Elversberg": 0.3666, "FC Cologne": 0.5208, "Freiburg": 0.6685, "Hamburger SV": 0.3663, "Hoffenheim": 0.5289, "Mainz 05": 0.6557, "Paderborn": 0.3358, "RasenBallsport Leipzig": 0.5553, "Schalke 04": 0.3328, "Union Berlin": 0.394, "VfB Stuttgart": 0.4443, "Werder Bremen": 0.4533},
+    "soccer/fra.1": {"Angers": 0.4213, "Auxerre": 0.5202, "Brest": 0.534, "Le Havre": 0.4372, "Le Mans": 0.4157, "Lens": 0.5359, "Lille": 0.5568, "Lorient": 0.4773, "Lyon": 0.6027, "Marseille": 0.4263, "Monaco": 0.414, "Nice": 0.4383, "Paris FC": 0.6732, "Paris Saint Germain": 0.6571, "Rennes": 0.5222, "Strasbourg": 0.3677, "Toulouse": 0.5893, "Troyes": 0.4109}
+  }
+}

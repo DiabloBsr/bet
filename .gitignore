@@ -55,3 +55,4 @@ ttcup_history.json
 
 # exception : bundle de donnees TT Elite livre avec l app (voir deploy_hf.py)
 !scripts/data/tt_elite.json
+!scripts/data/xg_form.json

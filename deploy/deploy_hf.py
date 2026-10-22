@@ -47,6 +47,10 @@ DEFAULT_FILES = [
     # 2e reference foot : Elo multi-saisons depuis openfootball (GitHub, joignable
     # datacenter), melange au pronostic. Importe par dashboard (22/10).
     "scripts/elo_multi.py",
+    # 3e signal foot : xG-forme (Understat) EMBARQUEE (Understat bloque le Space).
+    # Regeneree via le navigateur, voir tools/maj_xg.py. 22/10.
+    "scripts/xg_form.py",
+    "scripts/data/xg_form.json",
     # TT Cup / Czech Liga Pro (donnees OFFICIELLES ttcup.com, datacenter-OK, 20/10).
     # Le collecteur _ttcup_loop est lance par start_cloud ; il accumule /data.
     "scripts/ttcup_tt.py",
