@@ -36,7 +36,7 @@ SPORTS = {
     "⚽ Ligue des Champions":         {"path": "soccer/uefa.champions", "nuls": True, "home_adv": 55, "kind": "team"},
     "🏈 NFL (football américain)":    {"path": "football/nfl", "nuls": False, "home_adv": 48, "kind": "team"},
     "🏀 NBA (basket)":                {"path": "basketball/nba", "nuls": False, "home_adv": 100, "kind": "team", "elo_mov": True},
-    "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 50, "kind": "team", "marge": True},
+    "🏒 NHL (hockey)":                {"path": "hockey/nhl", "nuls": False, "home_adv": 70, "kind": "team", "marge": True},
     "⚾ MLB (baseball)":               {"path": "baseball/mlb", "nuls": False, "home_adv": 24, "kind": "team"},
     "🎾 Tennis ATP (simple messieurs)": {"path": "tennis/atp", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "mens-singles", "marge": True, "marge_scale": 4.0},
     "🎾 Tennis WTA (simple dames)":      {"path": "tennis/wta", "nuls": False, "home_adv": 0, "kind": "tennis", "slug": "womens-singles", "marge": True, "marge_scale": 4.0},
