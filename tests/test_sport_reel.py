@@ -202,6 +202,21 @@ def test_backtest_rend_un_taux_borne_ou_none():
     assert bt is not None and 0.0 <= bt["taux"] <= 1.0 and bt["tot"] > 0
 
 
+def test_taux_par_confiance_bandes_croissantes():
+    assert sr.taux_par_confiance([], nuls=False) is None   # trop peu
+    # A domine B et C ; le modèle est très sûr et a raison -> bandes élevées.
+    base = ([_g("A", "B", 3, 0, f"ab{i:03d}") for i in range(40)]
+            + [_g("A", "C", 3, 0, f"ac{i:03d}") for i in range(40)]
+            + [_g("B", "C", 1, 1, f"bc{i:03d}") for i in range(20)])
+    b = sr.taux_par_confiance(base, nuls=False, home_adv=0, warmup=20)
+    assert b is not None
+    for x in b:
+        assert 0.0 <= x["taux"] <= 1.0 and x["tot"] >= 10
+        assert 0.5 <= x["seuil"] <= 0.75
+    # les seuils sont rendus croissants
+    assert [x["seuil"] for x in b] == sorted(x["seuil"] for x in b)
+
+
 # -------- marchés : totaux, les deux marquent, meilleur marqueur --------
 
 def _gl(h, a, hs, as_, d, lh=None, la=None):

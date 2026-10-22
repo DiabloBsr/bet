@@ -851,6 +851,36 @@ def taux_reussite(hist: list, nuls: bool, home_adv: float = 0.0,
             "base_domicile": ok_base / tot if tot else 0.0}
 
 
+def taux_par_confiance(hist: list, nuls: bool, home_adv: float = 0.0,
+                       seuils=(0.50, 0.60, 0.65, 0.70, 0.75),
+                       maxi: int = 400, warmup: int = 50) -> list | None:
+    """Backtest walk-forward qui mesure la réussite PAR TRANCHE DE CONFIANCE :
+    pour chaque seuil, le taux sur les seuls pronostics où le modèle était au
+    moins aussi sûr. Idée clé : la moyenne est capée, mais les picks confiants
+    sont bien plus fiables — on ne parie que ceux-là. Rend [{seuil, taux, tot}]
+    (seuils sans match ignorés), ou None si trop peu de données."""
+    done = sorted([g for g in hist if g.get("done") and g.get("hs") is not None],
+                  key=lambda g: g.get("date") or "")
+    if len(done) < warmup + 20:
+        return None
+    sous = done[warmup:][-maxi:]
+    buckets = {s: [0, 0] for s in seuils}            # seuil -> [ok, tot]
+    for g in sous:
+        d = g.get("date") or ""
+        passes = [x for x in done if (x.get("date") or "") < d]
+        elo = Elo(home_adv=home_adv).entrainer(passes)
+        pr = pronostic_forme(passes, g["home"], g["away"], nuls, home_adv, elo=elo)
+        reel = "home" if g["hs"] > g["as_"] else ("away" if g["hs"] < g["as_"] else "draw")
+        bon = pr["pick"] == reel
+        for s in seuils:
+            if pr["conf"] >= s:
+                buckets[s][1] += 1
+                buckets[s][0] += bon
+    out = [{"seuil": s, "taux": ok / tot, "tot": tot}
+           for s, (ok, tot) in sorted(buckets.items()) if tot >= 10]
+    return out or None
+
+
 def predire(elo: Elo, fixtures: list, nuls: bool = True) -> list:
     """Attache à chaque match à venir les probas du modèle + le favori."""
     out = []

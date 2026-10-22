@@ -595,7 +595,8 @@ def main():
             # Les 6 MEILLEURS pronostics = les plus confiants de la journée.
             pronos = sorted(pronos, key=lambda p: -p["conf"])[:6]
             bt = _sr.taux_reussite(hist, nuls, home_adv)
-            return len(hist), pronos, bt
+            bandes = _sr.taux_par_confiance(hist, nuls, home_adv)
+            return len(hist), pronos, bt, bandes
 
         if st.button("📊 Pronostiquer", key="sr_go", type="primary"):
             with _db("Historique ESPN + prédiction…"):
@@ -611,7 +612,7 @@ def main():
             if _r[1] is None:
                 st.error(f"Données ESPN indisponibles. {st.session_state.get('sr_err','')}")
             else:
-                _nb, _pronos, _bt = _r[1]
+                _nb, _pronos, _bt, _bandes = _r[1]
                 _tennis = _cfg["kind"] == "tennis"
 
                 def _heure_sr(iso):
@@ -631,15 +632,33 @@ def main():
                            f"{_date_sr.strftime('%d/%m/%Y')}.")
                 if _bt:
                     st.caption(f"Fiabilité du modèle (backtest) : "
-                               f"**{_bt['taux'] * 100:.0f}%** de réussite.")
+                               f"**{_bt['taux'] * 100:.0f}%** de réussite en moyenne.")
+                # Fiabilité PAR CONFIANCE : parier seulement les picks sûrs.
+                _seuil_fiable = None
+                if _bandes:
+                    _txt = " · ".join(f"≥{b['seuil'] * 100:.0f}% → **{b['taux'] * 100:.0f}%** "
+                                      f"({b['tot']})" for b in _bandes)
+                    st.info("🎯 **Réussite par niveau de confiance** (backtest) : "
+                            + _txt + ". Conseil : **ne parie que les pronostics "
+                            "les plus confiants** — bien plus fiables que la moyenne.")
+                    # seuil « fiable » = le plus bas qui atteint ≥ 62 % sur ≥ 20 matchs.
+                    for b in _bandes:
+                        if b["taux"] >= 0.62 and b["tot"] >= 20:
+                            _seuil_fiable = b["seuil"]
+                            break
                 if _pronos:
+                    def _marque(p):
+                        return "✅ " if (_seuil_fiable and p["conf"] >= _seuil_fiable) else ""
                     _rows = [{"Heure": _heure_sr(p.get("date")),
-                              "Match": f"{p['home']} – {p['away']}",
+                              "Match": f"{_marque(p)}{p['home']} – {p['away']}",
                               "Pronostic": _pick_txt(p),
                               "Confiance": p["conf"] * 100} for p in _pronos]
                     _dfp = pd.DataFrame(_rows)
                     st.dataframe(_dfp.style.format({"Confiance": "{:.0f} %"}),
                                  hide_index=True, height=35 * (len(_dfp) + 1) + 3)
+                    if _seuil_fiable:
+                        st.caption(f"✅ = pronostic dans la **zone fiable** "
+                                   f"(confiance ≥ {_seuil_fiable * 100:.0f}%).")
                 else:
                     st.info("Aucun match programmé à cette date pour cette ligue.")
 
